@@ -74,6 +74,7 @@ define Flag_MelodyCaughtPlayerStealing = False #Melody caught the player unlocki
 
 define Flag_RexSneakDay1 #Rex has snuck out on Night 1
 define Flag_AriaWantsBook #Aria is bored and wants something to read in the dorms.
+define Flag_ArchivesDiscovered # player has discovered the archives.
 
 # Spells
 define Spell_Light = False
@@ -669,6 +670,7 @@ label Night0Corridor:
         Narrator "More apart of you than your beating heart."
         Narrator "You lift your light higher and look over the old paper label above the door."
         Narrator "{b}The Archives{/b}."
+        $ Flag_ArchivesDiscovered = True
         $ cinematic = False
         menu:
             "(Try the door.)":
@@ -1573,7 +1575,7 @@ label Morning1Greenhouse:
                 Narrator "She quickly puts an ingredient in the pot, lowers the temperature, and covers it with a heavy ceramic lid."
                 $ cinematic = False
                 Melody "Hey, I didn't think I'd have company."
-                Melody "I'm glad to see you. Exstatic, actually. I think I'm going a little mad. Haha."
+                Melody "I'm glad to see you. Ecstatic, actually. I think I'm going a little mad. Haha."
                 Melody "I'm just checking this place out, you know, getting ready for exam stuff. Do you like potions too?"
                 menu:
                     "I think so.":
@@ -1695,7 +1697,7 @@ label Morning1Greenhouse:
                                 Narrator "With a few whispered words, the cabinet unlocks with a loud {b}{i}clunk{i}{b}. It's clearly not been touched in a while."
                                 Narrator "Melody looks over at you. A knowing look in her eye."
                                 $ Flag_MelodyCaughtPlayerStealing = True
-                                Narrator "You know you can only take one. Any more and it'd be noticable."
+                                Narrator "You know you can only take one. Any more and it'd be noticeable."
                                 $ cinematic = False
                                 menu: 
                                     "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
@@ -2029,7 +2031,7 @@ label Morning1Greenhouse:
                 Rex "That's a needle file."
                 $ cinematic = True
                 Narrator "He drops the tool in his hand and moves past you to grab another."
-                Narrator "As he passes, you notice tha the smells like solder."
+                Narrator "As he passes, you notice that the smells like solder."
                 Narrator "When he returns, he places his back against the workbench, giving you his full attention."
                 $ cinematic = False
                 pass
@@ -2038,7 +2040,7 @@ label Morning1Greenhouse:
                 Rex "That's a jeweler's hammer."
                 $ cinematic = True
                 Narrator "He drops the tool in his hand and moves past you to grab another."
-                Narrator "As he passes, you notice tha the smells like solder."
+                Narrator "As he passes, you notice that the smells like solder."
                 Narrator "When he returns, he places his back against the workbench, giving you his full attention."
                 $ cinematic = False
                 pass
@@ -2099,7 +2101,7 @@ label Morning1Greenhouse:
             Rex "Maybe I can submit it for my Artificing Exam. That way I don't have to think about all this exam crap."
             menu:
                 "Maybe...":
-                    Rex "You don't sound convinved... then again, ain't my job to convince you."
+                    Rex "You don't sound convinced... then again, ain't my job to convince you."
                     return
                 "Is now the time to relax?":
                     Rex "Never seems to be. Not like I'm trying to laze about but a guy needs rest."
@@ -2249,12 +2251,15 @@ label Morning1Greenhouse:
             "(Talk to Xander)":
 
             "(Sneak Out)":
+                $ cinematic = True
+                Narrator "You "
+                $ cinematic = False
                 jump Night1SneakDecision 
 
             "(Go to sleep)":
                 $ cinematic = True
                 Narrator "You pull the covers over you, looking up at the ceiling as it lulls you to sleep."
-                Narrator "Moments after your eyes are closed, you fall alseep."
+                Narrator "Moments after your eyes are closed, you fall asleep."
                 $ cinematic = False
                 $ Day1Night = False
                 jump Morning1Dorms
@@ -2289,8 +2294,13 @@ label Morning1Greenhouse:
                     # empty but gives the player the option to steal a potion if they didn't before.
 
                 "(Go to the {b}Atrium{/b})":
-                    jump Night1Atrium
-                    # can have a first encounter with NotAlice... if they haven't met her before.
+                    if Flag_NotAliceMet:
+                        jump Night1Atrium
+                        #another encounter with NotAlice
+
+                    else:
+                        jump Night1Atrium2
+                        # can have a first encounter with NotAlice... if they haven't met her before.
 
                 "(Go to the {b}Artificing Lab{/b})":
                     jump Night1ArtificingLab
@@ -2300,28 +2310,174 @@ label Morning1Greenhouse:
                     jump Night1Courtyard
 
                 "(Return to the {b}Dormitory{/b})":
+                    jump Night1DecisionMenu
 
         else:
             $ cinematic = True
-            ""
+            Narrator "You can't see anything. It's too dangerous to go ahead without light."
+            Narrator "You turn around."
             $ cinematic = False
-
-
-
+            jump Night1DecisionMenu
 
 
 
 
 
         label Night1Library:
+            scene library night
+            $ cinematic = True
+            Narrator "The library door is warm as you open it. Roots and vines from the greenhouse seem to have slowly made their way inside overnight."
+            Narrator "You wonder if someone's plant has gone haywire."
+            Narrator "Brushing them aside, you push in."
+            Narrator "Carrying the light in your hands, you scan the room."
+            $ cinematic = False
+            if Flag_ArchivesDiscovered:
+                $ cinematic = True
+                Narrator "The silence is almost welcoming. The eerie feeling you had when you last visited has evaporated into solace."
+                Narrator "Rather than feeling the dread of being watched, you feel like you're centre-stage, with a hundred eyes watching you."
+                Narrator "Perhaps the books have eyes..."
+                Narrator "You turn your gaze to the Archive door."
+                if Spell_Unlocking:
+                    Narrator "You try the unlock spell."
+                    Narrator "As expected, nothing happens."
+                    Narrator "You're certain it needs something else to open..."
+                    pass
+                else: 
+                    Narrator "You pull on the lock."
+                    Narrator "It doesn't budge."
+                    pass
+                Narrator "You check the stacks for anything of interest..."
+                if book_collected:
+                    Narrator "...Finding nothing new. You're content with {book_collected}."
+                    jump Night1SneakDecision
+
+                else:
+                    Narrator "You check for the books on botany, all of which seem somewhat tattered and dated."
+                    Narrator "Not by misuse, or a lack of care, but by age."
+                    Narrator "It seems as though every book in this library comes with it's own layer of dust."
+                    Narrator "It doesn't help that parts of the wooden floor seem to have warped over years, leaving some bookshelves angular."
+                    Narrator "Nevertheless, you poke around until -- trying not to disturb Tao, who seems very aware of your presence."
+                    Narrator "You find a few books that seem relevant to your needs."
+                    $ cinematic = False
+                    label Night1Library_BotanyBooks:
+                        menu:
+                            "(Read '{b}The Illustrated Botanical{/b}')":
+                                $ cinematic = True
+                                Narrator "Overall, the Illustrated Botanical is exactly what it says on the cover."
+                                Narrator "A list of local flora and garden plants you're vaguely aware of with instruction on how to tend to them."
+                                Narrator "You saw {i}Winged Jasmine{/i} and {i}Moon Melon{/i} as a part of that."
+                                $ cinematic = False
+                                pass
+
+                            "(Read '{b}The Woodwitch Guide to Home Gardening{/b}')":
+                                $ cinematic = True
+                                Narrator "This book seems to go into not plants such as {i}Snapjaw Orchids{/i} and {i}Winged Jasmine{/i}, but also their applications."
+                                Narrator "There's a section on potions that you'd imagine would be quite useful."
+                                $ cinematic = False
+                                pass
+
+                            "(Read '{b}Carnivorous Plants of Viordia and their Many Applications{/b}')":
+                                $ cinematic = True
+                                Narrator "The book seems to be a catalogue of carnivorous plants found in the wilds of Viordia."
+                                Narrator "More than that, it has a few lists of historical uses for these plants."
+                                Narrator "You see {i}Sanguine Lily{/i} mentioned here, as well as a few other plants you don't recognise."
+                                Narrator "Sanguine Lily is mentioned as requiring blood in it's rearing."
+                                Narrator "Not much, but enough to make you queezy."
+                                Narrator "You close the book."
+                                $ cinematic = False
+                                pass
+
+                        $ cinematic = True
+                        Narrator "You know that you can only take one. The system this place seems to use is the same as in the Scholomance."
+                        Narrator "One book can be withdrawn per pupil."
+                        Narrator "Which book do you take?"
+                        $ cinematic = False
+                        menu:
+                            "The Illustrated Botanical." if "The Illustrated Botanical" not in book_collected:
+                                $ book_collected.append("The Illustrated Botanical")
+                                $ Flag_IllustratedBotanical = True
+                                $ cinematic = True
+                                Narrator "You take the book and head to the checkout desk."
+                                Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
+                                $ cinematic = False
+                                jump Night1SneakDecision
+
+                            "The Woodwitch Guide to Home Gardening." if "The Woodwitch Guide to Home Gardening" not in book_collected:
+                                $ book_collected.append("The Woodwitch Guide to Home Gardening")
+                                $ Flag_WoodwitchGuide = True
+                                $ cinematic = True
+                                Narrator "You take the book and head to the checkout desk."
+                                Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
+                                $ cinematic = False
+                                jump Night1SneakDecision
+
+                            "Carnivorous Plants of Viordia and their Many Applications." if "Carnivorous Plants of Viordia and their Many Applications" not in book_collected:
+                                $ book_collected.append("Carnivorous Plants of Viordia and their Many Applications")
+                                $ Flag_CarnivorousPlants = True
+                                $ cinematic = True
+                                Narrator "You take the book and head to the checkout desk."
+                                Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
+                                $ cinematic = False
+                                jump Night1SneakDecision
+                            
+                            "(Look through the options once again)":
+                                jump Night1Library_BotanyBooks
+
+                            "(Leave the Library)":
+                                jump Night1SneakDecision
+
+
+            else:
+                $ cinematic = True
+                Narrator "The spell casts eerie light over the library. The silence seems uncanny as you step inside -- looking over the stacks of thick books and tomes."
+                Narrator "Shadows dance along the walls -- remnants clouds through the skylight."
+                Narrator "Despite the prickly feeling on your neck, you know you're alone."
+                Narrator "In the distance, you notice a gated door, a great padlock stopping you."
+                Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+                Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
+                Narrator "You breathe it in..."
+                Narrator "Whatever is behind the door is old magic."
+                Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
+                Narrator "They feel intimate."
+                Narrator "More apart of you than your beating heart."
+                Narrator "You lift your light higher and look over the old paper label above the door."
+                Narrator "{b}The Archives{/b}."
+                $ Flag_ArchivesDiscovered = True
+                $ cinematic = False
+                menu:
+                    "(Try the door.)":
+                        $ cinematic = True
+                        Narrator "The chains are strong. The lock seems unbreakable."
+                        Narrator "You need a key."
+                        $ cinematic = False
+                        pass
+                    "(Leave.)": 
+                        $ cinematic = True
+                        Narrator "You kill the urge to move closer. You don't know where you find the determination."
+                        Narrator "You know there is nothing for you here."
+                        Narrator "Nothing yet..."
+                        $ cinematic = False
+                        pass
+                $ cinematic = True
+                Narrator "The moonlight reminds you how late it's getting. You head back to the corridor."
+                $ cinematic = False
+
 
         label Night1AlchemyLab:
 
+
+
+
+
+            
+
         label Night1Atrium:
+        
+        label Night1Atrium2:
 
         label Night1ArtificingLab:
 
-        label
+        label Courtyard:
 
 
 
