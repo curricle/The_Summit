@@ -72,6 +72,9 @@ define Flag_RexArtificing = False
 define Flag_DemoAliceJob = False
 define Flag_MelodyCaughtPlayerStealing = False #Melody caught the player unlocking the potion cabinet.
 
+define Flag_RexSneakDay1 #Rex has snuck out on Night 1
+define Flag_AriaWantsBook #Aria is bored and wants something to read in the dorms.
+
 # Spells
 define Spell_Light = False
 define Spell_Unlocking = False
@@ -79,6 +82,9 @@ define Spell_Telekinesis = False
 
 # Potion Recipes
 define Flag_CalmingPotionRecipe = False
+
+# Artifice Recipe 
+define Flag_ArtificeLightMachineRecipe = False
 
 #Quest Flags
 define Quest_XanderProgress = False
@@ -1977,17 +1983,15 @@ label Morning1Greenhouse:
 
             label Afternoon1Forest_Attempt:
                 $ cinematic = True
-                Narrator ""
+                Narrator "You walk towards the forest. A long stretch of grass acting as the threshold between the Summit and all that surrounds it."
+                Narrator "The trees seem to sway in the wind. It's just enough that you feel time passing."
+                Narrator "You take a step into the grass..."
                 $ cinematic = False
-
-
-
-
-
-
-
-
-
+                Alice "No. Absolutely not. Come back here."
+                menu:
+                    "Okay...":
+                        jump Afternoon1DecisionMenu
+                        
 
 
 
@@ -2000,9 +2004,140 @@ label Morning1Greenhouse:
         scene artificing lab afternoon
         $ cinematic = True
         Narrator "You enter the {b}Artificing Lab{/b}."
+        Narrator "It smells like burnt metal. The windows are steamed up, obscuring your view outside."
+        Narrator "As you look around, you notice Rex, hunched over a workbench. It's like he's in the centre of a tornado, with dozens of tools discarded around him."
+        Narrator "Though, as you look closer you see that the tools are organized by segments -- hammers with hammers, chisels with chisels..."
+        Narrator "He turns to look at you as you step into the eye of it all."
         $ cinematic = False
+        Rex "Hmm. Done with planting?"
+        $ cinematic = True
+        Narrator "Before you can respond he points over at a table covered in various tools and materials."
+        $ cinematic = False
+        Rex "Pass me the graver set."
+        $ cinematic = True
+        Narrator "You have no idea what that is."
+        $ cinematic = False
+        menu:
+            "(Hand him the small, sharp tool with a balled end.)":
+                Rex "Thanks."
+                $ cinematic = True 
+                Narrator "He shaves a mote of glowing metal and places the tool down. Turning to give you his full attention."
+                $ Affection_Rex += 10
+                pass
+
+            "(Hand him the long file)":
+                Rex "That's a needle file."
+                $ cinematic = True
+                Narrator "He drops the tool in his hand and moves past you to grab another."
+                Narrator "As he passes, you notice tha the smells like solder."
+                Narrator "When he returns, he places his back against the workbench, giving you his full attention."
+                $ cinematic = False
+                pass
+
+            "(Hand him the small hammer with a small, flat end.)":
+                Rex "That's a jeweler's hammer."
+                $ cinematic = True
+                Narrator "He drops the tool in his hand and moves past you to grab another."
+                Narrator "As he passes, you notice tha the smells like solder."
+                Narrator "When he returns, he places his back against the workbench, giving you his full attention."
+                $ cinematic = False
+                pass
+        Rex "I needed a break anyway."
         $ Location = "Artificing Lab"
         jump Afternoon1ArtificingLab_Choices
+
+
+        label Afternoon1ArtificingLab_Choices:
+            Rex "What do you need?"
+            menu:
+                "(Ask Rex about Artifice)":
+                    call Afternoon1ArtificingLab_Artifice
+
+                "(Ask Rex what he's working on)":
+                    call Afternoon1ArtificingLab_WorkingOn
+
+                "Can I ask you some stuff?":
+                    call rexhub_main
+
+                "(Investigate the Artificing Lab)":
+                    call Afternoon1ArtificingLab_Explore
+
+                "(Leave the Artificing Lab)":
+                    jump Afternoon1DecisionMenu
+        
+        
+        
+        label Afternoon1ArtificingLab_Artifice:
+            Rex "Artifice... it's machines and crap."
+            Rex "Magic machines."
+            Rex "Automating crap, but also augmenting spells..."
+            Rex "...basically anything that alters magic with a machine is Artifice."
+            Rex "You aren't prepared at all, are you?"
+            menu:
+                "I'll be fine.":
+                    Rex "You'll be fine but you're asking me what Artifice is."
+                    Rex "At least own up to it, loser."
+                    $ Affection_Rex -= 5
+                    pass
+
+                "I'm {i}absolutely{/i} not prepared.":
+                    Rex "Ha. You're honest, at least."
+                    Rex "Only tip I can give is to use good materials and figure out the stuff you {i}can{/i} make soon, so you're prepped."
+                    Rex "Artificing is simple... so long as you know what tools to use and what you're making."
+                    Rex "My sister used to bake a lot... it's kinda like that."
+                    $ Affection_Rex += 5
+                    pass
+            Rex "Anyway... the exams isn't for a few days."
+            return
+
+
+        label Afternoon1ArtificingLab_WorkingOn:
+            Rex "This? It's just some practice."
+            Rex "It doesn't explode... if that's what you're worried about."
+            Rex "I wanted to make a something to water my plants every day..."
+            Rex "Means I can sleep in."
+            Rex "Maybe I can submit it for my Artificing Exam. That way I don't have to think about all this exam crap."
+            menu:
+                "Maybe...":
+                    Rex "You don't sound convinved... then again, ain't my job to convince you."
+                    return
+                "Is now the time to relax?":
+                    Rex "Never seems to be. Not like I'm trying to laze about but a guy needs rest."
+                    Rex "We've been on a strict schedule for years now, course I've figured out ways to make that easier."
+                    Rex "Outside of... you know, just rebelling."
+                    return
+
+
+        label Afternoon1ArtificingLab_Explore:
+            $ cinematic = True
+            Narrator "You take a look around the Artificing Lab."
+            Narrator "There are a few messy tables and workstations -- tools placed in methodical spots."
+            Narrator "In one of the corners, you notice a few scrolls, one of which is loose."
+            Narrator "As you move over to it, unrolling one, you see that it's a blueprint of some sort of artifice."
+            Narrator "{b}The Light Machine{/b}"
+            $ cinematic = False
+            menu:
+                "(Take it with you)":
+                    $ Flag_ArtificeLightMachineRecipe = True
+                    $ cinematic = True
+                    Narrator "You stash it in your bag."
+                    $ cinematic = False
+                    pass
+
+                "(Leave it)":
+                    pass
+            Narrator "You also notice a few tools, scattered about the workstations."
+            Narrator "They seem to be specialized for artificing tasks, with intricate designs and a well-used appearance."
+            Narrator "You might be able to use them if you need to work on any artifice projects."
+            if Flag_ArtificeLightMachineRecipe:
+                Narrator "You could work on the Light Machine... though you aren't sure if you should dedicate time to it this early on."
+                pass
+            else:
+                Narrator "You don't have a project to work on yet."
+                pass
+            Narrator "You move on."
+            return
+
 
 
 
@@ -2015,31 +2150,116 @@ label Morning1Greenhouse:
 
 
     label Night1DecisionMenu:
-        $ Day1Afternoon = False
-        $ Day1Night = True
+        $ cinematic = True
+        Narrator "You feel tired. Looking around you see the rest of the students sitting around the dorm. Some studying, others already in bed with their curtains drawn."
+        Narrator "What do want to do?"
+        $ cinematic = False
+        menu:
+            "(Talk to Tao)":
+                $ cinematic = True
+                Narrator "Tao's curtain's are drawn, but you hear pages turning behind it."
+                Narrator "You clear your throat."
+                $ cinematic = False
+                Tao "I'm busy. Shoo."
+                jump Night1DecisionMenu
+                
+            "(Talk to Aria)":
+                $ cinematic = True
+                Narrator "Aria sits on her bed, staring out the window. In the distance, you see the trees wave in the wind."
+                $ cinematic = False
+                Aria "Shame curfew is so early. Night time is when nature is most itself."
+                Aria "Did you need something?"
+                menu:
+                    "I don't think so."
+                    "Are you okay?":
+                        Aria "I'm okay. Not tired enough to sleep but not daring enough to sneak out like Rex."
+                        menu:
+                            "Rex snuck out?":
+                                Aria "Obviously. He's a night owl, these are the hours he's most active.."
+                                Aria "I haven't checked, but his curtain hasn't moved in a while and last night I heard him snoring..."
+                                Aria "It's only logical that he's out in the castle."
+                                Aria "I should've asked him to bring me a book from the library or something. I'm bored out of my mind."
+                                $ Flag_RexSneakDay1 = True
+                                $ Flag_AriaWantsBook = True
+                                menu:
+                                    "Want me to get you one?":
+                                        Aria "I wouldn't want you to get in trouble."
+                                        Aria "If you {i}do{/i} go out... please. Something fictional. Maybe uplifting."
+                                        jump Night1DecisionMenu
+                                    "Pick one up tomorrow, I guess.":
+                                        Aria "Learned my lesson..."
+                                        jump Night1DecisionMenu
+
+            "(Talk to Melody)":
+                $ cinematic = True
+                Narrator "Melody sits by her desk, writing in her diary."
+                $ cinematic = False
+                Melody "Hey... nice to see you stay up late too."
+                if Spell_Light == False:
+                    Melody "I'm usually in bed pretty early, but I spend a lot of time reading under the covers." 
+                    Melody "Not saying you have to be quiet if you're walking around, I sleep like the dead." 
+                    Melody "Honestly, learning that light spell back at the Scholomance made my life a million times easier. "
+                    menu:
+                        "Light spell?":
+                            Melody "Yeah… wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
+                            $ Spell_Light = True:
+                            Melody "Here it is."
+                            menu:
+                                "Thanks.":
+                                    Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
+                                    menu:
+                                        "A few things...":
+                                            call melodyhub_main
+                                            jump Night1DecisionMenu
+                                        "Nothing in particular.":
+                                            Melody "Well, we'll chat tomorrow, I guess."
+                                            jump Night1DecisionMenu
+
+                else:
+                    Melody "I'm a little unsettled tonight. Dunno why. Maybe I'm just worried about my plants."
+                    Melody "One more thing we don't have that much control over, you know?"
+                    menu:
+                        "I know.":
+                            Melody "Oh I'm sure."
+                            Melody "I don't think there's anything happening tomorrow..."
+                            Melody "Pretty sure the Artificing exam is the day after tomorrow, though... which is worrying."
+                            Melody "Not sure what I'm making for that... guess I'll find out."
+                            Melody "Either way, I'll let you get some sleep."
+                            jump Night1DecisionMenu
+                        "I might just head to bed.":
+                            Melody "Oh, sure thing. Good night!"
+                            jump Night1DecisionMenu
 
 
+            "(Talk to Rex)":
+                $ cinematic = True
+                Narrator "Rex's curtains are drawn. You hear nothing behind them."
+                $ cinematic = False
+                if Flag_RexSneakDay1:
+                    $ cinematic = True
+                    Narrator "You know he's not there."
+                    Narrator "You wonder where he snuck off to..."
+                    $ cinematic = False
+                    jump Night1DecisionsMenu
 
+                else:
 
+                    jump Night1DecisionMenu
 
+            "(Talk to Xander)":
 
+            "(Sneak Out)":
+                jump Night1SneakDecision 
 
-
-
-
-            
-
-
-
+            "(Go to sleep)":
+                $ cinematic = True
+                Narrator "You pull the covers over you, looking up at the ceiling as it lulls you to sleep."
+                Narrator "Moments after your eyes are closed, you fall alseep."
+                $ cinematic = False
+                $ Day1Night = False
+                jump Morning1Dorms
     
 
-    
-
-
-
-
-
-    return
 
 
 
@@ -2047,6 +2267,44 @@ label Morning1Greenhouse:
 
 
 
+    label Night1SneakDecision:
+        $ cinematic = True
+        Narrator "You enter the corridor, the dormitory door closing behind you."
+        Narrator "It's cold, and in the dark you can only make out distant shapes."
+        Narrator "You know you won't be able to explore without some form of light."
+        $ cinematic = False    
+        if Spell_Light:
+            $ cinematic = True
+            Narrator "You ignite a white orb of light in your hand, casting stark shadows along the walls."
+            Narrator "You're thrilled, you realise. Your heart's racing."
+            Narrator "You wonder where you should explore..."
+            $ cinematic = False
+            menu:
+                "(Go to the {b}Library{/b})":
+                    jump Night1Library
+                    # can collect Aria a book (Flag_AriaWantsBook)
+
+                "(Go to the {b}Alchemy Lab{/b})":
+                    jump Night1AlchemyLab
+                    # empty but gives the player the option to steal a potion if they didn't before.
+
+                "(Go to the {b}Atrium{/b})":
+                    jump Night1Atrium
+                    # can have a first encounter with NotAlice... if they haven't met her before.
+
+                "(Go to the {b}Artificing Lab{/b})":
+                    jump Night1ArtificingLab
+                    ### Rex working on projects after hours.
+                
+                "(Go to the {b}Courtyard{/b})":
+                    jump Night1Courtyard
+
+                "(Return to the {b}Dormitory{/b})":
+
+        else:
+            $ cinematic = True
+            ""
+            $ cinematic = False
 
 
 
@@ -2055,6 +2313,30 @@ label Morning1Greenhouse:
 
 
 
+        label Night1Library:
+
+        label Night1AlchemyLab:
+
+        label Night1Atrium:
+
+        label Night1ArtificingLab:
+
+        label
+
+
+
+
+
+
+
+
+
+
+
+
+label Morning1Dorms:
+    scene dormitory morning
+    $ Day2Morning = True
 
 
 
