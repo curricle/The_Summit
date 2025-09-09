@@ -2718,6 +2718,7 @@ label BTAO01:
     Narrator "You notice a familiar face glimpsing up at the moons. While you didn't speak to Tao in the Scholomance, you'd heard of them, in fact, their name was usually mentioned when exam results were posted -- Tao, like Melody, was always at the top."
     $ cinematic = False
     show moons image
+    show tao sprite
     Tao "Oh, you're here too."
 
     menu: 
@@ -2752,6 +2753,7 @@ label BTAO01:
             Tao "Apparently not... apologies."
             menu:
                 "(Exit Conversation)":
+                    hide tao sprite
                     return
                 "...":
                     pass
@@ -2762,6 +2764,7 @@ label BTAO01:
             Tao "Ugh. Really?"
             pass
         "(Exit Conversation)":
+            hide tao sprite
             return 
     $ cinematic = True
     Narrator "Tao rolls their eyes. You're not going to get much else from them."
@@ -2780,6 +2783,7 @@ label BTAO01:
             Narrator "You could be here all day. It's best you move."
             $ Flag_PlayerMoonInspect = True
             hide moons image
+            hide tao sprite
             menu:
                 "Move on.":
                     return
@@ -2929,6 +2933,7 @@ label BREX01:
     Narrator "You bump into "
     $ cinematic = False
 
+    show rex sprite
     Rex "What do you want?"
     menu: 
         "Who are you?":
@@ -2938,6 +2943,7 @@ label BREX01:
             Rex "Alright. Buzz off then."
             pass
     Rex "I'm Rex, by the way."
+    hide rex sprite
     $ Flag_RexMet = True
 
     return
