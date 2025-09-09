@@ -2811,7 +2811,8 @@ label BARI01:
     
     $ cinematic = False
 
-    show aria sprite at quarter_size with dissolve 
+    # Removed at quarter_size from below
+    show aria sprite with dissolve 
     Aria "Oh, it's you! Maybe you don't remember me from the Scholomance. I'm Aria."
     $ cinematic = True
     Narrator "She extends her hand for you to shake it."
