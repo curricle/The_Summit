@@ -72,9 +72,13 @@ define Flag_RexArtificing = False
 define Flag_DemoAliceJob = False
 define Flag_MelodyCaughtPlayerStealing = False #Melody caught the player unlocking the potion cabinet.
 
-define Flag_RexSneakDay1 #Rex has snuck out on Night 1
-define Flag_AriaWantsBook #Aria is bored and wants something to read in the dorms.
-define Flag_ArchivesDiscovered # player has discovered the archives.
+# Check the below for appropriate values ######################################################################
+#
+define Flag_RexSneakDay1 = False #Rex has snuck out on Night 1
+define Flag_AriaWantsBook = False #Aria is bored and wants something to read in the dorms.
+define Flag_ArchivesDiscovered = False # player has discovered the archives.
+#
+###############################################################################################################
 
 # Spells
 define Spell_Light = False
@@ -205,7 +209,10 @@ label start:
 
     $ cinematic = False
 
-    show alice sprite at half_size with dissolve
+    #removed at half size below
+    show alice sprite with dissolve:
+        xalign 0.5
+        yalign 0.3
     Alice "You took your time. I was getting close to sending out a search party."
     Alice "The ceremony hasn't begun yet. Your fellow classmates are in the atrium. Leave your luggage, I'll get someone to take them to your dorm."
     Alice "Go on in. I must lock the doors behind you. Find your classmates."
@@ -251,7 +258,10 @@ label start:
     Narrator "As you look at the moons once more, you see a woman pass below them, standing on the platform before the students. You recognise her instantly: Inquisitor Eileen."
     show eileen sprite
     Narrator "Rather than stand still, she turns, as if summoning the woman behind her. Inquisitor Alice, the woman who crafted the dolls. This isn't the first time you've seen her in person, but it still strikes you as odd."
-    show alice sprite
+    #add x and y positioning to adjust sprite alignment
+    show alice sprite:
+        xalign 0.5 
+        yalign 0.3
     Narrator "The woman lives through a half-dozen dolls, it's very odd to see her in person. You notice another doll beside the staircase leading to a great green window."
     $ cinematic = False
     Alice "Good evening, pupils. I know the journey here wasn't smooth, but you all seem to have made it from the Scholomance in one piece."
@@ -265,10 +275,10 @@ label start:
     Alice "Some of you have honed your Magecraft for over a decade for this moment. So I implore you to take the opportunity seriously."
     Alice "Failure will result in your dismissal back to the Scholomance for further training."
     $ cinematic = True
-    show rex angry sprite at left with moveinright
+    show rex sprite angry at left with moveinright
     Narrator "You hear a grunt. Turning, you notice a man scowl, his arms crossed tight as he stares up at Eileen."
     $ cinematic = False
-    hide rex angry sprite
+    hide rex sprite angry
     Alice "I'm sure you all know what is on the line."
     Alice "Your future as a Mage depends on your performance here. Beginning tomorrow, over the next seven days you will be going through various exams."
     Alice "Potions..."
@@ -2204,7 +2214,7 @@ label Morning1Greenhouse:
                     menu:
                         "Light spell?":
                             Melody "Yeah… wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
-                            $ Spell_Light = True:
+                            $ Spell_Light = True
                             Melody "Here it is."
                             menu:
                                 "Thanks.":
@@ -2248,7 +2258,10 @@ label Morning1Greenhouse:
 
                     jump Night1DecisionMenu
 
+# Check to see what the below should do; for now, just go back to the Night1DecisionsMenu ##################################################
             "(Talk to Xander)":
+                jump Night1DecisionMenu
+############################################################################################################################################
 
             "(Sneak Out)":
                 $ cinematic = True
@@ -2490,7 +2503,7 @@ label Morning1Greenhouse:
 
 
 
-label Morning1Dorms:
+label Morning2Dorms:
     scene dormitory morning
     $ Day2Morning = True
 
@@ -2707,6 +2720,7 @@ label BTAO01:
     Narrator "You notice a familiar face glimpsing up at the moons. While you didn't speak to Tao in the Scholomance, you'd heard of them, in fact, their name was usually mentioned when exam results were posted -- Tao, like Melody, was always at the top."
     $ cinematic = False
     show moons image
+    show tao sprite
     Tao "Oh, you're here too."
 
     menu: 
@@ -2741,6 +2755,7 @@ label BTAO01:
             Tao "Apparently not... apologies."
             menu:
                 "(Exit Conversation)":
+                    hide tao sprite
                     return
                 "...":
                     pass
@@ -2751,6 +2766,7 @@ label BTAO01:
             Tao "Ugh. Really?"
             pass
         "(Exit Conversation)":
+            hide tao sprite
             return 
     $ cinematic = True
     Narrator "Tao rolls their eyes. You're not going to get much else from them."
@@ -2769,6 +2785,7 @@ label BTAO01:
             Narrator "You could be here all day. It's best you move."
             $ Flag_PlayerMoonInspect = True
             hide moons image
+            hide tao sprite
             menu:
                 "Move on.":
                     return
@@ -2794,7 +2811,8 @@ label BARI01:
     
     $ cinematic = False
 
-    show aria sprite at quarter_size with dissolve 
+    # Removed at quarter_size from below
+    show aria sprite with dissolve 
     Aria "Oh, it's you! Maybe you don't remember me from the Scholomance. I'm Aria."
     $ cinematic = True
     Narrator "She extends her hand for you to shake it."
@@ -2828,7 +2846,7 @@ label BARI01:
             "Sure."
             pass
 
-    Aria "Hm, you're not like the other student's here. I'll leave you to it. Good luck on the exams. Let me know if you need help."
+    Aria "Hm, you're not like the other students here. I'll leave you to it. Good luck on the exams. Let me know if you need help."
     $ Flag_AriaMet = True
     hide aria sprite
 
@@ -2918,6 +2936,7 @@ label BREX01:
     Narrator "You bump into "
     $ cinematic = False
 
+    show rex sprite
     Rex "What do you want?"
     menu: 
         "Who are you?":
@@ -2927,6 +2946,7 @@ label BREX01:
             Rex "Alright. Buzz off then."
             pass
     Rex "I'm Rex, by the way."
+    hide rex sprite
     $ Flag_RexMet = True
 
     return
@@ -3334,7 +3354,7 @@ label melodyhub_main:
         Melody "Maybe they'll put you and me somewhere close so we can visit… Wait, where do you want to end up?"
         menu:
             "Somewhere in the city.":
-                "Oh, me too. Maybe they'll take both of us. With that many people around I'm sure we'd never get bored!"
+                Melody "Oh, me too. Maybe they'll take both of us. With that many people around I'm sure we'd never get bored!"
                 $ Flag_MelodySabotage = True
                 pass
             "Somewhere out in the country.":
@@ -3368,7 +3388,7 @@ label melodyhub_main:
     label HMEL11:
         #HMEL11
         Melody "Getting anxious about exams is completely normal. Try and not worry too much though." 
-        Melody "If it helps, most people around here are focussing so much on their studies that they aren't being competitive about it." 
+        Melody "If it helps, most people around here are focusing so much on their studies that they aren't being competitive about it." 
         Melody "We all just want to pass. People fail, but you're far more likely to pass if you're in a good mental state. We're all going to pass… well maybe not Xander..." 
         Melody "I'm kidding! Obviously, I hope he passes."
         menu: 
