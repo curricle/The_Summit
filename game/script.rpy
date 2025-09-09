@@ -72,13 +72,16 @@ define Flag_RexArtificing = False
 define Flag_DemoAliceJob = False
 define Flag_MelodyCaughtPlayerStealing = False #Melody caught the player unlocking the potion cabinet.
 
-# Check the below for appropriate values ######################################################################
-#
 define Flag_RexSneakDay1 = False #Rex has snuck out on Night 1
 define Flag_AriaWantsBook = False #Aria is bored and wants something to read in the dorms.
 define Flag_ArchivesDiscovered = False # player has discovered the archives.
-#
-###############################################################################################################
+
+define Flag_EntranceDoor1 = False #hints that the door has more to it and can be unlocked via some artifact.
+
+
+define AriaBookAcquired = False #the player grabbed a book for Aria on day1. 
+# Important Visited Flags
+define AtriumVisitedDay1 = False
 
 # Spells
 define Spell_Light = False
@@ -595,7 +598,7 @@ label Night0Corridor:
                                                 $ cinematic = False
                                                 NotAlice "What is it you desire..."
                                                 NotAlice "... from this place?"
-                                                menu: 
+                                                menu:
                                                     "I want to pass.":
                                                         $ Quest_NotAliceProgress = True
                                                         pass
@@ -624,6 +627,7 @@ label Night0Corridor:
                                                 Narrator "And why do you still feel its gaze?"
                                                 $ cinematic = False
                                                 $ Day0Night = False
+                                                $ AtriumVisitedDay1 = True
                                                 jump Morning1Dorms
 
                         
@@ -2176,31 +2180,58 @@ label Morning1Greenhouse:
                 jump Night1DecisionMenu
                 
             "(Talk to Aria)":
-                $ cinematic = True
-                Narrator "Aria sits on her bed, staring out the window. In the distance, you see the trees wave in the wind."
-                $ cinematic = False
-                Aria "Shame curfew is so early. Night time is when nature is most itself."
-                Aria "Did you need something?"
-                menu:
-                    "I don't think so."
-                    "Are you okay?":
-                        Aria "I'm okay. Not tired enough to sleep but not daring enough to sneak out like Rex."
-                        menu:
-                            "Rex snuck out?":
-                                Aria "Obviously. He's a night owl, these are the hours he's most active.."
-                                Aria "I haven't checked, but his curtain hasn't moved in a while and last night I heard him snoring..."
-                                Aria "It's only logical that he's out in the castle."
-                                Aria "I should've asked him to bring me a book from the library or something. I'm bored out of my mind."
-                                $ Flag_RexSneakDay1 = True
-                                $ Flag_AriaWantsBook = True
-                                menu:
-                                    "Want me to get you one?":
-                                        Aria "I wouldn't want you to get in trouble."
-                                        Aria "If you {i}do{/i} go out... please. Something fictional. Maybe uplifting."
-                                        jump Night1DecisionMenu
-                                    "Pick one up tomorrow, I guess.":
-                                        Aria "Learned my lesson..."
-                                        jump Night1DecisionMenu
+                if Flag_AriaWantsBook:
+                    $ cinematic = True
+                    Narrator "Aria sits on her bed, staring out the window. In the distance, you see the trees wave in the wind."
+                    $ cinematic = False
+                    Aria "Shame curfew is so early. Night time is when nature is most itself."
+                    Aria "Did you need something?"
+                    menu:
+                        "I don't think so."
+                        "Are you okay?":
+                            Aria "I'm okay. Not tired enough to sleep but not daring enough to sneak out like Rex."
+                            menu:
+                                "Rex snuck out?":
+                                    Aria "Obviously. He's a night owl, these are the hours he's most active.."
+                                    Aria "I haven't checked, but his curtain hasn't moved in a while and last night I heard him snoring..."
+                                    Aria "It's only logical that he's out in the castle."
+                                    Aria "I should've asked him to bring me a book from the library or something. I'm bored out of my mind."
+                                    $ Flag_RexSneakDay1 = True
+                                    $ Flag_AriaWantsBook = True
+                                    menu:
+                                        "Want me to get you one?":
+                                            Aria "I wouldn't want you to get in trouble."
+                                            Aria "If you {i}do{/i} go out... please. Something fictional. Maybe uplifting."
+                                            jump Night1DecisionMenu
+                                        "Pick one up tomorrow, I guess.":
+                                            Aria "Learned my lesson..."
+                                            jump Night1DecisionMenu
+                else:
+                    $ cinematic = True
+                    Narrator "Aria is still sat on her bed when you enter the room."
+                    $ cinematic = False
+                    Aria "Oh, hi. Did you want something?"
+                    menu:
+                        "I brought you a book." if AriaBookAcquired:
+                            Aria "Oh, that's so kind."
+                            $ Affection_Aria += 10
+                            $ cinematic = True 
+                            Narrator "She takes the book and opens it."
+                            Narrator "You can tell she's tired, but she turns to page 1."
+                            $ cinematic = False
+                            menu:
+                                "You're going to read it now?":
+                                    Aria "Just a chapter. I'm bored, you know?"
+                                    Aria "Did you mean to get me something this..."
+                                    Aria "Know what, nevermind. I need something this... trashy."
+                                    menu:
+                                        "I'll leave you to it.":
+                                            jump Night1DecisionMenu
+
+                        "No.":
+                            jump Night1DecisionMenu
+
+
 
             "(Talk to Melody)":
                 $ cinematic = True
@@ -2208,9 +2239,9 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 Melody "Hey... nice to see you stay up late too."
                 if Spell_Light == False:
-                    Melody "I'm usually in bed pretty early, but I spend a lot of time reading under the covers." 
-                    Melody "Not saying you have to be quiet if you're walking around, I sleep like the dead." 
-                    Melody "Honestly, learning that light spell back at the Scholomance made my life a million times easier. "
+                    Melody "I'm usually in bed pretty early, but I spend a lot of time reading under the covers."
+                    Melody "Not saying you have to be quiet if you're walking around, I sleep like the dead."
+                    Melody "Honestly, learning that light spell back at the Scholomance made my life a million times easier."
                     menu:
                         "Light spell?":
                             Melody "Yeah… wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
@@ -2255,17 +2286,37 @@ label Morning1Greenhouse:
                     jump Night1DecisionsMenu
 
                 else:
+                    menu:
+                        "(Leave)":
+                            jump Night1DecisionMenu
 
-                    jump Night1DecisionMenu
-
-# Check to see what the below should do; for now, just go back to the Night1DecisionsMenu ##################################################
             "(Talk to Xander)":
-                jump Night1DecisionMenu
-############################################################################################################################################
+                $ cinematic = True
+                Narrator "Xander is sitting on his bed, staring at the wall."
+                Narrator "He looks deep in thought."
+                $ cinematic = False
+                menu:
+                    "You alright?":
+                        Xander "I'm okay. I'm going to be up all night studying again..."
+                        Xander "Don't let me keep you up."
+                        menu:
+                            "I'll be alright.":
+                                Xander "Right..."
+                                Xander "Must be nice."
+                                pass
+
+                            "Do you need some help?":
+                                Xander "There's nothing to help with. Unless you can somehow fix my idiot brain so I can pass."
+                                pass
+                Xander "I won't keep you."
+                menu:
+                    "(Leave)":
+                        jump Night1DecisionMenu
+
 
             "(Sneak Out)":
                 $ cinematic = True
-                Narrator "You "
+                Narrator "You pull your curtains closed and exit the dormitory."
                 $ cinematic = False
                 jump Night1SneakDecision 
 
@@ -2286,6 +2337,7 @@ label Morning1Greenhouse:
 
 
     label Night1SneakDecision:
+        $ Location = "Corridor"
         $ cinematic = True
         Narrator "You enter the corridor, the dormitory door closing behind you."
         Narrator "It's cold, and in the dark you can only make out distant shapes."
@@ -2300,7 +2352,7 @@ label Morning1Greenhouse:
             menu:
                 "(Go to the {b}Library{/b})":
                     jump Night1Library
-                    # can collect Aria a book (Flag_AriaWantsBook)
+                    # can collect Aria a book (Flag_AriaWantsBook) (AriaBookAcquired)
 
                 "(Go to the {b}Alchemy Lab{/b})":
                     jump Night1AlchemyLab
@@ -2319,8 +2371,8 @@ label Morning1Greenhouse:
                     jump Night1ArtificingLab
                     ### Rex working on projects after hours.
                 
-                "(Go to the {b}Courtyard{/b})":
-                    jump Night1Courtyard
+                "(Go to the {b}Greenhouse{/b})":
+                    jump Night1Greenhouse
 
                 "(Return to the {b}Dormitory{/b})":
                     jump Night1DecisionMenu
@@ -2338,12 +2390,24 @@ label Morning1Greenhouse:
 
         label Night1Library:
             scene library night
+            $ Location = "Library"
             $ cinematic = True
             Narrator "The library door is warm as you open it. Roots and vines from the greenhouse seem to have slowly made their way inside overnight."
             Narrator "You wonder if someone's plant has gone haywire."
             Narrator "Brushing them aside, you push in."
             Narrator "Carrying the light in your hands, you scan the room."
             $ cinematic = False
+            if Flag_AriaWantsBook:
+                Narrator "You remember Aria mentioning she wanted a book."
+                Narrator "You look around, wondering if you can find something for her."
+                Narrator "After a few moments of looking, you come across a tattered paperback, clearly left by a former student, or perhaps a staff member."
+                Narrator "It's certainly nothing academic..."
+                Narrator "The blurb reads:"
+                "{i}Depressed after a bad breakup, a man falls in love with the ghost haunting his house...{/i}"
+                Narrator "You pick it up."
+                $ AriaBookAcquired = True
+            else: 
+                pass
             if Flag_ArchivesDiscovered:
                 $ cinematic = True
                 Narrator "The silence is almost welcoming. The eerie feeling you had when you last visited has evaporated into solace."
@@ -2474,23 +2538,265 @@ label Morning1Greenhouse:
                 $ cinematic = True
                 Narrator "The moonlight reminds you how late it's getting. You head back to the corridor."
                 $ cinematic = False
+                jump Night1SneakDecision
+
+
+
+
+        label Night1Atrium:
+            scene atrium night
+            $ Location = "Atrium"
+            $ cinematic = True
+            Narrator "The atrium is quiet on this night. Even the moons don't make a noise as they bob -- their light is dimmer than you remember."
+            Narrator "You see the grate, even in the darkness. It's a dull silver, with repeating spiral patterns etched into it."
+            Narrator "You hear steps in water... you know it waits for you."
+            $ cinematic = False
+            menu:
+                "(Go to the grate)":
+                    $ cinematic = True
+                    Narrator "You shuffle close to it -- confident partly, that whatever it is is trapped down there."
+                    Narrator "With bated breath, you lean over the edge."
+                    $ cinematic = False
+                    menu:
+                        "Hello?":
+                            "{i}{b}slosh, slosh, slosh...{/b}{/i}"
+                            NotAlice "Good evening..."
+                            $ cinematic = True 
+                            Narrator "You see the doll come into view, it's porcelain skin glistening as shafts of moonlight pierce the shadows."
+                            Narrator "Its eyes, dark and empty, seem to follow your every movement."
+                            $ cinematic = False
+                            if Quest_NotAliceProgress == True:
+                                NotAlice "You took your time. I was getting close to sending out a search party."
+                                NotAlice "Did... you... Find... Inquisitor Alice?"
+                                menu: 
+                                    "No.":
+                                        NotAlice "...past curfew... ancient place."
+                                        $ cinematic = True
+                                        Narrator "You can feel the dolls gaze on you. It feels like being watched by a viper."
+                                        $ cinematic = False
+                                        NotAlice "...past curfew... ancient place."
+                                        $ cinematic = True
+                                        Narrator "The doll lift it's hands, pointing a delicate finger past you and through the grate."
+                                        Narrator "It's direction lands at the door."
+                                        $ cinematic = False
+                                        menu:
+                                            "It's locked.":
+                                                $ cinematic = True
+                                                Narrator "The doll moves out of view. You hear footsteps moving away from you."
+                                                Narrator "The moons return to their usual brightness... you squint, unaccustomed to the light."
+                                                Narrator "You wait a while... but the doll doesn't return."
+                                                Narrator "Still... you can't help but wonder if there's a way out you aren't considering."
+                                                $ cinematic = False
+                                                menu:
+                                                    "Look around the Atrium again.":
+                                                        $ cinematic = True
+                                                        Narrator "You take a moment to survey the room. Moving cautiously through the dark towards the doorway."
+                                                        Narrator "It's locked, you quickly realise."
+                                                        Narrator "There is no way out, but you feel magic eminating from the lock itself."
+                                                        Narrator "You realise, very quickly, that the lock is, like the moons, tied to something greater than a single spell."
+                                                        Narrator "You're sure that there's some way of opening it."
+                                                        $ Flag_EntranceDoor1 = True
+                                                        $ cinematic = False
+                                                        menu:
+                                                            "(Leave)":
+                                                                jump Night1SneakDecision
+                                                    "(Leave)":
+                                                        jump Night1SneakDecision
+
+                                            "No.":
+                                                $ cinematic = True
+                                                Narrator "The doll moves out of view. You hear footsteps moving away from you."
+                                                Narrator "The moons return to their usual brightness... you squint, unaccustomed to the light."
+                                                Narrator "You wait a while... but the doll doesn't return."
+                                                $ cinematic = False
+                                                menu:
+                                                    "(Leave)":
+                                                        jump Night1SneakDecision
+
+                            else:
+                                NotAlice "What is it you desire..."
+                                NotAlice "... from this place?"
+                                menu:
+                                    "I want to pass.":
+                                        $ Quest_NotAliceProgress = True
+                                        pass
+
+                                    "I want to escape.":
+                                        $ Quest_NotAliceProgress = True
+                                        pass
+
+                                    "I want nothing.":
+                                        pass
+                                NotAlice "Find... Inquisitor Alice... past curfew... I implore you... ancient place..."
+                                $ cinematic = True
+                                Narrator "The hand points behind you. To the entry way you first arrived through. The Summit's entrance."
+                                $ cinematic = False
+                                NotAlice "I must lock the doors behind you."
+                                NotAlice "Find... Inquisitor Alice"
+                                $ cinematic = True
+                                Narrator "The doll dips down into the shadows once more -- arm retracting back as though an invisible puppetmaster yanked its string."
+                                Narrator "You hear the sound of the water return once more."
+                                Narrator "You stand, heart pounding in your chest."
+                                Narrator "It's late. You know it's time to go to sleep."
+                                Narrator "You return to the dormitory and get into the bed." 
+                                Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
+                                Narrator "But you can't help but wonder..." 
+                                Narrator "...what was that?"
+                                Narrator "And why do you still feel its gaze?"
+                                menu:
+                                    "(Leave)":
+                                        jump Night1SneakDecision
+
+
+                "(Leave)":
+                    jump Night1SneakDecision
+
+
+        
+        label Night1Atrium2: #another encounter with NotAlice
+            scene atrium night
+            $ cinematic = True
+            Narrator "The Atrium is still magnificent. You see moonlight flicker through the stain glass window..."
+            Narrator "But you also notice that the spell conjuring the two, twin moons, is in effect, casting faux-moonlight along the floor."
+            Narrator "It's quiet. Quieter than you remember."
+            Narrator "It takes you a moment to place the difference... the water, there's no longer the sound of running water."
+            Narrator "All you hear is your footsteps, and the distant wind as it caresses the entrance."
+            Narrator "Part of you wonders whether you could simply escape. Run off to a distant land."
+            Narrator "Whether you could run into the woods and never think of the Summit, or the Scholomance again."
+            Narrator "Or whether you'd simply die trying to descend."
+            Narrator "Then you hear something break the silence."
+            Narrator "A splash. The pitter-patter of feet against water. Sloshing like emerging from a bathtub."
+            $ cinematic = False
+            menu:
+                "(Hide)":
+                    $ cinematic = True
+                    Narrator "You follow the noise, hiding behind a pillar. You still your breath."
+                    $ cinematic = False
+                    pass
+                "(Stand your ground)":
+                    $ cinematic = True
+                    Narrator "You stay stood out in the open. You expect Eileen or Alice to emerge." 
+                    Narrator "To toss you back to the Scholomance like a discarded ragdoll."
+                    $ cinematic = False
+                    pass
+            $ cinematic = True
+            Narrator "Your heart races. You try and find the source of the noise. Looking over at the large, green, window -- expecting at any moment see Eileen."
+            "{i}{b}slosh, slosh, slosh.{/b}{/i}"
+            Narrator "The noise moves to the moons. More specifically, to the grate below them. You listen as something pushes the grate up, and with effort, tries to push through."
+            $ cinematic = False
+            menu: 
+                "(Investigate)":
+                    $ cinematic = True
+                    Narrator "You creep closer, noticing a white hand twist upward. Whatever is down there isn't small enough to squeeze through."
+                    Narrator "You move closer. Crouching below the moons, gingerly shuffling until you can see something below."
+                    Narrator "Staring up at you, is a silhouette. You can't make out features in the darkness, but you can hear it move in the shallow water."
+                    $ cinematic = False
+                    menu:
+                        "Hello?":
+                            $ cinematic = True
+                            Narrator "You call out into the darkness, your voice barely above a whisper."
+                            Narrator "The silhouette stirs. You feel it's eyes meet yours, you feel like prey."
+                            Narrator "After a moment, as the moonlight twists and turns as the moons rotate, a shaft pushes into the darkness."
+                            Narrator "Revealing another Doll. Alice. Trapped below the sewer grates."
+                            $ cinematic = False
+                            menu:
+                                "Alice?":
+                                    NotAlice "Good evening, pupils."
+                                    NotAlice "I'm Inquisitor Alice."
+                                    $ Flag_NotAliceMet = True
+                                    menu: 
+                                        "Are you alright?":
+                                            NotAlice "Great... Great."
+                                            NotAlice "The ceremony hasn't begun yet."
+                                            menu: 
+                                                "We had the ceremony earlier.":
+                                                    $ cinematic = True
+                                                    Narrator "The doll talks in an awkward cadence. It's almost detached as it looks up at you."
+                                                    Narrator "The doll reaches up once more."
+                                                    $ cinematic = False
+                                                    NotAlice "We had the ceremony earlier."
+                                                    NotAlice "What is it you desire..."
+                                                    $ cinematic = True
+                                                    Narrator "You become aware that the doll is asking something of you."
+                                                    Narrator "The intensity of its gaze only strengthens as its eyes fixate on you."
+                                                    $ cinematic = False
+                                                    NotAlice "What is it you desire..."
+                                                    NotAlice "... from this place?"
+                                                    menu:
+                                                        "I want to pass.":
+                                                            $ Quest_NotAliceProgress = True
+                                                            pass
+
+                                                        "I want to escape.":
+                                                            $ Quest_NotAliceProgress = True
+                                                            pass
+
+                                                        "I want nothing.":
+                                                            pass
+                                                    NotAlice "Find... Inquisitor Alice... past curfew... I implore you... ancient place..."
+                                                    $ cinematic = True
+                                                    Narrator "The hand points behind you. To the entry way you first arrived through. The Summit's entrance."
+                                                    $ cinematic = False
+                                                    NotAlice "I must lock the doors behind you."
+                                                    NotAlice "Find... Inquisitor Alice"
+                                                    $ cinematic = True
+                                                    Narrator "The doll dips down into the shadows once more -- arm retracting back as though an invisible puppetmaster yanked its string."
+                                                    Narrator "You hear the sound of the water return once more."
+                                                    Narrator "You stand, heart pounding in your chest."
+                                                    Narrator "It's late. You know it's time to go to sleep."
+                                                    Narrator "You return to the dormitory and get into the bed." 
+                                                    Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
+                                                    Narrator "But you can't help but wonder..." 
+                                                    Narrator "...what was that?"
+                                                    Narrator "And why do you still feel its gaze?"
+                                                    $ cinematic = False
+                                                    $ Day0Night = False
+                                                    $ AtriumVisitedDay1 = True
+                                                    jump Morning2Dorms
+                                
+                                "(Leave it there)":
+                                    $ cinematic = True
+                                    Narrator "Something in you stirs. You know this place isn't for you."
+                                    Narrator "You turn, walking away from the moons, from the grate, and from whatever calls itself Alice beneath it."
+                                    Narrator "You turn back for one last glimpse -- it's hand upreaching, glowing in the moonlight, as though it's holding the moons in place."
+                                    Narrator "You leave the Atrium."
+                                    $ cinematic = False
+                                    jump Night1SneakDecision
+
+                    "(Run)":
+                        $ cinematic = True
+                        Narrator "You turn and run, heart pounding in your chest."
+                        Narrator "When you make it to the Atrium entrance, you take a look back to see a hand twisting below the moons."
+                        Narrator "You run."
+                        Narrator "You leave the Atrium."
+                        $ cinematic = False
+                        jump Night1SneakDecision
+
+
+
+
 
 
         label Night1AlchemyLab:
+            scene alchemy lab night
+            $ cinematic = True
+            Narrator ""
+            $ cinematic = False
 
-
-
-
-
-            
-
-        label Night1Atrium:
-        
-        label Night1Atrium2:
 
         label Night1ArtificingLab:
+            scene artificing lab night
+            $ cinematic = True
+            Narrator ""
+            $ cinematic = False
 
-        label Courtyard:
+
+        label Night1Greenhouse:
+            scene greenhouse night
+            $ cinematic = True
+            Narrator ""
+            $ cinematic = False
+
 
 
 
