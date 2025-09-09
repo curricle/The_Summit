@@ -209,7 +209,8 @@ label start:
 
     $ cinematic = False
 
-    show alice sprite at half_size with dissolve
+    #removed at half size below
+    show alice sprite with dissolve
     Alice "You took your time. I was getting close to sending out a search party."
     Alice "The ceremony hasn't begun yet. Your fellow classmates are in the atrium. Leave your luggage, I'll get someone to take them to your dorm."
     Alice "Go on in. I must lock the doors behind you. Find your classmates."
@@ -255,7 +256,10 @@ label start:
     Narrator "As you look at the moons once more, you see a woman pass below them, standing on the platform before the students. You recognise her instantly: Inquisitor Eileen."
     show eileen sprite
     Narrator "Rather than stand still, she turns, as if summoning the woman behind her. Inquisitor Alice, the woman who crafted the dolls. This isn't the first time you've seen her in person, but it still strikes you as odd."
-    show alice sprite
+    #add x and y positioning to adjust sprite alignment
+    show alice sprite:
+        xalign 0.5 
+        yalign 0.3
     Narrator "The woman lives through a half-dozen dolls, it's very odd to see her in person. You notice another doll beside the staircase leading to a great green window."
     $ cinematic = False
     Alice "Good evening, pupils. I know the journey here wasn't smooth, but you all seem to have made it from the Scholomance in one piece."
