@@ -72,9 +72,13 @@ define Flag_RexArtificing = False
 define Flag_DemoAliceJob = False
 define Flag_MelodyCaughtPlayerStealing = False #Melody caught the player unlocking the potion cabinet.
 
-define Flag_RexSneakDay1 #Rex has snuck out on Night 1
-define Flag_AriaWantsBook #Aria is bored and wants something to read in the dorms.
-define Flag_ArchivesDiscovered # player has discovered the archives.
+# Check the below for appropriate values ######################################################################
+#
+define Flag_RexSneakDay1 = False #Rex has snuck out on Night 1
+define Flag_AriaWantsBook = False #Aria is bored and wants something to read in the dorms.
+define Flag_ArchivesDiscovered = False # player has discovered the archives.
+#
+###############################################################################################################
 
 # Spells
 define Spell_Light = False
@@ -2204,7 +2208,7 @@ label Morning1Greenhouse:
                     menu:
                         "Light spell?":
                             Melody "Yeah… wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
-                            $ Spell_Light = True:
+                            $ Spell_Light = True
                             Melody "Here it is."
                             menu:
                                 "Thanks.":
@@ -2248,7 +2252,10 @@ label Morning1Greenhouse:
 
                     jump Night1DecisionMenu
 
+# Check to see what the below should do; for now, just go back to the Night1DecisionsMenu ##################################################
             "(Talk to Xander)":
+                jump Night1DecisionMenu
+############################################################################################################################################
 
             "(Sneak Out)":
                 $ cinematic = True
@@ -2490,7 +2497,7 @@ label Morning1Greenhouse:
 
 
 
-label Morning1Dorms:
+label Morning2Dorms:
     scene dormitory morning
     $ Day2Morning = True
 
