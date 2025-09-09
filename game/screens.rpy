@@ -442,6 +442,8 @@ screen navigation():
 
             spacing gui.navigation_spacing
 
+            textbutton _("Journal") action ShowMenu("journal", "exams")
+
             textbutton _("History") action ShowMenu("history")
 
             if not main_menu:

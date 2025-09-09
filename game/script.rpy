@@ -2763,14 +2763,14 @@ label Morning1Greenhouse:
                                     $ cinematic = False
                                     jump Night1SneakDecision
 
-                    "(Run)":
-                        $ cinematic = True
-                        Narrator "You turn and run, heart pounding in your chest."
-                        Narrator "When you make it to the Atrium entrance, you take a look back to see a hand twisting below the moons."
-                        Narrator "You run."
-                        Narrator "You leave the Atrium."
-                        $ cinematic = False
-                        jump Night1SneakDecision
+                "(Run)":
+                    $ cinematic = True
+                    Narrator "You turn and run, heart pounding in your chest."
+                    Narrator "When you make it to the Atrium entrance, you take a look back to see a hand twisting below the moons."
+                    Narrator "You run."
+                    Narrator "You leave the Atrium."
+                    $ cinematic = False
+                    jump Night1SneakDecision
 
 
 
