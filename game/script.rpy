@@ -210,7 +210,9 @@ label start:
     $ cinematic = False
 
     #removed at half size below
-    show alice sprite with dissolve
+    show alice sprite with dissolve:
+        xalign 0.5
+        yalign 0.3
     Alice "You took your time. I was getting close to sending out a search party."
     Alice "The ceremony hasn't begun yet. Your fellow classmates are in the atrium. Leave your luggage, I'll get someone to take them to your dorm."
     Alice "Go on in. I must lock the doors behind you. Find your classmates."
