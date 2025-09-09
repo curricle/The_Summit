@@ -269,10 +269,10 @@ label start:
     Alice "Some of you have honed your Magecraft for over a decade for this moment. So I implore you to take the opportunity seriously."
     Alice "Failure will result in your dismissal back to the Scholomance for further training."
     $ cinematic = True
-    show rex angry sprite at left with moveinright
+    show rex sprite angry at left with moveinright
     Narrator "You hear a grunt. Turning, you notice a man scowl, his arms crossed tight as he stares up at Eileen."
     $ cinematic = False
-    hide rex angry sprite
+    hide rex sprite angry
     Alice "I'm sure you all know what is on the line."
     Alice "Your future as a Mage depends on your performance here. Beginning tomorrow, over the next seven days you will be going through various exams."
     Alice "Potions..."
@@ -2835,7 +2835,7 @@ label BARI01:
             "Sure."
             pass
 
-    Aria "Hm, you're not like the other student's here. I'll leave you to it. Good luck on the exams. Let me know if you need help."
+    Aria "Hm, you're not like the other students here. I'll leave you to it. Good luck on the exams. Let me know if you need help."
     $ Flag_AriaMet = True
     hide aria sprite
 
@@ -3341,7 +3341,7 @@ label melodyhub_main:
         Melody "Maybe they'll put you and me somewhere close so we can visit… Wait, where do you want to end up?"
         menu:
             "Somewhere in the city.":
-                "Oh, me too. Maybe they'll take both of us. With that many people around I'm sure we'd never get bored!"
+                Melody "Oh, me too. Maybe they'll take both of us. With that many people around I'm sure we'd never get bored!"
                 $ Flag_MelodySabotage = True
                 pass
             "Somewhere out in the country.":
@@ -3375,7 +3375,7 @@ label melodyhub_main:
     label HMEL11:
         #HMEL11
         Melody "Getting anxious about exams is completely normal. Try and not worry too much though." 
-        Melody "If it helps, most people around here are focussing so much on their studies that they aren't being competitive about it." 
+        Melody "If it helps, most people around here are focusing so much on their studies that they aren't being competitive about it." 
         Melody "We all just want to pass. People fail, but you're far more likely to pass if you're in a good mental state. We're all going to pass… well maybe not Xander..." 
         Melody "I'm kidding! Obviously, I hope he passes."
         menu: 
