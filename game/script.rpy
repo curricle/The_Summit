@@ -2933,7 +2933,7 @@ label BREX01:
     ###################################
 
     $ cinematic = True
-    Narrator "You bump into "
+    Narrator "You bump into a tall figure. He's broad-shouldered with tattered clothes. He doesn't seem to wear his uniform correctly. He looks down at you with disarming look in his eye."
     $ cinematic = False
 
     show rex sprite
