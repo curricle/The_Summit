@@ -83,6 +83,10 @@ define AriaBookAcquired = False #the player grabbed a book for Aria on day1.
 # Important Visited Flags
 define AtriumVisitedDay1 = False
 
+define Flag_LockBreakerNeeded = False #player is alerted that they need a lockbreaker to break the lock.
+define Flag_PotionNotStolen = False #player has decided not to steal something.
+define Flag_LockBreakerUsed = False #Player has used the lockbreaker, leading to them potentially being caught.
+
 # Spells
 define Spell_Light = False
 define Spell_Unlocking = False
@@ -2778,28 +2782,183 @@ label Morning1Greenhouse:
 
 
         label Night1AlchemyLab:
-            scene alchemy lab night
+            scene corridor night
             $ cinematic = True
-            Narrator ""
+            Narrator "The alchemy lab door is unlocked, much to your surprise. As you look over your shoulder you see a distant light moving through the corridors."
             $ cinematic = False
+            menu:
+                "(Enter the Alchemy Lab)":
+                    $ cinematic = True
+                    Narrator "You sneak into the alchemy lab, locking the door behind you."
+                    $ cinematic = False
+                    jump Night1AlchemyLab_Choices
+                
+                "(Sneak back to the dorms)":
+                    $ cinematic = True
+                    Narrator "You carefully make your way back to the dorms, avoiding the light of whoever else is awake."
+                    $ cinematic = False
+                    jump Night1DecisionMenu
+
+
+                "(Investigate)":
+                    $ cinematic = True
+                    Narrator "You extinguish your light, keeping a close eye on whoever else is roaming the halls."
+                    Narrator "After a moment, you notice that it's Eileen. She makes her way towards the {b}Atrium{/b}."
+                    $ cinematic = False
+                    menu:
+                        "(Follow her)":
+                            jump Night1FollowEileen
+
+                        "(Return to the dorms)":
+                            jump Night1DecisionMenu
+
+            
+##### IM GONNA BE SO REAL HERE I CANNOT THINK ABOUT THE LOGIC OF IT IT JUST DOESNT MAKE SENSE RN!!!####
+
+            label Night1AlchemyLab_Choices:
+                scene alchemylab night
+                $ Location = "Alchemy Lab"
+                $ cinematic = True
+                Narrator "The first thing to hit you is the smell of sterile chemicals. It's been cleaned, at least."
+                Narrator "In the dim light, you notice how the potions and chemicals glow "
+                $ cinematic = False
+                if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
+                    $ cinematic = True
+                    Narrator "You notice a glass cupboard, filled to the brim with potions."
+                    $ cinematic = False
+                    menu:
+                        "(Investigate)":
+                            call Night1AlchemyLab_Potions
+                            jump Night1SneakDecision
+
+                else:
+                    Narrator "You notice the missing potions."
+                    Narrator "You can't shake the feeling that something isn't right here."
+                    Narrator "You look at the remnants of a potion on the cauldron."
+                    Narrator "You're certain it belonged to Melody."
+                    Narrator "You move over and investigate it."
+                    Narrator "It doesn't smell great, in fact, it smells like something dead, reanimated, tossed away, and then reboiled."
+                    Narrator "You know there's nothing for you here."
+                    $ cinematic = False
+                    jump Night1SneakDecision
+
+        
+
+
+
+            label Night1AlchemyLab_Potions:
+                $ cinematic = True
+                Narrator "Inside a locked glass cupboard, you see rows and rows of potions. Each meticulously label still readable under a layer of dust."
+                Narrator "You wonder when any of them were last used."
+                $ cinematic = False
+                menu:
+                    "(Inspect the Potions)":
+                        $ cinematic = True
+                        Narrator "You ignore it."
+                        Narrator "You notice a few you recognise from your time in the Scholomance."
+                        Narrator "A potion of cleansing - soap, basically."
+                        Narrator "A potion of sleepless night... which you can only assume is caffeine."
+                        Narrator "A frog potion... whatever that is..."
+                        Narrator "A lot of their labels are quite... undescriptive."
+                        Narrator "You wonder why they're locked away, and if so, who has the key?"
+                        $ cinematic = False
+                        menu:
+                            "(Magic: Unlock the Potions)" if Spell_Unlocking:
+                                $ cinematic = True
+                                Narrator "You focus on the lock, feeling the magic within you stir."
+                                Narrator "With a few whispered words, the cabinet unlocks with a loud {b}{i}clunk{i}{b}. It's clearly not been touched in a while."
+                                Narrator "Melody looks over at you. A knowing look in her eye."
+                                $ Flag_MelodyCaughtPlayerStealing = True
+                                Narrator "You know you can only take one. Any more and it'd be noticeable."
+                                $ cinematic = False
+                                menu: 
+                                    "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
+                                        $ potion_stolen.append("Potion of Cleansing")
+                                        pass
+                                    "(Take the {b}Potion of Frog Polymorph{/b})" if not "Potion of Frog Polymorph" not in potion_stolen:
+                                        $ potion_stolen.append("Potion of Frog Polymorph")
+                                        pass
+                                    "(Take the {b}Potion of Sleepless Night{/b})" if not "Potion of Sleepless Night" not in potion_stolen:
+                                        $ potion_stolen.append("Potion of Sleepless Night")
+                                        pass
+                                $ cinematic = True
+                                Narrator "You slip the potion into your bag."
+                                Narrator "A part of you feels a thrill of excitement."
+                                $ cinematic = False
+                                menu:
+                                    "(Leave)":
+                                        return
+
+                            "(Test the Lock)":
+                                $ cinematic = True
+                                Narrator "You pull the handle -- it doesn't give."
+                                $ cinematic = False
+                                pass
+                            
+                            "(Smash the Lock)":
+                                $ cinematic = True
+                                Narrator "You kick the lock, but it doesn't budge."
+                                $ Flag_LockBreakerNeeded = True
+
+                                if Flag_HammerAcquired:
+                                    Narrator "You pull the hammer out from your bag and bring it down on the lock."
+                                    Narrator "With a loud {i}clunk{/i} it unbolts, the lock metal feeling loose."
+                                    $ Flag_AlchemyLabLockBroken = True
+                                    menu: 
+                                        "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
+                                            $ potion_stolen.append("Potion of Cleansing")
+                                            pass
+                                        "(Take the {b}Potion of Frog Polymorph{/b})" if not "Potion of Frog Polymorph" not in potion_stolen:
+                                            $ potion_stolen.append("Potion of Frog Polymorph")
+                                            pass
+                                        "(Take the {b}Potion of Sleepless Night{/b})" if not "Potion of Sleepless Night" not in potion_stolen:
+                                            $ potion_stolen.append("Potion of Sleepless Night")
+                                            pass
+                                    $ cinematic = True
+                                    Narrator "You slip the potion into your bag."
+                                    Narrator "A part of you feels a thrill of excitement."
+                                    $ cinematic = False
+                                    $ Flag_LockBreakerUsed = True
+                                    menu:
+                                        "(Leave)":
+                                            return 
+
+
+                                else:
+                                    $ cinematic = True
+                                    Narrator "You probably need some sort of tool..."
+                                    $ Flag_PotionNotStolen = True
+                                    $ cinematic = False
+                                    menu:
+                                    "(Leave)":
+                                        return 
+
+                            "(Leave it alone)":
+                                return
 
 
         label Night1ArtificingLab:
             scene artificing lab night
+            $ Location = "Artificing Lab"
             $ cinematic = True
             Narrator ""
             $ cinematic = False
+            ### Flag_LockBreakerNeeded alerts the player to needing to take the hammer from the lab to smash the lock in the alchemy lab.
 
 
         label Night1Greenhouse:
             scene greenhouse night
+            $ Location "Greenhouse"
             $ cinematic = True
             Narrator ""
             $ cinematic = False
 
-
-
-
+        label Night1FollowEileen:
+            scene atrium night
+            $ cinematic = True
+            Narrator "You follow Eileen into the atrium, your mind racing."
+            Narrator "The Atrium door is open, you see her light glowing within."
+            $ cinematic = False
 
 
 
@@ -2812,7 +2971,9 @@ label Morning1Greenhouse:
 label Morning2Dorms:
     scene dormitory morning
     $ Day2Morning = True
+    $ Location = "Dormitory"
 
+    #### Flag_LockBreakerUsed should be brought up here -- with Eileen investigating it. ####
 
 
 
@@ -3254,7 +3415,6 @@ label BREX01:
     Rex "I'm Rex, by the way."
     hide rex sprite
     $ Flag_RexMet = True
-
     return
 
 
