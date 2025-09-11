@@ -2330,6 +2330,7 @@ label Morning1Greenhouse:
                 Narrator "Moments after your eyes are closed, you fall asleep."
                 $ cinematic = False
                 $ Day1Night = False
+                $ Flag_EileenLibraryDay2 = False
                 jump Morning1Dorms
     
 
@@ -2355,7 +2356,13 @@ label Morning1Greenhouse:
             $ cinematic = False
             menu:
                 "(Go to the {b}Library{/b})":
-                    jump Night1Library
+                    if Flag_EileenLibraryDay2:
+                        Narrator "Eileen is in there."
+                        Narrator "It's better you don't get caught."
+                        pass
+
+                    else:
+                        jump Night1Library
                     # can collect Aria a book (Flag_AriaWantsBook) (AriaBookAcquired)
 
                 "(Go to the {b}Alchemy Lab{/b})":
@@ -2803,12 +2810,11 @@ label Morning1Greenhouse:
                 "(Investigate)":
                     $ cinematic = True
                     Narrator "You extinguish your light, keeping a close eye on whoever else is roaming the halls."
-                    Narrator "After a moment, you notice that it's Eileen. She makes her way towards the {b}Atrium{/b}."
+                    Narrator "After a moment, you notice that it's Eileen. She makes her way towards the {b}Library{/b}."
+                    $ Flag_EileenLibraryDay2 = True
+                    Narrator "You know that you shouldn't follow her."
                     $ cinematic = False
                     menu:
-                        "(Follow her)":
-                            jump Night1FollowEileen
-
                         "(Return to the dorms)":
                             jump Night1DecisionMenu
 
@@ -2953,12 +2959,6 @@ label Morning1Greenhouse:
             Narrator ""
             $ cinematic = False
 
-        label Night1FollowEileen:
-            scene atrium night
-            $ cinematic = True
-            Narrator "You follow Eileen into the atrium, your mind racing."
-            Narrator "The Atrium door is open, you see her light glowing within."
-            $ cinematic = False
 
 
 
