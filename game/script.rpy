@@ -115,7 +115,8 @@ define Flag_ArtificeParts = False
 
 
 ################################################################
-
+## Flower Quality ##
+define Quality_Flower = 50
 
 
 
@@ -3126,8 +3127,13 @@ label Morning1Greenhouse:
             $ Location = "Greenhouse"
             $ cinematic = True
             Narrator "You step into the greenhouse, the air thick with humidity and the scent of damp earth."
-            Narrator ""
+            Narrator "Feet on the cobble, you move through, smelling the scents of flowers as moonlight blends through a tinted skylight."
+            Narrator "In the night, the Great Mage Tree seems to take on a light of its own."
+            Narrator "The dark grooves of its bark pulling the moonlight in..."
+            Narrator "You look up at the corridor surrounding you. You know if someone is out there you'll be spotted easily."
+            Narrator "You extinguish your light... the moonlight is bright enough for you to see."
             $ cinematic = False
+            jump Night1Greenhouse_Choices
 
             label Night1Greenhouse_Choices:
                 $ cinematic = True
@@ -3135,24 +3141,162 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 menu:
                     "(Check on your Plants)":
-                        if planted_seeds = "Winged Jasmine":
-                            
+                        call GreenhousePlants_Night1:
+                        return
 
-                        if planted_seeds = "Snapjaw Orchid":
+                        label GreenhousePlants_Night1:
+                            if planted_seeds = "Winged Jasmine":
+                                $ cinematic = True
+                                Narrator "You inspect your Winged Jasmine... you're surprised at how much it has already grown."
+                                Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some magecraft."
+                                Narrator "The flower is blue and white, it's petals delicate..."
+                                Narrator "... somehow you're reminded of fractured ice."
+                                Narrator "It seems so delicate."
+                                $ cinematic = False
+                                menu:
+                                    "Water it.":
+                                        $ cinematic = True
+                                        Narrator "You carefully water the Winged Jasmine, ensuring not to drown it."
+                                        Narrator "It seems perk up a little..."
+                                        Narrator "Perhaps it was thirstier than you thought."
+                                        $ Quality_Flower += 10
+                                        $ cinematic = False
+                                        return 
+                                    "Poke it.":
+                                        $ cinematic = True
+                                        Narrator "You poke the flower."
+                                        Narrator "A petal falls off."
+                                        $ cinematic = False
+                                        $ Quality_Flower -= 5
+                                        return
+
+                                    "Leave it be.":
+                                        return
 
 
-                        if planted_seeds = "Moon Melon":
+                            if planted_seeds = "Snapjaw Orchid":
+                                $ cinematic = True
+                                Narrator "You inspect your Snapjaw Orchid... it looks a little sad."
+                                Narrator "Still, you're surprised at how much it's grown in such a short amount of time."
+                                Narrator "It's a little creepy, a green flower that seems to have developed plant-teeth and pink, fleshy gums."
+                                Narrator "It looks hungry."
+                                $ cinematic = False
+                                menu:
+                                    "Water it.":
+                                        $ cinematic = True
+                                        Narrator "You carefully water the Snapjaw Orchid, taking good care to only water the soil."
+                                        Narrator "It seems to perk up slightly... though as you move closer to inspect it, its jaw closes."
+                                        Narrator "Maybe it wants something else..."
+                                        $ cinematic = False
+                                        return
+                                    "Feed it an insect." if book_collected = "The Woodwitch Guide to Home Gardening":
+                                        $ cinematic = True
+                                        Narrator "Remembering what you learned from [book_collected], you look around, finding a few dead insects inside a container left by Alice."
+                                        Narrator "You remove a few, placing them on the Snapjaw Orchid's pink gums."
+                                        Narrator "It's mouth closes and the plant begins to glow..."
+                                        $ Quality_Flower += 10
+                                        $ cinematic = False
+                                        return
+
+                                    "Poke it.":
+                                        $ cinematic = True
+                                        Narrator "You poke the Snapjaw Orchid..."
+                                        Narrator "It's mouth hooks onto your finger, drawing blood."
+                                        Narrator "You pull your finger out... it doesn't seem satisfied."
+                                        $ cinematic = False
+                                        return
+                                    "Leave it be.":
+                                        return
+
+                                
 
 
-                        if planted_seeds = "Sanguine Lily":
+                            if planted_seeds = "Moon Melon":
+                                $ cinematic = True
+                                Narrator "You inspect your Moon Melon, a large, round plant that glows a deep blue."
+                                Narrator "You're surprised how much it's already grown."
+                                Narrator "There's something pleasing about it... a scent... the shape..."
+                                Narrator "You can't put your finger on it, but you enjoy looking at it."
+                                $ cinematic = False
+                                menu:
+                                    "Water it.":
+                                        $ cinematic = True
+                                        Narrator "You carefully water the Moon Melon..."
+                                        Narrator "It seems to squirm away from the liquid."
+                                        $ Quality_Flower -= 5
+                                        $ cinematic = False
+                                        return
+                                    "Poke it.":
+                                        $ cinematic = True
+                                        Narrator "You poke the Moon Melon... it seems to bob like a balloon."
+                                        Narrator "It clearly isn't doing much... yet you're enjoying yourself."
+                                        $ cinematic = False
+                                        return
 
-                        else:
-                            return
+                                    "Sprinkle salt along the soil." if book_collected = "The Illustrated Botanical":
+                                        $ cinematic = True
+                                        Narrator "You collect the salt left by Alice on the table..."
+                                        Narrator "... and sprinkle it along the soil."
+                                        Narrator "The Moon Melon seems to react, eminating a soothing fragrance."
+                                        $ Quality_Flower += 10
+                                        $ cinematic = False
+                                        return
+                                    
+                                    "Leave it be.":
+                                        $ Quality_Flower += 5
+                                        return
+
+
+                            if planted_seeds = "Sanguine Lily":
+                                $ cinematic = True
+                                Narrator "You inspect your Sanguine Lily... it has already grown tremendously since you planted it."
+                                Narrator "The flower itself is rather interesting... long, thin petals stretch out and curl like spindling fingers."
+                                Narrator "And between the strands, like spiderwebs, are little red threads."
+                                Narrator "You've never seen anything like it before."
+                                $ cinematic = False 
+                                menu:
+                                    "Water it.":
+                                        $ cinematic = True
+                                        Narrator "You carefully water the Sanguine Lily... it doesn't seem to care for it."
+                                        $ cinematic = False
+                                        return
+
+                                    "Poke it.":
+                                        $ cinematic = True
+                                        Narrator "You poke the Sanguine Lily."
+                                        Narrator "As expected, it latches onto your finger, drawing blood."
+                                        Narrator "You feel drained as its teeth latch into your skin."
+                                        Narrator "Instinctivly, you pull away."
+                                        $ Quality_Flower += 5
+                                        $ cinematic = False
+                                        return
+
+                                    "Prick your finger and feed it." if book_collected = "Carnivorous Plants of Viordia and their Many Applications":
+                                        $ cinematic = True
+                                        Narrator "You take a thin needle and prick your skin, letting a few dozen drops of blood drop down onto the plant."
+                                        Narrator "It lifts its head up, as though to catch them as a dog catches a thrown treat."
+                                        Narrator "It seems to enjoy it."
+                                        $ cinematic = False
+                                        $ Quality_Flower += 10
+                                        return
+
+                                    "Leave it be.":
+                                        $ Quality_Flower -= 5
+                                        return
+                                
+
+                            else:
+                                return
+
                         
                     "(Investigate the Great Mage Tree)":
                         $ cinematic = True
-                        Narrator ""
+                        Narrator "You look up at the Great Mage Tree..."
+                        Narrator "While you can {i}feel{/i} something else about it... it seems like a tree."
+                        Narrator "Trying to push out, magically, is like pushing into a fog."
+                        Narrator "There's nothing decipherable. It's like trying to see an individual raindrop in a torrent."
                         $ cinematic = False
+                        jump Night1Greenhouse_Choices
 
                     "(Leave the {b}Greenhouse{/b})":
                         jump Night1SneakDecision
