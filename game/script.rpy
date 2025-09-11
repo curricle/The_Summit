@@ -2959,8 +2959,8 @@ label Morning1Greenhouse:
                                     $ Flag_PotionNotStolen = True
                                     $ cinematic = False
                                     menu:
-                                    "(Leave)":
-                                        return 
+                                        "(Leave)":
+                                            return 
 
                             "(Leave it alone)":
                                 return
