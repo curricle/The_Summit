@@ -3090,25 +3090,29 @@ label Morning1Greenhouse:
                         
                             
 
-
                 label Night1ArtificingLab_SearchLock:
                     $ cinematic = True
-                    Narrator ""
+                    Narrator "You give the Artificing Lab a look over, rummaging through cupboards and stacks of metal."
+                    Narrator "After a moment, you notice a small hammer beside a half-built contraption you don't quite know how to make heads or tails of."
+                    Narrator "You collect the hammer."
+                    $ Flag_LockBreakerNeeded = False
+                    $ Flag_HammerAcquired = True
+                    Narrator "You take a moment to feel the weight of it in your hands."
+                    Narrator "You wonder what you can do with it."
                     $ cinematic = False
+                    menu:
+                        "...":
+                            return
+                    
 
                 label Night1ArtificingLab_Search:
                     $ cinematic = True
-                    Narrator ""
+                    Narrator "You give the Artificing Lab a look over, rummaging through cupboards and stacks of metal."
+                    Narrator "You don't find anything useful."
                     $ cinematic = False
-
-
-
-
-
-
-
-
-
+                    menu:
+                        "...":
+                            return
 
 
 
@@ -3121,8 +3125,37 @@ label Morning1Greenhouse:
             scene greenhouse night
             $ Location = "Greenhouse"
             $ cinematic = True
+            Narrator "You step into the greenhouse, the air thick with humidity and the scent of damp earth."
             Narrator ""
             $ cinematic = False
+
+            label Night1Greenhouse_Choices:
+                $ cinematic = True
+                Narrator "You wonder what you should do."
+                $ cinematic = False
+                menu:
+                    "(Check on your Plants)":
+                        if planted_seeds = "Winged Jasmine":
+                            
+
+                        if planted_seeds = "Snapjaw Orchid":
+
+
+                        if planted_seeds = "Moon Melon":
+
+
+                        if planted_seeds = "Sanguine Lily":
+
+                        else:
+                            return
+                        
+                    "(Investigate the Great Mage Tree)":
+                        $ cinematic = True
+                        Narrator ""
+                        $ cinematic = False
+
+                    "(Leave the {b}Greenhouse{/b})":
+                        jump Night1SneakDecision
 
 
 
