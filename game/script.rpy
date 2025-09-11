@@ -21,7 +21,7 @@ default Location = "Dormitory"
 
 default planted_seeds = []
 default seed_options = ["Winged Jasmine", "Snapjaw Orchid", "Moon Melon", "Sanguine Lily"]
-
+default book_collected = []
 
 #Seed Variables
 $ planted_seeds = []
@@ -40,14 +40,7 @@ $ Flag_WoodwitchGuide = "The Woodwitch Guide to Home Gardening" in book_collecte
 $ Flag_CarnivorousPlants = "Carnivorous Plants of Viordia and their Many Applications" in book_collected
 # Now you can reference book_collected[0] as 'book 1' and book_collected[1] as 'book 2' in dialogue
 
-# Potion Variables
-$ potion_stolen = []
-$ stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
-$ Flag_CleansingPotion = "Potion of Cleansing" in potion_stolen
-$ Flag_FrogPolymorphPotion = "Potion of Frog Polymorph" in potion_stolen
-$ Flag_SleeplessNightPotion = "Potion of Sleepless Night" in potion_stolen
-# Now you can reference potion_stolen[0] as 'potion 1' and potion_stolen[1] as 'potion 2' in dialogue
- 
+
 # Character Flags
 define Flag_TaoMet = False
 define Flag_MelodyMet = False
@@ -92,11 +85,41 @@ define Spell_Light = False
 define Spell_Unlocking = False
 define Spell_Telekinesis = False
 
-# Potion Recipes
-define Flag_CalmingPotionRecipe = False
 
-# Artifice Recipe 
-define Flag_ArtificeLightMachineRecipe = False
+
+############################# EXAM RECIPES ##################
+# Created Potion Recipes Variables
+$ potion_recipe = []
+$ potionrecipe_options = ["Potion of Calming", "Potion of Hydration", "Potion of Frog Polymorph"]
+$ Flag_CalmingPotion = "Potion of Calming" in potion_recipe
+$ Flag_HydrationPotion = "Potion of Hydration" in potion_recipe
+$ Flag_FrogPotion = "Potion of Frog Polymorph" in potion_recipe
+
+
+# Stolen Potion Variables
+$ potion_stolen = []
+$ stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
+$ Flag_CleansingPotion = "Potion of Cleansing" in potion_stolen
+$ Flag_FrogPolymorphPotion = "Potion of Frog Polymorph" in potion_stolen
+$ Flag_SleeplessNightPotion = "Potion of Sleepless Night" in potion_stolen
+# Now you can reference potion_stolen[0] as 'potion 1' and potion_stolen[1] as 'potion 2' in dialogue
+
+
+# Created Artifice Recipe Variables
+$ artifice_options = []
+$ artificecreated_options = ["Light Machine", "Delivery Bird"]
+$ Flag_ArtificeLightMachine = "Light Machine" in artifice_options
+$ Flag_ArtificeDeliveryBird = "Delivery Bird" in artifice_options
+## Recipe Parts that increase grade ##
+define Flag_ArtificeParts = False
+
+
+################################################################
+
+
+
+
+
 
 #Quest Flags
 define Quest_XanderProgress = False
@@ -2138,7 +2161,7 @@ label Morning1Greenhouse:
             $ cinematic = False
             menu:
                 "(Take it with you)":
-                    $ Flag_ArtificeLightMachineRecipe = True
+                    $ artifice_options.append("Light Machine")
                     $ cinematic = True
                     Narrator "You stash it in your bag."
                     $ cinematic = False
@@ -2149,7 +2172,7 @@ label Morning1Greenhouse:
             Narrator "You also notice a few tools, scattered about the workstations."
             Narrator "They seem to be specialized for artificing tasks, with intricate designs and a well-used appearance."
             Narrator "You might be able to use them if you need to work on any artifice projects."
-            if Flag_ArtificeLightMachineRecipe:
+            if "Light Machine" in artifice_options:
                 Narrator "You could work on the Light Machine... though you aren't sure if you should dedicate time to it this early on."
                 pass
             else:
@@ -2947,17 +2970,160 @@ label Morning1Greenhouse:
             scene artificing lab night
             $ Location = "Artificing Lab"
             $ cinematic = True
-            Narrator ""
+            Narrator "You sneak into the {b}Artificing Lab{/b}. Dusty workstations and half-finished projects litter the room."
+            Narrator "The smell of oil and metal fills the air..."
+            Narrator "There's a light in the corner as Rex tinkers with something at a workstation."
+            Narrator "He doesn't seem surprised to be interrupted. He looks over his shoulder at you, and returns to whatever he's doing."
             $ cinematic = False
+            jump Night1ArtificingLab_Choices
+
             ### Flag_LockBreakerNeeded alerts the player to needing to take the hammer from the lab to smash the lock in the alchemy lab.
+
+            label Night1ArtificingLab_Choices:
+                $ cinematic = True
+                Narrator "You wonder what you should do."
+                $ cinematic = False
+                menu:
+                    "(Talk to Rex)":
+                        $ cinematic = True
+                        Narrator ""
+                        $ cinematic = False
+                        Rex "Surprised I'm here?"
+                        Rex "I know you think I'm dumb, or lazy, or whatever. I can study, just to be clear. But I do it on my terms."
+                        menu:
+                            "And what terms would those be?":
+                                Rex "If it's something that's actually useful in the real world, for one. Like artificing."
+                                menu:
+                                    "A lot of what we learn is useful.":
+                                        Rex "They give you the sterilized version of everything because they only want you to do things their way."
+                                        menu:
+                                            "Who's 'they'?":
+                                                Rex "The Mage Council. Now beat it, I have actual work to do."
+                                                pass
+                                            
+                                    "I'm not judging.":
+                                        Rex "You'd be the first in this kind of place."
+                                        Rex "The teachers, the Council, they all teach us only what they want us to know. Take artificing." 
+                                        Rex "Lots of real world uses like combat and sabotage. We hardly do any of that stuff. And you know what pisses me off about that?" 
+                                        Rex "Artificing's pretty much the only thing I'm good at. It clicks. It's stupid {i}I{/i} have to do an exam for it."
+                                        $ Affinity_Rex += 10
+                                        pass
+
+                            "I'm not judging...":
+                                Rex "You'd be the first in this kind of place."
+                                Rex "The teachers, the Council, they all teach us only what they want us to know. Take artificing." 
+                                Rex "Lots of real world uses like combat and sabotage. We hardly do any of that stuff. And you know what pisses me off about that?" 
+                                Rex "Artificing's pretty much the only thing I'm good at. It clicks. It's stupid {i}I{/i} have to do an exam for it."
+                                $ Affinity_Rex += 10
+                                pass
+
+                        $ cinematic = True
+                        Narrator "Rex turns his back to you again, tinkering away at a machine that glows and flashes over and over."
+                        $ cinematic = False
+                        menu:
+                            "What are you making?":
+                                if Affinity_Rex <= 30:
+                                    Rex "Something to submit to the exam..."
+                                    Rex "A mechanical plant waterer... I'm using some conjuration runes mixed with a mechanical body."
+                                    Rex "A little artifice to water my plants."
+                                    menu:
+                                        "That sounds lazy.":
+                                            Rex "Sometimes people don't feel like getting outta bed."
+                                            Rex "I know I don't... wouldn't call it laziness but I'm not always up to face the world."
+                                            Rex "We can't all be Melody or Tao."
+                                            Rex "...psychos."
+                                            pass
+
+                                        "That sounds brilliant.":
+                                            Rex "You think so?"
+                                            Rex "Huh. First time someone's called me that."
+                                            $ Affinity_Rex += 5
+                                            pass
+
+                                        "That sounds useful.":
+                                            Rex "I'm hoping people think that."
+                                            Rex "You can't have the blueprint. I haven't made one."
+                                            menu: 
+                                                "Damn.":
+                                                    Rex "There's always an angle with Scholomance students.."
+                                                    menu:
+                                                        "Said like someone who {i}isn't{/i} one.":
+                                                            Rex "A man can dream."
+                                                            pass
+                                                "I wasn't wanting one.":
+                                                    Rex "Good."
+                                                    pass
+                        $ cinematic = True
+                        Narrator "Rex looks back down at his artifice. You can tell he doens't want to talk anymore."
+                        $ cinematic = False
+                        jump Night1ArtificingLab_Choices
+
+
+
+                    "(Search the Lab)":
+                        if Flag_LockBreakerNeeded == True:
+                            call Night1ArtificingLab_SearchLock
+                            return
+
+                        else:
+                            call Night1ArtificingLab_Search
+                            return
+                        
+                    "(Look for Machine Parts)" if artifice_options:
+                        call Night1ArtificingLab_MachinePart
+                        return
+
+                        label Night1ArtificingLab_MachinePart:
+                            $ cinematic = True
+                            Narrator "You search through the lab for any machine parts. Your [artifice_options] creation doesn't need much, but it doens't help to look."
+                            Narrator "You find a small hammer beside some refined, malleable metal."
+                            Narrator "You pick them both up and place them in your bag."
+                            Narrator "You also find a few scraps of wire and a small gear."
+                            Narrator "You add those to your bag as well."
+                            $ cinematic = False
+                            $ Flag_ArtificeParts = True
+                            $ Flag_HammerAcquired = True
+                            return
+
+                    "(Leave the {b}Artificing Lab{/b})":
+                        jump Night1SneakDecision
+                        
+                            
+
+
+                label Night1ArtificingLab_SearchLock:
+                    $ cinematic = True
+                    Narrator ""
+                    $ cinematic = False
+
+                label Night1ArtificingLab_Search:
+                    $ cinematic = True
+                    Narrator ""
+                    $ cinematic = False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         label Night1Greenhouse:
             scene greenhouse night
-            $ Location "Greenhouse"
+            $ Location = "Greenhouse"
             $ cinematic = True
             Narrator ""
             $ cinematic = False
+
 
 
 
