@@ -2936,8 +2936,8 @@ label Morning1Greenhouse:
                                     $ Flag_PotionNotStolen = True
                                     $ cinematic = False
                                     menu:
-                                    "(Leave)":
-                                        return 
+                                        "(Leave)":
+                                            return 
 
                             "(Leave it alone)":
                                 return
@@ -2954,7 +2954,7 @@ label Morning1Greenhouse:
 
         label Night1Greenhouse:
             scene greenhouse night
-            $ Location "Greenhouse"
+            $ Location = "Greenhouse"
             $ cinematic = True
             Narrator ""
             $ cinematic = False
