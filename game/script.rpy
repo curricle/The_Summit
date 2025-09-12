@@ -113,9 +113,9 @@ $ Flag_ArtificeDeliveryBird = "Delivery Bird" in artifice_options
 ## Recipe Parts that increase grade ##
 define Flag_ArtificeParts = False
 
-
 ################################################################
-## Flower Quality ##
+
+### Flower Quality ###
 define Quality_Flower = 50
 
 
@@ -3313,13 +3313,35 @@ label Morning2Dorms:
     $ Day2Morning = True
     $ Location = "Dormitory"
     $ cinematic = True
-    Narrator ""
-    if Flag_LockBreakerUsed:
-    #### Flag_LockBreakerUsed should be brought up here -- with Eileen investigating it. ####
-
-    else:
-
+    Narrator "You wake up to the artifice alarm. A squaking, mechanical bird. You had one in the Scholomance, too." 
+    Narrator "You don't remember placing it there, yet all the other beds you see seem to have one."
+    Narrator "You listen to the rain beat the windows, the {i}drip, drip, drip{/i} of the water calming you as you watch the ceiling rotate and unfurl."
+    Narrator "Before you can close your eyes again, you hear the door."
     $ cinematic = False
+    if Flag_LockBreakerUsed:
+        $ cinematic = True
+        Narrator "Eileen enters. Her long robe trailing behind her. In her hand, shards of glass, hovering delicately above the skin."
+        $ cinematic = False
+        Eileen "I'd say good morning but it certainly is {i}not{i} one. One of you troglodytes decided to break into the potion storage..."
+        Eileen "I hope you understand that while I'm a very tolerant woman... this sort of transgression will not be swept under the rug."
+        Eileen "I {i}will{/i} find out who did it, and they will be punished."
+        $ cinematic = True
+        Narrator "You can see the annoyance in her eyes, never quite boiling into anger."
+        Narrator "She takes a long look around the room."
+        $ cinematic = False
+        Eileen "Out of bed."
+        $ cinematic = True
+        Narrator "Eileen turns around, disappearing into the corridor."
+        $ cinematic = False
+        jump Morning2Dorms_Choices
+    
+    else:
+        $ cinematic = True
+        Narrator "You place your feet on the ground... you should start your day."
+        $ cinematic = False
+        jump Morning2Dorms_Choices
+
+
     label Morning2Dorms_Choices:
         menu:
             "(Talk to Tao)":
@@ -3340,9 +3362,10 @@ label Morning2Dorms:
 
             "(Talk to Xander)":
                 call BXAN099
+                return
 
             "(Leave the Dormitory)":
-                jump Morning2Choices:
+                jump Morning2Choices
             
 
     label BTAO06:
@@ -3433,13 +3456,79 @@ label Morning2Dorms:
         Aria "He left earlier... he looked pale."
         Aria "I don't think he's handling the stress very well..."
         Aria "Then again... he might just be like that in the mornings."
-        Aria "{i}yawn{/i}"
+        Aria "{i}yawn{/i}..."
         return
 
 
 
 
 label Morning2Choices:
+    $ Location = "Corridor"
+    $ Day2Morning = True
+    $ cinematic = True
+    Narrator "You stand in the corridor, pondering where to go."
+    $ cinematic = False
+    menu:
+        "(Go to the {b}Library{/b})":
+            jump Morning2Library
+
+        "(Return to the {b}Dormitory{/b})":
+            jump Morning2Dorms
+
+        "(Go to the {b}Alchemy Lab{/b})":
+            jump Morning2AlchemyLab
+
+        "(Go to the {b}Atrium{/b})":
+            jump Morning2Atrium
+
+        "(Go to the {b}Artificing Lab{/b})":
+            jump Morning2ArtificingLab
+
+        "(Go to the {b}Courtyard{/b})":
+            jump Morning2Courtyard
+
+        "({b}Explore{/b})":
+            $ result = renpy.random.randint(1, 6)
+            if result == 1:
+                $ cinematic = True
+                Narrator "Your exploration takes you to the {b}Library{/b}."
+                $ cinematic = False
+                jump Morning2Library
+            if result == 2:
+                $ cinematic = True
+                Narrator "After a long while in the Greenhouse, you find yourself back in your {b}bed{/b}."
+                Narrator "You needed that."
+                $ cinematic = False
+                jump Morning2Dorms
+            if result == 3:
+                $ cinematic = True
+                Narrator "Your stroll leads you to the {b}Alchemy Lab{/b}."
+                $ cinematic = False
+                jump Morning2AlchemyLab
+            if result == 4:
+                $ cinematic = True
+                Narrator "You find yourself in the {b}Atrium{/b}."
+                $ cinematic = False
+                jump Morning2Atrium
+            if result == 5:
+                $ cinematic = True
+                Narrator "Perhaps you're feeling the urge to tinker as you've ended up in the {b}Artificing Lab{/b}."
+                $ cinematic = False
+                jump Morning2ArtificingLab
+            if result == 6:
+                $ cinematic = True
+                Narrator "You breathe in the fresh air of the {b}Courtyard{/b}."
+                $ cinematic = False
+                jump Morning2Courtyard
+
+        "({b}Pass Time{/b})":
+            $ Day1Morning = False
+            $ cinematic = True
+            Narrator "You go back to your dorm and take a nap."
+            $ cinematic = False
+            $ Location = "Dormitory"
+            jump Afternoon2DecisionMenu
+        
 
 
 
