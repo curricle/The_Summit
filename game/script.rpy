@@ -70,7 +70,7 @@ define Flag_AriaWantsBook = False #Aria is bored and wants something to read in 
 define Flag_ArchivesDiscovered = False # player has discovered the archives.
 
 define Flag_EntranceDoor1 = False #hints that the door has more to it and can be unlocked via some artifact.
-
+define Flag_TaoDormitoryDay2 = False #The player talks to Tao morning 2
 
 define AriaBookAcquired = False #the player grabbed a book for Aria on day1. 
 # Important Visited Flags
@@ -3308,23 +3308,138 @@ label Morning1Greenhouse:
 
 
 
-
-
-
 label Morning2Dorms:
     scene dormitory morning
     $ Day2Morning = True
     $ Location = "Dormitory"
-
+    $ cinematic = True
+    Narrator ""
+    if Flag_LockBreakerUsed:
     #### Flag_LockBreakerUsed should be brought up here -- with Eileen investigating it. ####
 
+    else:
+
+    $ cinematic = False
+    label Morning2Dorms_Choices:
+        menu:
+            "(Talk to Tao)":
+                call BTAO06
+                return
+            
+            "(Talk to Aria)":
+                call BARI29
+                return
+
+            "(Talk to Rex)":
+                call BREX06
+                return
+
+            "(Talk to Melody)":
+                call BMEL012
+                return
+
+            "(Talk to Xander)":
+                call BXAN099
+
+            "(Leave the Dormitory)":
+                jump Morning2Choices:
+            
+
+    label BTAO06:
+        $ cinematic = True
+        Narrator "Tao lifts their gaze from a book to look at you. You can see the stress in their eyes... something's on their mind."
+        $ cinematic = False
+        Tao "What is it? I need to study, so unless you're on your way to the library we'll have to chat another time."
+        $ Flag_TaoDormitoryDay2 = True
+        $ cinematic = True
+        Narrator "Tao turns to read their book again."
+        $ cinematic = False
+        return
+
+    label BARI29:
+        $ cinematic = True
+        Narrator "Aria looks at you tiredly. You can tell that within a few moments they're going to get back in bed and go to sleep."
+        $ cinematic = False
+        Aria "I woke up today feeling really fuzzy in my head. Not like me at all. I think it must be anxiety over our exams..." 
+        Aria "Maybe I should eat a bit more. I've got to focus..."
+        menu:
+            "You should probably wake up.":
+                Aria "I should... but I'm just so sleepy..."
+                Aria "..."
+                menu:
+                    "Aria?":
+                        Aria "Huh, what?"
+                        menu:
+                            "Wake up.":
+                                Aria "Fine... fine..."
+                                return
+            "I'll leave you to it...":
+                return
+
+    label BREX06:
+        $ cinematic = True
+        Narrator "Rex is staring out the window beside his bed. You can't see much through the fog."
+        Narrator "It's a cozy morning, cold outside, toasty inside."
+        Narrator "Under different circumstances, it might be a good day."
+        $ cinematic = False
+        Rex "Did you know we can't leave school grounds after 9 pm? Eileen might as well be running a prison, which I'm sure she'd love to do."
+        menu:
+            "I've noticed." if Flag_EntranceDoor1 and Affinity_Rex >= 40:
+                Rex "It's not the most secure..."
+                menu:
+                    "You escaped?":
+                        Rex "There's a tunnel in the Greenhouse... if that damn tree moves it's big roots you can get into the sewer and exit into the forest."
+                        menu:
+                            "How do you know this?":
+                                Rex "I sent one of my artifice down there. C'mere..."
+                                Narrator "Rex looks over your shoulder, checking to see if Eileen has gone. When the coast is clear, he tugs at your shirt to pull you to the window."
+                                Narrator "It's steamed up a little -- cold morning air stark against the warmth of the dormitory."
+                                Narrator "As he wipes away the fog, you see a little metal sheep at the edge of the forest."
+                                Rex "How else did it get out there?"
+                                Rex "You aren't gonna tell anyone, are you?"
+                                menu:
+                                    "Course not.":
+                                        Rex "Good."
+                                        return
+
+    label BMEL012:
+        $ cinematic = True
+        Narrator "Melody looks as though she's about to start her day."
+        Narrator "When she sees you approach, she smiles and stops, books still under her arm."
+        $ cinematic = False
+        Melody "Morning… make sure you water your crops today..." 
+        Melody "They need to be in good shape for the exams and we can't all just have naturally perfect flowers with no effort like Aria."
+        menu:
+            "What do you mean?":
+                Melody "I didn't mean it badly. Aria's just very good with plants." 
+                Melody "Her affinity is nature and all that so she doesn't really need to put much work into the growing part."
+                Melody "Anyway, did you need something? I'm just about to start my day."
+                menu:
+                    "I had a few questions...":
+                        call melodyhub_main
+                        return
+                    "Just checking in.":
+                        return
+            "I'll water them...":
+                Melody "Great."
+                return
+
+
+    label BXAN099: 
+        $ cinematic = True
+        Narrator "You look around for Xander... he's nowhere to be seen."
+        Narrator "As you inspect his quarters, you hear Aria, half-asleep, speaking to you."
+        $ cinematic = False
+        Aria "He left earlier... he looked pale."
+        Aria "I don't think he's handling the stress very well..."
+        Aria "Then again... he might just be like that in the mornings."
+        Aria "{i}yawn{/i}"
+        return
 
 
 
 
-
-
-
+label Morning2Choices:
 
 
 
