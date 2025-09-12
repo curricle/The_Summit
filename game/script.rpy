@@ -3141,7 +3141,7 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 menu:
                     "(Check on your Plants)":
-                        call GreenhousePlants_Night1:
+                        call GreenhousePlants_Night1
                         return
 
                         label GreenhousePlants_Night1:
