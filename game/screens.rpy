@@ -147,7 +147,8 @@ screen say(who, what):
 
     if cinematic == True:
         window:
-            background "gui/cinemabox.png"
+            # background "gui/cinemabox.png"
+            background None
             xsize 1800
             ysize 90
             xalign 0.5
@@ -168,6 +169,7 @@ screen say(who, what):
                             color "#ffffff"
                             size 40
                             xoffset -20
+                            yoffset 3
                             outlines([(2, "#5e510acb", 0, 2)])
                         
 
@@ -204,7 +206,7 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background Image("gui/w_textbox.png", xalign=0.5, yalign=1.0)
 
 style namebox:
     xpos gui.name_xpos
@@ -328,53 +330,53 @@ screen quick_menu():
             style_prefix "quick"
 
             xalign 0.5
-            yalign 0.9975
+            yalign 0.985
             spacing 20
 
-            # textbutton _("Back") action Rollback()
-            # textbutton _("History") action ShowMenu('history')
-            # textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            # textbutton _("Auto") action Preference("auto-forward", "toggle")
-            # textbutton _("Save") action ShowMenu('save')
-            # textbutton _("Q.Save") action QuickSave()
-            # textbutton _("Q.Load") action QuickLoad()
-            # textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("Back") action Rollback()
+            textbutton _("History") action ShowMenu('history')
+            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Auto") action Preference("auto-forward", "toggle")
+            textbutton _("Save") action ShowMenu('save')
+            textbutton _("Q.Save") action QuickSave()
+            textbutton _("Q.Load") action QuickLoad()
+            textbutton _("Prefs") action ShowMenu('preferences')
 
 
-            button:
-                action QuickSave()
-                xysize (70,70)
-                background "gui/button/q_save.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action QuickSave()
+            #     xysize (70,70)
+            #     background "gui/button/q_save.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
 
-            button:
-                action Rollback()
-                xysize (70,70)
-                background "gui/button/q_back.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action Rollback()
+            #     xysize (70,70)
+            #     background "gui/button/q_back.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
                 
-            button:
-                action ShowMenu('about')
-                xysize (191,191)
-                background "gui/button/q_about.png"
-                at quickMenu_hover
+            # button:
+            #     action ShowMenu('about')
+            #     xysize (191,191)
+            #     background "gui/button/q_about.png"
+            #     at quickMenu_hover
 
-            button:
-                action Preference("auto-forward", "toggle")
-                xysize (70,70)
-                background "gui/button/q_auto.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action Preference("auto-forward", "toggle")
+            #     xysize (70,70)
+            #     background "gui/button/q_auto.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
 
 
-            button:
-                action Skip() alternate Skip(fast=True, confirm=True)
-                xysize (70,70)
-                background "gui/button/q_skip.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action Skip() alternate Skip(fast=True, confirm=True)
+            #     xysize (70,70)
+            #     background "gui/button/q_skip.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -561,7 +563,9 @@ screen main_menu():
     add SnowBlossom("gui/particles/light3.png", 50, xspeed=(20, 50), yspeed=(50, 300), start=50)
     add SnowBlossom("gui/particles/light4.png", 3, xspeed=(20, 50), yspeed=(100, 300), start=50)
 
+    ## Astrology GUI borders below
     add "gui/border.png"
+
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.
     use navigation
