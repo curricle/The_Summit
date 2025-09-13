@@ -67,7 +67,12 @@ define Flag_MelodyCaughtPlayerStealing = False #Melody caught the player unlocki
 
 define Flag_RexSneakDay1 = False #Rex has snuck out on Night 1
 define Flag_AriaWantsBook = False #Aria is bored and wants something to read in the dorms.
+
+
 define Flag_ArchivesDiscovered = False # player has discovered the archives.
+define Flag_ArchivesArtifice = False #player has discovered that the lock on the archives is artifice.
+define Flag_ArchivesUnlocked = False #player has unlocked the archives.
+define Flag_ArchivesArtifice_Xander = False #player has talked to Rex and found out that Xander might be able to break the Archive lock.
 
 define Flag_EntranceDoor1 = False #hints that the door has more to it and can be unlocked via some artifact.
 define Flag_TaoDormitoryDay2 = False #The player talks to Tao morning 2
@@ -1399,7 +1404,7 @@ label Morning1Greenhouse:
                             Narrator "You take the book and head to the checkout desk."
                             Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
                             $ cinematic = False
-                            jump Afternoon1Library_Choices
+                            return
 
                         "The Woodwitch Guide to Home Gardening." if "The Woodwitch Guide to Home Gardening" not in book_collected:
                             $ book_collected.append("The Woodwitch Guide to Home Gardening")
@@ -1408,7 +1413,7 @@ label Morning1Greenhouse:
                             Narrator "You take the book and head to the checkout desk."
                             Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
                             $ cinematic = False
-                            jump Afternoon1Library_Choices
+                            return
 
                         "Carnivorous Plants of Viordia and their Many Applications." if "Carnivorous Plants of Viordia and their Many Applications" not in book_collected:
                             $ book_collected.append("Carnivorous Plants of Viordia and their Many Applications")
@@ -1417,13 +1422,13 @@ label Morning1Greenhouse:
                             Narrator "You take the book and head to the checkout desk."
                             Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
                             $ cinematic = False
-                            jump Afternoon1Library_Choices
+                            return
                         
                         "(Look through the options once again)":
                             jump Afternoon1Library_BotanyBooks
 
                         "(Leave the Library)":
-                            jump Afternoon1DecisionMenu
+                            return
 
 
 
@@ -3424,6 +3429,10 @@ label Morning2Dorms:
                                     "Course not.":
                                         Rex "Good."
                                         return
+            "Can't say I've tried.":
+                Rex "Guess you're just fine with being here..."
+                Rex "I was gonna talk to you about something, but honestly, best not."
+                return
 
     label BMEL012:
         $ cinematic = True
@@ -3531,10 +3540,94 @@ label Morning2Choices:
         
 
 
+label Morning2Library:
+    $ cinematic = True
+    Narrator "You enter the {b}Library{/b}. The morning light filters through the tall windows, illuminating the dust motes dancing in the air."
+    Narrator "You hear pages turn, the tapping of a frustrated foot against millenia-aged wood."
+    Narrator "You aren't sure whether it was there before, but you notice the floor is warped, as though the roots of the Great Mage Tree push beneath it."
+    if Flag_ArchivesDiscovered:
+        $ cinematic = True
+        Narrator "You look over at the archives... wondering whether there is a way of entering you aren't aware of."
+        Narrator "In the daylight, this place takes on a new form -- one of maroon, stuffy academia. White, nearly transparent pages..."
+        Narrator "...holding millions of words written for {b}you{/b}."
+        $ cinematic = False
+        pass
+    else:
+        $ cinematic = True
+        Narrator "You look around, noticing a door you haven't seen before."
+        Narrator "It's gated, a great padlock stopping you."
+        Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+        Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
+        Narrator "You breathe it in..."
+        Narrator "Whatever is behind the door is old magic."
+        Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
+        Narrator "They feel intimate."
+        Narrator "More apart of you than your beating heart."
+        Narrator "You look up at the label above the door."
+        Narrator "{b}The Archives{/b}."
+        $ Flag_ArchivesDiscovered = True
+        $ cinematic = False
+        menu:
+            "(Try the door.)":
+                $ cinematic = True
+                Narrator "The chains are strong. The lock seems unbreakable."
+                Narrator "You need a key."
+                $ cinematic = False
+                pass
+            "(Leave it be.)": 
+                $ cinematic = True
+                Narrator "You kill the urge to move closer. You don't know where you find the determination."
+                Narrator "You know there is nothing for you here."
+                Narrator "Nothing yet..."
+                $ cinematic = False
+                pass
+        pass
+    $ cinematic = True
+    Narrator "You notice Tao, their head in a book."
+    $ cinematic = False
+    jump Morning2Library_Choices
 
 
+label Morning2Library_Choices:
+    $ cinematic = True
+    Narrator "You wonder what you should do..."
+    $ cinematic = False
+    menu:
+        "(Talk to Tao)":
+            call Morning2Library_Tao
+            return
 
+            label Morning2Library_Tao:
 
+            
+
+        "(Inspect the Archives Door)":
+            $ cinematic = True
+            Narrator "You inspect the archives door. Tugging on the gate -- it rattles, but holds firm."
+            Narrator "You kneel to inspect the lock itself, as it doesn't seem to even have a keyhole."
+            Narrator "As you touch it, you feel a spark as whatever enchantment is on the piece of artifice meets the latent magic on your skin."
+            Narrator "You now know that it's artifice... and that there's an enchantment on it."
+            Narrator "You wonder if there's some sort of spell you could use to break it."
+            $ Flag_ArchivesArtifice = True
+            $ cinematic = False
+            jump Morning2Library_Choices
+
+        "(Look for books on Botany)" if not book_collected:
+            $ cinematic = True
+            Narrator "You check for the books on botany, all of which seem somewhat tattered and dated."
+            Narrator "Not by misuse, or a lack of care, but by age."
+            Narrator "It seems as though every book in this library comes with it's own layer of dust."
+            Narrator "It doesn't help that parts of the wooden floor seem to have warped over years, leaving some bookshelves angular."
+            Narrator "Nevertheless, you poke around until -- trying not to disturb Tao, who seems very aware of your presence."
+            Narrator "You find a few books that seem relevant to your needs."
+            $ cinematic = False
+            call Afternoon1Library_BotanyBooks
+            return
+
+        "(Leave the Library)":
+            $ cinematic = True
+            Narrator "You leave the {b}library{/b}"
+            jump Morning2Choices
 
 
 
@@ -3650,7 +3743,7 @@ label BREX22: #Rex Dormitory Night 0
             $ Affinity_Rex+= 10
             menu: 
                 "(Continue) I was wondering...":
-                    call RexMainHub
+                    call rexhub_main
                 "(End Conversation) Bye for now.":
                     Rex "Alright... see ya."
                     return
@@ -6175,6 +6268,10 @@ label rexhub_main:
             call HREX18
             return
 
+        "(Archives) Have you seen the Archive Door Lock?" if Flag_ArchivesArtifice:
+            call HREX28
+            return
+
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
             if result == 1:
@@ -6576,7 +6673,18 @@ label rexhub_main:
                                                                         $ Quest_RexPlanStopped = True
                                                                         $ Quest_RexProgress = False
                                                                         jump rexhub_main
-
+        
+        label HREX28:
+            Rex "Oh that old piece of crap?"
+            Rex "Yeah, it's artifice alright... older than anything I've seen before though."
+            Rex "I don't know how to break something like that... weirdly enough though, Xander might."
+            Rex "His affinity is electricity... which is useful for breaking artifice. Does something to the magnetism of it."
+            menu:
+                "Really?":
+                    Rex "Yeah... really. You think I wanna give that twerp props for anything?"
+                    Rex "You want it broken, ask him."
+                    $ Flag_ArchivesArtifice_Xander
+                    return
 
 
 #######################
