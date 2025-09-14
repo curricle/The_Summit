@@ -547,8 +547,8 @@ label Night0Corridor:
                 call Night0Library
                 return
 
-            "To the {b}Courtyard{/b}.":
-                call Night0Courtyard
+            "To the {b}Greenhouse{/b}.":
+                call Night0Greenhouse
                 return
 
             "Back to the {b}Dormitory{/b}.":
@@ -742,9 +742,9 @@ label Night0Corridor:
 
 
 
-    label Night0Courtyard:
+    label Night0Greenhouse:
         $ cinematic = True
-        Narrator "As you walk around the corridors, you realise there is no way into the courtyard. In fact, you realise it's not quite a courtyard, but a greenhouse."
+        Narrator "As you walk around the corridors, you realise there is no way into the greenhouse."
         Narrator "The tree at its centre seems to have it's own energy. The more you look at it, the more you feel watched."
         Narrator "You're certain it's locked in there for the best."
         Narrator "You should go somewhere else."
@@ -3493,11 +3493,14 @@ label Morning2Choices:
         "(Go to the {b}Artificing Lab{/b})":
             jump Morning2ArtificingLab
 
+        "(Go to the {b}Greenhouse{/b})":
+            jump Morning2Greenhouse
+        
         "(Go to the {b}Courtyard{/b})":
             jump Morning2Courtyard
 
         "({b}Explore{/b})":
-            $ result = renpy.random.randint(1, 6)
+            $ result = renpy.random.randint(1, 7)
             if result == 1:
                 $ cinematic = True
                 Narrator "Your exploration takes you to the {b}Library{/b}."
@@ -3526,7 +3529,13 @@ label Morning2Choices:
                 jump Morning2ArtificingLab
             if result == 6:
                 $ cinematic = True
-                Narrator "You breathe in the fresh air of the {b}Courtyard{/b}."
+                Narrator "You breathe in the fresh air of the {b}Greenhouse{/b}."
+                $ cinematic = False
+                jump Morning2Greenhouse
+                
+            if result == 7:
+                $ cinematic = True
+                Narrator "You feel the wind cut to your bone as you stand in the {b}Courtyard{/b}, overlooking the forest."
                 $ cinematic = False
                 jump Morning2Courtyard
 
@@ -3584,6 +3593,8 @@ label Morning2Library:
         pass
     $ cinematic = True
     Narrator "You notice Tao, their head in a book."
+    Narrator "For once, the scoul they wear is dissolved into a look of tired resolve."
+    Narrator "Perhaps they're struggling with a topic."
     $ cinematic = False
     jump Morning2Library_Choices
 
@@ -3594,11 +3605,52 @@ label Morning2Library_Choices:
     $ cinematic = False
     menu:
         "(Talk to Tao)":
-            call Morning2Library_Tao
-            return
+            $ cinematic = True
+            Narrator "Tao's head is deep in a book as you approach, left hand taking notes in a tattered notebook."
+            Narrator "You wonder whether they need a new one."
+            Narrator "They barely look up at you as you approach."
+            $ cinematic = False
+            call Morning2LibraryTao_Choices
+            jump Morning2Library_Choices
 
-            label Morning2Library_Tao:
+            label Morning2LibraryTao_Choices:
+                Tao "What do you need?"
+                menu:
+                    "Just checking in.":
+                        Tao "I'm clearly studying. Aren't you?"
+                        menu:
+                            "Not particularly...":
+                                Tao "You and Xander seem to share a braincell then."
+                                return
 
+                            "Sure I am.":
+                                Tao "Oddly enough I've found silence and concentration to greatly assist in studying."
+                                Tao "You should try it."
+                                Tao "Right now, actually. Go on. {i}Shoo{/i}."
+                                menu:
+                                    "(Leave Tao be)":
+                                        return
+                                    "(Linger)":
+                                        Tao "..."
+                                        $ Affinity_Tao -= 5
+                                        return
+                    "Nothing.":
+                        Tao "Then why are you {i}here{/i}..."
+                        menu:
+                            "Just am.":
+                                Tao "Ok..."
+                                Tao "Can you leave?"
+                                return
+                            "You're a very mean person, you know that?":
+                                Tao "I don't owe you my time. In fact, you owe me time at this point, for wasting so much of it."
+                                Tao "I could've read a chapter ahead if you kept away from me."
+                                Tao "I understand that you must be worried about failing but clinging to me does nothing but annoy me."
+                                Tao "There's the empathy you clearly need."
+                                $ Affinity_Tao -= 10
+                                return
+
+                    
+                
             
 
         "(Inspect the Archives Door)":
@@ -3626,11 +3678,21 @@ label Morning2Library_Choices:
 
         "(Leave the Library)":
             $ cinematic = True
-            Narrator "You leave the {b}library{/b}"
+            Narrator "You leave the {b}library{/b}."
             jump Morning2Choices
 
 
+label Morning2Dorms:
 
+label Morning2AlchemyLab:
+
+label Morning2Atrium:
+
+label Morning2ArtificingLab:
+
+label Morning2Greenhouse:
+
+label Morning2Courtyard:
 
 
 
