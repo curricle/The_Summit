@@ -1904,7 +1904,7 @@ label splashscreen:
     with Pause(1)
 
     show splash with dissolve
-    with Pause(2)
+    with Pause(3)
     
     scene black with dissolve
     with Pause(1)

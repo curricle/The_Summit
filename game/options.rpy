@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("Astrology UI")
+define config.name = _("The Summit")
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -37,7 +37,7 @@ define gui.about = _p("""
 ## distribution. This must be ASCII-only, and must not contain spaces, colons,
 ## or semicolons.
 
-define build.name = "AstrologyUI"
+define build.name = "TheSummit"
 
 
 ## Sounds and music ############################################################
@@ -65,7 +65,7 @@ define config.has_voice = True
 # define config.main_menu_music = "main-menu-theme.ogg"
 
 ## Layers ######################################################################
-define config.layer_clipping['master'] = (0, 102, 1920, 876)
+# define config.layer_clipping['master'] = (0, 102, 1920, 876)
 define config.layers = [ 'master', 'UI', 'transient', 'screens', 'overlay', 'particles' ]
 
 ## Transitions #################################################################
