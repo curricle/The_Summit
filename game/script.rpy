@@ -3929,28 +3929,249 @@ label Morning2ArtificingLab:
 
 
 
-### both Melody & Aria are here. Aria is happy to talk to you and even offers to talk to you about parting the roots (Flag_GreenhouseTunnel) leading to (Flag_GreenhouseTunnelUnlocked)
-### melody is just tending to her plants but mentions that it looks like Xander's crops died -- Aria offers to fix them but Melody convinces her not to to save both of their grades.
 label Morning2Greenhouse:
     $ Location = "Greenhouse"
     $ cinematic = True
-    Narrator ""
-    $ cinematic = True
-    if Flag_Day2PlantsWatered:#player already watered crops
-
-    else:##if player needs to water crops
-    jump Morning2Greenhouse_Choices
+    Narrator "You enter the {b}Greenhouse{/b}."
+    $ cinematic = False
+    if Flag_Morning2GreenhouseVisited:
+        $ cinematic = True
+        Narrator "Aria and Melody still tend to their plants, barely looking at one another."
+        Narrator "They seem like strangers, but you get the feeling there's history there."
+        $ cinematic = False
+        jump Morning2Greenhouse_Choices
+    
+    else:
+        $ cinematic = True
+        Narrator "Immediately as you enter, you realise that both Melody and Aria are tending to their crops."
+        Narrator "Melody is beneath the tree, looking over at Aria who is looking over a few dead plants."
+        Narrator "Both of them look worried."
+        $ cinematic = False
+        Melody "Leave it, Aria. If you mess with them you'll get us {i}both{/i}..."
+        Melody "In fact, you'll get all three of us in trouble."
+        $ cinematic = True
+        Narrator "Melody looks over at you... quickly after so does Aria. She stands up, her arms crossed."
+        Narrator "You walk over to join them, which is where you get a better look at what Aria is doing."
+        Narrator "A few flowers lay dead, their petals blackened."
+        $ cinematic = False
+        Aria "Xander's flowers didn't make it."
+        Melody "Aria is thinking of fixing them. I told her that if Eileen finds out we're screwed."
+        Aria "But it would be so simple to fix!"
+        Melody "Aria, it doesn't matter how simple it would be. You'd get yourself, Xander, and probably me implicated."
+        Melody "{i}You'd{/i} probably get dragged in too, just for being here."
+        Aria "I don't understand how they died. He planted them yesterday."
+        Melody "It's Xander. He probably tried to feed it with weed killer."
+        Aria "He's not stupid. He grew up on a farm, you know?"
+        Melody "He grew up with like fifty brothers, they probably split the tasks between them."
+        Melody "Aria, please, for the sake of everyone in this room, do not reanimate them. I don't want all my hard work to go to waste."
+        Melody "Do you want us to go back to the Scholomance?"
+        Aria "I don't want Xander to go back there."
+        Melody "Xander will be fine! He'll get top marks in the combat exam, we all know that."
+        Melody "All we're guarenteeing by fixing this is that the rest of us fail and he's guarenteed to fail."
+        Aria "Eileen and Alice won't find out."
+        Melody "They wake up earlier than us. Chances are they already {i}know{/i} Xander's plants died."
+        $ cinematic = True
+        Narrator "You watch Aria pull her hand back. Stepping away from the flowers to turn and look up at the tree."
+        $ cinematic = False
+        Aria "We're horrible."
+        Aria "He's going to be devestated."
+        Melody "He will be okay."
+        Melody "You can't live your life caring this much about everyone else, Aria."
+        Melody "Are you even studying? All this time pouring over your flowers that we both know can't die with you around..."
+        Melody "You need to focus. Care less about others and more about doing well."
+        Melody "You don't want to go back to the Scholomance. None of us do."
+        Aria "..."
+        $ cinematic = True
+        Narrator "Aria looks up at the tree. Melody sighs and turns to you."
+        $ cinematic = False
+        Melody "Maybe you can talk some sense into her."
+        $ Flag_Morning2GreenhouseVisited = True
+        jump Morning2Greenhouse_Choices
+        
+### melody is just tending to her plants but mentions that it looks like Xander's crops died -- Aria offers to fix them but Melody convinces her not to to save both of their grades.
 
     label Morning2Greenhouse_Choices:
         menu:
             "(Tend to your plants)" if not Flag_Day2PlantsWatered:
+                call Morning1Greenhouse_Plants
+                $ Flag_Day2PlantsWatered = True
+                jump Morning2Greenhouse_Choices
+                
+                label Morning1Greenhouse_Plants:
+                    $ cinematic = True
+                    Narrator "You take a moment, kneeling over your plot."
+                    $ cinematic = False
+                    if planted_seeds = "Winged Jasmine":
+                        $ cinematic = True
+                        Narrator "You inspect your Winged Jasmine... you're surprised at how much it has already grown."
+                        Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some magecraft."
+                        Narrator "The flower is blue and white, it's petals delicate..."
+                        Narrator "...somehow you're reminded of fractured ice."
+                        Narrator "It seems so delicate."
+                        $ cinematic = False
+                        menu:
+                            "Water it.":
+                                $ cinematic = True
+                                Narrator "You carefully water the Winged Jasmine, ensuring not to drown it."
+                                Narrator "It seems perk up a little..."
+                                Narrator "Perhaps it was thirstier than you thought."
+                                $ Quality_Flower += 10
+                                $ cinematic = False
+                                return 
+                            "Poke it.":
+                                $ cinematic = True
+                                Narrator "You poke the flower."
+                                Narrator "A petal falls off."
+                                $ cinematic = False
+                                $ Quality_Flower -= 5
+                                return
 
-            "(Talk to Melody)"
-            ## mentions Xander's crops died. Aria interrupts and offers to fix them... Melody convinces her not to because it'll get all three of them disqualified.
+                            "Leave it be.":
+                                return
 
-            "(Talk to Aria)"
 
-            "(Leave the Greenhouse)"
+                    if planted_seeds = "Snapjaw Orchid":
+                        $ cinematic = True
+                        Narrator "You inspect your Snapjaw Orchid... it looks a little sad."
+                        Narrator "Still, you're surprised at how much it's grown in such a short amount of time."
+                        Narrator "It's a little creepy, a green flower that seems to have developed plant-teeth and pink, fleshy gums."
+                        Narrator "It looks hungry."
+                        $ cinematic = False
+                        menu:
+                            "Water it.":
+                                $ cinematic = True
+                                Narrator "You carefully water the Snapjaw Orchid, taking good care to only water the soil."
+                                Narrator "It seems to perk up slightly... though as you move closer to inspect it, its jaw closes."
+                                Narrator "Maybe it wants something else..."
+                                $ cinematic = False
+                                return
+                            "Feed it an insect." if book_collected == "The Woodwitch Guide to Home Gardening":
+                                $ cinematic = True
+                                Narrator "Remembering what you learned from [book_collected], you look around, finding a few dead insects inside a container left by Alice."
+                                Narrator "You remove a few, placing them on the Snapjaw Orchid's pink gums."
+                                Narrator "It's mouth closes and the plant begins to glow..."
+                                $ Quality_Flower += 10
+                                $ cinematic = False
+                                return
+
+                            "Poke it.":
+                                $ cinematic = True
+                                Narrator "You poke the Snapjaw Orchid..."
+                                Narrator "It's mouth hooks onto your finger, drawing blood."
+                                Narrator "You pull your finger out... it doesn't seem satisfied."
+                                $ cinematic = False
+                                return
+                            "Leave it be.":
+                                return
+
+
+                    if planted_seeds = "Moon Melon":
+                        $ cinematic = True
+                        Narrator "You inspect your Moon Melon, a large, round plant that glows a deep blue."
+                        Narrator "You're surprised how much it's already grown."
+                        Narrator "There's something pleasing about it... a scent... the shape..."
+                        Narrator "You can't put your finger on it, but you enjoy looking at it."
+                        $ cinematic = False
+                        menu:
+                            "Water it.":
+                                $ cinematic = True
+                                Narrator "You carefully water the Moon Melon..."
+                                Narrator "It seems to squirm away from the liquid."
+                                $ Quality_Flower -= 5
+                                $ cinematic = False
+                                return
+                            "Poke it.":
+                                $ cinematic = True
+                                Narrator "You poke the Moon Melon... it seems to bob like a balloon."
+                                Narrator "It clearly isn't doing much... yet you're enjoying yourself."
+                                $ cinematic = False
+                                return
+
+                            "Sprinkle salt along the soil." if book_collected == "The Illustrated Botanical":
+                                $ cinematic = True
+                                Narrator "You collect the salt left by Alice on the table..."
+                                Narrator "... and sprinkle it along the soil."
+                                Narrator "The Moon Melon seems to react, eminating a soothing fragrance."
+                                $ Quality_Flower += 10
+                                $ cinematic = False
+                                return
+                            
+                            "Leave it be.":
+                                $ Quality_Flower += 5
+                                return
+
+
+                    if planted_seeds = "Sanguine Lily":
+                        $ cinematic = True
+                        Narrator "You inspect your Sanguine Lily... it has already grown tremendously since you planted it."
+                        Narrator "The flower itself is rather interesting... long, thin petals stretch out and curl like spindling fingers."
+                        Narrator "And between the strands, like spiderwebs, are little red threads."
+                        Narrator "You've never seen anything like it before."
+                        $ cinematic = False 
+                        menu:
+                            "Water it.":
+                                $ cinematic = True
+                                Narrator "You carefully water the Sanguine Lily... it doesn't seem to care for it."
+                                $ cinematic = False
+                                return
+
+                            "Poke it.":
+                                $ cinematic = True
+                                Narrator "You poke the Sanguine Lily."
+                                Narrator "As expected, it latches onto your finger, drawing blood."
+                                Narrator "You feel drained as its teeth latch into your skin."
+                                Narrator "Instinctivly, you pull away."
+                                $ Quality_Flower += 5
+                                $ cinematic = False
+                                return
+
+                            "Prick your finger and feed it." if book_collected == "Carnivorous Plants of Viordia and their Many Applications":
+                                $ cinematic = True
+                                Narrator "You take a thin needle and prick your skin, letting a few dozen drops of blood drop down onto the plant."
+                                Narrator "It lifts its head up, as though to catch them as a dog catches a thrown treat."
+                                Narrator "It seems to enjoy it."
+                                $ cinematic = False
+                                $ Quality_Flower += 10
+                                return
+
+                            "Leave it be.":
+                                $ Quality_Flower -= 5
+                                return
+                        
+
+                    else:
+                        return
+
+            "(Talk to Melody)":
+                $ cinematic = True
+                Narrator ""
+                $ cinematic = False
+                Melody ""
+
+### both Melody & Aria are here. Aria is happy to talk to you and even offers to talk to you about parting the roots (Flag_GreenhouseTunnel) leading to (Flag_GreenhouseTunnelUnlocked)
+
+            "(Talk to Aria)":
+                $ cinematic = True
+                Narrator ""
+                $ cinematic = False
+                Aria ""
+                call Morning2Greenhouse_Aria
+                jump Morning2Greenhouse_Choices
+
+                label Morning2Greenhouse_Aria:
+                    menu:
+                        "(Parting the Roots of the Mage Tree)" if Flag_GreenhouseTunnel:
+
+                        "(Xander's Plants)":
+
+                        "(Leave)":
+                            return
+
+            "(Leave the Greenhouse)":
+                $ cinematic = True
+                Narrator ""
+                $ cinematic = True
+                jump Morning2Choices
 
 
 
