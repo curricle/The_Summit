@@ -1898,3 +1898,15 @@ screen character_hub_menu(options):
             vbox:
                 for opt in options:
                     textbutton opt["label"] action opt["action"]
+
+label splashscreen:
+    scene black
+    with Pause(1)
+
+    show splash with dissolve
+    with Pause(2)
+    
+    scene black with dissolve
+    with Pause(1)
+
+    return
