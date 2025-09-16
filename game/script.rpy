@@ -79,6 +79,8 @@ define Flag_TaoDormitoryDay2 = False #The player talks to Tao morning 2
 
 define AriaBookAcquired = False #the player grabbed a book for Aria on day1. 
 
+define Flag_XanderWatched = False #Xander told the player that something knocked on his window in the night.
+define Flag_TheWatcher = False #The player has seen something at the edge of the forest, stalking them.
 
 
 # Important Visited Flags
@@ -3784,6 +3786,7 @@ label Morning2Atrium:
                             $ cinematic = False
                             Xander "Yeah. I know, I look worse than I am... I've not had much sleep."
                             Xander "Someone knocked on my window last night and then I heard who I'm guessing was Rex leaving and coming back..."
+                            $ Flag_XanderWatched = True
                             Xander "I'm just a little on edge. I'll be fine."
                             menu:
                                 "I'm here if you need to chat.":
@@ -4144,32 +4147,106 @@ label Morning2Greenhouse:
 
             "(Talk to Melody)":
                 $ cinematic = True
-                Narrator ""
+                Narrator "You approach Melody, who is tending to a small plant."
                 $ cinematic = False
-                Melody ""
+                Melody "Glad you turned up... I sort of needed someone to help with Aria."
+                menu:
+                    "You seem stressed about Xander's plants.":
+                        Melody "I don't mean to be... well, mean."
+                        Melody "I just don't want to risk everything over Xander not checking on his crops."
+                        Melody "It's nothing personal, if anything, I'm just trying to stop Aria from getting implicated."
+                        Melody "You understand, right?"
+                        menu:
+                            "I guess.":
+                                Melody "Glad to hear it... I just don't think it's worth the risk."
+                                Melody "Xander will be fine. I'm certain of that. If he wasn't, I'd stick my neck out for him."
+                                Melody "But right now, he can recover. We're early enough on."
+                                Melody "We have days to the potion exam. He can plant something else, I'm sure."
+                                return
+                            "Not really.":
+                                Melody "Well, maybe when I'm {i}not{/i} around, you and Aria should restore them."
+                                Melody "I really want to pass. I don't want to risk this."
+                                $ cinematic = True
+                                Narrator "You see that she's pleading."
+                                Narrator "You should leave the topic alone."
+                                $ cinematic = False
+                                return
+                                
+
+
+                    "I have some questions...":
+                        call melodyhub_main
+                        return
+
+                    "(Leave)":
+                        jump Morning2Greenhouse_Choices
+
 
 ### both Melody & Aria are here. Aria is happy to talk to you and even offers to talk to you about parting the roots (Flag_GreenhouseTunnel) leading to (Flag_GreenhouseTunnelUnlocked)
 
             "(Talk to Aria)":
                 $ cinematic = True
-                Narrator ""
+                Narrator "Aria steps towards you as you approach. Her arms are twisted around her body like she's embracing herself."
                 $ cinematic = False
-                Aria ""
+                Aria "Hmm? Did you need to talk?"
                 call Morning2Greenhouse_Aria
                 jump Morning2Greenhouse_Choices
 
                 label Morning2Greenhouse_Aria:
                     menu:
-                        "(Parting the Roots of the Mage Tree)" if Flag_GreenhouseTunnel:
+                        "(Parting the Roots of the Mage Tree)" if Flag_GreenhouseTunnel and not Flag_GreenhouseTunnelUnlocked:
+                            call AriaOpensGreenhouseTunnel
+                            jump Morning2Greenhouse_Aria
+
+                            label AriaOpensGreenhouseTunnel:
+                                Aria "Is it in the way of something?"
+                                menu:
+                                    "A pipe leading out of the school.":
+                                        Aria "Oh..."
+                                        pass
+                                Aria "I mean I can talk to him... He doesn't talk back but he reacts."
+                                menu:
+                                    "Can't you make him move?":
+                                        Aria "Why would I? If someone shoved you aside you wouldn't like that."
+                                        Aria "I'll ask."
+                                        Aria "But I can't promise anything."
+                                        Aria "I'll ask him later."
+                                        $ Flag_GreenhouseTunnelUnlocked = True
+                                        return 
+                                    "Sure, please ask him.":
+                                        Aria "I will later."
+                                        $ Flag_GreenhouseTunnelUnlocked = True
+                                        return
 
                         "(Xander's Plants)":
+                            Aria "I found them like that."
+                            Aria "When Melody got here she asked me if {i}I{/i} did it."
+                            Aria "As if I'd ever do something like that."
+                            Aria "Xander's going to be heartbroken. I'll break the news to him when he gets here."
+                            menu:
+                                "Are you going to fix them?":
+                                    Aria "I want to."
+                                    Aria "But Melody's right. If I interfere with them I'm going to sabotague all of us."
+                                    Aria "Eileen's probably already seem it all. Either her or one of Alice's copies."
+                                    pass
+                            Aria "I hate it."
+                            $ cinematic = True
+                            Narrator "Aria looks back down at the flowers. You notice one begin to perk up, the soft dark frailness dissipating."
+                            Narrator "A moment later, you see her turn from it, and the flower returns to it's former state."
+                            $ cinematic = False
+                            jump Morning2Greenhouse_Aria
+                            
 
-                        "(Leave)":
+                        "(Nothing to say.)":
                             return
+            
+                        "(I have other questions)":
+                            call ariahub_main
+                            jump Morning2Greenhouse_Aria
 
             "(Leave the Greenhouse)":
                 $ cinematic = True
-                Narrator ""
+                Narrator "You leave the {b}Greenhouse{/b}."
                 $ cinematic = True
                 jump Morning2Choices
 
@@ -4177,14 +4254,70 @@ label Morning2Greenhouse:
 
 
 
-
-
 label Morning2Courtyard:
+    scene courtyard morning
+    $ cinematic = True
+    Narrator "You enter the {b}Courtyard{/b}."
+    Narrator "The morning dew hits you as you step through the grass."
+    Narrator "The cold wind sends a chill down your spine but you stand still, staring out from the top of the mountain, along the green landscape."
+    Narrator "Forests for as far as you can see. You wonder where your home is?"
+    Narrator "You were too young to know the place on the map..."
+    Narrator "You're sure you'll see it again, soon."
+    $ cinematic = False
+    $ Location = "Courtyard"
+    jump Morning2Courtyard_Choices
 
+    label Morning2Courtyard_Choices:
+        $ cinematic = True
+        Narrator "What do you want to do?"
+        $ cinematic = False
+        menu:
+            "(Investigate outside the dorms)" if Flag_XanderWatched:
+                $ cinematic = True
+                Narrator "You remember what Xander told you... it sticks with you."
+                $ cinematic = False
+                call Morning2Courtyard_Dorms
+                jump Morning2Courtyard_Choices
 
+                label Morning2Courtyard_Dorms:
+                    $ cinematic = True
+                    Narrator "You walk over to the dormitory windows. "
+                    Narrator "You notice some handprints on the window, as though something has been outside, looking in."
+                    Narrator "You look over your shoulder at the forest. There's a small parting, where something came through."
+                    Narrator "Squinting, you make out a set of eyes."
+                    Narrator "There's something in the forest." 
+                    Narrator "Watching you."
+                    $ cinematic = False
+                    Alice "Pupil, you shouldn't be this far out of the courtyard."
+                    $ cinematic = True
+                    Narrator "The doll looks at you, seemingly oblivious to your fear."
+                    $ cinematic = False
+                    Alice "Move back to the courtyard, please."
+                    $ cinematic = True
+                    Narrator "You do as she says, following her closely." 
+                    Narrator "As you get back to the Courtyard, you feel the eyes on you dissipate."
+                    $ cinematic = False
+                    $ Flag_TheWatcher = True
+                    return
 
+            "(Explore the Courtyard)":
+                $ cinematic = True
+                Narrator "You take a moment to explore the {b}Courtyard{/b}."
+                Narrator "You notice a few flowers blooming in the cracks of the stone path."
+                Narrator "Their colors are vibrant against the gray stones."
+                Narrator "You can't help but feel a sense of calm wash over you."
+                Narrator "As you look out over the mountain, you wonder how many mages have stood where you're stood."
+                Narrator "Eileen... Alice... the council."
+                Narrator "The older students who one day disappered from the Scholomance... {i}freed{/i}, you hoped."
+                Narrator "You wonder what they're doing now. Where over the horizon they ended up."
+                $ cinematic = False
+                jump Morning2Courtyard_Choices
 
-
+            "(Leave the {b}Courtyard{/b})":
+                $ cinematic = True
+                Narrator "You leave the {b}Courtyard{/b}."
+                $ cinematic = True
+                jump Morning2Choices
 
 
 
