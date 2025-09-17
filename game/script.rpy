@@ -4322,15 +4322,130 @@ label Morning2Courtyard:
 
 
 label Afternoon2Choices:
+    $ Day2Morning = False
+    $ Day2Afternoon = True
+    $ Location = "Dormitory"
+    $ cinematic = True
+    Narrator "You sit at the end of your bed. The afternoon sun streams through the window, casting a warm glow over the room."
+    Narrator "You must've fallen asleep..."
+    $ cinematic = False
+    jump Afternoon2Choices_Menu
 
+label Afternoon2Choices_Menu:
+    $ cinematic = True
+    Narrator "You wonder what you should do."
+    $ cinematic = False
+    menu:
+        "(Go to the {b}Library{/b})":
+            jump Afternoon2Library
+
+        "(Return to the {b}Dormitory{/b})":
+            jump Afternoon2Dorms
+
+        "(Go to the {b}Alchemy Lab{/b})":
+            jump Afternoon2AlchemyLab
+
+        "(Go to the {b}Atrium{/b})":
+            jump Afternoon2Atrium
+
+        "(Go to the {b}Artificing Lab{/b})":
+            jump Afternoon2ArtificingLab
+
+        "(Go to the {b}Greenhouse{/b})":
+            jump Afternoon2Greenhouse
+        
+        "(Go to the {b}Courtyard{/b})":
+            jump Afternoon2Courtyard
+
+        "({b}Explore{/b})":
+            $ result = renpy.random.randint(1, 7)
+            if result == 1:
+                $ cinematic = True
+                Narrator "Your exploration takes you to the {b}Library{/b}."
+                $ cinematic = False
+                jump Afternoon2Library
+            if result == 2:
+                $ cinematic = True
+                Narrator "You decide to stay in the dormitory..."
+                $ cinematic = False
+                jump Afternoon2Dorms
+            if result == 3:
+                $ cinematic = True
+                Narrator "Your stroll leads you to the {b}Alchemy Lab{/b}."
+                $ cinematic = False
+                jump Afternoon2AlchemyLab
+            if result == 4:
+                $ cinematic = True
+                Narrator "You find yourself in the {b}Atrium{/b}."
+                $ cinematic = False
+                jump Afternoon2Atrium
+            if result == 5:
+                $ cinematic = True
+                Narrator "Perhaps you're feeling the urge to tinker as you've ended up in the {b}Artificing Lab{/b}."
+                $ cinematic = False
+                jump Afternoon2ArtificingLab
+            if result == 6:
+                $ cinematic = True
+                Narrator "You breathe in the fresh air of the {b}Greenhouse{/b}."
+                $ cinematic = False
+                jump Afternoon2Greenhouse
+            if result == 7:
+                $ cinematic = True
+                Narrator "You feel the wind cut to your bone as you stand in the {b}Courtyard{/b}, overlooking the forest."
+                $ cinematic = False
+                jump Afternoon2Courtyard
+
+        "({b}Pass Time{/b})":
+            $ Day1Morning = False
+            $ cinematic = True
+            Narrator "You go back to your dorm and take a nap."
+            $ cinematic = False
+            $ Location = "Dormitory"
+            jump Night2DecisionMenu
+
+
+
+
+
+
+label Afternoon2Library:
+    return
+
+label Afternoon2Dorms:
+    return
+
+label Afternoon2AlchemyLab:
+    return
 
 label Afternoon2Atrium:
+    scene atrium afternoon
+    $ Day2Afternoon = True
+    $ Location = "Atrium"
+    $ cinematic = True
+    Narrator "You enter the Atrium. You can hear the sound of the moons as they rotate."
+    Narrator "Magical masses made from heavy stone, twisting and turning around one another."
+    Narrator "As you step towards the centre, you see Xander, his head deep in his hands."
+    Narrator "Whatever book he was reading is discarded. Turned upside down, pages frayed along the marble."
+    Narrator "The door closes behind you."
+    $ cinematic = False
 # Xander is freaking out because his plant died already - asks the player to help him break into the archives
 
-label Afternoon2Greenhouse:
 
+
+label Afternoon2ArtificingLab:
+    return
+
+label Afternoon2Greenhouse:
+    return
+
+label Afternoon2Courtyard:
+    return
+
+label Night2Choices:
 
 label Night2Atrium:
+    return
+
 
 
 
