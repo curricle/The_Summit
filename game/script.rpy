@@ -88,6 +88,9 @@ define AtriumVisitedDay1 = False
 define Flag_Day2PlantsWatered = False #did the player tend to their plants on day2?
 
 
+# Teachers Lounge Discovery
+define Flag_TeachersLoungeQuestioned = False # the player has questioned where Eileen and Alice stay.
+
 
 
 
@@ -4407,38 +4410,188 @@ label Afternoon2Choices_Menu:
 
 
 
-
-label Afternoon2Library:
+label Afternoon2Library: #empty
     return
 
-label Afternoon2Dorms:
+label Afternoon2Dorms:#Melody is in the dorms, she feels a bit under the weather so she's taking a break (she's sabotaging alarms)
     return
 
-label Afternoon2AlchemyLab:
+label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- it's going badly. They are stressed.
     return
+
+
 
 label Afternoon2Atrium:
     scene atrium afternoon
     $ Day2Afternoon = True
     $ Location = "Atrium"
     $ cinematic = True
-    Narrator "You enter the Atrium. You can hear the sound of the moons as they rotate."
-    Narrator "Magical masses made from heavy stone, twisting and turning around one another."
-    Narrator "As you step towards the centre, you see Xander, his head deep in his hands."
-    Narrator "Whatever book he was reading is discarded. Turned upside down, pages frayed along the marble."
-    Narrator "The door closes behind you."
+    Narrator "You enter the Atrium. You can hear the sound of the moons as they rotate..."
+    Narrator "...Magical masses made from heavy stone, twisting and turning around one another."
+    if not Quest_XanderProgress:
+        Narrator "As you step towards the centre, you see Xander, his head deep in his hands."
+        Narrator "Whatever book he was reading is discarded. Turned upside down, pages frayed along the marble."
+        pass
+    else:
+        Narrator "Xander stares up at the moons... you can see the stress on his face."
+        Narrator "As you look at him, he smiles."
     $ cinematic = False
-# Xander is freaking out because his plant died already - asks the player to help him break into the archives
+    menu:
+        "(Talk to Xander)":
+            if not Quest_XanderProgress:
+                call XanderQuestStartDialogue
+                return
+
+            else:
+                call Afternoon2Atrium_Xander
+                return
+
+        "(Explore the Atrium)":
+            $ cinematic = True
+            Narrator "You look around the atrium..."
+            Narrator "Nothing seems out of place."
+            if Flag_NotAliceMet:
+                Narrator "You check the sewer grate and see nothing."
+                pass
+            else:
+                Narrator "You look up at the moons, feeling a sense of calm."
+                pass
+            Narrator "You wonder whether you should be studying."
+            Narrator "You haven't seen Alice or Eileen in a while."
+            Narrator "You wonder where they're staying..."
+            $ Flag_TeachersLoungeQuestioned
+
+        "(Leave the Atrium)":
+            jump Afternoon2Choices_Menu
+
+    label XanderQuestStartDialogue:
+        $ cinematic = true
+        Narrator "You walk over. Xander doesn't even look up at you."
+        Narrator "He's muttering something to himself as holds his head in his hands."
+        Narrator "He's shaking, you notice little magical bolts of electricity spewing from his nails, fizzling into the air around him."
+        $ cinematic = False
+        Xander "...fire... water... air... or... water... then stone... then... fire-water-air... or... water? then stone...then..."
+        menu:
+            "Xander, are you okay?":
+                Xander "Uhhh... my head's pounding. I feel like I'm gonna puke. Or I'm gonna run. Or puke."
+                Xander "I can't think straight. I can't focus. I can't... I can't..."
+                $ cinematic = True
+                Narrator "He takes a breath. Still shaking."
+                $ cinematic = False
+                Xander "My crops died. All of them. I must've messed up."
+                Xander "I'm such an idiot. I'm screwed. I've never been good at exams. I don't even know what we're trying to do half the time. No matter how much I study, I don't even get the basics right!"
+                Xander "It's growing a plant, something I've done a hundred times and I {i}still{/i} fucked it up!"
+                menu:
+                    "You're being too hard on yourself.":
+                        Xander "I'll be stuck at the Scholomance forever..."
+                        Xander "I'll probably die there!"
+                        pass
+                    "You need to calm down...":
+                        Xander "Easy for you to say! You didn't fuck everything up!"
+                        pass
+                Xander "Everyone here just studies all the time. It's real lonely." 
+                Xander "I'm used to having a ton of brothers around. I miss home so bad..."
+                menu:
+                    "I can help you study.":
+                        $ cinematic = True
+                        Narrator "Xander perks up, a small smile forming on his face."
+                        Narrator "You can see the relief hit him as he internalises what you said."
+                        $ cinematic = False
+                        Xander "Really? I hate that I have to ask for help. You know, if I could just get a few more hours in Archives, I could catch up to the others." 
+                        Xander "But it's locked up. I'm guessing whatever is in there will help me pass."
+                        Xander "I've seen Tao in the Library... there's no way they'd be studying there if not to investigate it." 
+                        Xander "Can you break into the Archives with me?"
+                        menu:
+                            "Yes, I'll help you.":
+                                $ Quest_XanderProgress = True
+                                Xander "Really? Thank you. I know it's risky but I need the help."
+                                Xander "I'll do anything you need."
+                                menu:
+                                    "Just pass, Xander. You don't owe me.":
+                                        Xander "Saint's I could just hug you. I'm not gonna... unless you want me to?"
+                                        menu:
+                                            "Sure.":
+                                                Xander "C'mere..."
+                                                $ cinematic = True
+                                                Narrator "Xander pulls you close, wrapping his arms around you."
+                                                Narrator "He stays there for a bit longer than you thought he would..."
+                                                Narrator "You awkwardly tap his back... he releases you."
+                                                Xander "Guess I needed that..."
+                                                $ Affinity_Xander += 10
+                                                pass
+                                            "I'm not a hugging person...":
+                                                Xander "I get that..."
+                                                $ Affinity_Xander += 5
+                                                pass
+                                    "I might call you up on that.":
+                                        Xander "'Course. You know me."
+                                        pass
+                                Xander "Right... I'm going to try to break the lock tonight... maybe you can figure out ways to break it?"
+                                if Flag_ArchivesArtifice_Xander:
+                                    menu:
+                                        "(Tell him Rex already told you how)": 
+                                            Xander "He called me a twerp..."
+                                            Xander "Good to know we can just... break it."
+                                            Xander "Rex is kinda mean... good guy overall, but mean."
+                                            pass
+                                else:
+                                    menu:
+                                        "Will do.":
+                                            pass
+                                Xander "If you're a hundred percent in... just meet me in the library tonight after curfew."
+                                Xander "I'll wait for you."
+                                menu:
+                                    "Tonight in the Library... got it.":
+                                        return
+
+                            "That's against the rules... sorry.":
+                                Xander "Great... thanks for nothing!"
+                                Xander "I'm gonna get shipped back to the Scholomance. Enjoy your hard earned freedom."
+                                $ Affinity_Xander -= 10
+                                return
+                    
+                    "Have you talked to Alice or Eileen about it?":
+                        Xander "I might be a farmboy, but that doesn't mean I'm dumb." 
+                        Xander "They'll put me on discipline for making excuses to slack off."
+                        Xander "Thanks but you're not really helping. Can you leave me be... please."
+                        $ Affinity_Xander -= 10
+                        return
 
 
+            "(Don't get involved.)":
+                return
 
-label Afternoon2ArtificingLab:
+    label Afternoon2Atrium_Xander:
+        $ cinematic = True
+        Narrator ""
+        $ cinematic = False
+        Xander "Hey... I'll see you tonight at the Library."
+        Xander "Careful sneaking out. I don't want you getting in shit for me."
+        Xander "Was there something you wanted to chat about?"
+        menu:
+            "Just a few general questions...":
+                call xanderhub_main
+                return
+
+            "Just checking on you...":
+                Xander "I'm stressed, but after tonight it should be better."
+                Xander "I'm worried about getting caught by Eileen or Alice..."
+                Xander "If I get caught I'm {i}definitely{/i} going back to the Scholomance... but if I don't..."
+                Xander "I guess I'll be more likely to pass."
+                Xander "Risk versus reward or whatever."
+                return
+
+            "Nothing at all.":
+                return       
+
+
+label Afternoon2ArtificingLab:#Rex is being berated by Eileen about poisoning Xander's crops. He says he didn't do it. She says she'll catch him.
     return
 
-label Afternoon2Greenhouse:
+label Afternoon2Greenhouse: #You can check on the passage -- which Aria has unveiled if Flag_GreenhouseTunnelUnlocked = True
     return
 
-label Afternoon2Courtyard:
+label Afternoon2Courtyard: #Alice and Aria are talking about the exams
     return
 
 label Night2Choices:
