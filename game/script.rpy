@@ -3326,7 +3326,7 @@ label Morning1Greenhouse:
 
 
 
-
+### Morning 2 ###
 
 
 label Morning2Dorms:
@@ -4185,7 +4185,6 @@ label Morning2Greenhouse:
                         jump Morning2Greenhouse_Choices
 
 
-### both Melody & Aria are here. Aria is happy to talk to you and even offers to talk to you about parting the roots (Flag_GreenhouseTunnel) leading to (Flag_GreenhouseTunnelUnlocked)
 
             "(Talk to Aria)":
                 $ cinematic = True
@@ -4323,7 +4322,7 @@ label Morning2Courtyard:
                 jump Morning2Choices
 
 
-
+### Afternoon 2 ###
 label Afternoon2Choices:
     $ Day2Morning = False
     $ Day2Afternoon = True
@@ -4594,10 +4593,30 @@ label Afternoon2Greenhouse: #You can check on the passage -- which Aria has unve
 label Afternoon2Courtyard: #Alice and Aria are talking about the exams
     return
 
+
+
+
+
+
+
+
+### Night 2 ###
 label Night2Choices:
 
-label Night2Atrium:
+label Night2Atrium: #the thing isn't there. The moons are wacky.
     return
+
+label Night2Library: #Quest_XanderProgress Xander is waiting for you to break into the Archives. Eileen is in the Archives waiting for him.
+
+label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked)
+
+label Night2AlchemyLab: #Locked
+
+label Night2ArtificingLab: #Rex is there, being yelled at by Alice. 
+
+label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlocked)
+
+label Night2Dormitory: #Xander isn't there. Rex isn't there. Melody is sleeping early. Aria is staring out the window, saying something is watching her. Tao is stressed out.
 
 
 
