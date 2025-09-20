@@ -12,7 +12,7 @@ define Xander = Character("Xander")
 define Eileen = Character("Eileen")
 define Alice = Character("Alice")
 define NotAlice = Character("NotAlice")
-define Narrator = Character("Narrator")
+define Narrator = Character("")
 
 # List of possible locations (optional, for reference)
 define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge")
@@ -86,11 +86,14 @@ define Flag_TheWatcher = False #The player has seen something at the edge of the
 # Important Visited Flags
 define AtriumVisitedDay1 = False
 define Flag_Day2PlantsWatered = False #did the player tend to their plants on day2?
-
+define Flag_Afternoon2Tao = False #Player hasn't yet spoken to Tao on Afternoon Day 2
+define Afternoon2CourtyardVisited = False #player hasn't heard the conversation between Aria and Alice.
+define Afternoon2ArtificingLabVisited = False # player hasn't visited the Artificing Lab on Afternoon2
+define Afternoon2Aria = False #the player spoke to Aria on Day2 in the Courtyard
 
 # Teachers Lounge Discovery
 define Flag_TeachersLoungeQuestioned = False # the player has questioned where Eileen and Alice stay.
-
+define Flag_DiscoveredTeachersLounge = False #You have been told about the Teachers lounge.
 
 
 
@@ -98,8 +101,8 @@ define Flag_LockBreakerNeeded = False #player is alerted that they need a lockbr
 define Flag_PotionNotStolen = False #player has decided not to steal something.
 define Flag_LockBreakerUsed = False #Player has used the lockbreaker, leading to them potentially being caught.
 define Flag_GreenhouseTunnel = False #Player has found out that there's a tunnel covered by roots that leads outside.
-define Flag_GreenhouseTunnelUnlocked = False
-
+define Flag_GreenhouseTunnelUnlocked = False #The tunnel is unlocked and can be used via the Greenhouse starting at Night 2.
+define Flag_XanderPoisoned = False # You've found out that Xander's plants were poisoned.
 
 # Spells
 define Spell_Light = False
@@ -673,7 +676,7 @@ label Night0Corridor:
                                                 Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
                                                 Narrator "But you can't help but wonder..." 
                                                 Narrator "...what was that?"
-                                                Narrator "And why do you still feel its gaze?"
+                                                Narrator "And why do you still feel it's gaze?"
                                                 $ cinematic = False
                                                 $ Day0Night = False
                                                 $ AtriumVisitedDay1 = True
@@ -2953,7 +2956,7 @@ label Morning1Greenhouse:
 
                                 if Flag_HammerAcquired:
                                     Narrator "You pull the hammer out from your bag and bring it down on the lock."
-                                    Narrator "With a loud {i}clunk{/i} it unbolts, the lock metal feeling loose."
+                                    Narrator "With a loud {i}clunk{/i} it unbolts, the metal feeling loose."
                                     $ Flag_AlchemyLabLockBroken = True
                                     menu: 
                                         "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
@@ -3499,7 +3502,7 @@ label Morning2Choices:
             jump Morning2Library
 
         "(Return to the {b}Dormitory{/b})":
-            jump Morning2Dorms
+            jump Morning2Dorms2
 
         "(Go to the {b}Alchemy Lab{/b})":
             jump Morning2AlchemyLab
@@ -3610,7 +3613,7 @@ label Morning2Library:
         pass
     $ cinematic = True
     Narrator "You notice Tao, their head in a book."
-    Narrator "For once, the scoul they wear is dissolved into a look of tired resolve."
+    Narrator "For once, the scowl they wear is dissolved into a look of tired resolve."
     Narrator "Perhaps they're struggling with a topic."
     $ cinematic = False
     jump Morning2Library_Choices
@@ -3695,11 +3698,11 @@ label Morning2Library_Choices:
 
         "(Leave the Library)":
             $ cinematic = True
-            Narrator "You leave the {b}library{/b}."
+            Narrator "You leave the {b}Library{/b}."
             jump Morning2Choices
 
 
-label Morning2Dorms:
+label Morning2Dorms2:
     $ Location = "Dormitory"
     $ cinematic = True
     Narrator "You sit in your bed... the dormitory is empty except for you."
@@ -3722,7 +3725,7 @@ label Morning2AlchemyLab:
     $ cinematic = True
     Narrator "You enter the {b}Alchemy Lab{/b}."
     Narrator "The scent of herbs and chemicals fills the air, mingling with the faint hum of magical energy."
-    Narrator "In the dim light, you notice how the potions and chemicals glow "
+    Narrator "In the dim light, you notice how the potions and chemicals glow, casting soft shadows along the walls."
     $ cinematic = False
     if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
         $ cinematic = True
@@ -3961,7 +3964,7 @@ label Morning2Greenhouse:
         Narrator "A few flowers lay dead, their petals blackened."
         $ cinematic = False
         Aria "Xander's flowers didn't make it."
-        Melody "Aria is thinking of fixing them. I told her that if Eileen finds out we're screwed."
+        Melody "Aria is thinking of fixing them. I told her that if Eileen finds out we'll get in trouble."
         Aria "But it would be so simple to fix!"
         Melody "Aria, it doesn't matter how simple it would be. You'd get yourself, Xander, and probably me implicated."
         Melody "{i}You'd{/i} probably get dragged in too, just for being here."
@@ -4283,7 +4286,7 @@ label Morning2Courtyard:
 
                 label Morning2Courtyard_Dorms:
                     $ cinematic = True
-                    Narrator "You walk over to the dormitory windows. "
+                    Narrator "You walk over to the dormitory windows."
                     Narrator "You notice some handprints on the window, as though something has been outside, looking in."
                     Narrator "You look over your shoulder at the forest. There's a small parting, where something came through."
                     Narrator "Squinting, you make out a set of eyes."
@@ -4410,13 +4413,249 @@ label Afternoon2Choices_Menu:
 
 
 label Afternoon2Library: #empty
-    return
+    scene library afternoon
+    $ Location = "Library"
+    $ cinematic = True
+    Narrator "You enter the {b}Library{/b}. The scent of old books and tomes fills the air."
+    Narrator "You don't hear anyone else here."
+    $ cinematic = False
+    if Flag_ArchivesDiscovered:
+        $ cinematic = True
+        Narrator "You look over at the archives... wondering whether there is a way of entering you aren't aware of."
+        Narrator "In the afternoon light, this place takes on a new form -- one of maroon, stuffy academia. White, nearly transparent pages..."
+        Narrator "...holding millions of words written for {b}you{/b}."
+        $ cinematic = False
+        pass
+    else:
+        $ cinematic = True
+        Narrator "You look around, noticing a door you haven't seen before."
+        Narrator "It's gated, a great padlock stopping you."
+        Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+        Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
+        Narrator "You breathe it in..."
+        Narrator "Whatever is behind the door is old magic."
+        Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
+        Narrator "They feel intimate."
+        Narrator "More apart of you than your beating heart."
+        Narrator "You look up at the label above the door."
+        Narrator "{b}The Archives{/b}."
+        $ Flag_ArchivesDiscovered = True
+        $ cinematic = False
+        menu:
+            "(Try the door.)":
+                $ cinematic = True
+                Narrator "The chains are strong. The lock seems unbreakable."
+                Narrator "You need a key."
+                $ cinematic = False
+                pass
+            "(Leave it be.)": 
+                $ cinematic = True
+                Narrator "You kill the urge to move closer. You don't know where you find the determination."
+                Narrator "You know there is nothing for you here."
+                Narrator "Nothing yet..."
+                $ cinematic = False
+                pass
+        pass
+    $ cinematic = True
+    Narrator "You take a breath."
+    $ cinematic = False
+    jump Afternoon2Library_Choices
 
-label Afternoon2Dorms:#Melody is in the dorms, she feels a bit under the weather so she's taking a break (she's sabotaging alarms)
-    return
+    label Afternoon2Library_Choices:
+        $ cinematic = True
+        Narrator "You wonder what you should do..."
+        $ cinematic = False
+        menu:
+            "(Inspect the Archives Door)":
+                $ cinematic = True
+                Narrator "You inspect the archives door. Tugging on the gate -- it rattles, but holds firm."
+                Narrator "You kneel to inspect the lock itself, as it doesn't seem to even have a keyhole."
+                Narrator "As you touch it, you feel a spark as whatever enchantment is on the piece of artifice meets the latent magic on your skin."
+                Narrator "You now know that it's artifice... and that there's an enchantment on it."
+                Narrator "You wonder if there's some sort of spell you could use to break it."
+                $ Flag_ArchivesArtifice = True
+                $ cinematic = False
+                jump Afternoon2Library_Choices
+
+            "(Look for books on Botany)" if not book_collected:
+                $ cinematic = True
+                Narrator "You check for the books on botany, all of which seem somewhat tattered and dated."
+                Narrator "Not by misuse, or a lack of care, but by age."
+                Narrator "It seems as though every book in this library comes with it's own layer of dust."
+                Narrator "It doesn't help that parts of the wooden floor seem to have warped over years, leaving some bookshelves angular."
+                Narrator "Nevertheless, you poke around until -- trying not to disturb Tao, who seems very aware of your presence."
+                Narrator "You find a few books that seem relevant to your needs."
+                $ cinematic = False
+                call Afternoon1Library_BotanyBooks
+                return
+
+            "(Leave the Library)":
+                $ cinematic = True
+                Narrator "You leave the {b}Library{/b}."
+                jump Afternoon2Choices_Menu
+
+
+
+
+label Afternoon2Dorms:#Melody is in the dorms, she feels a bit under the weather so she's taking a break (she's sabotaging alarms) # talks to you about Flag_TeachersLoungeQuestioned
+    scene dormitory afternoon
+
+    $ cinematic = True
+    if Location not "Dormitory":
+        Narrator "You head back to the {b}Dormitory{/b}."
+        pass
+    else:
+        Narrator "You stay in the {b}Dormitory{/b}."
+        pass
+    Narrator "The afternoon light, despite the cold, feels heavy through the windowpanes."
+    Narrator "You feel the weight of exams melt as you sit at your bed."
+    Narrator "After a few moments, you see Melody emerge from behind her bed curtain."
+    $ Location = "Dormitory"
+    $ cinematic = False
+    jump Afternoon2Dorms_Choices:
+    
+    label Afternoon2Dorms_Choices:
+        $ cinematic = True
+        Narrator "You wonder what you should do..."
+        $ cinematic = False
+        menu:
+            "(Talk to Melody)":
+                $ cinematic = True
+                Narrator "Melody looks upbeat as you approach. You can tell she's tired, but she still forces a smile."
+                $ cinematic = False
+                Melody "You feeling under the weather, too? I thought I'd let myself rest this afternoon..."
+                jump Afternoon2Melody_Choices
+                label Afternoon2Melody_Choices:
+                    menu:
+                        "How are you?":
+                            Melody "I {i}said{/i} 'under the weather' but I guess it's more like... lethargic."
+                            Melody "I guess I've not had a break... I can afford it."
+                            Melody "You should do the same. I've seen you running around all day... have a sit down."
+                            jump Afternoon2Melody_Choices
+                        "Where do Alice & Eileen stay?" if Flag_TeachersLoungeQuestioned:
+                            Melody "The teachers lounge... I'm pretty sure. It's up the stairs in the upstairs corridor Directly across from the dorms."
+                            Melody "It's always locked."
+                            $ Flag_DiscoveredTeachersLounge = True
+                            Melody "I didn't check.."
+                            Melody "But I saw them go up there yesterday."
+                            Melody "You know... It's odd to have teachers with us so often..."
+                            Melody "Back at the Scholomance they sort of left us to our own devices..." 
+                            Melody "I suppose they didn't want to risk spending time with a bunch of unstable mages."
+                            Melody "It sort of feels as though we're under a microscope. Especially with Alice's dolls around the place."
+                            menu:
+                                "...":
+                                    jump Afternoon2Melody_Choices
+                                "What do you think is in there?":
+                                    Melody "The teacher's lounge? Probably a kitchen... a few beds..."
+                                    Melody "It's a room for {i}people{/i} so at the end of the day it's most like something boring."
+                                    jump Afternoon2Melody_Choices
+                        "(Leave)":
+                            jump Afternoon2Dorms_Choices
+
+
+            "(Look out the window)" if Flag_TheWatcher:
+                $ cinematic = True
+                Narrator "Remembering whatever you saw in the forest, you decide to part the curtain behind your bed and peer through the window..."
+                Narrator "From the safety of your dormitory, you stare out into the forest... the damp grass gleaming as wind ripples through it."
+                Narrator "You see nothing watching you."
+                Narrator "Yet, as you peer into the forest, you still feel like something is looking back at you."
+                $ cinematic = False
+                jump Afternoon2Dorms_Choices
+
+            "(Take a nap)":
+                $ cinematic = True
+                Narrator "You pull the blanket over your head... the closed curtains around you forming a sanctuary."
+                Narrator "You drift off..."
+                $ cinematic = False
+                jump Night2Choices
+            
+            "(Leave the {b}Dormitory{/b})":
+                jump Afternoon2Choices_Menu
+
+
+
 
 label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- it's going badly. They are stressed.
-    return
+    scene alchemy lab afternoon
+    $ Location = "Alchemy Lab"
+    $ cinematic = True
+    Narrator "You enter the {b}Alchemy Lab{/b}."
+    Narrator "The scent of herbs and chemicals fills the air, mingling with the faint hum of magical energy."
+    Narrator "In the dim light, you notice how the potions and chemicals glow, casting soft shadows along the walls."
+    Narrator "At one of the stations, you see Tao, deep in thought. Hand aimlessly stirring a potion as the other hold a recipe tome."
+    $ cinematic = False
+    if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
+        $ cinematic = True
+        Narrator "You notice a glass cupboard, filled to the brim with potions."
+        $ cinematic = False
+        menu:
+            "(Investigate)":
+                call Night1AlchemyLab_Potions
+                jump Afternoon2AlchemyLab_Choices
+    else:
+        $ cinematic = True
+        Narrator "You notice the missing potions."
+        Narrator "There's a twinge of guilt that seems to sit with you..."
+        Narrator "You ignore it."
+        $ cinematic = False
+        jump Afternoon2AlchemyLab_Choices
+    
+    label Afternoon2AlchemyLab_Choices:
+        menu:
+            "(Talk to Tao)":
+                if Flag_Afternoon2Tao = False
+                $ cinematic = True
+                Narrator "You approach Tao, who doesn't look up from their work."
+                Narrator "As you step closer, you see the pot bubble up."
+                Narrator "It splashes, catching Tao's sleeve."
+                $ cinematic = False
+                $ Flag_Afternoon2Tao = True
+                Tao "Crap!"
+                Tao "Damn it, damn it, damn it!"
+                menu:
+                    "Are you okay?":
+                        Tao "No! No, it is {i}not{/i} going well."
+                        Tao "Every blasted potion just..."
+                        Tao "I could've sworn this one worked."
+                        Tao "It's simple. I don't understand what I'm doing incorrectly!"
+                        Tao "It's a simple recipe. I've dissolved the ember-cherries in the brine, I've added moon melon skin..."
+                        $ cinematic = True
+                        Narrator "Tao looks over their book again, checking whether they've missed a step."
+                        $ cinematic = False
+                        Tao "The only reason this {i}isn't{/i} working is if they've been tampered with."
+                        Tao "Screw it. I'll wash the skins, then create a purifying alkaline solution..."
+                        Tao "Say, did you need something? You're just sort of... hovering."
+                        menu:
+                            "Wanted to see if you needed help.":
+                                Tao "Unless you can actually help, I don't need you hovering."
+                                Tao "Either this book is incorrect, {i}and{/i} I'm having amnesia, or there's something wrong with my plants."
+                                Tao "Tell me, did you tamper with my plants? I won't be mad."
+                                Tao "Ok, I will be mad, but tell me, I'm losing my mind."
+                                menu:
+                                    "I haven't touched anything.":
+                                        Tao "Then... something is up with the materials..."
+                                        Tao "I'll try another recipe. Perhaps one from another book."
+                                        Tao "Perhaps whatever Xander did to his plants impacted mine."
+                                        Tao "His plot was the one next to mine... yes... I bet that's it."
+                                        Tao "What an idiot."
+                                        $ cinematic = True
+                                        Narrator "You're sure if you stay all you'll hear is rambling..."
+                                        menu:
+                                            "(Leave)":
+                                                jump Afternoon2AlchemyLab_Choices
+                                    "Yes, I'm an evil mastermind who... tampers with plants.":
+                                        Tao "Ha-ha. Very funny."
+
+                            "Good point... (Leave)":
+                                jump Afternoon2AlchemyLab_Choices
+
+                
+
+            "(Investigate Potions)" if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
+                call Night1AlchemyLab_Potions
+                jump Afternoon2AlchemyLab_Choices
+
+
 
 
 
@@ -4458,7 +4697,7 @@ label Afternoon2Atrium:
             Narrator "You wonder whether you should be studying."
             Narrator "You haven't seen Alice or Eileen in a while."
             Narrator "You wonder where they're staying..."
-            $ Flag_TeachersLoungeQuestioned
+            $ Flag_TeachersLoungeQuestioned = True
 
         "(Leave the Atrium)":
             jump Afternoon2Choices_Menu
@@ -4562,7 +4801,7 @@ label Afternoon2Atrium:
 
     label Afternoon2Atrium_Xander:
         $ cinematic = True
-        Narrator ""
+        Narrator "You find Xander sat at the bench."
         $ cinematic = False
         Xander "Hey... I'll see you tonight at the Library."
         Xander "Careful sneaking out. I don't want you getting in shit for me."
@@ -4581,34 +4820,309 @@ label Afternoon2Atrium:
                 return
 
             "Nothing at all.":
-                return       
+                return
 
 
 label Afternoon2ArtificingLab:#Rex is being berated by Eileen about poisoning Xander's crops. He says he didn't do it. She says she'll catch him.
-    return
+    scene artificing lab afternoon
+    $ Location = "Artificing Lab"
+    if Afternoon2ArtificingLabVisited:
+        $ cinematic = True
+        Narrator "You enter the {b}Artificing Lab{b}."
+        Narrator ""
+        $ cinematic = False
+        pass
+    else:
+        $ cinematic = True
+        Narrator "As you enter the {b}Artificing Lab{/b} you hear Rex, his voice raised."
+        $ cinematic = False
+        Rex "I'm telling you. I didn't do anything."
+        Eileen "You believe that you didn't leave evidence... Are you that arrogant."
+        Eileen "You believe you can concoct a potion like that and leave no remnants?"
+        Rex "As you said, I'm a D+ student at my best, how would I have made something that could poison Xander's plants?"
+        Eileen "It's an impressive potion."
+        Rex "I didn't do it."
+        Eileen "{i}I{/i} don't believe you."
+        Rex "Then prove I did it. Innocent until proven guilty."
+        Eileen "I prefer the opposite approach."
+        Eileen "I've got my eye on you, Rex. Sabotage isn't something I can allow in the Summit."
+        $ Afternoon2ArtificingLabVisited = True
+        Rex "..."
+        Narrator "You hear heavy footsteps as Eileen leaves the Artificing Lab, passing you with a stern glance."
+        Eileen "Shouldn't you be studying?"
+        menu:
+            "Yes...":
+                Eileen "Very good."
+                pass
+            "Probably...":
+                Eileen "I detest non-committal pupils. Hurry on."
+                pass
+            "No...":
+                Eileen "Hmm. It's your future, I suppose."
+                pass
+        $ cinematic = True
+        Narrator "You enter the {b}Artificing Lab{/b}."
+        $ cinematic = False
+        jump Afternoon2ArtificingLab_Choices
+
+
+    
+    label Afternoon2ArtificingLab_Choices:
+        $ cinematic = True
+        Narrator "You wonder what you should do."
+        menu:
+            "(Talk to Rex)":
+                Rex "Oh... you're here."
+                Rex "Did you hear that old witch? Thinks I poisoned Xander's crops."
+                menu:
+                    "Did you?":
+                        Rex "No. What's the point? I don't care if he passes or not."
+                        pass
+                    "She seemed angry.":
+                        Rex "That? That was nothing. I remember when--"
+                        Rex "Know what, nevermind."
+                        pass
+                Rex "Still... I guess now we know someone poisoned Xander's plants. I'm betting it was Tao, those two are always at eachothers throats."
+                $ Flag_XanderPoisoned = True
+                Rex "Didn't think that sorta thing would still be going on."
+                menu:
+                    "Shame.":
+                        Rex "The only shame is that I'm catching flack for it."
+                        Rex "Either way... I'm gonna put my head down and finish this crap."
+                        Rex "If Eileen's investigating me, I don't have long before she throws me in isolation."
+                        menu:
+                            "(Leave)":
+                                jump Afternoon2ArtificingLab_Choices
+                
+
+            "(Investigate the Artificing Lab)":
+                if not artifice_options:
+                    call Afternoon1ArtificingLab_Explore
+                    jump Afternoon2ArtificingLab_Choices
+                else:
+                    $ cinematic = True
+                    Narrator "You take a closer look around the lab."
+                    Narrator "The locked cupboards are tattered by age."
+                    Narrator "As you peer through one of the holes you see it's filled with dusty scraps of metal and a few empty bulbs."
+                    Narrator "You wonder whether there's anything else in there..."
+                    $ cinematic = False
+                    menu:
+                        "(Break lock)" if Flag_HammerAcquired:
+                            Narrator "You pull the hammer out from your bag and bring it down on the lock."
+                            Narrator "With a loud {i}clunk{/i} it unbolts, the metal feeling loose."
+                            Narrator "Inside you find a blueprint of some sort of Artifice..."
+                            Narrator "{b}Delivery Bird{/b}"
+                            menu:
+                                "(Take it with you)":
+                                    $ artifice_options.append("Delivery Bird")
+                                    $ cinematic = True
+                                    Narrator "You stash it in your bag."
+                                    $ cinematic = False
+                                    jump Afternoon2ArtificingLab_Choices
+
+                                "(Leave it)":
+                                    jump Afternoon2ArtificingLab_Choices
+
+                        "(Magic: Unlock the cupboard)" if Spell_Unlocking:
+                            Narrator "You focus on the lock, feeling the magic within you stir."
+                            Narrator "With a few whispered words, the cabinet unlocks with a loud {b}{i}clunk{i}{b}. It's clearly not been touched in a while."
+                            menu:
+                                "(Take it with you)":
+                                    $ artifice_options.append("Delivery Bird")
+                                    $ cinematic = True
+                                    Narrator "You stash it in your bag."
+                                    $ cinematic = False
+                                    jump Afternoon2ArtificingLab_Choices
+
+                                "(Leave it)":
+                                    jump Afternoon2ArtificingLab_Choices
+                        
+                        "(Leave it alone)":
+                            jump Afternoon2ArtificingLab_Choices
+            
+            "(Leave the Artificing Lab)":
+                Narrator "You decide to leave the {b}Artificing Lab{/b}"
+                jump Afternoon2Choices_Menu
+
+
+
+
 
 label Afternoon2Greenhouse: #You can check on the passage -- which Aria has unveiled if Flag_GreenhouseTunnelUnlocked = True
-    return
+    scene greenhouse afternoon
+    $ Location = "Greenhouse"
+    $ cinematic = True
+    Narrator "As you enter the {b}Greenhouse{/b}, the scent of damp earth and blooming flowers fills the air."
+    Narrator "You notice your crops have grown... whatever magic this soil brings working busily."
+    $ cinematic = False
+    jump Afternoon2Greenhouse_Choices
+    label Afternoon2Greenhouse_Choices:
+        menu:
+            "(Check on the passageway)" if Flag_GreenhouseTunnelUnlocked:
+                $ cinematic = True
+                Narrator "You approach the passageway Rex told you about..."
+                Narrator "A grate once covered by roots now has nearly enough room for you to fit in."
+                Narrator "You know the tree is moving them... though, slowly."
+                Narrator "You're sure if you come back tonight you'll be able to fit through."
+                Narrator "As you look down, you see little reflections in the water, the strong Greenhouse light filtering down to reveal icy blue water."
+                Narrator "Perhaps a spring fuels the running water."
+                $ cinematic = False
+                jump Afternoon2Greenhouse_Choices
 
-label Afternoon2Courtyard: #Alice and Aria are talking about the exams
-    return
+            "(Tend to your Crops)" if not Flag_Day2PlantsWatered:
+                call Morning1Greenhouse_Plants
+                $ Flag_Day2PlantsWatered = True
+                jump Afternoon2Greenhouse_Choices
+
+            "(Leave {b}Greenhouse{/b})":
+                $ cinematic = True
+                Narrator "You decide to leave the {b}Greenhouse{/b}..."
+                $ cinematic = False
+                jump Afternoon2Choices_Menu
 
 
 
+label Afternoon2Courtyard: 
+    scene courtyard afternoon
+    $ Location = "Courtyard"
+    "You enter the {b}Courtyard{/b}."
+    if not Afternoon2CourtyardVisited:#Alice and Aria are talking about the exams
+        $ cinematic = True
+        Narrator "You notice Alice and Aria both sitting in the grass."
+        Narrator "You can't help but eavesdrop..."
+        $ cinematic = False
+        $ Afternoon2CourtyardVisited = True
+        Alice "But you {i}have{/i} been studying, correct?"
+        Aria "A little bit... I dunno, I've had other things on my mind."
+        Alice "What sort of things..."
+        Aria "It gets worse when I'm stressed, Alice. I don't want something to happen."
+        Alice "It won't... and if it does, I'll deal with it."
+        Aria "I just get the feeling that Eileen is waiting for me to mess up."
+        Alice "Hmm... I can see why you might believe that."
+        Aria "I can't control my magic... Though... when I'm in the Greenhouse that changes. It's like the Great Mage Tree is holding me."
+        Alice "It's an odd enchantment, isn't it. It almost seems to care."
+        Aria "I think it does."
+        Alice "Then spend more time with it. If it helps you to be around it, study under it."
+        Aria "What happens after? You know, when I leave? I won't have something like that around and it'llo all start again."
+        Alice "I can't answer... But know that I understand."
+        Alice "Anyway, my dress is getting dirty sat here. I'll leave you to st-... well, whatever it is you're doing."
+        $ cinematic = True
+        Narrator "You watch Alice get up and walk towards the Atrium. She looks over at you with a smile."
+        Narrator "The Courtyard looks as it always does, though since the rain ceased this morning you still notice the leaves of trees slick with droplets."
+        $ cinematic = False
+        pass
+
+    else:
+        $ cinematic = True
+        Narrator "The Courtyard looks as it always does, though since the rain ceased this morning you still notice the leaves of trees slick with droplets."
+        Narrator "You step into the grass and feel the wind on your skin."
+        $ cinematic = False
+        pass
+    $ cinematic = True
+    Narrator "You wonder what you should do."
+    $ cinematic = False
+    jump Afternoon2Courtyard_Choices
+
+    label Afternoon2Courtyard_Choices:
+        "(Talk to Aria)":
+            if Afternoon2Aria = False:
+                $ cinematic = True
+                Narrator "You approach Aria, who seems lost in thought."
+                $ cinematic = False
+                Aria "Hello. Did you want to take a seat? I'm just... well, I guess I'm just watching the clouds move."
+                Aria "It's been so long since we last saw them... well, real clouds."
+                menu:
+                    "Are you okay?":
+                        Aria "Last night I had a nightmare that felt real. It's one I'm sure you've had, too."
+                        Aria "It was the one where you're back at the Scholomance."
+                        Aria "You hear the sound of water overhead because somewhere on the surface of the lake something has whipped up a storm."
+                        Aria "The water above you is thrashing... you feel the walls, they're wet and slick."
+                        Aria "The whole lake above the Scholomance is angry, and it's trying to get in..."
+                        menu:
+                            "Can't say I've had that one.":
+                                Aria "One day you will. You've been through what every mage has."
+                                pass
+                            "I've had a similar one.":
+                                Aria "That whole place is built on nightmares."
+                                pass
+                Aria "Sorry if I seem melancholic. I've been trying to study but can't seem to focus."
+                Aria "I just... I don't think I'll be placed anywhere, even if I pass."
+                menu:
+                    "Is that why you aren't trying to study?":
+                        Aria "That's probably it."
+                        Aria "I just don't see the point. Alice wants to console me but in truth there's nothing to say." 
+                        Aria "This isn't a feeling to be resolved, it's one I have to live in until the situation changes."
+                        Aria "Hmm..."
+                        Aria "If it's alright with you, I'd like to be alone."
+                        $ Affinity_Aria += 10
+                        $ Afternoon2Aria = True
+                        menu:
+                            "Sure.":
+                                jump Afternoon2Courtyard_Choices
+            else: 
+                $ cinematic = True
+                Narrator "Aria looks lost in thought. You should leave her be."
+                jump Afternoon2Courtyard_Choices
+
+        "(Talk to Alice)":
+            jump Afternoon2Alice
+            label Afternoon2Alice:
+                Alice "Good afternoon, pupil. Did you need something?"
+                menu:
+                    "Is Aria alright?":
+                        Alice "She'll be okay. Like you, she's stressed about her exams."
+                        Alice "Many pupils find themselves in this state."
+                        jump Afternoon2Alice
+
+                    "Where are you and Eileen staying?" if Flag_TeachersLoungeQuestioned:
+                        Alice "Up the hall in the corridor... there's a teachers lounge."
+                        Alice "It's not my favourite place, but it's only a week."
+                        jump Afternoon2Alice
+
+                    "I have other questions...":
+                        call alicehub_main
+                        jump Afternoon2Alice
+                    
+                    "(Leave)":
+                        jump Afternoon2Courtyard_Choices
 
 
+        "(Explore)":#with alice there you can't leave the courtyard
+            $ cinematic = True
+            Narrator "You look toward the forest, taking in the sights and sounds."
+            Narrator "The trees sway gently in the breeze, their leaves rustling softly."
+            Narrator "As you step away from the Courtyard, towards the forest, you hear Alice yell loudly in your direction."
+            $ cinematic = False
+            Alice "Absolutely not. Come back."
+            menu:
+                "(Return)":
+                    jump Afternoon2Courtyard_Choices
+
+        "(Leave {b}Courtyard{/b})":
+            $ cinematic = True
+            Narrator "You decide to leave the {b}Courtyard{/b}."
+            jump Afternoon2Choices_Menu
 
 
 
 ### Night 2 ###
+
 label Night2Choices:
+    $ Day2Afternoon = False
+    $ Day2Night = True
+    scene dormitory afternoon
+    $ Location = "Dormitory"
+    $ cinematic = True
+    Narrator ""
+    $ cinematic = False
+    return
 
 label Night2Atrium: #the thing isn't there. The moons are wacky.
     return
 
 label Night2Library: #Quest_XanderProgress Xander is waiting for you to break into the Archives. Eileen is in the Archives waiting for him.
 
-label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked)
+label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked) #You can sabotague other crops #You can find the Doll and agree to sacrifice a classmate.
 
 label Night2AlchemyLab: #Locked
 
