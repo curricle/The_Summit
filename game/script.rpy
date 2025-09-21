@@ -12,7 +12,7 @@ define Xander = Character("Xander")
 define Eileen = Character("Eileen")
 define Alice = Character("Alice")
 define NotAlice = Character("NotAlice")
-define Narrator = Character("")
+define Narrator = Character("Narrator")
 
 # List of possible locations (optional, for reference)
 define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge", "Archive", "Teacher's Lounge")
@@ -39,6 +39,16 @@ $ Flag_IllustratedBotanical = "The Illustrated Botanical" in book_collected
 $ Flag_WoodwitchGuide = "The Woodwitch Guide to Home Gardening" in book_collected
 $ Flag_CarnivorousPlants = "Carnivorous Plants of Viordia and their Many Applications" in book_collected
 # Now you can reference book_collected[0] as 'book 1' and book_collected[1] as 'book 2' in dialogue
+
+# Sabotage Variables
+$ sabotaged_plant = []
+$ sabotaged_options = ["Aria", "Xander", "Tao", "Rex", "Melody"]
+$ Flag_AriaPlantSabotaged = "Aria" in sabotaged_plant
+$ Flag_XanderPlantSabotaged = "Xander" in sabotaged_plant
+$ Flag_TaoPlantSabotaged = "Tao" in sabotaged_plant
+$ Flag_RexPlantSabotaged = "Rex" in sabotaged_plant
+$ Flag_MelodyPlantSabotaged = "Melody" in sabotaged_plant
+######referencing sabotagued plants######
 
 
 # Character Flags
@@ -91,7 +101,7 @@ define Afternoon2CourtyardVisited = False #player hasn't heard the conversation 
 define Afternoon2ArtificingLabVisited = False # player hasn't visited the Artificing Lab on Afternoon2
 define Afternoon2Aria = False #the player spoke to Aria on Day2 in the Courtyard
 define Night2AtriumVisited = False #the player visited the atrium and saw the porcelain fragments.
-
+define Night2Explored = False #the player has got to the courtyard on night 2. Meaning if they leave, the demo ends.
 
 # Teachers Lounge Discovery
 define Flag_TeachersLoungeQuestioned = False # the player has questioned where Eileen and Alice stay.
@@ -5157,193 +5167,205 @@ label Night2Choices:
         jump Night2Choices_Menu
 
     label Night2Choices_Menu:
-        $ cinematic = True
-        Narrator "You wonder what you should do with your night..."
-        $ cinematic = False
-        menu:
-            "(Talk to Tao)": #Tao is stressed about the exam - they are reading a book and making notes
-                $ cinematic = True
-                Narrator "Tao's curtain is open as they study at their desk, scratching their furiously along a tattered notebook. As you approach, they look at you over their shoulder."
-                $ cinematic = False
-                Tao "Hmm? I'm a bit busy... what do you want?"
-                menu:
-                    "I have a few questions...":
-                        Tao "I can afford a small break..."
-                        call taohub_main
-                        Tao "Right... can you leave me be now?"
-                        menu:
-                            "Sure...":
-                                jump Night2Choices_Menu
-                    "Nothing...":
-                        jump Night2Choices_Menu
-
-
-
-            "(Talk to Aria)": #Aria is having an early night after feeling a bit melancholic - talks from behind a curtain
-                $ cinematic = True
-                Narrator "You approach Aria's curtain, and her voice comes softly from behind it."
-                Aria "Hey... is someone there?"
-                $ cinematic = False
-                menu:
-                    "(Ask if she's okay)":
-                        Aria "I'm okay. Just sleepy."
-                        Aria "We'll talk tomorrow."
-                        jump Night2Choices_Menu
-
-                    "(Leave her be)":
-                        jump Night2Choices_Menu
-
-            "(Talk to Rex)" if not Quest_RexPlanRejected and not Quest_RexProgress: #Rex pulls you into his area, closing the curtains behind you to ask whether you want to do his plan (blowing up Eileen's half built statue in the Atrium)
-                if Affinity_Rex >= 50:
+        if not Night2Explored:
+            $ cinematic = True
+            Narrator "You wonder what you should do with your night..."
+            $ cinematic = False
+            menu:
+                "(Talk to Tao)": #Tao is stressed about the exam - they are reading a book and making notes
                     $ cinematic = True
-                    Narrator "You walk over to Rex's curtain... he says nothing but you hear the sound of metal scraping."
+                    Narrator "Tao's curtain is open as they study at their desk, scratching their furiously along a tattered notebook. As you approach, they look at you over their shoulder."
                     $ cinematic = False
+                    Tao "Hmm? I'm a bit busy... what do you want?"
                     menu:
-                        "Rex?":
-                            Rex "Hey, just a sec."
-                            pass
-                        "(Leave)":
-                                jump Night2Choices_Menu
-                    $ cinematic = True
-                    Narrator "You hear him tinker some more. After a moment, he opens the curtains and looks around the room with a look in his eye."
-                    Narrator "He looks like he's looking out for someone. He pulls you in by your shirt, closing the curtain behind you."
-                    $ cinematic = False
-                    Rex "You got a minute? I wanted to run something by you..."
-                    menu:
-                        "Sure I do.":
-                            pass
-                    Rex "Listen. You're different from the others. I can tell you're not scared of me. So I'll let you in on something." 
-                    Rex "I got a plan for graduation day. A big event."
-                    menu:
-                        "A party?":
-                            pass
-                        "Something tells me you aren't throwing us a party...":
-                            pass
-                    Rex "You know that the Council's building a statue of Eileen, right? Can't imagine why. But I bet she's loving it." 
-                    Rex "All that glory for being the Council's pet. Well, I can't just let that happen. I'm going to blow it up before our graduation ceremony."
-                    menu:
-                        "You can't be serious...":
-                            Rex "I'm always serious."
-                            pass
-                        "You're building a {i}bomb{/i}?":
-                            Rex "Not a bomb... I'm not some psychopath wanting to hurt people. Well, most people."
-                            pass
-                    Rex "Eileen is everything I hate about mages. When I think about how miserable I was at the Scholomance, it always goes back to how much they controlled me." 
-                    Rex "Think about it: we'll be the mages that stood up to them. Are you in?"
-                    menu:
-                        "Yes, I'll help you.":
-                            Rex "I knew I liked you."
-                            $ Affection_Rex += 10
-                            Rex "Right, I've been building a few devices... One of them is a nifty bit of artifice I'm calling the Stonecutter."
-                            Rex "It's basically a big hammer... with blades..."
-                            Rex "I need to finish it, and to do that I need materials... which is why I've been trying to find a way out of the Summit."
-                            Rex "I can't leave. Eileen's watching me like a hawk... but she seems to barely notice you."
-                            Rex "Think you could run a few errands for me over the next few days? I'll tell you what I need in the mornings..."
+                        "I have a few questions...":
+                            Tao "I can afford a small break..."
+                            call taohub_main
+                            Tao "Right... can you leave me be now?"
                             menu:
-                                "I can do that.":
-                                    Rex "That's great."
-                                    pass
-                                "It might be hard...":
-                                    Rex "Just whatever you can spare. It'll be worth it."
-                                    pass
-                            Rex "For this to work... I'll need the materials in three days."
-                            Rex "On graduation day, I'll cast the spell, activate the Artifice, and everyone will watch Eileen's legacy crumble." 
-                            Rex "One more thing. I'm trusting you not to rat me out to Eileen and Alice."
-                            $ Quest_RexProgress = True
-                            $ cinematic = True
-                            Narrator "You nod, feeling a mix of excitement and apprehension."
-                            $ cinematic = False
-                            Rex "I need to finish this up... mind if we chat more tomorrow? I've got a few things to run by you."
-                            menu:
-                                "Sure.":
-                                    $ cinematic = True
-                                    Narrator "Rex smiles. You don't think you've seen him smile before."
-                                    Narrator "You leave him alone."
-                                    $ cinematic = False
+                                "Sure...":
                                     jump Night2Choices_Menu
+                        "Nothing...":
+                            jump Night2Choices_Menu
 
-                        "No, I don't agree with you.":
-                            Rex "I overestimated you. This conversation never happened."
-                            $ Quest_RexPlanRejected = True
+
+
+                "(Talk to Aria)": #Aria is having an early night after feeling a bit melancholic - talks from behind a curtain
+                    $ cinematic = True
+                    Narrator "You approach Aria's curtain, and her voice comes softly from behind it."
+                    Aria "Hey... is someone there?"
+                    $ cinematic = False
+                    menu:
+                        "(Ask if she's okay)":
+                            Aria "I'm okay. Just sleepy."
+                            Aria "We'll talk tomorrow."
+                            jump Night2Choices_Menu
+
+                        "(Leave her be)":
+                            jump Night2Choices_Menu
+
+                "(Talk to Rex)" if not Quest_RexPlanRejected and not Quest_RexProgress: #Rex pulls you into his area, closing the curtains behind you to ask whether you want to do his plan (blowing up Eileen's half built statue in the Atrium)
+                    if Affinity_Rex >= 50:
+                        $ cinematic = True
+                        Narrator "You walk over to Rex's curtain... he says nothing but you hear the sound of metal scraping."
+                        $ cinematic = False
+                        menu:
+                            "Rex?":
+                                Rex "Hey, just a sec."
+                                pass
+                            "(Leave)":
+                                    jump Night2Choices_Menu
+                        $ cinematic = True
+                        Narrator "You hear him tinker some more. After a moment, he opens the curtains and looks around the room with a look in his eye."
+                        Narrator "He looks like he's looking out for someone. He pulls you in by your shirt, closing the curtain behind you."
+                        $ cinematic = False
+                        Rex "You got a minute? I wanted to run something by you..."
+                        menu:
+                            "Sure I do.":
+                                pass
+                        Rex "Listen. You're different from the others. I can tell you're not scared of me. So I'll let you in on something." 
+                        Rex "I got a plan for graduation day. A big event."
+                        menu:
+                            "A party?":
+                                pass
+                            "Something tells me you aren't throwing us a party...":
+                                pass
+                        Rex "You know that the Council's building a statue of Eileen, right? Can't imagine why. But I bet she's loving it." 
+                        Rex "All that glory for being the Council's pet. Well, I can't just let that happen. I'm going to blow it up before our graduation ceremony."
+                        menu:
+                            "You can't be serious...":
+                                Rex "I'm always serious."
+                                pass
+                            "You're building a {i}bomb{/i}?":
+                                Rex "Not a bomb... I'm not some psychopath wanting to hurt people. Well, most people."
+                                pass
+                        Rex "Eileen is everything I hate about mages. When I think about how miserable I was at the Scholomance, it always goes back to how much they controlled me." 
+                        Rex "Think about it: we'll be the mages that stood up to them. Are you in?"
+                        menu:
+                            "Yes, I'll help you.":
+                                Rex "I knew I liked you."
+                                $ Affection_Rex += 10
+                                Rex "Right, I've been building a few devices... One of them is a nifty bit of artifice I'm calling the Stonecutter."
+                                Rex "It's basically a big hammer... with blades..."
+                                Rex "I need to finish it, and to do that I need materials... which is why I've been trying to find a way out of the Summit."
+                                Rex "I can't leave. Eileen's watching me like a hawk... but she seems to barely notice you."
+                                Rex "Think you could run a few errands for me over the next few days? I'll tell you what I need in the mornings..."
+                                menu:
+                                    "I can do that.":
+                                        Rex "That's great."
+                                        pass
+                                    "It might be hard...":
+                                        Rex "Just whatever you can spare. It'll be worth it."
+                                        pass
+                                Rex "For this to work... I'll need the materials in three days."
+                                Rex "On graduation day, I'll cast the spell, activate the Artifice, and everyone will watch Eileen's legacy crumble." 
+                                Rex "One more thing. I'm trusting you not to rat me out to Eileen and Alice."
+                                $ Quest_RexProgress = True
+                                $ cinematic = True
+                                Narrator "You nod, feeling a mix of excitement and apprehension."
+                                $ cinematic = False
+                                Rex "I need to finish this up... mind if we chat more tomorrow? I've got a few things to run by you."
+                                menu:
+                                    "Sure.":
+                                        $ cinematic = True
+                                        Narrator "Rex smiles. You don't think you've seen him smile before."
+                                        Narrator "You leave him alone."
+                                        $ cinematic = False
+                                        jump Night2Choices_Menu
+
+                            "No, I don't agree with you.":
+                                Rex "I overestimated you. This conversation never happened."
+                                $ Quest_RexPlanRejected = True
+                                $ cinematic = True
+                                Narrator "He looks pissed. You leave him be."
+                                $ cinematic = False
+                                jump Night2Choices_Menu
+
+
+                    else:#Rex is busy.
+                        $ cinematic = True
+                        Narrator "You walk over to Rex's curtain... he says nothing but you hear the sound of metal scraping."
+                        $ cinematic = False
+                        menu:
+                            "Rex?":
+                                Rex "Kinda busy. Come back tomorrow."
+                                jump Night2Choices_Menu
+                            "(Leave)":
+                                jump Night2Choices_Menu
+
+
+
+                "(Talk to Melody)": #Melody is studying
+                    $ cinematic = True
+                    Narrator "Melody sits at the desk by her bed, surrounded by books and notes."
+                    $ cinematic = False
+                    menu:
+                        "(Ask what she's studying)":
+                            Melody "Oh, just some advanced spell theory. It's dry."
+                            Melody "Very, very dry. Five days to go..."
+                            Melody "That's how I stay motivated... counting days."
+                            Melody "I'm guessing you're not tired."
+                            menu:
+                                "Not particularly.":
+                                    Melody "Curfew is always a bit early... if you're anything like Rex or Xander... you can just sneak out, I suppose."
+                                    Melody "Must be scary, being out there at night."
+                                    Melody "Certainly not something I'll be doing. Plus, if Eileen catches them, they're good as dead."
+                                    Melody "..."
+                                    Melody "Okay, maybe not {i}dead{/i}..."
+                                    Melody "I'm rambling. Did you need something?"
+                                    menu:
+                                        "I have a few questions...":
+                                            call melodyhub_main
+                                            jump Night2Choices_Menu
+                                        "No. I'll head to bed now.":
+                                            jump Night2Choices_Menu
+                                "I'll be going to bed soon.":
+                                    Melody "Same here."
+                                    jump Night2Choices_Menu
+                        "(Leave)":
+                            jump Night2Choices_Menu
+
+                "(Talk to Xander)" if not Quest_XanderProgress:
+                    $ cinematic = True
+                    Narrator "You see that Xander's curtain is drawn."
+                    Narrator "You don't hear anything behind it."
+                    $ cinematic = False
+                    menu:
+                        "Xander?":
                             $ cinematic = True
-                            Narrator "He looks pissed. You leave him be."
+                            Narrator "You call out to Xander, but there's no response."
+                            Narrator "You wait a moment, but still nothing."
+                            Narrator "You part the curtain. He's gone. You wonder where."
                             $ cinematic = False
                             jump Night2Choices_Menu
 
-
-                else:#Rex is busy.
-                    $ cinematic = True
-                    Narrator "You walk over to Rex's curtain... he says nothing but you hear the sound of metal scraping."
-                    $ cinematic = False
-                    menu:
-                        "Rex?":
-                            Rex "Kinda busy. Come back tomorrow."
-                            jump Night2Choices_Menu
                         "(Leave)":
                             jump Night2Choices_Menu
 
 
-
-            "(Talk to Melody)": #Melody is studying
-                $ cinematic = True
-                Narrator "Melody sits at the desk by her bed, surrounded by books and notes."
-                $ cinematic = False
-                menu:
-                    "(Ask what she's studying)":
-                        Melody "Oh, just some advanced spell theory. It's dry."
-                        Melody "Very, very dry. Five days to go..."
-                        Melody "That's how I stay motivated... counting days."
-                        Melody "I'm guessing you're not tired."
-                        menu:
-                            "Not particularly.":
-                                Melody "Curfew is always a bit early... if you're anything like Rex or Xander... you can just sneak out, I suppose."
-                                Melody "Must be scary, being out there at night."
-                                Melody "Certainly not something I'll be doing. Plus, if Eileen catches them, they're good as dead."
-                                Melody "..."
-                                Melody "Okay, maybe not {i}dead{/i}..."
-                                Melody "I'm rambling. Did you need something?"
-                                menu:
-                                    "I have a few questions...":
-                                        call melodyhub_main
-                                        jump Night2Choices_Menu
-                                    "No. I'll head to bed now.":
-                                        jump Night2Choices_Menu
-                            "I'll be going to bed soon.":
-                                Melody "Same here."
-                                jump Night2Choices_Menu
-                    "(Leave)":
-                        jump Night2Choices_Menu
-
-            "(Talk to Xander)" if not Quest_XanderProgress:
-                $ cinematic = True
-                Narrator "You see that Xander's curtain is drawn."
-                Narrator "You don't hear anything behind it."
-                $ cinematic = False
-                menu:
-                    "Xander?":
-                        $ cinematic = True
-                        Narrator "You call out to Xander, but there's no response."
-                        Narrator "You wait a moment, but still nothing."
-                        Narrator "You part the curtain. He's gone. You wonder where."
-                        $ cinematic = False
-                        jump Night2Choices_Menu
-
-                    "(Leave)":
-                        jump Night2Choices_Menu
-
-
-            "(Sneak Out)":
-                $ cinematic = True
-                Narrator "You tiptoe your way into the corridor... hoping no one catches you."
-                $ cinematic = False
-                jump Night2SneakDecision
-            
-            "(Go to Sleep)":
-                $ cinematic = True
-                Narrator "You pull the covers over you, looking up at the ceiling as it lulls you to sleep."
-                Narrator "Moments after your eyes are closed, you fall asleep."
-                $ Day2Night = False
-                jump EndOfDemo
+                "(Sneak Out)":
+                    $ cinematic = True
+                    Narrator "You tiptoe your way into the corridor... hoping no one catches you."
+                    $ cinematic = False
+                    jump Night2SneakDecision
+                
+                "(Go to Sleep)":
+                    $ cinematic = True
+                    Narrator "You pull the covers over you, looking up at the ceiling as it lulls you to sleep."
+                    Narrator "Moments after your eyes are closed, you fall asleep."
+                    $ Day2Night = False
+                    jump EndOfDemo
+        else:
+            scene dormitory night
+            $ Location = "Dormitory"
+            $ cinematic = True
+            Narrator "You make it back to the dormitory unscathed."
+            Narrator "Everyone else seems to be sleeping."
+            Narrator "The only thing you can do without waking someone, or getting caught, is going to sleep."
+            Narrator "You close the curtain and pull the covers over you..."
+            Narrator "And drift off to sleep..."
+            $ cinematic = False
+            jump EndOfDemo
 
 
 label Night2SneakDecision:
@@ -5759,7 +5781,7 @@ label Night2ArtificingLab:
 
 
 
-label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked) #You can sabotague other crops 
+label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked)
     scene greenhouse night
     $ Location = "Greenhouse"
     $ cinematic = True
@@ -5814,19 +5836,161 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                 $ cinematic = False
                                 jump Night2Courtyard
 
-                        jump Night2Courtyard
-
                     "(No.)":
+                        $ cinematic = True
+                        Narrator "You step away from the hole. Maybe you'll come back later."
+                        $ cinematic = False
                         jump Night2Greenhouse_Choices
 
             
-            "(Inspect the Crops)":
+            "(Inspect the Crops)" if planted_seeds: #You can sabotague other crops 
+                $ cinematic = True
+                Narrator "You look over the crops, a few small plots of herbs and vegetables, all thriving under the magical light."
+                Narrator "All, but Xander's, who have been dug up and binned."
+                Narrator "You know you can't tend to your crops in the night. Someone will check them in the morning... so insted you just look over at them, watching them grow."
+                $ cinematic = False
+                menu:
+                    "(Inspect your Crops)":
+                        if planted_seeds = "Winged Jasmine":
+                            $ cinematic = True
+                            Narrator "You inspect your Winged Jasmine."
+                            $ cinematic = False
+                            if quality => 50:
+                                $ cinematic = True
+                                Narrator "It's thriving, it's blue and white colours seemingly silky smooth and untainted."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices
+                            else:
+                                $ cinematic = True
+                                Narrator "It seems to be wilting... You wonder why."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices
+
+                        if planted_seeds = "Snapjaw Orchid":
+                            $ cinematic = True
+                            Narrator "You inspect your Snapjaw Orchid."
+                            $ cinematic = False
+                            if quality => 50:
+                                $ cinematic = True
+                                Narrator "The pink, fleshy bits of it's {i}mouth{/i} seem to be developing well. You can tell it's healthy."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices
+                            else:
+                                $ cinematic = True
+                                Narrator "As you reach close to look at it, you notice it turn to try and grab your finger. That can't be a good sign."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices
+
+                        if planted_seeds = "Moon Melon":
+                            $ cinematic = True
+                            Narrator "You inspect your Moon Melon."
+                            $ cinematic = False
+                            if quality => 50:
+                                $ cinematic = True
+                                Narrator "You're suprised at how much it's grown... it's positively glowing and fragrant. You're sure it's healthy."
+                                $ cinematic = False 
+                                jump Night2Greenhouse_Choices
+                            else:
+                                $ cinematic = True
+                                Narrator "It seems to be wilting... You wonder why."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices
+
+                        if planted_seeds = "Sanguine Lily":
+                            $ cinematic = True
+                            Narrator "You inspect your Sanguine Lily."
+                            $ cinematic = False
+                            if quality => 50:
+                                $ cinematic = True
+                                Narrator "It's long tendrils have grown even more. As you look at it, it seems to glisten. You can tell it's healthy."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices
+                            else:
+                                $ cinematic = True
+                                Narrator "The ends of it's long tendrils are blackened... you know that's not a good sign."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices   
+                        else:
+                            jump Night2Greenhouse_Choices
+
+
+                    "(Leave)":
+                        if sabotagued_potions == False:
+                            Narrator "As you step away from the crops, a thought seems to manifest in your mind -- fully formed."
+                            Narrator "If there are only limited slots... why not play dirty?"
+                            Narrator "If your whole future is riding on this one week... you might as well..."      
+                            menu:
+                                "(Sabotage someone's crops)":
+                                    Narrator "Who should you sabotage?"
+                                    menu:
+                                        "(Melody)":
+                                            $ sabotaged_plants.append("Melody")
+                                            $ Flag_MelodyPlantSabotaged = True
+                                            $ cinematic = True
+                                            Narrator "You sneak over to Melody's plants, digging in the soil to cut the roots."
+                                            Narrator "You don't feel good about it... but sabotaging Melody feels like your best shot at scoring higher than her."
+                                            $ cinematic = False
+                                            jump Night2Greenhouse_Choices
+
+                                        "(Xander)":
+                                            $ sabotaged_plants.append("Xander")
+                                            $ Flag_XanderPlantSabotaged = True
+                                            Narrator "You sneak over to Xander's plants, digging in the soil to cut the roots."
+                                            Narrator "You don't really know why you did it... they're already dead."
+                                            jump Night2Greenhouse_Choices
+
+                                        "(Aria)":
+                                            $ sabotaged_plants.append("Aria")
+                                            $ Flag_AriaPlantSabotaged = True
+                                            $ cinematic = True
+                                            Narrator "You sneak over to Aria's plants, digging in the soil to cut the roots."
+                                            Narrator "You get the feeling they'll grow back."
+                                            $ cinematic = False
+                                            jump Night2Greenhouse_Choices
+
+                                        "(Rex)":
+                                            $ sabotaged_plants.append("Rex")
+                                            $ Flag_RexPlantSabotaged = True
+                                            $ cinematic = True
+                                            Narrator "You sneak over to Rex's plants, digging in the soil to cut the roots."
+                                            Narrator "Rex isn't much of a threat, but sabotaging him will ensure he has better things on his mind."
+                                            $ cinematic = False
+                                            jump Night2Greenhouse_Choices
+
+                                        "(Tao)":
+                                            $ sabotaged_plants.append("Tao")
+                                            $ Flag_TaoPlantSabotaged = True
+                                            $ cinematic = True
+                                            Narrator "You sneak over to Tao's plants, digging in the soil to cut the roots."
+                                            Narrator "You don't feel good about it, but sabotaging Tao's feels like your best option."
+                                            $ cinematic = False
+                                            jump Night2Greenhouse_Choices
+
+                                        "(Nevermind)":
+                                            $ cinematic = True
+                                            Narrator "Almost as quickly as the thought materialised in your mind, it vanishes."
+                                            Narrator "What were you thinking?"
+                                            $ cinematic = False
+                                            jump Night2Greenhouse_Choices
+                                
+                        else:
+                            "(Leave)":
+                                $ cinematic = True
+                                Narrator "You leave your plants be."
+                                $ cinematic = False
+                                jump Night2Greenhouse_Choices
 
             "(Investigate the {b}Greenhouse{/b})":
                 $ cinematic = True
                 Narrator "You inspect the greenhouse, the smells sticking out more here than they do anywhere else in the Summit."
                 Narrator "You move up to the tree, feeling a surge of magic around it. You know that the tree is sentient, but it doesn't speak to you."
                 Narrator "It barely seems to acknowldge you."
+                Narrator "The rest of the greenhouse is tall flowers, wild grass, and carefully segmented crop areas, with bags of seeds stored away in cupboards dotting the edge of the room."
+                Narrator "There was nothing this complex in the Scholomance. You learned botany with imported plants, teleported in by stern looking mages in strict uniforms, who seemed to look at you with distain."
+                Narrator "What was there would grow under an artificial sun, something akin to the moons, but far less elegant. Like the harsh bulbs imported from the neighbouring country of Cerulia, where magic is outlawed."
+                Narrator "You feel the magic in your body resonating with that of the tree, with that of the flowers and crops... Everything smells like honey, but you can't remember the last time you saw bees."
+                Narrator "You realise, with a pang, that you're longing for something that you're sure no longer exists."
+                Narrator "You should distract yourself with something else."
                 $ cinematic = False
                 jump Night2Greenhouse_Choices
 
@@ -5842,9 +6006,79 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
 label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlocked)
     scene courtyard night
     $ Location = "Courtyard"
-    jump Night2Forest
+    $ cinematic = True
+    $ Night2Explored = True
+    Narrator "You emerge from the tunnel, batting away the branches that were concealing it. You stand a few steps into the forest, from here you can look out and see the full scale of the summit."
+    Narrator "It seems so bright, even in the dark. You can see lights in the window of the dormitory. From here you can even make out the faux moons in the Atrium."
+    Narrator "As you walk into the Courtyard you find yourself looking out through the clearing, over the mountain. The sky is filled with a million stars, all twinkling for you."
+    Narrator "You haven't been outside in the night, looking up at the stars since your magic first manifested. You feel freedom."
+    Narrator "You feel small. A whole universe above you but here you are, stuck on a mountain..."
+    $ cinematic = False
+    jump Night2Courtyard_Choices:
+
+    label Night2Courtyard_Choices:
+        scene courtyard night
+        $ Location = "Courtyard"
+        Narrator "You wonder what you should do..."
+        menu:
+            "(Enter the Forest)":
+                $ cinematic = True
+                Narrator "With no one to stop you, you enter the forest..."
+                $ cinematic = False
+                jump Night2Forest
+            
+            "(Go back inside through the tunnel)":
+                $ cinematic = True
+                Narrator "You've seen enough... time to head back."
+                scene corridor night
+                Narrator "As you make your way to your room, you see Eileen in the hallway... she doens't see you."
+                Narrator "It's too risky to stay out."
+                Narrator "You go back to your room."
+                $ cinematic = False
+                jump Night2Choices_Menu
+
+
+
 
 label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can find the Doll and agree to sacrifice a classmate.
+    scene forest night
+    $ Location = "Forest"
+    $ cinematic = True
+    Narrator "You step into the forest, the trees towering above you, their leaves whispering secrets in the night breeze. You ignite a light in your hand and let it hover above your shoulder."
+    Narrator "The ground is thick with folliage, you watch your step as you move through it." 
+    Narrator "As you do, you notice that something else has already made a path -- with crushed branches and disturbed bushes making your progress easier."
+    Narrator "A trail for you to follow."
+    $ cinematic = False
+    jump Night2Forest_Choices
+
+    label Night2Forest_Choices:
+        scene forest night
+        $ Location = "Forest"
+        $ cinematic = True
+        Narrator "You wonder what you should do..."
+        $ cinematic = False
+        menu:
+            "(Go back)":
+                $ cinematic = True
+                Narrator "You decide to go back. The forest doesn't seem too safe to explore..."
+                $ cinematic = False
+                jump Night2Courtyard_Choices
+
+            "(Follow the Trail)" #leads to the ent place Aria ends up. Nice clearning, big sleeping trees.
+
+            "(Go off the beaten path)" #leads to the doll.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5898,7 +6132,6 @@ label BTAO20: #Tao Dormitory Night 0
                             "(Leave Tao be.)":
                                 return
             else:
-
                 Tao "What in the Saints would give you that impression? I'm about to sleep. Shoo."
                 $ cinematic = True
                 Narrator "Tao sits back in their chair, clearly unwilling to talk."
