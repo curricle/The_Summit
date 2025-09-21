@@ -5763,13 +5763,78 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
     scene greenhouse night
     $ Location = "Greenhouse"
     $ cinematic = True
-    Narrator ""
+    Narrator "You enter the {b}Greenhouse{/b}, moonlight filtering through the painted skylight, revealing the unshaded nooks in a dreamlike view."
+    Narrator "You see the crops, some turning to your light as you approach. It flickers the closer you get to the tree, as though the magic in the room belongs only to him."
     $ cinematic = False
-    if Flag_GreenhouseTunnelUnlocked:
+    jump Night2Greenhouse_Choices
 
-    else:
+    label Night2Greenhouse_Choices:
+        Narrator "You wonder what you should do..."
+        menu:
+            "(Inspect the Tunnel)" if Flag_GreenhouseTunnelUnlocked:
+                $ cinematic = True
+                Narrator "You peer into the hole... the roots moving just enough for a person to descend through."
+                Narrator "Other than running water, there's only silence below it."
+                if Flag_NotAliceMet:
+                    Narrator "You hope you don't see the doll down here."
+                else:
+                    pass
+                Narrator "Do you want to enter?"
+                $ cinematic = False
+                menu:
+                    "(Yes.)":
+                        scene tunnel night
+                        $ cinematic = True
+                        Narrator "You step into the tunnel, the air growing cooler and damper as you proceed."
+                        Narrator "The faint sound of dripping water echoes around you."
+                        Narrator "As your light ignites fully, you can see the tunnel around you... Stone slabs jutted at odd angles to make up a circular tunnel."
+                        Narrator "Along the floor, you notice running water -- clean and clear... but also slightly warm."
+                        Narrator "Whatever spring they emerge from must be close... you follow the flow of the water and let it lead you."
+                        Narrator "After a few minutes of walking, you look up to see moonlight. The faux moons in the Atrium spin and rotate above you through a small, head-sized, grate."
+                        Narrator "You know the courtyard is ahead of you. You follow the water for a long while until you see collapsed stone."
+                        Narrator "The tunnel is split, to your right there's a small area that seems to descend down the mountain, and to your right, moonlight pouring through the rubble at a climable angle."
+                        $ cinematic = False
+                        menu:
+                            "(Left)":
+                                $ cinematic = True
+                                Narrator "You look at the hole... it seems to tight for you to squeeze through."
+                                $ cinematic = False
+                                menu:
+                                    "(Go Right)":
+                                        $ cinematic = True
+                                        Narrator "You approach the rubble, the moonlight illuminating the way."
+                                        Narrator "You clamber up the rubble, your hands dirty with dust."
+                                        $ cinematic = False
+                                        jump Night2Courtyard
 
-    jump Night2Courtyard
+                            "(Right)":
+                                $ cinematic = True
+                                Narrator "You approach the rubble, the moonlight illuminating the way."
+                                Narrator "You clamber up the rubble, your hands dirty with dust."
+                                $ cinematic = False
+                                jump Night2Courtyard
+
+                        jump Night2Courtyard
+
+                    "(No.)":
+                        jump Night2Greenhouse_Choices
+
+            
+            "(Inspect the Crops)":
+
+            "(Investigate the {b}Greenhouse{/b})":
+                $ cinematic = True
+                Narrator "You inspect the greenhouse, the smells sticking out more here than they do anywhere else in the Summit."
+                Narrator "You move up to the tree, feeling a surge of magic around it. You know that the tree is sentient, but it doesn't speak to you."
+                Narrator "It barely seems to acknowldge you."
+                $ cinematic = False
+                jump Night2Greenhouse_Choices
+
+            "(Leave the {b}Greenhouse{/b})":
+                $ cinematic = True
+                Narrator "You decide to leave the Greenhouse, the smell of flowers and dew evaporating as you close the door behind you."
+                $ cinematic = False
+                jump Night2SneakDecision
 
 
 
@@ -5777,7 +5842,6 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
 label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlocked)
     scene courtyard night
     $ Location = "Courtyard"
-
     jump Night2Forest
 
 label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can find the Doll and agree to sacrifice a classmate.
