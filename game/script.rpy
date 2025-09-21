@@ -102,6 +102,7 @@ define TeachersLounge = False #you have discovered the teachers lounge. a new ro
 
 ### Archive Opened ###
 define ArchiveOpened = False # the archive is opened -- a new location for future episodes.
+####
 
 define Flag_LockBreakerNeeded = False #player is alerted that they need a lockbreaker to break the lock.
 define Flag_PotionNotStolen = False #player has decided not to steal something.
@@ -109,7 +110,7 @@ define Flag_LockBreakerUsed = False #Player has used the lockbreaker, leading to
 define Flag_GreenhouseTunnel = False #Player has found out that there's a tunnel covered by roots that leads outside.
 define Flag_GreenhouseTunnelUnlocked = False #The tunnel is unlocked and can be used via the Greenhouse starting at Night 2.
 define Flag_XanderPoisoned = False # You've found out that Xander's plants were poisoned.
-
+define Flag_ForestDiscovered = False #The player can access the forest on night2.
 # Spells
 define Spell_Light = False
 define Spell_Unlocking = False
@@ -5695,17 +5696,6 @@ label Night2Archive: #Xander quest.
 
 
 
-label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked) #You can sabotague other crops #You can find the Doll and agree to sacrifice a classmate.
-    scene greenhouse night
-    $ Location = "Greenhouse"
-    $ cinematic = True
-    Narrator ""
-    $ cinematic = False
-    jump Night2Courtyard
-
-
-
-
 label Night2AlchemyLab: #Locked
     scene alchemy lab night
     $ cinematic = True
@@ -5769,10 +5759,28 @@ label Night2ArtificingLab:
 
 
 
+label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked) #You can sabotague other crops 
+    scene greenhouse night
+    $ Location = "Greenhouse"
+    $ cinematic = True
+    Narrator ""
+    $ cinematic = False
+    if Flag_GreenhouseTunnelUnlocked:
+
+    else:
+
+    jump Night2Courtyard
+
+
+
 
 label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlocked)
+    scene courtyard night
+    $ Location = "Courtyard"
 
+    jump Night2Forest
 
+label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can find the Doll and agree to sacrifice a classmate.
 
 
 
