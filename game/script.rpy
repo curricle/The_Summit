@@ -15,7 +15,7 @@ define NotAlice = Character("NotAlice")
 define Narrator = Character("")
 
 # List of possible locations (optional, for reference)
-define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge")
+define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge", "Archive", "Teacher's Lounge")
 default Location = "Dormitory"
 # Variable to track the player's current location
 
@@ -90,12 +90,18 @@ define Flag_Afternoon2Tao = False #Player hasn't yet spoken to Tao on Afternoon 
 define Afternoon2CourtyardVisited = False #player hasn't heard the conversation between Aria and Alice.
 define Afternoon2ArtificingLabVisited = False # player hasn't visited the Artificing Lab on Afternoon2
 define Afternoon2Aria = False #the player spoke to Aria on Day2 in the Courtyard
+define Night2AtriumVisited = False #the player visited the atrium and saw the porcelain fragments.
+
 
 # Teachers Lounge Discovery
 define Flag_TeachersLoungeQuestioned = False # the player has questioned where Eileen and Alice stay.
 define Flag_DiscoveredTeachersLounge = False #You have been told about the Teachers lounge.
+define TeachersLounge = False #you have discovered the teachers lounge. a new room to access in the next episodes.
+##### I had an idea that the way Eileen gets into the Archives is through the Teacher's lounge. It's not explained to the player but they can test it out.
 
 
+### Archive Opened ###
+define ArchiveOpened = False # the archive is opened -- a new location for future episodes.
 
 define Flag_LockBreakerNeeded = False #player is alerted that they need a lockbreaker to break the lock.
 define Flag_PotionNotStolen = False #player has decided not to steal something.
@@ -5348,13 +5354,13 @@ label Night2SneakDecision:
         Narrator "You wonder where you should explore..."
         $ cinematic = False
         menu:
-            "(Go to the {b}Library{/b})":
+            "(Go to the {b}Library{/b})" if not Quest_XanderComplete:
                 jump Night2Library
 
             "(Go to the {b}Alchemy Lab{/b})":
                 jump Night2AlchemyLab
 
-            "(Go to the {b}Atrium{/b})":
+            "(Go to the {b}Atrium{/b})" if not Night2AtriumVisited:
                 if Flag_NotAliceMet:
                     jump Night2Atrium
 
@@ -5371,7 +5377,10 @@ label Night2SneakDecision:
                 jump Night2TeachersLounge
 
             "(Return to the {b}Dormitory{/b})":
-                jump Night2DecisionMenu
+                $ cinematic = True
+                Narrator "You decide to return to your room..."
+                $ cinematic = False
+                jump Night2Choices_Menu
 
     else:
         $ cinematic = True
@@ -5387,24 +5396,399 @@ label Night2SneakDecision:
 
 label Night2Atrium: #the thing isn't there. The moons are wacky. You find a shattered porcelain hand by the moons.
     $ cinematic = True
-    Narrator "The atrium is eerily quiet, the usual sounds of nature replaced by an unsettling stillness."
-    Narrator "You glance up at the moons, their shapes distorted and swirling in the sky."
+    $ Location = "Atrium"
+    Narrator "The atrium is eerily quiet, the usual sounds of water replaced by an unsettling stillness."
+    Narrator "You glance up at the moons, their shapes distorted and swirling in the air..."
+    Narrator "As you look around, you notice something glinting on the ground near the base of the moons."
+    Narrator "You step closer, keeping an eye on the grate to make sure that nothing is below it."
+    Narrator "You lean over and see a shattered porcelain hand lying on the ground. Little splinters scattered and broken."
+    Narrator "It's clear the doll reached through the grate... and something cut it off."
+    Narrator "You decide to leave the Atrium."
     $ cinematic = False
-    return
+    $ Night2AtriumVisited = True
+    jump Night2SneakDecision
+    
 
 label Night2Atrium: #same as before except this time you don't look under the grates. You find a shattered porcelain hand by the moons.
+    $ cinematic = True
+    $ Location = "Atrium"
+    Narrator "The atrium is eerily quiet, the usual sounds of water replaced by an unsettling stillness."
+    Narrator "You glance up at the moons, their shapes distorted and swirling in the air..."
+    Narrator "As you look around, you notice something glinting on the ground near the base of the moons."
+    Narrator "You step closer."
+    Narrator "You lean over and see a fragments of some sort lying on the ground. Little pale splinters scattered and broken, as though a vase has dropped.."
+    Narrator "You feel unsettled..."
+    Narrator "You decide to leave the Atrium."
+    $ cinematic = False
+    $ Night2AtriumVisited = True
+    jump Night2SneakDecision
+    
 
 label Night2Library: #Quest_XanderProgress Xander is waiting for you to break into the Archives. Eileen is in the Archives waiting for him.
+    scene library night
+    $ Location = "Library"
+    $ cinematic = True
+    Narrator "You arrive at the Library... a heavy light filters beneath the doorway. As you open it, you see Xander."
+    $ cinematic = False
+    if Quest_XanderProgress:
+        Xander "You came! Hey!"
+        menu:
+            "You sound surprised.":
+                pass
+        Xander "I'm... I'm a little surprised. I thought you might chicken out. It kinda dawned on me that I'm asking for a lot."
+        Xander "But... I'm glad you came. I really need the help."
+        $ cinematic = True
+        Narrator "He moves over to the Archives door. Even in the darkness you can make out the great lock."
+        $ cinematic = False
+        Xander "Any ideas on how to get it open?"
+        menu:
+            "I know how to open it.." if Flag_ArchivesArtifice_Xander:
+                $ cinematic = True
+                Narrator "You tell Xander that you already asked Rex how to break this piece of artifice."
+                Narrator "Xander looks oddly annoyed as you explain it."
+                $ cinematic = False
+                Xander "He called me a twerp... that sucks. But it's good to know I can just... break it."
+                Xander "Guess I'll try that."
+                $ cinematic = True
+                Narrator "Xander places his hands together and closes his eyes. Without even a whisper of a spell, static forms between his fingertips."
+                Narrator "You can smell his hair beginning to singe as electricity crackles between his palms, growing and growing into a flurry of chaotic bolts."
+                Narrator "He reaches forward and grasps the lock... it bursts open, unraveling like a tightrope cut loose. The chain fractures and falls to the ground with a heavy thud."
+                Narrator "After a long moment, Xander takes a breath, letting his magic dissipate. His eyes are bright blue, as though the heat is still captured in his irises."
+                $ cinematic = False
+                Xander "Okay. Let's go in."
+                menu:
+                    "(Enter the Archive)":
+                        jump Night2Archive
+
+            "Have you tried hitting it?":
+                Xander "I've tried hitting it... That's usually the first thing I do. First I hit then I shock it. Do you think that'd work?"
+                menu:
+                    "It might.":
+                        Xander "Alright, I guess... I'll give it a shot."
+                        $ cinematic = True
+                        Narrator "Xander places his hands together and closes his eyes. Without even a whisper of a spell, static forms between his fingertips."
+                        Narrator "You can smell his hair beginning to singe as electricity crackles between his palms, growing and growing into a flurry of chaotic bolts."
+                        Narrator "He reaches forward and grasps the lock... it bursts open, unraveling like a tightrope cut loose. The chain fractures and falls to the ground with a heavy thud."
+                        Narrator "After a long moment, Xander takes a breath, letting his magic dissipate. His eyes are bright blue, as though the heat is still captured in his irises."
+                        $ cinematic = False
+                        Xander "Okay. Let's go in."
+                        menu:
+                            "(Enter the Archive)":
+                                jump Night2Archive
+            
+            "There's probably some spell we don't know...":
+                Xander "I doubt it. If that was so, Tao or Melody or, well, someone would've already gotten in."
+                Xander "I was thinking of just brute forcing it. It's not refined, and Eileen will launch her own investigation and I'll definitely get caught... but what other options do I have?"
+                menu:
+                    "Just hit it.":
+                        Xander "Don't need to tell me twice."
+                        $ cinematic = True
+                        Narrator "Xander places his hands together and closes his eyes. Without even a whisper of a spell, static forms between his fingertips."
+                        Narrator "You can smell his hair beginning to singe as electricity crackles between his palms, growing and growing into a flurry of chaotic bolts."
+                        Narrator "He reaches forward and grasps the lock... it bursts open, unraveling like a tightrope cut loose. The chain fractures and falls to the ground with a heavy thud."
+                        Narrator "After a long moment, Xander takes a breath, letting his magic dissipate. His eyes are bright blue, as though the heat is still captured in his irises."
+                        $ cinematic = False
+                        Xander "Okay. Let's go in."
+                        menu:
+                            "(Enter the Archive)":
+                                jump Night2Archive
+
+    else:
+        Xander "What are you doing here?"
+        menu:
+            "Exploring...":
+                Xander "Well... unless you want to be dragged into something, I'd suggest exploring somewhere else."
+                menu:
+                    "What are you doing?":
+                        Xander "Breaking into the Archives... if I want to salvage my grade after I messed up my crops this is the only way."
+                        menu:
+                            "Need help?":
+                                Xander "Really? You'd help? That's a relief. I have no clue how to break this lock."
+                                $ cinematic = True
+                                Narrator "Xander moves over to the lock on the Archive door."
+                                $ cinematic = False
+                                menu:
+                                    "I do." if Flag_ArchivesArtifice_Xander:
+                                        $ cinematic = True
+                                        Narrator "You tell Xander that by some miracle, you already asked Rex how to break this piece of artifice."
+                                        Narrator "Xander looks oddly annoyed as you explain it."
+                                        $ cinematic = False
+                                        Xander "He called me a twerp... that sucks. But it's good to know I can just... break it."
+                                        Xander "Guess I'll try that."
+                                        $ cinematic = True
+                                        Narrator "Xander places his hands together and closes his eyes. Without even a whisper of a spell, static forms between his fingertips."
+                                        Narrator "You can smell his hair beginning to singe as electricity crackles between his palms, growing and growing into a flurry of chaotic bolts."
+                                        Narrator "He reaches forward and grasps the lock... it bursts open, unraveling like a tightrope cut loose. The chain fractures and falls to the ground with a heavy thud."
+                                        Narrator "After a long moment, Xander takes a breath, letting his magic dissipate. His eyes are bright blue, as though the heat is still captured in his irises."
+                                        $ cinematic = False
+                                        Xander "Okay. Let's go in."
+                                        menu:
+                                            "(Enter the Archive)":
+                                                jump Night2Archive
+
+                                    "Have you tried hitting it?":
+                                        Xander "I've tried hitting it... That's usually the first thing I do. First I hit then I shock it. Do you think that'd work?"
+                                        menu:
+                                            "It might.":
+                                                Xander "Alright, I guess... I'll give it a shot."
+                                                $ cinematic = True
+                                                Narrator "Xander places his hands together and closes his eyes. Without even a whisper of a spell, static forms between his fingertips."
+                                                Narrator "You can smell his hair beginning to singe as electricity crackles between his palms, growing and growing into a flurry of chaotic bolts."
+                                                Narrator "He reaches forward and grasps the lock... it bursts open, unraveling like a tightrope cut loose. The chain fractures and falls to the ground with a heavy thud."
+                                                Narrator "After a long moment, Xander takes a breath, letting his magic dissipate. His eyes are bright blue, as though the heat is still captured in his irises."
+                                                $ cinematic = False
+                                                Xander "Okay. Let's go in."
+                                                menu:
+                                                    "(Enter the Archive)":
+                                                        jump Night2Archive
+                                    
+                                    "There's probably some spell we don't know...":
+                                        Xander "I doubt it. If that was so, Tao or Melody or, well, someone would've already gotten in."
+                                        Xander "I was thinking of just brute forcing it. It's not refined, and Eileen will launch her own investigation and I'll definitely get caught... but what other options do I have?"
+                                        menu:
+                                            "Just hit it.":
+                                                Xander "Don't need to tell me twice."
+                                                $ cinematic = True
+                                                Narrator "Xander places his hands together and closes his eyes. Without even a whisper of a spell, static forms between his fingertips."
+                                                Narrator "You can smell his hair beginning to singe as electricity crackles between his palms, growing and growing into a flurry of chaotic bolts."
+                                                Narrator "He reaches forward and grasps the lock... it bursts open, unraveling like a tightrope cut loose. The chain fractures and falls to the ground with a heavy thud."
+                                                Narrator "After a long moment, Xander takes a breath, letting his magic dissipate. His eyes are bright blue, as though the heat is still captured in his irises."
+                                                $ cinematic = False
+                                                Xander "Okay. Let's go in."
+                                                menu:
+                                                    "(Enter the Archive)":
+                                                        jump Night2Archive
+
+
+                            "You're going to get shipped off to the Scholomance. Good luck.":
+                                Xander "I know! I know. Maybe I'll see you there."
+                                menu:
+                                    "I'd hope not.":
+                                        $ cinematic = True
+                                        Narrator "You turn around and leave. It's probaby best to avoid... whatever it is he's doing."
+                                        $ cinematic = False
+                                        jump Night2SneakDecision
+                                    "...":
+                                        $ cinematic = True
+                                        Narrator "You turn around and leave. It's probaby best to avoid... whatever it is he's doing."
+                                        $ cinematic = False
+                                        jump Night2SneakDecision
+                    
+                    "I'd rather not get dragged into something...":
+                        $ cinematic = True
+                        Narrator "You turn around and leave. It's probaby best to avoid... whatever it is he's doing."
+                        $ cinematic = False
+                        jump Night2SneakDecision
+
+
+label Night2Archive: #Xander quest.
+    scene archive night
+    $ Location = "Archive"
+    $ ArchiveOpened = True
+    $ cinematic = True
+    Narrator "As you pass through the threshold, your lights extinguish."
+    Narrator "You remember a spell in the Scholomance which did that -- a whole room sealed from mana such that no one could cast spells inside."
+    Narrator "You feel the overwhelming pressence of it. Or more so a lack of it. As though you're in a perfectly silent room where even your voice is muted."
+    Narrator "With no residual light, you struggle to move, your footsteps colliding with eachother as you move through the darkness."
+    $ cinematic = False
+    Xander "I can't believe we did it... I need to find a light, I can't see my feet in here."
+    $ cinematic = True
+    Narrator "You trip on something, but regain your balance before you hit the ground by hanging on to a shelf. As you stand, you feel a switch."
+    $ cinematic = False
+    Eileen "Allow me to help you with that."
+    $ cinematic = True
+    Narrator "A dim light switches on, revealing the makeup of the room, along with Eileen, who is seated, rather sternly, on a velvet red chaise lounge with a half-read book on her lap."
+    Narrator "You notice the blanket, tossed hastily aside beneath a tall wall of books. It's clear she was sleeping."
+    $ cinematic = False
+    Xander "Fuck."
+    menu:
+        "Language...":
+            $ cinematic = True
+            Narrator "Eileen sighs, rubbing the bridge betweewn her eyes with her finger and thumb."
+            $ cinematic = False
+            pass
+        "Fuck.":
+            Eileen "Indeed."
+            pass
+    $ cinematic = True
+    Narrator "As your eyes adjust to the light... you see her compose herself, standing up straight and placing the book she was reading on the coffee-table before her."
+    $ cinematic = False
+    Eileen "You both know that nobody is supposed to be in here. Just, you know, cards on the table."
+    Eileen "Not only is it past curfew, but you've managed to break a perfectly good lock."
+    Eileen "..."
+    Eileen "It {i}was{/i} locked, wasn't it?"
+    Xander "It's not locked... right now..."
+    Xander "Are you supposed to be in here?"
+    Eileen "None of your business. The reason I'm here is--"
+    Eileen "Oh, sod it. I needed some peace and quiet from you lot. What are you doing in here?"
+    Xander "Honestly? Cards on the table... I needed some extra time. My crops died, you see, and--"
+    Eileen "Right, right... you realise they got poisoned, don't you?"
+    Xander "I... did not."
+    Xander "I thought if I got in here, I'd find a way to salvage my grade. I can't get my head around the exam material. I really need it."
+    Xander "You're failing me on the spot, aren't you. Just... please don't punish my friend, I dragged them into it. They didn't even want to be here I just needed--"
+    Eileen "Please be quiet, I've got quite the headache."
+    Xander "Sorry, ma'am."
+    Eileen "Do not call me that."
+    Xander "Sorry..."
+    $ cinematic = True
+    Narrator "Eileen takes a long breath."
+    $ cinematic = False
+    Eileen "The academic side of Magecraft is never as straightforward as you'd like. Not like combat, at least."
+    Eileen "You know. The place where a hit is a hit and a miss is a miss. You get bloody or you bloody someone up. Simple things. Win or lose."
+    Eileen "That's more your world, isn't it."
+    Xander "I-- yes. That's exactly how I feel. Enchantments don't work how I want. I can barely brew a potion. And my last Artifice tried to kill me. I'm horrible."
+    Xander "I'm completely useless at being a Mage. If I'm honest, I don't even know how to read runes, I just sound them out and hope it goes well."
+    Eileen "Mages can't choose their gifts." 
+    Eileen "For example, if one were to break into a locked room at night, one that had the potential to utterly ruin a thousand year old Artifice must be quite gifted in breaking things."
+    menu:
+        "Uhh...":
+            pass
+    Eileen "Xander, your path begins when you understand your strength. I must admit that potion craft and artifice were never things I excelled in..." 
+    Eileen "... I killed my crops on purpose out of boredom. Combat is what I excelled in, and that's brought me to where I am today."
+    Xander "Really? Did you fail all of your final exams?"
+    Eileen "Don't pry... what I'm saying is there is far more to being a Mage than getting top marks. The council needs pupils with combat talent..."
+    Eileen "Nevertheless... you two have the opportunity to turn around, head back to your dormitory and I will forget what transpired here."
+    Xander "Thank you."
+    menu:
+        "How did you get in here? The lock was bolted.":
+            Eileen "I thought I told you not to pry."
+            pass
+        "Thank you.":
+            pass
+    $ cinematic = True
+    Narrator "Eileen flicks her hand, as though you were servants she was dispatching."
+    Narrator "Xander drags you by the arm, and pulls you back into the library."
+    Narrator "Before you close the door, you hear her words:" 
+    $ cinematic = False
+    Eileen "Not a word that either of us were in here to Alice."
+    $ cinematic = True
+    Narrator "The door closes. Xander summons a cold blue light to illuminate both of your faces."
+    Narrator "He's pale. You are too."
+    $ cinematic = False
+    Xander "That was..."
+    Xander "That was intense."
+    Xander "Thanks for helping me out. I owe you one."
+    $ Affinity_Xander += 20
+    $ Quest_XanderComplete = True
+    $ Quest_XanderProgress = False
+    Xander "I think I'm going to head back to the dorm... I need some sleep. Are you coming with?"
+    menu:
+        "Yes.":
+            $ cinematic = True
+            Narrator "Xander leads you back. The whole time you can feel your heart beating."
+            Narrator "He's silent, as though deep in thought."
+            Narrator "Despite not getting any studying done, he seems happier. As though he's finally seen some light at the end of a dark tunnel."
+            $ cinematic = False
+            jump Night2Choices_Menu
+
+        "I have other stuff to do.":
+            Xander "Well, take care."
+            $ cinematic = True
+            Narrator "Xander leads you to the corridor, where you go your seperate ways."
+            $ cinematic = False
+            jump Night2SneakDecision
+
+ 
+
+    
+
+
+
 
 label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked) #You can sabotague other crops #You can find the Doll and agree to sacrifice a classmate.
+    scene greenhouse night
+    $ Location = "Greenhouse"
+    $ cinematic = True
+    Narrator ""
+    $ cinematic = False
+    jump Night2Courtyard
+
+
+
 
 label Night2AlchemyLab: #Locked
+    scene alchemy lab night
+    $ cinematic = True
+    $ Location = "Corridor"
+    Narrator "You approach the Alchemy Lab and twist the handle."
+    Narrator "It's locked."
+    if Spell_Unlocking:
+        Narrator "You try to unlock it with a spell... it doesn't seem to do anything. The door unlocks but doesn't move... perhaps something is blocking it."
+        pass
+    else:
+        pass
+    Narrator "You decide to leave it alone."
+    $ cinematic = False
+    jump Night2SneakDecision
 
-label Night2ArtificingLab: #Rex is there, being yelled at by Alice. 
+
+
+label Night2ArtificingLab:
+    scene artificing lab night
+    $ Location = "Artificing Lab"
+    $ cinematic = True
+    Narrator "You sneak into the {b}Artificing Lab{/b}. Dusty workstations and half-finished projects litter the room."
+    Narrator "It smells like solder and smoke. The thin windows overlook a forest that is oddly bright under moonlight. You can't help but look out."
+    Narrator "You look at the tools littered about, left by whoever was last here."
+    $ cinematic = False
+    jump Night2ArtificingLab_Choices
+
+    label Night2ArtificingLab_Choices:
+        $ cinematic = True
+        Narrator "You wonder what you should do."
+        $ cinematic = False
+        menu:
+            "(Search the Lab)":
+                if Flag_LockBreakerNeeded == True:
+                    call Night1ArtificingLab_SearchLock
+                    return
+
+                else:
+                    call Night1ArtificingLab_Search
+                    return
+                
+            "(Look for Machine Parts)" if artifice_options:
+                call Night2ArtificingLab_MachinePart
+                return
+
+                label Night2ArtificingLab_MachinePart:
+                    $ cinematic = True
+                    Narrator "You search through the lab for any machine parts. Your [artifice_options] creation doesn't need much, but it doens't help to look."
+                    Narrator "You find a small hammer beside some refined, malleable metal."
+                    Narrator "You pick them both up and place them in your bag."
+                    Narrator "You also find a few scraps of wire and a small gear."
+                    Narrator "You add those to your bag as well."
+                    $ cinematic = False
+                    $ Flag_ArtificeParts = True
+                    $ Flag_HammerAcquired = True
+                    return
+
+            "(Leave the {b}Artificing Lab{/b})":
+                jump Night2SneakDecision
+
+
+
+
 
 label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlocked)
 
-label Night2Dormitory: #Xander isn't there. Rex isn't there. Melody is sleeping early. Aria is staring out the window, saying something is watching her. Tao is stressed out.
+
+
+
+
+label Night2TeachersLounge: #player cannot enter because it's locked and has teachers in it, but it's now an option in future.
+    scene corridor night
+    $ Location = "Corridor"
+    $ cinematic = True
+    Narrator "Beside the Library, you see a small staircase. At the top, is an old, blue door."
+    Narrator "The {b}Teachers Lounge{/b}."
+    Narrator "You shouldn't knock. Whoever is in there would surely catch you."
+    Narrator "Taking note of it, you decide to leave it be."
+    $ cinematic = False
+    $ TeachersLounge = True
+    jump Night2SneakDecision
+
+
 
 
 label EndOfDemo:
