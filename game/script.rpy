@@ -4543,7 +4543,7 @@ label Afternoon2Dorms:#Melody is in the dorms, she feels a bit under the weather
     Narrator "After a few moments, you see Melody emerge from behind her bed curtain."
     $ Location = "Dormitory"
     $ cinematic = False
-    jump Afternoon2Dorms_Choices:
+    jump Afternoon2Dorms_Choices
     
     label Afternoon2Dorms_Choices:
         $ cinematic = True
@@ -4634,12 +4634,12 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
     label Afternoon2AlchemyLab_Choices:
         menu:
             "(Talk to Tao)":
-                if Flag_Afternoon2Tao = False
-                $ cinematic = True
-                Narrator "You approach Tao, who doesn't look up from their work."
-                Narrator "As you step closer, you see the pot bubble up."
-                Narrator "It splashes, catching Tao's sleeve."
-                $ cinematic = False
+                if Flag_Afternoon2Tao == False:
+                    $ cinematic = True
+                    Narrator "You approach Tao, who doesn't look up from their work."
+                    Narrator "As you step closer, you see the pot bubble up."
+                    Narrator "It splashes, catching Tao's sleeve."
+                    $ cinematic = False
                 $ Flag_Afternoon2Tao = True
                 Tao "Crap!"
                 Tao "Damn it, damn it, damn it!"
@@ -5055,85 +5055,86 @@ label Afternoon2Courtyard:
     jump Afternoon2Courtyard_Choices
 
     label Afternoon2Courtyard_Choices:
-        "(Talk to Aria)":
-            if Afternoon2Aria = False:
-                $ cinematic = True
-                Narrator "You approach Aria, who seems lost in thought."
-                $ cinematic = False
-                Aria "Hello. Did you want to take a seat? I'm just... well, I guess I'm just watching the clouds move."
-                Aria "It's been so long since we last saw them... well, real clouds."
-                menu:
-                    "Are you okay?":
-                        Aria "Last night I had a nightmare that felt real. It's one I'm sure you've had, too."
-                        Aria "It was the one where you're back at the Scholomance."
-                        Aria "You hear the sound of water overhead because somewhere on the surface of the lake something has whipped up a storm."
-                        Aria "The water above you is thrashing... you feel the walls, they're wet and slick."
-                        Aria "The whole lake above the Scholomance is angry, and it's trying to get in..."
-                        menu:
-                            "Can't say I've had that one.":
-                                Aria "One day you will. You've been through what every mage has."
-                                pass
-                            "I've had a similar one.":
-                                Aria "That whole place is built on nightmares."
-                                pass
-                Aria "Sorry if I seem melancholic. I've been trying to study but can't seem to focus."
-                Aria "I just... I don't think I'll be placed anywhere, even if I pass."
-                menu:
-                    "Is that why you aren't trying to study?":
-                        Aria "That's probably it."
-                        Aria "I just don't see the point. Alice wants to console me but in truth there's nothing to say." 
-                        Aria "This isn't a feeling to be resolved, it's one I have to live in until the situation changes."
-                        Aria "Hmm..."
-                        Aria "If it's alright with you, I'd like to be alone."
-                        $ Affinity_Aria += 10
-                        $ Afternoon2Aria = True
-                        menu:
-                            "Sure.":
-                                jump Afternoon2Courtyard_Choices
-            else: 
-                $ cinematic = True
-                Narrator "Aria looks lost in thought. You should leave her be."
-                jump Afternoon2Courtyard_Choices
-
-        "(Talk to Alice)":
-            jump Afternoon2Alice
-            label Afternoon2Alice:
-                Alice "Good afternoon, pupil. Did you need something?"
-                menu:
-                    "Is Aria alright?":
-                        Alice "She'll be okay. Like you, she's stressed about her exams."
-                        Alice "Many pupils find themselves in this state."
-                        jump Afternoon2Alice
-
-                    "Where are you and Eileen staying?" if Flag_TeachersLoungeQuestioned:
-                        Alice "Up the hall in the corridor... there's a teachers lounge."
-                        Alice "It's not my favourite place, but it's only a week."
-                        $ Flag_DiscoveredTeachersLounge = True
-                        jump Afternoon2Alice
-
-                    "I have other questions...":
-                        call alicehub_main
-                        jump Afternoon2Alice
-                    
-                    "(Leave)":
-                        jump Afternoon2Courtyard_Choices
-
-
-        "(Explore)":#with alice there you can't leave the courtyard
-            $ cinematic = True
-            Narrator "You look toward the forest, taking in the sights and sounds."
-            Narrator "The trees sway gently in the breeze, their leaves rustling softly."
-            Narrator "As you step away from the Courtyard, towards the forest, you hear Alice yell loudly in your direction."
-            $ cinematic = False
-            Alice "Absolutely not. Come back."
-            menu:
-                "(Return)":
+        menu:
+            "(Talk to Aria)":
+                if Afternoon2Aria == False:
+                    $ cinematic = True
+                    Narrator "You approach Aria, who seems lost in thought."
+                    $ cinematic = False
+                    Aria "Hello. Did you want to take a seat? I'm just... well, I guess I'm just watching the clouds move."
+                    Aria "It's been so long since we last saw them... well, real clouds."
+                    menu:
+                        "Are you okay?":
+                            Aria "Last night I had a nightmare that felt real. It's one I'm sure you've had, too."
+                            Aria "It was the one where you're back at the Scholomance."
+                            Aria "You hear the sound of water overhead because somewhere on the surface of the lake something has whipped up a storm."
+                            Aria "The water above you is thrashing... you feel the walls, they're wet and slick."
+                            Aria "The whole lake above the Scholomance is angry, and it's trying to get in..."
+                            menu:
+                                "Can't say I've had that one.":
+                                    Aria "One day you will. You've been through what every mage has."
+                                    pass
+                                "I've had a similar one.":
+                                    Aria "That whole place is built on nightmares."
+                                    pass
+                    Aria "Sorry if I seem melancholic. I've been trying to study but can't seem to focus."
+                    Aria "I just... I don't think I'll be placed anywhere, even if I pass."
+                    menu:
+                        "Is that why you aren't trying to study?":
+                            Aria "That's probably it."
+                            Aria "I just don't see the point. Alice wants to console me but in truth there's nothing to say." 
+                            Aria "This isn't a feeling to be resolved, it's one I have to live in until the situation changes."
+                            Aria "Hmm..."
+                            Aria "If it's alright with you, I'd like to be alone."
+                            $ Affinity_Aria += 10
+                            $ Afternoon2Aria = True
+                            menu:
+                                "Sure.":
+                                    jump Afternoon2Courtyard_Choices
+                else: 
+                    $ cinematic = True
+                    Narrator "Aria looks lost in thought. You should leave her be."
                     jump Afternoon2Courtyard_Choices
 
-        "(Leave {b}Courtyard{/b})":
-            $ cinematic = True
-            Narrator "You decide to leave the {b}Courtyard{/b}."
-            jump Afternoon2Choices_Menu
+            "(Talk to Alice)":
+                jump Afternoon2Alice
+                label Afternoon2Alice:
+                    Alice "Good afternoon, pupil. Did you need something?"
+                    menu:
+                        "Is Aria alright?":
+                            Alice "She'll be okay. Like you, she's stressed about her exams."
+                            Alice "Many pupils find themselves in this state."
+                            jump Afternoon2Alice
+
+                        "Where are you and Eileen staying?" if Flag_TeachersLoungeQuestioned:
+                            Alice "Up the hall in the corridor... there's a teachers lounge."
+                            Alice "It's not my favourite place, but it's only a week."
+                            $ Flag_DiscoveredTeachersLounge = True
+                            jump Afternoon2Alice
+
+                        "I have other questions...":
+                            call alicehub_main
+                            jump Afternoon2Alice
+                        
+                        "(Leave)":
+                            jump Afternoon2Courtyard_Choices
+
+
+            "(Explore)":#with alice there you can't leave the courtyard
+                $ cinematic = True
+                Narrator "You look toward the forest, taking in the sights and sounds."
+                Narrator "The trees sway gently in the breeze, their leaves rustling softly."
+                Narrator "As you step away from the Courtyard, towards the forest, you hear Alice yell loudly in your direction."
+                $ cinematic = False
+                Alice "Absolutely not. Come back."
+                menu:
+                    "(Return)":
+                        jump Afternoon2Courtyard_Choices
+
+            "(Leave {b}Courtyard{/b})":
+                $ cinematic = True
+                Narrator "You decide to leave the {b}Courtyard{/b}."
+                jump Afternoon2Choices_Menu
 
 
 
@@ -5986,11 +5987,10 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             jump Night2Greenhouse_Choices
                                 
                         else:
-                            "(Leave)":
-                                $ cinematic = True
-                                Narrator "You leave your plants be."
-                                $ cinematic = False
-                                jump Night2Greenhouse_Choices
+                            $ cinematic = True
+                            Narrator "You leave your plants be."
+                            $ cinematic = False
+                            jump Night2Greenhouse_Choices
 
             "(Investigate the {b}Greenhouse{/b})":
                 $ cinematic = True
@@ -6026,7 +6026,7 @@ label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlock
     Narrator "You haven't been outside in the night, looking up at the stars since your magic first manifested. You feel freedom."
     Narrator "You feel small. A whole universe above you but here you are, stuck on a mountain..."
     $ cinematic = False
-    jump Night2Courtyard_Choices:
+    jump Night2Courtyard_Choices
 
     label Night2Courtyard_Choices:
         scene courtyard night
