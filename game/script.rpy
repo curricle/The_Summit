@@ -15,7 +15,7 @@ define NotAlice = Character("NotAlice")
 define Narrator = Character("Narrator")
 
 # List of possible locations (optional, for reference)
-define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge", "Archive", "Teacher's Lounge")
+define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge", "Archive", "Teacher's Lounge", "Clearing", "Grotto")
 default Location = "Dormitory"
 # Variable to track the player's current location
 
@@ -49,6 +49,18 @@ $ Flag_TaoPlantSabotaged = "Tao" in sabotaged_plant
 $ Flag_RexPlantSabotaged = "Rex" in sabotaged_plant
 $ Flag_MelodyPlantSabotaged = "Melody" in sabotaged_plant
 ######referencing sabotagued plants######
+
+
+#### CHARACTER SACRIFICED ###
+$ sacrificed_character = []
+$ sacrificed_options = ["Aria", "Xander", "Tao", "Rex", "Melody"]
+$ Flag_Sacrificed_Aria = "Aria" in sacrificed_character
+$ Flag_Sacrificed_Xander = "Xander" in sacrificed_character
+$ Flag_Sacrificed_Tao = "Tao" in sacrificed_character
+$ Flag_Sacrificed_Rex = "Rex" in sacrificed_character
+$ Flag_Sacrificed_Melody = "Melody" in sacrificed_character
+#############
+
 
 
 # Character Flags
@@ -96,8 +108,8 @@ define Flag_TheWatcher = False #The player has seen something at the edge of the
 # Important Visited Flags
 define AtriumVisitedDay1 = False
 define Flag_Day2PlantsWatered = False #did the player tend to their plants on day2?
-define Flag_Afternoon2Tao = False #Player hasn't yet spoken to Tao on Afternoon Day 2
-define Afternoon2CourtyardVisited = False #player hasn't heard the conversation between Aria and Alice.
+define Flag_Afternoon2Tao = False #Player has spoken to Tao on Afternoon Day 2
+define Afternoon2CourtyardVisited = False #player heard the conversation between Aria and Alice.
 define Afternoon2ArtificingLabVisited = False # player hasn't visited the Artificing Lab on Afternoon2
 define Afternoon2Aria = False #the player spoke to Aria on Day2 in the Courtyard
 define Night2AtriumVisited = False #the player visited the atrium and saw the porcelain fragments.
@@ -6058,16 +6070,320 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
         Narrator "You wonder what you should do..."
         $ cinematic = False
         menu:
+            "(Follow the Trail)": #leads to the ent place Aria ends up. Nice clearning, big sleeping trees.
+                $ cinematic = True
+                Narrator "You follow the trail lit by moonlight. The stones feel soft under your shoes --  crisp, icy grass crackles like glass shards"
+                Narrator "The trees seem to part for you, their branches reaching out like arms, guiding you deeper into the forest."
+                Narrator "It's odd, you feel like you're being led somewhere... but you can't see anyone."
+                Narrator "After a few minutes of walking, the plants seem to part and make room for long grass."
+                Narrator "You come to a clearing. The trees here forming it are enormous, their trunks wide and gnarled, their leaves forming a dense canopy overhead."
+                $ cinematic = False
+                menu:
+                    "(Enter the clearing)":
+                        jump Night2Forest_Trail
+
+                label Night2Forest_Trail:
+                    scene forest clearing
+                    $ Location = "Clearing"
+                    $ cinematic = True
+                    Narrator "Looking around, you notice small trees, their branches drooping as though they were asleep."
+                    Narrator "They're short, and rather than having thick trunks, you notice that they have many, slender branches that lithely catch the moonlight."
+                    Narrator "The grass around them clings like clothing."
+                    Narrator "You step closer to the centre of the clearing, and as you do, you notice on of the branches moving. Twisting, turning, as if to look at you."
+                    Narrator "It's at that moment that you realise it is not a tree you are looking at... it's something alive and moving."
+                    Narrator "You take careful steps backward, noticing a few other trees beginning to move..."
+                    Narrator "You hear move movement in the trees in the forest. They sway and move aside, as if making room for something bigger."
+                    $ cinematic = False
+                    menu:
+                        "(Run)":
+                            $ cinematic = True
+                            Narrator "You feel adrenaline rush through you as you sprint through the forest, following the trail until you reach the courtyard. The soft glow of the Summit's lights a sanctuary..."
+                            $ cinematic = False
+                            jump Night2Courtyard_Choices
+
+
+                    
+            "(Go off the beaten path)": #leads to the doll, hiding in a small grotto. one armed. something poking out.
+                if Quest_NotAliceProgress:
+                
+                    $ cinematic = True
+                    Narrator "You descend through the shrubbery, following your intuition and the slow descent of the mountain."
+                    Narrator "It feels almost natural to you, as if you're following an invisible thread."
+                    Narrator "It leads you down. Lower and lower through the forest, until you stumble across a small grotto, with a dull light eminating within."
+                    $ cinematic = False
+                    menu:
+                        "(Enter the Grotto)":
+                            $ cinematic = True
+                            Narrator "You step into the grotto, wind at your back. As you step through the threshold, the world falls silent."
+                            Narrator "You hadn't realised how loud the forest was in the night. Birds, insects, all forming a cacophony of nature."
+                            Narrator "Here, there is only silence."
+                            Narrator "The light within flickers and blurs, while yours remains strong."
+                            Narrator "You step closer, and your light shifts, bouncing off the walls of the cave to reveal..."
+                            Narrator "A small doll, sitting in the centre of the grotto."
+                            Narrator "It's Alice's doll, missing a forearm, eye cracked, something crawling within it."
+                            Narrator "It looks at you. If it could smile, you're sure it would."
+                            Narrator "You notice that the flickering light is coming from within the Doll an ambient yellow that dulls into reds."
+                            Narrator "It turns its remaining hand over, signalling for you to sit on the rock opposite it."
+                            $ cinematic = False
+                            menu:
+                                "(Take a seat)":
+                                    $ cinematic = True
+                                    Narrator "You sit across from the doll. The rock is uncomfortable, but you bare it."
+                                    $ cinematic = False
+                                    jump Night2Forest_Grotto
+                                    
+                                "(Remain standing)":
+                                    $ cinematic = True
+                                    Narrator "You stand your ground."
+                                    $ cinematic = False
+                                    jump Night2Forest_Grotto
+                                    
+                                "(Turn around and leave)":
+                                    $ cinematic = True
+                                    Narrator "You shouldn't be here. You step backwards until you're out of the grotto, then sprint back to the Courtyard."
+                                    $ cinematic = False
+                                    jump Night2Courtyard_Choices
+
+                            
+                        "(Turn Back)":
+                            $ cinematic = True
+                            Narrator "You follow the path back the way you came, until you come to the crossroads once again."
+                            $ cinematic = False
+                            jump Night2Forest_Choices
+
+                    label Night2Forest_Grotto: #NotAlice only speaks using words Alice has spoken
+                        scene forest grotto
+                        $ cinematic = True
+                        Narrator "After a few moments of silence, the Doll speaks. It's voice is still a mimicry of Alice's... but there's something different about it."
+                        $ cinematic = False
+                        NotAlice "Good evening, pupil."
+                        NotAlice "You took your time, but you did as I asked... You found me."
+                        NotAlice "We aren't in the Scholomance anymore, pupil."
+                        NotAlice "Instead... we are in an ancient place."
+                        NotAlice "I ask again... as part of the test."
+                        NotAlice "What is it you desire..."
+                        NotAlice "... from this place?"
+                        menu:
+                            "I want to pass":
+                                NotAlice "Ha... ha."
+                                pass
+
+                            "I want to escape":
+                                NotAlice "Escape?"
+                                pass
+
+                        NotAlice "Very well."
+                        NotAlice "I can offer you a choice."
+                        NotAlice "A sacrifice..."
+                        NotAlice "One of your classmates... and in exchange..."
+                        NotAlice "In five days, you will have your wish."
+                        jump Night2Forest_Grotto_Choices
+
+
+
+
+
+
+                        label Night2Forest_Grotto_Choices:
+                            menu:
+                                "(Sacrifice?)":
+                                    NotAlice "A classmate. Gone... forever."
+                                    NotAlice "A body... to feed me."
+                                    jump Night2Forest_Grotto_Choices
+
+                                "What are you?":
+                                    NotAlice "Something... else."
+                                    menu:
+                                        "You grant wishes. Like a genie?":
+                                            NotAlice "Not a genie."
+                                            jump Night2Forest_Grotto_Choices
+
+                                        "What's inside the doll?":
+                                            NotAlice "You'll see..."
+                                            NotAlice "As I grow..."
+                                            jump Night2Forest_Grotto_Choices
+                                
+                                "What happened to you?":
+                                    NotAlice "The moons... crushed me."
+                                    NotAlice "Inconvenient..."
+                                    jump Night2Forest_Grotto_Choices
+
+                                "({b}Make your Choice{/b})":
+                                    $ cinematic = True
+                                    Narrator "The doll looks at you with a stillness you've only ever seen in stone statues."
+                                    Narrator "You feel a chill run down your spine."
+                                    Narrator "You've come this far. You need to make a choice."
+                                    $ cinematic = False
+                                    menu:
+                                        "Xander":
+                                            $ cinematic = True
+                                            Narrator "The dolls eye flashes. You feel your magic surge, your light flickers as you lack the mana to produce it."
+                                            $ cinematic = False
+                                            NotAlice "As you wish."
+                                            $ sacrificed_character.append("Xander")
+                                            pass
+                                        "Aria":
+                                            $ cinematic = True
+                                            Narrator "The dolls eye flashes. You feel your magic surge, your light flickers as you lack the mana to produce it."
+                                            $ cinematic = False
+                                            NotAlice "As you wish."
+                                            $ sacrificed_character.append("Aria")
+                                            pass
+                                        "Tao":
+                                            $ cinematic = True
+                                            Narrator "The dolls eye flashes. You feel your magic surge, your light flickers as you lack the mana to produce it."
+                                            $ cinematic = False
+                                            NotAlice "As you wish."
+                                            $ sacrificed_character.append("Tao")
+                                            pass
+                                        "Rex":
+                                            $ cinematic = True
+                                            Narrator "The dolls eye flashes. You feel your magic surge, your light flickers as you lack the mana to produce it."
+                                            $ cinematic = False
+                                            NotAlice "As you wish."
+                                            $ sacrificed_character.append("Rex")
+                                            pass
+                                        "Melody":
+                                            $ cinematic = True
+                                            Narrator "The dolls eye flashes. You feel your magic surge, your light flickers as you lack the mana to produce it."
+                                            $ cinematic = False
+                                            NotAlice "As you wish."
+                                            $ sacrificed_character.append("Melody")
+                                            pass
+                                    $ cinematic = True
+                                    Narrator "You feel drained. As though you've been dragged, kicking and screaming through freezing water."
+                                    Narrator "Your spell-light is too dim to reveal anything around you."
+                                    Narrator "But you can still see the dolls eyes, watching."
+                                    $ cinematic = False
+                                    NotAlice "You're dismissed."
+                                    NotAlice "I'll see you soon."
+                                    $ cinematic = True
+                                    Narrator "You step away from the doll, feeling your hands along the grotto walls until you find yourself back in the moonlit forest."
+                                    Narrator "You know you need to get back to the Summit. Without your magic you're defenseless."
+                                    Narrator "You look back at the grotto once more. The light in there still flickers, though now, much stronger."
+                                    scene forest night
+                                    Narrator "Clambering and stumbling, you find your way back to the crossroads, and follow the trail to the Summit."
+                                    scene courtyard night
+                                    Narrator "In the dark, you manage to navigate through the tunnel, through the Greenhouse and back to the dorms."
+                                    scene dormitory night
+                                    Narrator "You sit at the edge of your bed, catching your breath."
+                                    Narrator "The silence of the dorms is interrupted only by the beating of your heart."
+                                    $ cinematic = False
+                                    if "Xander" in sacrificed_character:
+                                        Xander "Hey, are you okay?"
+                                        $ cinematic = True
+                                        Narrator "You look up to see Xander. He parts his curtains to look over at you, a soft yellow light illuminating him."
+                                        Narrator "He looks as though he's just woken up from a bad dream."
+                                        Narrator "Before you can respond... you notice something..."
+                                        Narrator "You notice something under his bed."
+                                        Narrator "A hand reaching out from underneath."
+                                        $ cinematic = False
+                                        Xander "What's up--"
+                                        $ cinematic = True
+                                        Narrator "Before he can finish his sentence, the hands pull him under with a quickness you thought impossible."
+                                        Narrator "His body seems to bend and morph, kicking as whatever has a hold of him drags him into the shadows."
+                                        Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
+                                        $ cinematic = False
+                                        jump PostSacrificeSleep
+
+                                    elif "Aria" in sacrificed_character:
+                                        Aria "Are you okay?"
+                                        Aria "You look exhausted. I can make you some tea if you need."
+                                        $ cinematic = True
+                                        Narrator "You're surprised to see Aria, parting her curtains to look at you."
+                                        Narrator "She seems restless, as though she's just woken from a bad dream."
+                                        Narrator "She switches on her lamp and stands up."
+                                        Narrator "You notice something under her bed."
+                                        Narrator "A hand reaching out from underneath."
+                                        $ cinematic = False
+                                        Xander "I'll just make you some tea... one mo--"
+                                        $ cinematic = True
+                                        Narrator "Before she can finish her sentence, the hands pull her under with a quickness you thought impossible."
+                                        Narrator "Her body seems to bend and morph, kicking as whatever has a hold of her drags her into the shadows."
+                                        Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
+                                        $ cinematic = False
+                                        jump PostSacrificeSleep
+
+                                    elif "Tao" in sacrificed_character:
+                                        Tao "Do you mind? Some of us are trying to sleep."
+                                        $ cinematic = True
+                                        Narrator "You look over to see Tao, lit by their nightlight."
+                                        Narrator "A book is closed over their lap as they sit at the end of their bed. They clearly woke up before you entered."
+                                        Narrator "You notice something under the bed."
+                                        Narrator "A hand reaching out from underneath."
+                                        $ cinematic = False
+                                        Tao "The least you could do is keep qui--"
+                                        $ cinematic = True
+                                        Narrator "Before they can finish, the hands reaches up and pulls them under with a quickness you thought impossible."
+                                        Narrator "Tao's body seems to bend and morph, kicking as whatever has a hold of them drags them into the shadows."
+                                        Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
+                                        $ cinematic = False
+                                        jump PostSacrificeSleep
+
+                                    elif "Rex" in sacrificed_character:
+                                        Rex "You're up, too?"
+                                        Rex "Saints... You look horrible."
+                                        $ cinematic = True
+                                        Narrator "You look over to see Rex, lit by his nightlight. He's half-dressed. You can tell he's been up a while."
+                                        Narrator "He sits at the edge of his bed, like you."
+                                        Narrator "You notice something under the bed."
+                                        Narrator "A hand reaching out from underneath."
+                                        $ cinematic = False
+                                        Rex "What happened to you--"
+                                        $ cinematic = True
+                                        Narrator "Before he can finish his sentence, the hands pull him under with a quickness you thought impossible."
+                                        Narrator "Rex's body seems to bend and morph, kicking as whatever has a hold of him drags him into the shadows."
+                                        Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
+                                        $ cinematic = False
+                                        jump PostSacrificeSleep
+                                    
+                                    elif "Melody" in sacrificed_character:
+                                        Melody "Saints... it's you." 
+                                        Melody "I had the worst nightmare."
+                                        $ cinematic = True
+                                        Narrator "You look over to see Melody. She's parted her curtain so that she can better see you. Her light is on."
+                                        Narrator "As she stirs to look over at you..."
+                                        Narrator "... you notice something under the bed."
+                                        Narrator "A hand reaching out from underneath."
+                                        $ cinematic = False
+                                        Melody "Say... you don't look too good."
+                                        Melody "Did something--"
+                                        $ cinematic = True
+                                        Narrator "Before she can finish her sentence, the hands pull her under with a quickness you thought impossible."
+                                        Narrator "Melody's body seems to bend and morph, kicking as whatever has a hold of her drags her into the shadows."
+                                        Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
+                                        $ cinematic = False
+                                        jump PostSacrificeSleep
+
+                                    else:
+                                        return
+                                    
+                            label PostSacrificeSleep:
+                                $ cinematic = True
+                                Narrator "You stare at where you once saw your classmate."
+                                Narrator "An empty, unmade bed."
+                                Narrator "You hope it's worth it."
+                                Narrator "Your body seems to force you to lay down... you draw the curtains around you and hide underneath the blanket."
+                                Narrator "You wait for sleep. Hoping it comes quickly."
+                                $ cinematic = False
+                                jump EndOfDemo
+
+
+
+
+                else:
+                    $ cinematic = True
+                    Narrator "You descend through the shrubbery, feeling lost."
+                    Narrator "It feels as though the darkness is too imposing to work through."
+                    Narrator "You find yourself back at the crossroads."
+                    $ cinematic = False
+                    jump Night2Forest_Choices
+
             "(Go back)":
                 $ cinematic = True
                 Narrator "You decide to go back. The forest doesn't seem too safe to explore..."
                 $ cinematic = False
                 jump Night2Courtyard_Choices
-
-            "(Follow the Trail)" #leads to the ent place Aria ends up. Nice clearning, big sleeping trees.
-
-            "(Go off the beaten path)" #leads to the doll.
-
 
 
 
