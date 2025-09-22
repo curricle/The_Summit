@@ -5445,7 +5445,7 @@ label Night2Atrium: #the thing isn't there. The moons are wacky. You find a shat
     jump Night2SneakDecision
     
 
-label Night2Atrium: #same as before except this time you don't look under the grates. You find a shattered porcelain hand by the moons.
+label Night2Atrium2: #same as before except this time you don't look under the grates. You find a shattered porcelain hand by the moons.
     $ cinematic = True
     $ Location = "Atrium"
     Narrator "The atrium is eerily quiet, the usual sounds of water replaced by an unsettling stillness."
