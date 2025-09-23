@@ -15,7 +15,7 @@ define NotAlice = Character("NotAlice")
 define Narrator = Character("Narrator")
 
 # List of possible locations (optional, for reference)
-define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge", "Archive", "Teacher's Lounge", "Clearing", "Grotto")
+define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge", "Archive", "Teacher's Lounge", "Clearing", "Grotto")#gotto only has night, clearing only has night, teachers lounge is just corridor night
 default Location = "Dormitory"
 # Variable to track the player's current location
 
@@ -267,6 +267,12 @@ transform half_size:
 transform quarter_size:
     zoom 0.25 #adjust quarter size
 
+# syntax for music
+# play music "filename" ## plays music
+# stop music ## stops anything that's playing on the music channel
+# play sound "filename"
+# stop sound "filename" #most of the specific sound channel plays once and stops.
+
 
 # The game starts here.
 
@@ -279,12 +285,9 @@ label start:
     ## Do not remove this portion
     show border onlayer UI 
     ###################################    
-
     scene bg room
     $ Day0Afternoon = True
-
     $ cinematic = True
-
     Narrator "Bells chime behind you as you exit the carriage and look up at the great structure before you." 
     Narrator "It's nothing like the Scholomance you came from, it's quainter. A great tower atop an impossibly high mountain, overlooking nothing but forests."
     Narrator "In the far distance, over the horizon, you imagine your old home. It warms you. The other carriages seem empty."
@@ -949,7 +952,7 @@ label Morning1Dorms:
                     Tao "Right..."
                     if Flag_PlayerMoonInspect == True:
                         Tao "While I'm sure you have something interesting to say..."
-                        Tao "I engaged."
+                        Tao "I'm engaged."
                         menu:
                             "As in to-marry?":
                                 Tao "How do you not fall over more often?"
@@ -6172,8 +6175,6 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
 
 
 
-
-
                         label Night2Forest_Grotto_Choices:
                             menu:
                                 "(Sacrifice?)":
@@ -6374,14 +6375,6 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                 Narrator "You decide to go back. The forest doesn't seem too safe to explore..."
                 $ cinematic = False
                 jump Night2Courtyard_Choices
-
-
-
-
-
-
-
-
 
 
 
