@@ -979,7 +979,7 @@ label Morning1Greenhouse:
     Narrator "You're the last to arrive at the Greenhouse -- a great garden at the centre of the Summit, surrounded on all four sides by hallways and a domed, glass ceiling on top."
     Narrator "At it's centre, is the Great Mage Tree. An tree said to be enchanted. It's boughs rattle the glass as it sleeps."
     Narrator "You notice Alice beneath the tree with Aria, the two of them deep in conversation. At the back of the Greenhouse, seemingly bored, is Eileen."
-    Narrator "Aice turns to you, counting to see whether all of the students had arrived."
+    Narrator "Alice turns to you, counting to see whether all of the students had arrived."
     if Flag_NotAliceMet == True:
         Narrator "In the light of day, you wonder whether the thing you saw in the sewer last night was real."
         Narrator "Or whether it was just a dream."
@@ -1004,7 +1004,7 @@ label Morning1Greenhouse:
     Narrator "This one's sickly sweet."
     $ cinematic = False
     Alice "We've given you a small plot to work with. Try not to overcrowd the area."
-    Alice "Allow for two plants, at a most -- that's our recommendation."
+    Alice "For now, I would simply plant type of seed at a most -- that's our recommendation."
     Alice "We've labelled the seeds -- you should know what sort of care they require."
     Alice "If not... well consider it part of the test."
     Alice "I've taken the liberty of asking Miss Aria to avoid tending to your flowers. If you allow her to do so, both of you will be given a fail on your Potion exam."
@@ -1278,17 +1278,7 @@ label Morning1Greenhouse:
             $ cinematic = True
             Narrator "Which seed do you plant second?"
             $ cinematic = False
-            menu:
-                "Winged Jasmine." if "Winged Jasmine" not in planted_seeds:
-                    $ planted_seeds.append("Winged Jasmine")
-                "Snapjaw Orchid." if "Snapjaw Orchid" not in planted_seeds:
-                    $ planted_seeds.append("Snapjaw Orchid")
-                "Moon Melon." if "Moon Melon" not in planted_seeds:
-                    $ planted_seeds.append("Moon Melon")
-                "Sanguine Lily." if "Sanguine Lily" not in planted_seeds:
-                    $ planted_seeds.append("Sanguine Lily")
-            $ cinematic = True
-            Narrator "With {planted_seed[0]} and {planted_seed[1]} planted, you watch your classmates funnel out of the greenhouse without you."
+            Narrator "With the {planted_seed[0]} planted, you watch your classmates funnel out of the greenhouse without you."
             Narrator "Alice looks over at you."
             $ cinematic = False
             Alice "You have the rest of the day to prepare for you upcoming exams."
