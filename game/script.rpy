@@ -15,7 +15,7 @@ define NotAlice = Character("NotAlice")
 define Narrator = Character("Narrator")
 
 # List of possible locations (optional, for reference)
-define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Mess Hall", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Lounge", "Archive", "Teacher's Lounge", "Clearing", "Grotto")#gotto only has night, clearing only has night, teachers lounge is just corridor night
+define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Archive", "Forest", "Teacher's Lounge", "Clearing", "Grotto")#gotto only has night, clearing only has night, teachers lounge is just corridor night
 default Location = "Dormitory"
 # Variable to track the player's current location
 
@@ -272,7 +272,6 @@ transform quarter_size:
 # stop music ## stops anything that's playing on the music channel
 # play sound "filename"
 # stop sound "filename" #most of the specific sound channel plays once and stops.
-
 
 # The game starts here.
 
