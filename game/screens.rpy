@@ -27,6 +27,9 @@ style gui_text:
 
 style button:
     properties gui.button_properties("button")
+    ## The default sfx played when a button is hovered and pressed
+    hover_sound 'audio/fertilizer_add.mp3'
+    activate_sound 'audio/clue_found_item_alert.mp3'
 
 style button_text is gui_text:
     properties gui.text_properties("button")
@@ -386,7 +389,7 @@ init python:
 
 default quick_menu = True
 
-style quick_button is default
+style quick_button is button
 style quick_button_text is button_text
 
 style quick_button:
