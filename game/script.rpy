@@ -92,7 +92,7 @@ define Flag_TaoXanderFriendship = False
 define Flag_RexArtificing = False
 define Flag_DemoAliceJob = False
 define Flag_MelodyCaughtPlayerStealing = False #Melody caught the player unlocking the potion cabinet.
-
+define Flag_EileenLibraryDay2 = False # eileen is in the library on night 1
 define Flag_RexSneakDay1 = False #Rex has snuck out on Night 1
 define Flag_AriaWantsBook = False #Aria is bored and wants something to read in the dorms.
 
@@ -2338,9 +2338,11 @@ label Morning1Greenhouse:
 
     label Afternoon1ArtificingLab:
         scene artificing lab afternoon
+        play music "audio/Marigold District_MASTER2_LOOPED.mp3"
         $ cinematic = True
         Narrator "You enter the {b}Artificing Lab{/b}."
         Narrator "It smells like burnt metal. The windows are steamed up, obscuring your view outside."
+        show rex sprite
         Narrator "As you look around, you notice Rex, hunched over a workbench. It's like he's in the centre of a tornado, with dozens of tools discarded around him."
         Narrator "Though, as you look closer you see that the tools are organized by segments -- hammers with hammers, chisels with chisels..."
         Narrator "He turns to look at you as you step into the eye of it all."
@@ -2384,6 +2386,7 @@ label Morning1Greenhouse:
 
 
         label Afternoon1ArtificingLab_Choices:
+            show rex sprite with dissolve
             Rex "What do you need?"
             menu:
                 "(Ask Rex about Artifice)":
@@ -2396,9 +2399,12 @@ label Morning1Greenhouse:
                     call rexhub_main
 
                 "(Investigate the Artificing Lab)":
+                    hide rex sprite
                     call Afternoon1ArtificingLab_Explore
 
                 "(Leave the Artificing Lab)":
+                    stop music
+                    hide rex sprite
                     jump Afternoon1DecisionMenu
         
         
@@ -2454,6 +2460,7 @@ label Morning1Greenhouse:
             $ cinematic = False
             menu:
                 "(Take it with you)":
+                    play sound "audio/clue_found_item_alert.mp3"
                     $ artifice_options.append("Light Machine")
                     $ cinematic = True
                     Narrator "You stash it in your bag."
@@ -2466,7 +2473,7 @@ label Morning1Greenhouse:
             Narrator "They seem to be specialized for artificing tasks, with intricate designs and a well-used appearance."
             Narrator "You might be able to use them if you need to work on any artifice projects."
             if "Light Machine" in artifice_options:
-                Narrator "You could work on the Light Machine... though you aren't sure if you should dedicate time to it this early on."
+                Narrator "You could work on the Light Machine... though you aren't sure if you should dedicate time to it right now."
                 pass
             else:
                 Narrator "You don't have a project to work on yet."
@@ -2484,8 +2491,9 @@ label Morning1Greenhouse:
 
 
 
-
     label Night1DecisionMenu:
+        scene dormitory night
+        play music "audio/project_w_dorms.mp3"
         $ cinematic = True
         Narrator "You feel tired. Looking around you see the rest of the students sitting around the dorm. Some studying, others already in bed with their curtains drawn."
         Narrator "What do want to do?"
@@ -2500,6 +2508,7 @@ label Morning1Greenhouse:
                 jump Night1DecisionMenu
                 
             "(Talk to Aria)":
+                show aria sprite with dissolve
                 if Flag_AriaWantsBook:
                     $ cinematic = True
                     Narrator "Aria sits on her bed, staring out the window. In the distance, you see the trees wave in the wind."
@@ -2522,9 +2531,11 @@ label Morning1Greenhouse:
                                         "Want me to get you one?":
                                             Aria "I wouldn't want you to get in trouble."
                                             Aria "If you {i}do{/i} go out... please. Something fictional. Maybe uplifting."
+                                            hide aria sprite
                                             jump Night1DecisionMenu
                                         "Pick one up tomorrow, I guess.":
                                             Aria "Learned my lesson..."
+                                            hide aria sprite
                                             jump Night1DecisionMenu
                 else:
                     $ cinematic = True
@@ -2546,16 +2557,19 @@ label Morning1Greenhouse:
                                     Aria "Know what, nevermind. I need something this... trashy."
                                     menu:
                                         "I'll leave you to it.":
+                                            hide aria sprite
                                             jump Night1DecisionMenu
 
                         "No.":
+                            hide aria sprite
                             jump Night1DecisionMenu
 
 
 
             "(Talk to Melody)":
+                show melody sprite with dissolve
                 $ cinematic = True
-                Narrator "Melody sits by her desk, writing in her diary."
+                Narrator "Melody sits at her desk, writing in her diary."
                 $ cinematic = False
                 Melody "Hey... nice to see you stay up late too."
                 if Spell_Light == False:
@@ -2573,9 +2587,11 @@ label Morning1Greenhouse:
                                     menu:
                                         "A few things...":
                                             call melodyhub_main
+                                            hide melody sprite
                                             jump Night1DecisionMenu
                                         "Nothing in particular.":
                                             Melody "Well, we'll chat tomorrow, I guess."
+                                            hide melody sprite
                                             jump Night1DecisionMenu
 
                 else:
@@ -2588,9 +2604,11 @@ label Morning1Greenhouse:
                             Melody "Pretty sure the Artificing exam is the day after tomorrow, though... which is worrying."
                             Melody "Not sure what I'm making for that... guess I'll find out."
                             Melody "Either way, I'll let you get some sleep."
+                            hide melody sprite
                             jump Night1DecisionMenu
                         "I might just head to bed.":
                             Melody "Oh, sure thing. Good night!"
+                            hide melody sprite
                             jump Night1DecisionMenu
 
 
@@ -2611,6 +2629,7 @@ label Morning1Greenhouse:
                             jump Night1DecisionMenu
 
             "(Talk to Xander)":
+                show xander sprite with dissolve
                 $ cinematic = True
                 Narrator "Xander is sitting on his bed, staring at the wall."
                 Narrator "He looks deep in thought."
@@ -2631,6 +2650,7 @@ label Morning1Greenhouse:
                 Xander "I won't keep you."
                 menu:
                     "(Leave)":
+                        hide xander sprite
                         jump Night1DecisionMenu
 
 
@@ -2638,6 +2658,7 @@ label Morning1Greenhouse:
                 $ cinematic = True
                 Narrator "You pull your curtains closed and exit the dormitory."
                 $ cinematic = False
+                stop music
                 jump Night1SneakDecision 
 
             "(Go to sleep)":
@@ -2647,6 +2668,7 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 $ Day1Night = False
                 $ Flag_EileenLibraryDay2 = False
+                stop music
                 jump Morning1Dorms
     
 
@@ -2659,52 +2681,63 @@ label Morning1Greenhouse:
 
     label Night1SneakDecision:
         $ Location = "Corridor"
+        play music "audio/project_w_main_theme_concept_02_fade.mp3"
         $ cinematic = True
         Narrator "You enter the corridor, the dormitory door closing behind you."
         Narrator "It's cold, and in the dark you can only make out distant shapes."
         Narrator "You know you won't be able to explore without some form of light."
         $ cinematic = False    
         if Spell_Light:
+            play sound "audio/light_spell.mp3"
             $ cinematic = True
             Narrator "You ignite a white orb of light in your hand, casting stark shadows along the walls."
             Narrator "You're thrilled, you realise. Your heart's racing."
             Narrator "You wonder where you should explore..."
             $ cinematic = False
-            menu:
-                "(Go to the {b}Library{/b})":
-                    if Flag_EileenLibraryDay2:
-                        Narrator "Eileen is in there."
-                        Narrator "It's better you don't get caught."
-                        pass
+            jump Night1SneakDecision_Choices
+            label Night1SneakDecision_Choices:
+                menu:
+                    "(Go to the {b}Library{/b})":
+                        if Flag_EileenLibraryDay2:
+                            Narrator "Eileen is in there."
+                            Narrator "It's better you don't get caught."
+                            pass
 
-                    else:
-                        jump Night1Library
-                    # can collect Aria a book (Flag_AriaWantsBook) (AriaBookAcquired)
+                        else:
+                            stop music
+                            jump Night1Library
+                        # can collect Aria a book (Flag_AriaWantsBook) (AriaBookAcquired)
 
-                "(Go to the {b}Alchemy Lab{/b})":
-                    jump Night1AlchemyLab
-                    # empty but gives the player the option to steal a potion if they didn't before.
+                    "(Go to the {b}Alchemy Lab{/b})":
+                        stop music
+                        jump Night1AlchemyLab
+                        # empty but gives the player the option to steal a potion if they didn't before.
 
-                "(Go to the {b}Atrium{/b})":
-                    if Flag_NotAliceMet:
-                        jump Night1Atrium
-                        #another encounter with NotAlice
+                    "(Go to the {b}Atrium{/b})":
+                        stop music
+                        if Flag_NotAliceMet:
+                            jump Night1Atrium
+                            #another encounter with NotAlice
 
-                    else:
-                        jump Night1Atrium2
-                        # can have a first encounter with NotAlice... if they haven't met her before.
+                        else:
+                            jump Night1Atrium2
+                            # can have a first encounter with NotAlice... if they haven't met her before.
 
-                "(Go to the {b}Artificing Lab{/b})":
-                    jump Night1ArtificingLab
-                    ### Rex working on projects after hours.
-                
-                "(Go to the {b}Greenhouse{/b})":
-                    jump Night1Greenhouse
+                    "(Go to the {b}Artificing Lab{/b})":
+                        stop music
+                        jump Night1ArtificingLab
+                        ### Rex working on projects after hours.
+                    
+                    "(Go to the {b}Greenhouse{/b})":
+                        stop music
+                        jump Night1Greenhouse
 
-                "(Return to the {b}Dormitory{/b})":
-                    jump Night1DecisionMenu
+                    "(Return to the {b}Dormitory{/b})":
+                        stop music
+                        jump Night1DecisionMenu
 
         else:
+            stop music
             $ cinematic = True
             Narrator "You can't see anything. It's too dangerous to go ahead without light."
             Narrator "You turn around."
@@ -2717,6 +2750,7 @@ label Morning1Greenhouse:
 
         label Night1Library:
             scene library night
+            play music "audio/project_w_concept_04_fminor.mp3"
             $ Location = "Library"
             $ cinematic = True
             Narrator "The library door is warm as you open it. Roots and vines from the greenhouse seem to have slowly made their way inside overnight."
@@ -2753,7 +2787,7 @@ label Morning1Greenhouse:
                 Narrator "You check the stacks for anything of interest..."
                 if book_collected:
                     Narrator "...Finding nothing new. You're content with {book_collected}."
-                    jump Night1SneakDecision
+                    jump Night1SneakDecision_Choices
 
                 else:
                     Narrator "You check for the books on botany, all of which seem somewhat tattered and dated."
@@ -2804,7 +2838,7 @@ label Morning1Greenhouse:
                                 Narrator "You take the book and head to the checkout desk."
                                 Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
                                 $ cinematic = False
-                                jump Night1SneakDecision
+                                jump Night1SneakDecision_Choices
 
                             "The Woodwitch Guide to Home Gardening." if "The Woodwitch Guide to Home Gardening" not in book_collected:
                                 $ book_collected.append("The Woodwitch Guide to Home Gardening")
@@ -2813,7 +2847,7 @@ label Morning1Greenhouse:
                                 Narrator "You take the book and head to the checkout desk."
                                 Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
                                 $ cinematic = False
-                                jump Night1SneakDecision
+                                jump Night1SneakDecision_Choices
 
                             "Carnivorous Plants of Viordia and their Many Applications." if "Carnivorous Plants of Viordia and their Many Applications" not in book_collected:
                                 $ book_collected.append("Carnivorous Plants of Viordia and their Many Applications")
@@ -2822,13 +2856,13 @@ label Morning1Greenhouse:
                                 Narrator "You take the book and head to the checkout desk."
                                 Narrator "As you approach, you feel the book pulled onto the counter, where an invisible hand stamps the inner page and pushes it back to you.."
                                 $ cinematic = False
-                                jump Night1SneakDecision
+                                jump Night1SneakDecision_Choices
                             
                             "(Look through the options once again)":
                                 jump Night1Library_BotanyBooks
 
                             "(Leave the Library)":
-                                jump Night1SneakDecision
+                                jump Night1SneakDecision_Choices
 
 
             else:
@@ -2865,13 +2899,14 @@ label Morning1Greenhouse:
                 $ cinematic = True
                 Narrator "The moonlight reminds you how late it's getting. You head back to the corridor."
                 $ cinematic = False
-                jump Night1SneakDecision
+                jump Night1SneakDecision_Choices
 
 
 
 
         label Night1Atrium:
             scene atrium night
+            play music "audio/Oratory_MASTER_LOOPED.mp3"
             $ Location = "Atrium"
             $ cinematic = True
             Narrator "The atrium is quiet on this night. Even the moons don't make a noise as they bob -- their light is dimmer than you remember."
@@ -2886,7 +2921,9 @@ label Morning1Greenhouse:
                     $ cinematic = False
                     menu:
                         "Hello?":
-                            "{i}{b}slosh, slosh, slosh...{/b}{/i}"
+                            play sound "audio/main_hall_gentle_water.mp3"
+                            Narrator "{i}{b}slosh, slosh, slosh...{/b}{/i}"
+                            show notalice sprite
                             NotAlice "Good evening..."
                             $ cinematic = True 
                             Narrator "You see the doll come into view, it's porcelain skin glistening as shafts of moonlight pierce the shadows."
@@ -2922,13 +2959,18 @@ label Morning1Greenhouse:
                                                         Narrator "There is no way out, but you feel magic eminating from the lock itself."
                                                         Narrator "You realise, very quickly, that the lock is, like the moons, tied to something greater than a single spell."
                                                         Narrator "You're sure that there's some way of opening it."
+                                                        play sound "audio/dialogue_information_default.mp3"
                                                         $ Flag_EntranceDoor1 = True
                                                         $ cinematic = False
                                                         menu:
                                                             "(Leave)":
-                                                                jump Night1SneakDecision
+                                                                hide notalice sprite
+                                                                stop music
+                                                                jump Night1SneakDecision_Choices
                                                     "(Leave)":
-                                                        jump Night1SneakDecision
+                                                        hide notalice sprite
+                                                        stop music
+                                                        jump Night1SneakDecision_Choices
 
                                             "No.":
                                                 $ cinematic = True
@@ -2938,7 +2980,9 @@ label Morning1Greenhouse:
                                                 $ cinematic = False
                                                 menu:
                                                     "(Leave)":
-                                                        jump Night1SneakDecision
+                                                        hide notalice sprite
+                                                        stop music
+                                                        jump Night1SneakDecision_Choices
 
                             else:
                                 NotAlice "What is it you desire..."
@@ -2972,11 +3016,14 @@ label Morning1Greenhouse:
                                 Narrator "And why do you still feel its gaze?"
                                 menu:
                                     "(Leave)":
-                                        jump Night1SneakDecision
+                                        stop music
+                                        hide notalice sprite
+                                        jump Night1SneakDecision_Choices
 
 
                 "(Leave)":
-                    jump Night1SneakDecision
+                    stop music
+                    jump Night1SneakDecision_Choices
 
 
         
@@ -3008,7 +3055,8 @@ label Morning1Greenhouse:
                     pass
             $ cinematic = True
             Narrator "Your heart races. You try and find the source of the noise. Looking over at the large, green, window -- expecting at any moment see Eileen."
-            "{i}{b}slosh, slosh, slosh.{/b}{/i}"
+            play sound "audio/main_hall_gentle_water.mp3"
+            Narrator "{i}{b}slosh, slosh, slosh.{/b}{/i}"
             Narrator "The noise moves to the moons. More specifically, to the grate below them. You listen as something pushes the grate up, and with effort, tries to push through."
             $ cinematic = False
             menu: 
@@ -3025,6 +3073,7 @@ label Morning1Greenhouse:
                             Narrator "The silhouette stirs. You feel it's eyes meet yours, you feel like prey."
                             Narrator "After a moment, as the moonlight twists and turns as the moons rotate, a shaft pushes into the darkness."
                             Narrator "Revealing another Doll. Alice. Trapped below the sewer grates."
+                            show notalice sprite
                             $ cinematic = False
                             menu:
                                 "Alice?":
@@ -3079,6 +3128,8 @@ label Morning1Greenhouse:
                                                     $ cinematic = False
                                                     $ Day0Night = False
                                                     $ AtriumVisitedDay1 = True
+                                                    stop music
+                                                    hide notalice sprite
                                                     jump Morning2Dorms
                                 
                                 "(Leave it there)":
@@ -3088,7 +3139,9 @@ label Morning1Greenhouse:
                                     Narrator "You turn back for one last glimpse -- it's hand upreaching, glowing in the moonlight, as though it's holding the moons in place."
                                     Narrator "You leave the Atrium."
                                     $ cinematic = False
-                                    jump Night1SneakDecision
+                                    stop music
+                                    hide notalice sprite
+                                    jump Night1SneakDecision_Choices
 
                 "(Run)":
                     $ cinematic = True
@@ -3097,7 +3150,8 @@ label Morning1Greenhouse:
                     Narrator "You run."
                     Narrator "You leave the Atrium."
                     $ cinematic = False
-                    jump Night1SneakDecision
+                    stop music
+                    jump Night1SneakDecision_Choices
 
 
 
@@ -3120,6 +3174,7 @@ label Morning1Greenhouse:
                     $ cinematic = True
                     Narrator "You carefully make your way back to the dorms, avoiding the light of whoever else is awake."
                     $ cinematic = False
+                    stop music
                     jump Night1DecisionMenu
 
 
@@ -3132,6 +3187,7 @@ label Morning1Greenhouse:
                     $ cinematic = False
                     menu:
                         "(Return to the dorms)":
+                            stop music
                             jump Night1DecisionMenu
 
             
@@ -3139,6 +3195,7 @@ label Morning1Greenhouse:
 
             label Night1AlchemyLab_Choices:
                 scene alchemylab night
+                play music "audio/Potion_Theme.mp3"
                 $ Location = "Alchemy Lab"
                 $ cinematic = True
                 Narrator "The first thing to hit you is the smell of sterile chemicals. It's been cleaned, at least."
@@ -3151,7 +3208,8 @@ label Morning1Greenhouse:
                     menu:
                         "(Investigate)":
                             call Night1AlchemyLab_Potions
-                            jump Night1SneakDecision
+                            stop music
+                            jump Night1SneakDecision_Choices
 
                 else:
                     Narrator "You notice the missing potions."
@@ -3162,7 +3220,8 @@ label Morning1Greenhouse:
                     Narrator "It doesn't smell great, in fact, it smells like something dead, reanimated, tossed away, and then reboiled."
                     Narrator "You know there's nothing for you here."
                     $ cinematic = False
-                    jump Night1SneakDecision
+                    stop music
+                    jump Night1SneakDecision_Choices
 
         
 
@@ -3186,6 +3245,7 @@ label Morning1Greenhouse:
                         $ cinematic = False
                         menu:
                             "(Magic: Unlock the Potions)" if Spell_Unlocking:
+                                play sound "audio/reveal_magic_spell.mp3"
                                 $ cinematic = True
                                 Narrator "You focus on the lock, feeling the magic within you stir."
                                 Narrator "With a few whispered words, the cabinet unlocks with a loud {b}{i}clunk{i}{b}. It's clearly not been touched in a while."
@@ -3221,7 +3281,6 @@ label Morning1Greenhouse:
                                 $ cinematic = True
                                 Narrator "You kick the lock, but it doesn't budge."
                                 $ Flag_LockBreakerNeeded = True
-
                                 if Flag_HammerAcquired:
                                     Narrator "You pull the hammer out from your bag and bring it down on the lock."
                                     Narrator "With a loud {i}clunk{/i} it unbolts, the metal feeling loose."
@@ -3238,6 +3297,7 @@ label Morning1Greenhouse:
                                             pass
                                     $ cinematic = True
                                     Narrator "You slip the potion into your bag."
+                                    play sound "audio/clue_found_item_alert.mp3"
                                     Narrator "A part of you feels a thrill of excitement."
                                     $ cinematic = False
                                     $ Flag_LockBreakerUsed = True
@@ -3261,12 +3321,15 @@ label Morning1Greenhouse:
 
         label Night1ArtificingLab:
             scene artificing lab night
+            play music "audio/Marigold District_MASTER2_LOOPED.mp3"
             $ Location = "Artificing Lab"
             $ cinematic = True
             Narrator "You sneak into the {b}Artificing Lab{/b}. Dusty workstations and half-finished projects litter the room."
             Narrator "The smell of oil and metal fills the air..."
             Narrator "There's a light in the corner as Rex tinkers with something at a workstation."
+            show rex sprite with dissolve
             Narrator "He doesn't seem surprised to be interrupted. He looks over his shoulder at you, and returns to whatever he's doing."
+            hide rex sprite
             $ cinematic = False
             jump Night1ArtificingLab_Choices
 
@@ -3279,7 +3342,8 @@ label Morning1Greenhouse:
                 menu:
                     "(Talk to Rex)":
                         $ cinematic = True
-                        Narrator ""
+                        show rex sprite with dissolve
+                        Narrator "Rex looks up as you approach, a smirk on his face."
                         $ cinematic = False
                         Rex "Surprised I'm here?"
                         Rex "I know you think I'm dumb, or lazy, or whatever. I can study, just to be clear. But I do it on my terms."
@@ -3347,8 +3411,9 @@ label Morning1Greenhouse:
                                                     Rex "Good."
                                                     pass
                         $ cinematic = True
-                        Narrator "Rex looks back down at his artifice. You can tell he doens't want to talk anymore."
+                        Narrator "Rex looks back down at his artifice. You can tell he doesn't want to talk anymore."
                         $ cinematic = False
+                        hide rex sprite
                         jump Night1ArtificingLab_Choices
 
 
@@ -3373,13 +3438,15 @@ label Morning1Greenhouse:
                             Narrator "You pick them both up and place them in your bag."
                             Narrator "You also find a few scraps of wire and a small gear."
                             Narrator "You add those to your bag as well."
+                            play sound "audio/clue_found_item_alert.mp3"
                             $ cinematic = False
                             $ Flag_ArtificeParts = True
                             $ Flag_HammerAcquired = True
                             return
 
                     "(Leave the {b}Artificing Lab{/b})":
-                        jump Night1SneakDecision
+                        stop music
+                        jump Night1SneakDecision_Choices
                         
                             
 
@@ -3416,6 +3483,7 @@ label Morning1Greenhouse:
 
         label Night1Greenhouse:
             scene greenhouse night
+            play music "audio/project_w_concept_03_gmajor.mp3"
             $ Location = "Greenhouse"
             $ cinematic = True
             Narrator "You step into the greenhouse, the air thick with humidity and the scent of damp earth."
@@ -3434,7 +3502,7 @@ label Morning1Greenhouse:
                 menu:
                     "(Check on your Plants)":
                         call GreenhousePlants_Night1
-                        return
+                        jump Night1Greenhouse_Choices
 
                         label GreenhousePlants_Night1:
                             if planted_seeds = "Winged Jasmine":
@@ -3447,6 +3515,7 @@ label Morning1Greenhouse:
                                 $ cinematic = False
                                 menu:
                                     "Water it.":
+                                        play sound "audio/watering_can_water_soil.mp3"
                                         $ cinematic = True
                                         Narrator "You carefully water the Winged Jasmine, ensuring not to drown it."
                                         Narrator "It seems perk up a little..."
@@ -3475,6 +3544,7 @@ label Morning1Greenhouse:
                                 $ cinematic = False
                                 menu:
                                     "Water it.":
+                                        play sound "audio/watering_can_water_soil.mp3"
                                         $ cinematic = True
                                         Narrator "You carefully water the Snapjaw Orchid, taking good care to only water the soil."
                                         Narrator "It seems to perk up slightly... though as you move closer to inspect it, its jaw closes."
@@ -3482,6 +3552,7 @@ label Morning1Greenhouse:
                                         $ cinematic = False
                                         return
                                     "Feed it an insect." if book_collected = "The Woodwitch Guide to Home Gardening":
+                                        play sound "audio/bug_add_to_inventory.mp3"
                                         $ cinematic = True
                                         Narrator "Remembering what you learned from [book_collected], you look around, finding a few dead insects inside a container left by Alice."
                                         Narrator "You remove a few, placing them on the Snapjaw Orchid's pink gums."
@@ -3512,6 +3583,7 @@ label Morning1Greenhouse:
                                 $ cinematic = False
                                 menu:
                                     "Water it.":
+                                        play sound "audio/watering_can_water_soil.mp3"
                                         $ cinematic = True
                                         Narrator "You carefully water the Moon Melon..."
                                         Narrator "It seems to squirm away from the liquid."
@@ -3526,6 +3598,7 @@ label Morning1Greenhouse:
                                         return
 
                                     "Sprinkle salt along the soil." if book_collected = "The Illustrated Botanical":
+                                        play sound "audio/fertilizer_add.mp3"
                                         $ cinematic = True
                                         Narrator "You collect the salt left by Alice on the table..."
                                         Narrator "... and sprinkle it along the soil."
@@ -3548,6 +3621,7 @@ label Morning1Greenhouse:
                                 $ cinematic = False 
                                 menu:
                                     "Water it.":
+                                        play sound "audio/watering_can_water_soil.mp3"
                                         $ cinematic = True
                                         Narrator "You carefully water the Sanguine Lily... it doesn't seem to care for it."
                                         $ cinematic = False
@@ -3582,6 +3656,7 @@ label Morning1Greenhouse:
 
                         
                     "(Investigate the Great Mage Tree)":
+                        play sound "audio/dialogue_information_default.mp3"
                         $ cinematic = True
                         Narrator "You look up at the Great Mage Tree..."
                         Narrator "While you can {i}feel{/i} something else about it... it seems like a tree."
@@ -3591,7 +3666,8 @@ label Morning1Greenhouse:
                         jump Night1Greenhouse_Choices
 
                     "(Leave the {b}Greenhouse{/b})":
-                        jump Night1SneakDecision
+                        stop music
+                        jump Night1SneakDecision_Choices
 
 
 
