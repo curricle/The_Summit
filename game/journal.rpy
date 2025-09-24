@@ -28,25 +28,19 @@ init python:
             self.description = description
 
     def getNextItemInArray(item, array):
-        nextIndex = 0
-        arrayLength = len(array)
+        arrayLength = (len(array) - 1)
 
         try:
             currentIndex = array.index(item)
-            print(f'array length: {arrayLength}, current item index: {currentIndex}')
 
-            if currentIndex < arrayLength:
-                nextIndex += currentIndex
-            elif currentIndex == arrayLength:
-                nextIndex = 0
-            else: 
-                nextIndex = arrayLength
+            if currentIndex == arrayLength:
+                return array[0]
+            elif currentIndex < arrayLength:
+                return array[currentIndex + 1]
+            
         except:
             print("An exception occurred.")
             item = array[0]
-            nextIndex = 0
-
-        return array[nextIndex]
 
 ####################################################################
 #
