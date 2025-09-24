@@ -147,7 +147,6 @@ screen say(who, what):
 
     if cinematic == True:
         window:
-            # background "gui/cinemabox.png"
             background None
             xsize 1800
             ysize 90
@@ -309,6 +308,8 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
+    background 'gui/choice_box.png'
+    hover_background 'gui/choice_box_selected.png'
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")

@@ -224,16 +224,18 @@ define gui.navigation_button_text_xalign = 0.5
 ##
 ## Choice buttons are used in the in-game menus.
 
-define gui.choice_button_width = 600
+define gui.choice_button_width = 740
 define gui.choice_button_height = None
 define gui.choice_button_tile = False
 define gui.choice_button_borders = Borders(10, 10, 10, 10)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
+define gui.choice_button_text_yalign = 0.5
 define gui.choice_button_text_idle_color = '#b6b6b6'
 define gui.choice_button_text_hover_color = white
 define gui.choice_button_text_insensitive_color = '#888888'
+define gui.choice_button_background = 'gui/choice_box.png'
 
 
 ## File Slot Buttons ###########################################################

@@ -49,6 +49,7 @@ define build.name = "TheSummit"
 define config.has_sound = True
 define config.has_music = True
 define config.has_voice = True
+# define config.has_ambience = True
 
 
 ## To allow the user to play a test sound on the sound or voice channel,
@@ -62,7 +63,7 @@ define config.has_voice = True
 ## the player is at the main menu. This file will continue playing into the
 ## game, until it is stopped or another file is played.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+define config.main_menu_music = "audio/Title_Theme_MASTER.mp3"
 
 ## Layers ######################################################################
 # define config.layer_clipping['master'] = (0, 102, 1920, 876)
@@ -146,7 +147,7 @@ default preferences.afm_time = 15
 ## This generally should not be changed, and if it is, should always be a
 ## literal string, not an expression.
 
-define config.save_directory = "AstrologyUI-1702444616"
+define config.save_directory = "TheSummit-1702444616"
 
 
 ## Icon ########################################################################
