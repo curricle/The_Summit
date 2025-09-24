@@ -27,6 +27,26 @@ init python:
             self.scheduled = scheduled
             self.description = description
 
+    def getNextItemInArray(item, array):
+        nextIndex = 0
+        arrayLength = len(array)
+
+        try:
+            currentIndex = array.index(item)
+            print(f'array length: {arrayLength}, current item index: {currentIndex}')
+
+            if currentIndex < arrayLength:
+                nextIndex += currentIndex
+            elif currentIndex == arrayLength:
+                nextIndex = 0
+            else: 
+                nextIndex = arrayLength
+        except:
+            print("An exception occurred.")
+            item = array[0]
+            nextIndex = 0
+
+        return array[nextIndex]
 
 ####################################################################
 #
@@ -127,6 +147,7 @@ screen journal(tab):
                 #list of characters to choose from
                 frame:
                     background Frame('gui/frame_L.png', 32, 32, 32, 32)
+                    padding (10, 25)
                     ypos 250
                     has vbox
                     spacing 20
@@ -137,32 +158,52 @@ screen journal(tab):
                 #character information
                 vbox:
                     ysize 776
+                    spacing 30
                     if current_character:
                         frame:
                             background Frame('gui/frame_L.png', 32, 32)
                             padding (30,30)
                             has hbox
                             spacing 30
+
+                            # image
                             frame:
                                 background Frame('gui/frame_lightTsp.png', 32, 32)
                                 ysize 700
                                 xsize 390
                                 if current_character != journal__bio_default:
                                     image current_character.image:
+                                        ysize 706
+                                        ypos 17
                                         if current_character == journal__bio_xander:
-                                            ysize 706
                                             xsize -992
                                             xcenter 150
-                                            ypos 23
+                                            
+                                        if current_character == journal__bio_aria:
+                                            xcenter 250
+                                            xsize -549
 
+                                        if current_character == journal__bio_melody:
+                                            xsize 637
+                                            xcenter 245
+                                        
+                                        if current_character == journal__bio_rex:
+                                            xsize -636
+                                            xcenter 250
+
+                                        if current_character == journal__bio_tao:
+                                            xsize -544
+                                            xcenter 200
+                            # text
                             vbox:
-                                spacing 30
                                 xsize 667
                                 hbox:
-                                    xfill True
-                                    text current_character.name size 72
+                                    spacing 30
+                                    yalign 1.0
+                                    text current_character.name size 72 italic True yalign 0.5
                                     image 'gui/divider_vertical.png'
                                     vbox:
+                                        yalign 0.5
                                         text 'Specialty: [current_character.specialty]'
                                         text current_character.short_description
                                 frame:
@@ -171,5 +212,14 @@ screen journal(tab):
                                     xfill True
                                     padding (30, 30)
                                     text current_character.description
+                        hbox: 
+                            xfill True
+                            textbutton _("Next >"):
+                                # write a function to: 1. grab the current character's index in journal__characterBio_list; 2. grab the length of journal__characterBio_list;
+                                # set current_character to journal__characterBio_list[current_character_index++] IF current_character_index < journal__characterBio_list.length
+                                # else current_character = journal__characterBio_list[0]
+                                text_size 24
+                                xalign 1.0
+                                action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
                         
 
