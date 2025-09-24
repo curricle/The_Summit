@@ -14,10 +14,12 @@ init python:
             self.description = description
 
     class CharacterBio:
-        def __init__(self, name, image, description):
+        def __init__(self, name, image, description, specialty='???', short_description='???'):
             self.name = name
             self.image = image
             self.description = description
+            self.specialty = specialty
+            self.short_description = short_description
 
     class ExamInfo:
         def __init__(self, name, scheduled, description):
@@ -48,6 +50,7 @@ define journal__bio_tao = CharacterBio("Tao", "images/tao/tao sprite.png", "A ra
 define journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two.")
 define journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "An Inquisitor... best not get on her bad side.")
 define journal__bio_melody = CharacterBio("Melody", "images/melody/melody sprite.png", "Put-together and friendly. Serious about her studies.")
+define journal__bio_default = CharacterBio("???", '', "???")
 
 define journal__characterBio_list = [journal__bio_alice, journal__bio_aria, journal__bio_eileen, journal__bio_melody, journal__bio_rex, journal__bio_tao, journal__bio_xander]
 
@@ -66,7 +69,7 @@ define journal__exam_list = [journal__exam_artificing, journal__exam_combat, jou
 #
 ####################################################################
 
-default current_character = ""
+default current_character = journal__bio_default
 
 screen journal(tab):
 
@@ -75,10 +78,10 @@ screen journal(tab):
 
     default current_tab = tab
 
-    hbox:
+    vbox:
+        xpos 50
         ypos 200
-        xalign 0.5
-        spacing 150
+        spacing 30
 
         textbutton _("Spells") action ShowMenu("journal", "spells")
         textbutton _("Exams") action ShowMenu("journal", "exams")
@@ -116,12 +119,16 @@ screen journal(tab):
 
         if current_tab == "characters":
             hbox:
-                ysize 900
-                ypos 300
-                spacing 100
+                ysize 776
+                ypos 50
+                xsize 1645
+                spacing 300
 
                 #list of characters to choose from
-                vbox:
+                frame:
+                    background Frame('gui/frame_L.png', 32, 32, 32, 32)
+                    ypos 250
+                    has vbox
                     spacing 20
                     for character in journal__characterBio_list:
                         textbutton _(character.name) action [SetVariable("current_character", character),
@@ -129,15 +136,40 @@ screen journal(tab):
                 
                 #character information
                 vbox:
-                    hbox:
-                        spacing 20
-                        if current_character:
-                            image current_character.image:
-                                ysize 500
-                                xsize 300
+                    ysize 776
+                    if current_character:
+                        frame:
+                            background Frame('gui/frame_L.png', 32, 32)
+                            padding (30,30)
+                            has hbox
+                            spacing 30
+                            frame:
+                                background Frame('gui/frame_lightTsp.png', 32, 32)
+                                ysize 700
+                                xsize 390
+                                if current_character != journal__bio_default:
+                                    image current_character.image:
+                                        if current_character == journal__bio_xander:
+                                            ysize 706
+                                            xsize -992
+                                            xcenter 150
+                                            ypos 23
+
                             vbox:
-                                spacing 60
-                                text current_character.name
-                                text current_character.description
+                                spacing 30
+                                xsize 667
+                                hbox:
+                                    xfill True
+                                    text current_character.name size 72
+                                    image 'gui/divider_vertical.png'
+                                    vbox:
+                                        text 'Specialty: [current_character.specialty]'
+                                        text current_character.short_description
+                                frame:
+                                    background Frame('gui/frame_darkBg.png', 32, 32)
+                                    ysize 595
+                                    xfill True
+                                    padding (30, 30)
+                                    text current_character.description
                         
 

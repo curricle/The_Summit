@@ -28,8 +28,12 @@ style gui_text:
 style button:
     properties gui.button_properties("button")
     ## The default sfx played when a button is hovered and pressed
-    hover_sound 'audio/fertilizer_add.mp3'
-    activate_sound 'audio/clue_found_item_alert.mp3'
+    # hover_sound Play('audio', 'audio/ui_click_02.mp3')
+    # activate_sound Play('audio', 'audio/ui_click_01.mp3')
+    hover_sound 'audio/ui_click_02.mp3'
+    activate_sound 'audio/ui_click_01.mp3'
+    padding (35,5)
+    hover_background Frame('gui/gradient_highlight.png')
 
 style button_text is gui_text:
     properties gui.text_properties("button")
@@ -488,6 +492,7 @@ style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
     xsize 200
+    hover_background Frame('gui/gradient_highlight.png')
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
@@ -630,60 +635,60 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     if main_menu:
         add gui.main_menu_background
-    # else:
-        # add gui.game_menu_background
+    else:
+        add gui.game_menu_background
 
     frame:
         style "game_menu_outer_frame"
 
-        add "gui/starlight_1.png":
-            at starlight1
-            alpha 0.6
-            yoffset -180.75
+        # add "gui/starlight_1.png":
+        #     at starlight1
+        #     alpha 0.6
+        #     yoffset -180.75
         
-        add "gui/starlight_2.png":
-            at starlight2
-            alpha 0.6
-            yoffset -180.75
+        # add "gui/starlight_2.png":
+        #     at starlight2
+        #     alpha 0.6
+        #     yoffset -180.75
         
-        add "gui/starlight_3.png":
-            at starlight3
-            alpha 0.6
-            yoffset -180.75
+        # add "gui/starlight_3.png":
+        #     at starlight3
+        #     alpha 0.6
+        #     yoffset -180.75
 
         add "gui/w_border.png":
             yoffset -180.75
 
-        add "gui/constellations.png":
-            xpos 50
-            ypos -150
-            at clockwise
+        # add "gui/constellations.png":
+        #     xpos 50
+        #     ypos -150
+        #     at clockwise
 
-        add "gui/circle1.png":
-            xpos 50
-            ypos -150
-            at clockwise
+        # add "gui/circle1.png":
+        #     xpos 50
+        #     ypos -150
+        #     at clockwise
 
-        add "gui/circle2.png":
-            xpos 50
-            ypos -150
-            at counterClockWise
+        # add "gui/circle2.png":
+        #     xpos 50
+        #     ypos -150
+        #     at counterClockWise
 
-        add "gui/circle3.png":
-            xpos 50
-            ypos -150
-            at clockwise
+        # add "gui/circle3.png":
+        #     xpos 50
+        #     ypos -150
+        #     at clockwise
 
-        add "gui/circle1.png":
-            xpos 1900
-            ypos 1000
-            alpha 0.5
-            at counterClockWise
+        # add "gui/circle1.png":
+        #     xpos 1900
+        #     ypos 1000
+        #     alpha 0.5
+        #     at counterClockWise
 
-        add "gui/comet1.png":
-            xpos 2200
-            ypos 1300
-            at comet1
+        # add "gui/comet1.png":
+        #     xpos 2200
+        #     ypos 1300
+        #     at comet1
 
         # hbox:
 

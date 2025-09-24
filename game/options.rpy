@@ -51,6 +51,10 @@ define config.has_music = True
 define config.has_voice = True
 # define config.has_ambience = True
 
+# ## Add custom channels
+# $ renpy.music.register_channel('ambience', 'ambience', loop=True, tight=True)
+# $ renpy.music.register_channel('gui', 'sfx')
+
 
 ## To allow the user to play a test sound on the sound or voice channel,
 ## uncomment a line below and use it to set a sample sound to play.
@@ -63,7 +67,9 @@ define config.has_voice = True
 ## the player is at the main menu. This file will continue playing into the
 ## game, until it is stopped or another file is played.
 
-define config.main_menu_music = "audio/Title_Theme_MASTER.mp3"
+define config.main_menu_music = "Title_Theme_MASTER.mp3"
+define config.enter_sound = 'audio/ui_book_open.mp3'
+define config.exit_sound = 'audio/ui_book_close.mp3'
 
 ## Layers ######################################################################
 # define config.layer_clipping['master'] = (0, 102, 1920, 876)
