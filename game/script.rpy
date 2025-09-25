@@ -5645,6 +5645,7 @@ label Night2Choices:
                 Narrator "She hands you a ripped piece of paper -- it looks like it might have been pulled out of a journal."
                 Narrator "There's a spell on it. It's easy, almost nursery rhyme in it's simplicity."
                 $ Spell_Light = True
+                play sound "audio/learn_spell.mp3"
                 $ cinematic = False
                 Melody "It's simple, but effective."
                 menu:
@@ -5667,6 +5668,7 @@ label Night2Choices:
             $ cinematic = False
             menu:
                 "(Talk to Tao)": #Tao is stressed about the exam - they are reading a book and making notes
+                    show tao sprite with dissolve
                     $ cinematic = True
                     Narrator "Tao's curtain is open as they study at their desk, scratching their furiously along a tattered notebook. As you approach, they look at you over their shoulder."
                     $ cinematic = False
@@ -5678,13 +5680,16 @@ label Night2Choices:
                             Tao "Right... can you leave me be now?"
                             menu:
                                 "Sure...":
+                                    hide tao sprite
                                     jump Night2Choices_Menu
                         "Nothing...":
+                            hide tao sprite
                             jump Night2Choices_Menu
 
 
 
                 "(Talk to Aria)": #Aria is having an early night after feeling a bit melancholic - talks from behind a curtain
+                    show aria sprite with dissolve
                     $ cinematic = True
                     Narrator "You approach Aria's curtain, and her voice comes softly from behind it."
                     Aria "Hey... is someone there?"
@@ -5693,13 +5698,17 @@ label Night2Choices:
                         "(Ask if she's okay)":
                             Aria "I'm okay. Just sleepy."
                             Aria "We'll talk tomorrow."
+                            hide aria sprite
                             jump Night2Choices_Menu
 
                         "(Leave her be)":
+                            hide aria sprite
                             jump Night2Choices_Menu
+
 
                 "(Talk to Rex)" if not Quest_RexPlanRejected and not Quest_RexProgress: #Rex pulls you into his area, closing the curtains behind you to ask whether you want to do his plan (blowing up Eileen's half built statue in the Atrium)
                     if Affinity_Rex >= 50:
+                        show rex sprite with dissolve
                         $ cinematic = True
                         Narrator "You walk over to Rex's curtain... he says nothing but you hear the sound of metal scraping."
                         $ cinematic = False
@@ -5708,6 +5717,7 @@ label Night2Choices:
                                 Rex "Hey, just a sec."
                                 pass
                             "(Leave)":
+                                hide rex sprite
                                     jump Night2Choices_Menu
                         $ cinematic = True
                         Narrator "You hear him tinker some more. After a moment, he opens the curtains and looks around the room with a look in his eye."
@@ -5764,6 +5774,7 @@ label Night2Choices:
                                         $ cinematic = True
                                         Narrator "Rex smiles. You don't think you've seen him smile before."
                                         Narrator "You leave him alone."
+                                        hide rex sprite
                                         $ cinematic = False
                                         jump Night2Choices_Menu
 
@@ -5773,6 +5784,7 @@ label Night2Choices:
                                 $ cinematic = True
                                 Narrator "He looks pissed. You leave him be."
                                 $ cinematic = False
+                                hide rex sprite
                                 jump Night2Choices_Menu
 
 
@@ -5790,6 +5802,7 @@ label Night2Choices:
 
 
                 "(Talk to Melody)": #Melody is studying
+                    show melody sprite with dissolve
                     $ cinematic = True
                     Narrator "Melody sits at the desk by her bed, surrounded by books and notes."
                     $ cinematic = False
@@ -5810,13 +5823,17 @@ label Night2Choices:
                                     menu:
                                         "I have a few questions...":
                                             call melodyhub_main
+                                            hide melody sprite
                                             jump Night2Choices_Menu
                                         "No. I'll head to bed now.":
+                                            hide melody sprite
                                             jump Night2Choices_Menu
                                 "I'll be going to bed soon.":
                                     Melody "Same here."
+                                    hide melody sprite
                                     jump Night2Choices_Menu
                         "(Leave)":
+                            hide melody sprite
                             jump Night2Choices_Menu
 
                 "(Talk to Xander)" if not Quest_XanderProgress:
@@ -5838,12 +5855,14 @@ label Night2Choices:
 
 
                 "(Sneak Out)":
+                    stop music
                     $ cinematic = True
                     Narrator "You tiptoe your way into the corridor... hoping no one catches you."
                     $ cinematic = False
                     jump Night2SneakDecision
                 
                 "(Go to Sleep)":
+                    stop music
                     $ cinematic = True
                     Narrator "You pull the covers over you, looking up at the ceiling as it lulls you to sleep."
                     Narrator "Moments after your eyes are closed, you fall asleep."
@@ -5859,11 +5878,14 @@ label Night2Choices:
             Narrator "You close the curtain and pull the covers over you..."
             Narrator "And drift off to sleep..."
             $ cinematic = False
+            stop music
             jump EndOfDemo
 
 
 label Night2SneakDecision:
     if Spell_Light:
+        scene corridor night with fade
+        play music "audio/project_w_main_theme_concept_02_fade.mp3"
         $ Location = "Corridor"
         $ cinematic = True
         Narrator "You ignite a white orb of light in your hand, casting stark shadows along the walls."
@@ -5871,29 +5893,37 @@ label Night2SneakDecision:
         Narrator "You wonder where you should explore..."
         $ cinematic = False
         menu:
-            "(Go to the {b}Library{/b})" if not Quest_XanderComplete:
+            "(Go to the {b}Library{/b})" if not Quest_XanderComplete and Location != "Library":
+                stop music
                 jump Night2Library
 
-            "(Go to the {b}Alchemy Lab{/b})":
+            "(Go to the {b}Alchemy Lab{/b})" if Location != "Alchemy Lab":
+                stop music
                 jump Night2AlchemyLab
 
-            "(Go to the {b}Atrium{/b})" if not Night2AtriumVisited:
+            "(Go to the {b}Atrium{/b})" if not Night2AtriumVisited and Location != "Atrium":
                 if Flag_NotAliceMet:
+                    stop music
                     jump Night2Atrium
 
                 else:
+                    stop music
                     jump Night2Atrium2
 
-            "(Go to the {b}Artificing Lab{/b})":
+            "(Go to the {b}Artificing Lab{/b})" if Location != "Artificing Lab":
+                stop music
                 jump Night2ArtificingLab
 
-            "(Go to the {b}Greenhouse{/b})":
+            "(Go to the {b}Greenhouse{/b})" if Location != "Greenhouse":
+                stop music
                 jump Night2Greenhouse
 
-            "(Search for the Teachers Lounge)" if Flag_DiscoveredTeachersLounge:
+            "(Search for the Teachers Lounge)" if Flag_DiscoveredTeachersLounge and Location != "Teachers Lounge":
+                stop music
                 jump Night2TeachersLounge
 
-            "(Return to the {b}Dormitory{/b})":
+            "(Return to the {b}Dormitory{/b})" if Location != "Dormitory":
+                stop music
                 $ cinematic = True
                 Narrator "You decide to return to your room..."
                 $ cinematic = False
@@ -5912,14 +5942,17 @@ label Night2SneakDecision:
 
 
 label Night2Atrium: #the thing isn't there. The moons are wacky. You find a shattered porcelain hand by the moons.
-    $ cinematic = True
+    scene atrium night with fade
+    play music "audio/Oratory_MASTER_LOOPED.mp3"
     $ Location = "Atrium"
+    $ cinematic = True
     Narrator "The atrium is eerily quiet, the usual sounds of water replaced by an unsettling stillness."
     Narrator "You glance up at the moons, their shapes distorted and swirling in the air..."
     Narrator "As you look around, you notice something glinting on the ground near the base of the moons."
     Narrator "You step closer, keeping an eye on the grate to make sure that nothing is below it."
     Narrator "You lean over and see a shattered porcelain hand lying on the ground. Little splinters scattered and broken."
     Narrator "It's clear the doll reached through the grate... and something cut it off."
+    Narrator "You feel unsettled..."
     Narrator "You decide to leave the Atrium."
     $ cinematic = False
     $ Night2AtriumVisited = True
@@ -5927,8 +5960,10 @@ label Night2Atrium: #the thing isn't there. The moons are wacky. You find a shat
     
 
 label Night2Atrium2: #same as before except this time you don't look under the grates. You find a shattered porcelain hand by the moons.
-    $ cinematic = True
+    scene atrium night with fade
+    play music "audio/Oratory_MASTER_LOOPED.mp3"
     $ Location = "Atrium"
+    $ cinematic = True
     Narrator "The atrium is eerily quiet, the usual sounds of water replaced by an unsettling stillness."
     Narrator "You glance up at the moons, their shapes distorted and swirling in the air..."
     Narrator "As you look around, you notice something glinting on the ground near the base of the moons."
@@ -5942,17 +5977,19 @@ label Night2Atrium2: #same as before except this time you don't look under the g
     
 
 label Night2Library: #Quest_XanderProgress Xander is waiting for you to break into the Archives. Eileen is in the Archives waiting for him.
-    scene library night
+    scene library night with fade
     $ Location = "Library"
+    play music "audio/project_w_concept_04_fminor.mp3"
     $ cinematic = True
     Narrator "You arrive at the Library... a heavy light filters beneath the doorway. As you open it, you see Xander."
+    show xander sprite with dissolve
     $ cinematic = False
     if Quest_XanderProgress:
         Xander "You came! Hey!"
         menu:
             "You sound surprised.":
                 pass
-        Xander "I'm... I'm a little surprised. I thought you might chicken out. It kinda dawned on me that I'm asking for a lot."
+        Xander "I'm... I'm a little surprised. I thought you might chicken out. It kinda dawned on me that I'm asking for a {i}lot{/i}."
         Xander "But... I'm glad you came. I really need the help."
         $ cinematic = True
         Narrator "He moves over to the Archives door. Even in the darkness you can make out the great lock."
@@ -5975,6 +6012,8 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                 Xander "Okay. Let's go in."
                 menu:
                     "(Enter the Archive)":
+                        hide xander sprite
+                        stop music
                         jump Night2Archive
 
             "Have you tried hitting it?":
@@ -5991,6 +6030,8 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                         Xander "Okay. Let's go in."
                         menu:
                             "(Enter the Archive)":
+                                hide xander sprite
+                                stop music
                                 jump Night2Archive
             
             "There's probably some spell we don't know...":
@@ -6008,6 +6049,8 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                         Xander "Okay. Let's go in."
                         menu:
                             "(Enter the Archive)":
+                                hide xander sprite
+                                stop music
                                 jump Night2Archive
 
     else:
@@ -6041,6 +6084,8 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                                         Xander "Okay. Let's go in."
                                         menu:
                                             "(Enter the Archive)":
+                                                hide xander sprite
+                                                stop music
                                                 jump Night2Archive
 
                                     "Have you tried hitting it?":
@@ -6057,6 +6102,8 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                                                 Xander "Okay. Let's go in."
                                                 menu:
                                                     "(Enter the Archive)":
+                                                        hide xander sprite
+                                                        stop music
                                                         jump Night2Archive
                                     
                                     "There's probably some spell we don't know...":
@@ -6074,6 +6121,8 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                                                 Xander "Okay. Let's go in."
                                                 menu:
                                                     "(Enter the Archive)":
+                                                        hide xander sprite
+                                                        stop music
                                                         jump Night2Archive
 
 
@@ -6084,25 +6133,33 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                                         $ cinematic = True
                                         Narrator "You turn around and leave. It's probaby best to avoid... whatever it is he's doing."
                                         $ cinematic = False
+                                        hide xander sprite
+                                        stop music
                                         jump Night2SneakDecision
                                     "...":
                                         $ cinematic = True
                                         Narrator "You turn around and leave. It's probaby best to avoid... whatever it is he's doing."
                                         $ cinematic = False
+                                        hide xander sprite
+                                        stop music
                                         jump Night2SneakDecision
                     
                     "I'd rather not get dragged into something...":
                         $ cinematic = True
                         Narrator "You turn around and leave. It's probaby best to avoid... whatever it is he's doing."
                         $ cinematic = False
+                        hide xander sprite
+                        stop music
                         jump Night2SneakDecision
 
 
 label Night2Archive: #Xander quest.
-    scene archive night
+    scene archive night with fade
+    play music "audio/project_w_combat_01.mp3"
     $ Location = "Archive"
     $ ArchiveOpened = True
     $ cinematic = True
+    show xander sprite at left
     Narrator "As you pass through the threshold, your lights extinguish."
     Narrator "You remember a spell in the Scholomance which did that -- a whole room sealed from mana such that no one could cast spells inside."
     Narrator "You feel the overwhelming pressence of it. Or more so a lack of it. As though you're in a perfectly silent room where even your voice is muted."
@@ -6113,6 +6170,7 @@ label Night2Archive: #Xander quest.
     Narrator "You trip on something, but regain your balance before you hit the ground by hanging on to a shelf. As you stand, you feel a switch."
     $ cinematic = False
     Eileen "Allow me to help you with that."
+    show eileen sprite at right
     $ cinematic = True
     Narrator "A dim light switches on, revealing the makeup of the room, along with Eileen, who is seated, rather sternly, on a velvet red chaise lounge with a half-read book on her lap."
     Narrator "You notice the blanket, tossed hastily aside beneath a tall wall of books. It's clear she was sleeping."
@@ -6139,7 +6197,7 @@ label Night2Archive: #Xander quest.
     Eileen "None of your business. The reason I'm here is--"
     Eileen "Oh, sod it. I needed some peace and quiet from you lot. What are you doing in here?"
     Xander "Honestly? Cards on the table... I needed some extra time. My crops died, you see, and--"
-    Eileen "Right, right... you realise they got poisoned, don't you?"
+    Eileen "Right, right... you do realise they got poisoned, don't you?"
     Xander "I... did not."
     Xander "I thought if I got in here, I'd find a way to salvage my grade. I can't get my head around the exam material. I really need it."
     Xander "You're failing me on the spot, aren't you. Just... please don't punish my friend, I dragged them into it. They didn't even want to be here I just needed--"
@@ -6178,8 +6236,12 @@ label Night2Archive: #Xander quest.
     Narrator "Before you close the door, you hear her words:" 
     $ cinematic = False
     Eileen "Not a word that either of us were in here to Alice."
+    hide eileen sprite
+    show xander sprite at center
     $ cinematic = True
     Narrator "The door closes. Xander summons a cold blue light to illuminate both of your faces."
+    stop music
+    play music "audio/Underground_Ambience.mp3"
     Narrator "He's pale. You are too."
     $ cinematic = False
     Xander "That was..."
@@ -6196,6 +6258,8 @@ label Night2Archive: #Xander quest.
             Narrator "He's silent, as though deep in thought."
             Narrator "Despite not getting any studying done, he seems happier. As though he's finally seen some light at the end of a dark tunnel."
             $ cinematic = False
+            stop music
+            hide xander sprite
             jump Night2Choices_Menu
 
         "I have other stuff to do.":
@@ -6203,34 +6267,38 @@ label Night2Archive: #Xander quest.
             $ cinematic = True
             Narrator "Xander leads you to the corridor, where you go your seperate ways."
             $ cinematic = False
+            stop music
+            hide xander sprite
             jump Night2SneakDecision
 
  
-
-    
 
 
 
 
 label Night2AlchemyLab: #Locked
-    scene alchemy lab night
+    scene alchemy lab night with fade
+    play music "audio/potions_classroom_ambience.mp3"
     $ cinematic = True
     $ Location = "Corridor"
     Narrator "You approach the Alchemy Lab and twist the handle."
     Narrator "It's locked."
     if Spell_Unlocking:
+        play sound "audio/reveal_magic_spell.mp3"
         Narrator "You try to unlock it with a spell... it doesn't seem to do anything. The door unlocks but doesn't move... perhaps something is blocking it."
         pass
     else:
         pass
     Narrator "You decide to leave it alone."
+    stop music
     $ cinematic = False
     jump Night2SneakDecision
 
 
 
 label Night2ArtificingLab:
-    scene artificing lab night
+    scene artificing lab night with fade
+    play music "audio/Marigold_Ambience.mp3"
     $ Location = "Artificing Lab"
     $ cinematic = True
     Narrator "You sneak into the {b}Artificing Lab{/b}. Dusty workstations and half-finished projects litter the room."
@@ -6247,29 +6315,32 @@ label Night2ArtificingLab:
             "(Search the Lab)":
                 if Flag_LockBreakerNeeded == True:
                     call Night1ArtificingLab_SearchLock
-                    return
+                    jump Night2ArtificingLab_Choices
 
                 else:
                     call Night1ArtificingLab_Search
-                    return
+                    jump Night2ArtificingLab_Choices
                 
             "(Look for Machine Parts)" if artifice_options:
                 call Night2ArtificingLab_MachinePart
-                return
+                jump Night2ArtificingLab_Choices
 
                 label Night2ArtificingLab_MachinePart:
                     $ cinematic = True
                     Narrator "You search through the lab for any machine parts. Your [artifice_options] creation doesn't need much, but it doens't help to look."
                     Narrator "You find a small hammer beside some refined, malleable metal."
+                    play sound "audio/clue_found_item_alert.mp3"
                     Narrator "You pick them both up and place them in your bag."
                     Narrator "You also find a few scraps of wire and a small gear."
                     Narrator "You add those to your bag as well."
+                    play sound "audio/clue_found_item_alert.mp3"
                     $ cinematic = False
                     $ Flag_ArtificeParts = True
                     $ Flag_HammerAcquired = True
                     return
 
             "(Leave the {b}Artificing Lab{/b})":
+                stop music
                 jump Night2SneakDecision
 
 
@@ -6277,6 +6348,7 @@ label Night2ArtificingLab:
 
 label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelUnlocked)
     scene greenhouse night
+    play music "audio/project_w_concept_03_gmajor.mp3"
     $ Location = "Greenhouse"
     $ cinematic = True
     Narrator "You enter the {b}Greenhouse{/b}, moonlight filtering through the painted skylight, revealing the unshaded nooks in a dreamlike view."
@@ -6299,7 +6371,9 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                 $ cinematic = False
                 menu:
                     "(Yes.)":
-                        scene tunnel night
+                        stop music
+                        scene tunnel night with fade
+                        play music "audio/Underground_Ambience.mp3"
                         $ cinematic = True
                         Narrator "You step into the tunnel, the air growing cooler and damper as you proceed."
                         Narrator "The faint sound of dripping water echoes around you."
@@ -6321,6 +6395,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                         Narrator "You approach the rubble, the moonlight illuminating the way."
                                         Narrator "You clamber up the rubble, your hands dirty with dust."
                                         $ cinematic = False
+                                        stop music
                                         jump Night2Courtyard
 
                             "(Right)":
@@ -6328,6 +6403,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                 Narrator "You approach the rubble, the moonlight illuminating the way."
                                 Narrator "You clamber up the rubble, your hands dirty with dust."
                                 $ cinematic = False
+                                stop music
                                 jump Night2Courtyard
 
                     "(No.)":
@@ -6336,8 +6412,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                         $ cinematic = False
                         jump Night2Greenhouse_Choices
 
-            
-            "(Inspect the Crops)" if planted_seeds: #You can sabotague other crops 
+            "(Inspect the Crops)" if planted_seeds: #You can sabotague other crops
                 $ cinematic = True
                 Narrator "You look over the crops, a few small plots of herbs and vegetables, all thriving under the magical light."
                 Narrator "All, but Xander's, who have been dug up and binned."
@@ -6422,6 +6497,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             $ Flag_MelodyPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Melody's plants, digging in the soil to cut the roots."
+                                            play sound "audio/uproot_plant.mp3"
                                             Narrator "You don't feel good about it... but sabotaging Melody feels like your best shot at scoring higher than her."
                                             $ cinematic = False
                                             jump Night2Greenhouse_Choices
@@ -6430,6 +6506,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             $ sabotaged_plants.append("Xander")
                                             $ Flag_XanderPlantSabotaged = True
                                             Narrator "You sneak over to Xander's plants, digging in the soil to cut the roots."
+                                            play sound "audio/uproot_plant.mp3"
                                             Narrator "You don't really know why you did it... they're already dead."
                                             jump Night2Greenhouse_Choices
 
@@ -6438,6 +6515,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             $ Flag_AriaPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Aria's plants, digging in the soil to cut the roots."
+                                            play sound "audio/uproot_plant.mp3"
                                             Narrator "You get the feeling they'll grow back."
                                             $ cinematic = False
                                             jump Night2Greenhouse_Choices
@@ -6447,6 +6525,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             $ Flag_RexPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Rex's plants, digging in the soil to cut the roots."
+                                            play sound "audio/uproot_plant.mp3"
                                             Narrator "Rex isn't much of a threat, but sabotaging him will ensure he has better things on his mind."
                                             $ cinematic = False
                                             jump Night2Greenhouse_Choices
@@ -6456,6 +6535,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             $ Flag_TaoPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Tao's plants, digging in the soil to cut the roots."
+                                            play sound "audio/uproot_plant.mp3"
                                             Narrator "You don't feel good about it, but sabotaging Tao's feels like your best option."
                                             $ cinematic = False
                                             jump Night2Greenhouse_Choices
@@ -6478,6 +6558,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                 Narrator "You inspect the greenhouse, the smells sticking out more here than they do anywhere else in the Summit."
                 Narrator "You move up to the tree, feeling a surge of magic around it. You know that the tree is sentient, but it doesn't speak to you."
                 Narrator "It barely seems to acknowldge you."
+                play sound "audio/dialogue_information_default.mp3"
                 Narrator "The rest of the greenhouse is tall flowers, wild grass, and carefully segmented crop areas, with bags of seeds stored away in cupboards dotting the edge of the room."
                 Narrator "There was nothing this complex in the Scholomance. You learned botany with imported plants, teleported in by stern looking mages in strict uniforms, who seemed to look at you with distain."
                 Narrator "What was there would grow under an artificial sun, something akin to the moons, but far less elegant. Like the harsh bulbs imported from the neighbouring country of Cerulia, where magic is outlawed."
@@ -6491,14 +6572,16 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                 $ cinematic = True
                 Narrator "You decide to leave the Greenhouse, the smell of flowers and dew evaporating as you close the door behind you."
                 $ cinematic = False
+                stop music
                 jump Night2SneakDecision
 
 
 
 
 label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlocked)
-    scene courtyard night
+    scene courtyard night with fade
     $ Location = "Courtyard"
+    play music "audio/project_w_concept_02_eminor.mp3"
     $ cinematic = True
     $ Night2Explored = True
     Narrator "You emerge from the tunnel, batting away the branches that were concealing it. You stand a few steps into the forest, from here you can look out and see the full scale of the summit."
@@ -6510,7 +6593,8 @@ label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlock
     jump Night2Courtyard_Choices
 
     label Night2Courtyard_Choices:
-        scene courtyard night
+        scene courtyard night with fade
+        play music "audio/project_w_concept_02_eminor.mp3"
         $ Location = "Courtyard"
         Narrator "You wonder what you should do..."
         menu:
@@ -6518,6 +6602,7 @@ label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlock
                 $ cinematic = True
                 Narrator "With no one to stop you, you enter the forest..."
                 $ cinematic = False
+                stop music
                 jump Night2Forest
             
             "(Go back inside through the tunnel)":
@@ -6528,13 +6613,14 @@ label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlock
                 Narrator "It's too risky to stay out."
                 Narrator "You go back to your room."
                 $ cinematic = False
+                stop music
                 jump Night2Choices_Menu
 
 
 
 
 label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can find the Doll and agree to sacrifice a classmate.
-    scene forest night
+    scene forest night with fade
     $ Location = "Forest"
     $ cinematic = True
     Narrator "You step into the forest, the trees towering above you, their leaves whispering secrets in the night breeze. You ignite a light in your hand and let it hover above your shoulder."
@@ -6545,7 +6631,8 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
     jump Night2Forest_Choices
 
     label Night2Forest_Choices:
-        scene forest night
+        scene forest night with fade
+        play music "audio/project_w_main_theme_concept_02.mp3"
         $ Location = "Forest"
         $ cinematic = True
         Narrator "You wonder what you should do..."
@@ -6561,6 +6648,7 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                 $ cinematic = False
                 menu:
                     "(Enter the clearing)":
+                        stop music
                         jump Night2Forest_Trail
 
                 label Night2Forest_Trail:
@@ -6580,13 +6668,12 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                             $ cinematic = True
                             Narrator "You feel adrenaline rush through you as you sprint through the forest, following the trail until you reach the courtyard. The soft glow of the Summit's lights a sanctuary..."
                             $ cinematic = False
+                            stop music
                             jump Night2Courtyard_Choices
-
 
                     
             "(Go off the beaten path)": #leads to the doll, hiding in a small grotto. one armed. something poking out.
                 if Quest_NotAliceProgress:
-                
                     $ cinematic = True
                     Narrator "You descend through the shrubbery, following your intuition and the slow descent of the mountain."
                     Narrator "It feels almost natural to you, as if you're following an invisible thread."
@@ -6594,6 +6681,7 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                     $ cinematic = False
                     menu:
                         "(Enter the Grotto)":
+                            play music "audio/project_w_concept_02_eminor.mp3"
                             $ cinematic = True
                             Narrator "You step into the grotto, wind at your back. As you step through the threshold, the world falls silent."
                             Narrator "You hadn't realised how loud the forest was in the night. Birds, insects, all forming a cacophony of nature."
@@ -6601,6 +6689,7 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                             Narrator "The light within flickers and blurs, while yours remains strong."
                             Narrator "You step closer, and your light shifts, bouncing off the walls of the cave to reveal..."
                             Narrator "A small doll, sitting in the centre of the grotto."
+                            show notalice sprite with dissolve
                             Narrator "It's Alice's doll, missing a forearm, eye cracked, something crawling within it."
                             Narrator "It looks at you. If it could smile, you're sure it would."
                             Narrator "You notice that the flickering light is coming from within the Doll an ambient yellow that dulls into reds."
@@ -6623,17 +6712,19 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                     $ cinematic = True
                                     Narrator "You shouldn't be here. You step backwards until you're out of the grotto, then sprint back to the Courtyard."
                                     $ cinematic = False
+                                    stop music
+                                    hide notalice sprite
                                     jump Night2Courtyard_Choices
 
-                            
                         "(Turn Back)":
                             $ cinematic = True
                             Narrator "You follow the path back the way you came, until you come to the crossroads once again."
                             $ cinematic = False
+                            stop music
                             jump Night2Forest_Choices
 
                     label Night2Forest_Grotto: #NotAlice only speaks using words Alice has spoken
-                        scene forest grotto
+                        scene forest grotto with fade
                         $ cinematic = True
                         Narrator "After a few moments of silence, the Doll speaks. It's voice is still a mimicry of Alice's... but there's something different about it."
                         $ cinematic = False
@@ -6737,18 +6828,22 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                     NotAlice "You're dismissed."
                                     NotAlice "I'll see you soon."
                                     $ cinematic = True
+                                    hide notalice sprite with dissolve
                                     Narrator "You step away from the doll, feeling your hands along the grotto walls until you find yourself back in the moonlit forest."
                                     Narrator "You know you need to get back to the Summit. Without your magic you're defenseless."
                                     Narrator "You look back at the grotto once more. The light in there still flickers, though now, much stronger."
-                                    scene forest night
+                                    scene forest night with fade
                                     Narrator "Clambering and stumbling, you find your way back to the crossroads, and follow the trail to the Summit."
-                                    scene courtyard night
+                                    scene courtyard night with fade
                                     Narrator "In the dark, you manage to navigate through the tunnel, through the Greenhouse and back to the dorms."
-                                    scene dormitory night
+                                    scene dormitory night with fade
+                                    $ Location = "Dormitory"
+                                    queue music "audio/Oratory_Ambience.mp3"
                                     Narrator "You sit at the edge of your bed, catching your breath."
                                     Narrator "The silence of the dorms is interrupted only by the beating of your heart."
                                     $ cinematic = False
                                     if "Xander" in sacrificed_character:
+                                        show xander sprite with dissolve
                                         Xander "Hey, are you okay?"
                                         $ cinematic = True
                                         Narrator "You look up to see Xander. He parts his curtains to look over at you, a soft yellow light illuminating him."
@@ -6762,10 +6857,12 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "Before he can finish his sentence, the hands pull him under with a quickness you thought impossible."
                                         Narrator "His body seems to bend and morph, kicking as whatever has a hold of him drags him into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
+                                        hide xander sprite
                                         $ cinematic = False
                                         jump PostSacrificeSleep
 
                                     elif "Aria" in sacrificed_character:
+                                        show aria sprite with dissolve
                                         Aria "Are you okay?"
                                         Aria "You look exhausted. I can make you some tea if you need."
                                         $ cinematic = True
@@ -6781,9 +6878,11 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "Her body seems to bend and morph, kicking as whatever has a hold of her drags her into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
+                                        hide aria sprite
                                         jump PostSacrificeSleep
 
                                     elif "Tao" in sacrificed_character:
+                                        show tao sprite with dissolve
                                         Tao "Do you mind? Some of us are trying to sleep."
                                         $ cinematic = True
                                         Narrator "You look over to see Tao, lit by their nightlight."
@@ -6797,9 +6896,11 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "Tao's body seems to bend and morph, kicking as whatever has a hold of them drags them into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
+                                        hide tao sprite
                                         jump PostSacrificeSleep
 
                                     elif "Rex" in sacrificed_character:
+                                        show rex sprite with dissolve
                                         Rex "You're up, too?"
                                         Rex "Saints... You look horrible."
                                         $ cinematic = True
@@ -6814,9 +6915,11 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "Rex's body seems to bend and morph, kicking as whatever has a hold of him drags him into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
+                                        hide rex sprite
                                         jump PostSacrificeSleep
                                     
                                     elif "Melody" in sacrificed_character:
+                                        show melody sprite with dissolve
                                         Melody "Saints... it's you." 
                                         Melody "I had the worst nightmare."
                                         $ cinematic = True
@@ -6832,9 +6935,11 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "Melody's body seems to bend and morph, kicking as whatever has a hold of her drags her into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
+                                        hide melody sprite
                                         jump PostSacrificeSleep
 
                                     else:
+                                        stop music
                                         return
                                     
                             label PostSacrificeSleep:
@@ -6845,6 +6950,7 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                 Narrator "Your body seems to force you to lay down... you draw the curtains around you and hide underneath the blanket."
                                 Narrator "You wait for sleep. Hoping it comes quickly."
                                 $ cinematic = False
+                                stop music
                                 jump EndOfDemo
 
 
@@ -6856,12 +6962,14 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                     Narrator "It feels as though the darkness is too imposing to work through."
                     Narrator "You find yourself back at the crossroads."
                     $ cinematic = False
+                    stop music
                     jump Night2Forest_Choices
 
             "(Go back)":
                 $ cinematic = True
                 Narrator "You decide to go back. The forest doesn't seem too safe to explore..."
                 $ cinematic = False
+                stop music
                 jump Night2Courtyard_Choices
 
 
@@ -6885,11 +6993,14 @@ label Night2TeachersLounge: #player cannot enter because it's locked and has tea
 
 
 label EndOfDemo:
+    scene black with fade
+    play music "audio/Title_Theme_MASTER.mp3"
     "You have now completed Episode 1!"
     "We hope you enjoyed your time at The Summit!"
     "Thank you, so much, for playing!"
     "If you want to support us as we create Episode 2, 3, and other games, we have a Patreon!"
     "While you wait, we have also created a Podcast, set inside the world of the Summit."
+    play sound "audio/dialogue_information_default.mp3"
     return
 
 
@@ -7221,7 +7332,6 @@ label BARI01:
     Aria "Hm, you're not like the other students here. I'll leave you to it. Good luck on the exams. Let me know if you need help."
     $ Flag_AriaMet = True
     hide aria sprite
-
     return
 
 
@@ -7531,8 +7641,6 @@ label melodyhub_main:
             call HMEL20
             return
 
-
-
     return
 
 
@@ -7828,6 +7936,7 @@ label melodyhub_main:
                         show melody sprite sad
                         Melody "Hmm. It's not a complex potion and it certainly shouldn't have backfired in any way."
                         hide melody sprite sad
+                        show melody sprite
                         call potionfail
                         jump melodyhub_main
                     
@@ -7854,7 +7963,6 @@ label melodyhub_main:
             
     
     label HMEL16:
-
         Melody "Everyone's so nervous for the Potion Exam. I guess I've studied enough that I'm feeling pretty calm. I already know the recipe I'll be using -- it'll get me top marks, for sure."
         menu: 
             "Recipe?":
@@ -7999,7 +8107,6 @@ label xanderhub_main:
             call HXAN01
             return
 
-
         "What was it like on the farm?" if Flag_XanderFarmer == True:
             call HXAN02
             return
@@ -8108,7 +8215,6 @@ label xanderhub_main:
                     Xander "We're tough boys. Lots of digging holes and building walls. It was pretty good. Animals like me, and I like lifting heavy stuff so… yeah."
                     $ Flag_XanderFarmer = True
                     jump xanderhub_main
-
 
     label HXAN02:
         Xander "Our farm's known for its beef and milk. I'm proud of that. Cows are smart, you know." 
