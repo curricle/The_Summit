@@ -1,12 +1,12 @@
 # The script of the game goes in this file.
-
+# last changedf 5am on 20/09/2025
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
 define Tao = Character("Tao")
 define Aria = Character("Aria")
 define Melody = Character("Melody", color="#6f068ad3")
-define Melody2 = Character("Melody")
+define Melody2 = Character("Melody", color="#6f068ad3")
 define Rex = Character("Rex")
 define Xander = Character("Xander")
 define Eileen = Character("Eileen")
@@ -5718,7 +5718,7 @@ label Night2Choices:
                                 pass
                             "(Leave)":
                                 hide rex sprite
-                                    jump Night2Choices_Menu
+                                jump Night2Choices_Menu
                         $ cinematic = True
                         Narrator "You hear him tinker some more. After a moment, he opens the curtains and looks around the room with a look in his eye."
                         Narrator "He looks like he's looking out for someone. He pulls you in by your shirt, closing the curtain behind you."
