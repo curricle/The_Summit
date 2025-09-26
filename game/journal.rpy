@@ -42,6 +42,9 @@ init python:
             print("An exception occurred.")
             item = array[0]
 
+    def resetCurrentCharacter():
+        return journal__bio_default
+
 ####################################################################
 #
 # Create spells, bios, and exams
@@ -209,9 +212,6 @@ screen journal(tab):
                         hbox: 
                             xfill True
                             textbutton _("Next >"):
-                                # write a function to: 1. grab the current character's index in journal__characterBio_list; 2. grab the length of journal__characterBio_list;
-                                # set current_character to journal__characterBio_list[current_character_index++] IF current_character_index < journal__characterBio_list.length
-                                # else current_character = journal__characterBio_list[0]
                                 text_size 24
                                 xalign 1.0
                                 action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
