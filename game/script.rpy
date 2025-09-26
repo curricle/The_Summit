@@ -392,7 +392,7 @@ label start:
     $ cinematic = False
     Eileen "It could be {i}years{/i} before you have another chance to leave the Scholomance. If you botch it, I assure you, you {i}will{/i} regret it."
     Eileen "Your peers will pity you and use your story to fuel their aspirations."
-    Eileen "Your life will remain in stagnation. Studying and learning under lecturers who care little for you, to leave a place you barely grew beyond."
+    Eileen "Your life will remain in stagnation. Studying and learning under lecturers who care little for you, with ambitions to leave a place you barely grew beyond."
     Eileen "Consider this your only chance at life."
     hide eileen sprite
     $ cinematic = True
@@ -402,7 +402,7 @@ label start:
         xalign 0.5 
         yalign 0.3
     Alice "Great... Great. Thank you for your advice, Inquisitor Eileen."
-    Alice "As for my own advice... Every licenced Mage has been through the Summit. It's the final test we undertake as student mages." 
+    Alice "As for my own advice... Every licensed Mage has been through the Summit. It's the final test we undertake as student mages." 
     Alice "I have unwavering trust that you each have it in you to succeed."
     Alice "You're only here for {i}seven days{/i}, pupils. Make those days count."
     Alice "And remember to ask yourself. What is it you desire from this place? Let that motivate you."
