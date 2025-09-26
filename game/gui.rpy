@@ -21,7 +21,8 @@ define gold = "#b49920"
 define yellow = "#ffe77e"
 
 ## Images
-image border = "gui/border.png"
+# image border = "gui/border.png"
+image border = "gui/w_border.png"
 image constellations = "gui/constellations.png"
 
 ## Custom transitions
@@ -52,7 +53,8 @@ define gui.hover_color = yellow
 
 ## The color used for a text button when it is selected but not focused. A
 ## button is selected if it is the current screen or preference value.
-define gui.selected_color = white
+define gui.selected_color = yellow
+define gui.selected_idle_background = Frame('gui/gradient_highlight.png')
 
 ## The color used for a text button when it cannot be selected.
 define gui.insensitive_color = '#8888887f'
@@ -113,12 +115,12 @@ define gui.game_menu_background = "gui/game_menu.png"
 ## time.
 
 ## The height of the textbox containing dialogue.
-define gui.textbox_height = 278
-define gui.textbox_width = 463
+define gui.textbox_height = 304
+define gui.textbox_width = 1104
 
 ## The placement of the textbox vertically on the screen. 0.0 is the top, 0.5 is
 ## center, and 1.0 is the bottom.
-define gui.textbox_yalign = 0.75
+define gui.textbox_yalign = 0.925
 
 
 ## The placement of the speaking character's name, relative to the textbox.
@@ -151,8 +153,8 @@ define gui.dialogue_xalign = 0.5
 define gui.dialogue_yalign = 0.5
 
 ## The maximum width of dialogue text, in pixels.
-define gui.dialogue_width = 345
-define gui.dialogue_height = 194
+define gui.dialogue_width = 1054
+define gui.dialogue_height = 204
 
 ## The horizontal alignment of the dialogue text. This can be 0.0 for left-
 ## aligned, 0.5 for centered, and 1.0 for right-aligned.
@@ -223,16 +225,18 @@ define gui.navigation_button_text_xalign = 0.5
 ##
 ## Choice buttons are used in the in-game menus.
 
-define gui.choice_button_width = 600
+define gui.choice_button_width = 740
 define gui.choice_button_height = None
 define gui.choice_button_tile = False
 define gui.choice_button_borders = Borders(10, 10, 10, 10)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
+define gui.choice_button_text_yalign = 0.5
 define gui.choice_button_text_idle_color = '#b6b6b6'
 define gui.choice_button_text_hover_color = white
 define gui.choice_button_text_insensitive_color = '#888888'
+define gui.choice_button_background = 'gui/choice_box.png'
 
 
 ## File Slot Buttons ###########################################################
@@ -360,7 +364,7 @@ define config.history_length = 250
 
 ## The height of a history screen entry, or None to make the height variable at
 ## the cost of performance.
-define gui.history_height = 210
+define gui.history_height = None
 
 ## The position, width, and alignment of the label giving the name of the
 ## speaking character.
@@ -456,10 +460,10 @@ init python:
         gui.label_text_size = 51
 
         ## Adjust the location of the textbox.
-        gui.textbox_height = 360
+        gui.textbox_height = 304
         gui.name_xpos = 120
         gui.dialogue_xpos = 135
-        gui.dialogue_width = 1650
+        gui.dialogue_width = 1054
 
         ## Change the size and spacing of various things.
         gui.slider_size = 54

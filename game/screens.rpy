@@ -27,6 +27,15 @@ style gui_text:
 
 style button:
     properties gui.button_properties("button")
+    ## The default sfx played when a button is hovered and pressed
+    # hover_sound Play('audio', 'audio/ui_click_02.mp3')
+    # activate_sound Play('audio', 'audio/ui_click_01.mp3')
+    hover_sound 'audio/ui_click_02.mp3'
+    activate_sound 'audio/ui_click_01.mp3'
+    padding (35,5)
+    hover_background Frame('gui/gradient_highlight.png')
+    selected_idle_background Frame('gui/gradient_highlight.png')
+    
 
 style button_text is gui_text:
     properties gui.text_properties("button")
@@ -109,8 +118,8 @@ screen say(who, what):
 
     if renpy.get_screen("choice") and cinematic == False:
         window:
-            # id "window"
-            background "gui/choicebox.png"
+            id "window"
+            background "gui/choice_box.png"
             xysize (900,126)
             yalign 0.2
 
@@ -147,7 +156,7 @@ screen say(who, what):
 
     if cinematic == True:
         window:
-            background "gui/cinemabox.png"
+            background None
             xsize 1800
             ysize 90
             xalign 0.5
@@ -168,6 +177,7 @@ screen say(who, what):
                             color "#ffffff"
                             size 40
                             xoffset -20
+                            yoffset 3
                             outlines([(2, "#5e510acb", 0, 2)])
                         
 
@@ -204,7 +214,7 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background Image("gui/w_textbox.png", xalign=0.5, yalign=1.0)
 
 style namebox:
     xpos gui.name_xpos
@@ -307,6 +317,11 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
+    ysize 70
+    hover_sound audio.ui_click_02
+    activate_sound audio.ui_click_01
+    background 'gui/choice_box.png'
+    hover_background 'gui/choice_box_selected.png'
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
@@ -328,53 +343,53 @@ screen quick_menu():
             style_prefix "quick"
 
             xalign 0.5
-            yalign 0.9975
+            yalign 0.985
             spacing 20
 
-            # textbutton _("Back") action Rollback()
-            # textbutton _("History") action ShowMenu('history')
-            # textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            # textbutton _("Auto") action Preference("auto-forward", "toggle")
-            # textbutton _("Save") action ShowMenu('save')
-            # textbutton _("Q.Save") action QuickSave()
-            # textbutton _("Q.Load") action QuickLoad()
-            # textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("Back") action Rollback()
+            textbutton _("History") action ShowMenu('history')
+            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Auto") action Preference("auto-forward", "toggle")
+            textbutton _("Save") action ShowMenu('save')
+            textbutton _("Q.Save") action QuickSave()
+            textbutton _("Q.Load") action QuickLoad()
+            textbutton _("Prefs") action ShowMenu('preferences')
 
 
-            button:
-                action QuickSave()
-                xysize (70,70)
-                background "gui/button/q_save.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action QuickSave()
+            #     xysize (70,70)
+            #     background "gui/button/q_save.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
 
-            button:
-                action Rollback()
-                xysize (70,70)
-                background "gui/button/q_back.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action Rollback()
+            #     xysize (70,70)
+            #     background "gui/button/q_back.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
                 
-            button:
-                action ShowMenu('about')
-                xysize (191,191)
-                background "gui/button/q_about.png"
-                at quickMenu_hover
+            # button:
+            #     action ShowMenu('about')
+            #     xysize (191,191)
+            #     background "gui/button/q_about.png"
+            #     at quickMenu_hover
 
-            button:
-                action Preference("auto-forward", "toggle")
-                xysize (70,70)
-                background "gui/button/q_auto.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action Preference("auto-forward", "toggle")
+            #     xysize (70,70)
+            #     background "gui/button/q_auto.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
 
 
-            button:
-                action Skip() alternate Skip(fast=True, confirm=True)
-                xysize (70,70)
-                background "gui/button/q_skip.png"
-                at quickMenu_hover
-                yalign 0.5
+            # button:
+            #     action Skip() alternate Skip(fast=True, confirm=True)
+            #     xysize (70,70)
+            #     background "gui/button/q_skip.png"
+            #     at quickMenu_hover
+            #     yalign 0.5
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -383,7 +398,7 @@ init python:
 
 default quick_menu = True
 
-style quick_button is default
+style quick_button is button
 style quick_button_text is button_text
 
 style quick_button:
@@ -433,45 +448,47 @@ screen navigation():
                 textbutton _("Quit") action Quit(confirm=not main_menu)
 
     else:
-        hbox:
-            style_prefix "navigation"
+        vbox:
+            hbox:
+                style_prefix "navigation"
 
-            # xpos gui.navigation_xpos
-            ypos 115
-            xalign 0.5
+                # xpos gui.navigation_xpos
+                ypos 115
+                xalign 0.5
 
-            spacing gui.navigation_spacing
+                spacing gui.navigation_spacing
 
-            textbutton _("Journal") action ShowMenu("journal", "exams")
+                textbutton _("Journal") action ShowMenu("journal", "exams")
 
-            textbutton _("History") action ShowMenu("history")
+                textbutton _("History") action ShowMenu("history")
 
-            if not main_menu:
-                textbutton _("Save") action ShowMenu("save")
+                if not main_menu:
+                    textbutton _("Save") action ShowMenu("save")
 
-            textbutton _("Load") action ShowMenu("load")
+                textbutton _("Load") action ShowMenu("load")
 
-            textbutton _("Settings") action ShowMenu("preferences")
+                textbutton _("Settings") action ShowMenu("preferences")
 
-            # if _in_replay:
+                # if _in_replay:
 
-                # textbutton _("End Replay") action EndReplay(confirm=True)
+                    # textbutton _("End Replay") action EndReplay(confirm=True)
 
-            textbutton _("About") action ShowMenu("about")
+                textbutton _("About") action ShowMenu("about")
 
-            if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+                if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
-                ## Help isn't necessary or relevant to mobile devices.
-                textbutton _("Help") action ShowMenu("help")
+                    ## Help isn't necessary or relevant to mobile devices.
+                    textbutton _("Help") action ShowMenu("help")
 
-            if not main_menu:
-                textbutton _("Home") action MainMenu()
+                if not main_menu:
+                    textbutton _("Home") action MainMenu()
 
-            if renpy.variant("pc") and main_menu:
+                if renpy.variant("pc") and main_menu:
 
-                ## The quit button is banned on iOS and unnecessary on Android and
-                ## Web.
-                textbutton _("Quit") action Quit(confirm=not main_menu)
+                    ## The quit button is banned on iOS and unnecessary on Android and
+                    ## Web.
+                    textbutton _("Quit") action Quit(confirm=not main_menu)
+            add Frame('gui/divider_horizontal.png', 1, 1) ysize 2 yoffset 120
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -482,6 +499,8 @@ style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
     xsize 200
+    hover_background Frame('gui/gradient_highlight.png')
+    selected_idle_background Frame('gui/gradient_highlight.png')
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
@@ -561,7 +580,9 @@ screen main_menu():
     add SnowBlossom("gui/particles/light3.png", 50, xspeed=(20, 50), yspeed=(50, 300), start=50)
     add SnowBlossom("gui/particles/light4.png", 3, xspeed=(20, 50), yspeed=(100, 300), start=50)
 
-    add "gui/border.png"
+    ## Astrology GUI borders below
+    # add "gui/w_border.png"
+
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.
     use navigation
@@ -622,69 +643,18 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     if main_menu:
         add gui.main_menu_background
-    # else:
-        # add gui.game_menu_background
+    else:
+        add gui.game_menu_background
 
     frame:
         style "game_menu_outer_frame"
 
-        add "gui/starlight_1.png":
-            at starlight1
-            alpha 0.6
-            yoffset -180.75
-        
-        add "gui/starlight_2.png":
-            at starlight2
-            alpha 0.6
-            yoffset -180.75
-        
-        add "gui/starlight_3.png":
-            at starlight3
-            alpha 0.6
-            yoffset -180.75
-
-        add "gui/border.png":
-            yoffset -180.75
-
-        add "gui/constellations.png":
-            xpos 50
-            ypos -150
-            at clockwise
-
-        add "gui/circle1.png":
-            xpos 50
-            ypos -150
-            at clockwise
-
-        add "gui/circle2.png":
-            xpos 50
-            ypos -150
-            at counterClockWise
-
-        add "gui/circle3.png":
-            xpos 50
-            ypos -150
-            at clockwise
-
-        add "gui/circle1.png":
-            xpos 1900
-            ypos 1000
-            alpha 0.5
-            at counterClockWise
-
-        add "gui/comet1.png":
-            xpos 2200
-            ypos 1300
-            at comet1
-
-        # hbox:
-
-            ## Reserve space for the navigation section.
-        # frame:
-            # style "game_menu_navigation_frame"
+        frame:
+            style "game_menu_navigation_frame"
 
         frame:
             style "game_menu_content_frame"
+            xalign 0.5
 
             if scroll == "viewport":
 
@@ -721,10 +691,10 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     use navigation
     
-    # textbutton _("Return"):
-        # style "return_button"
+    textbutton _("Return"):
+        style "return_button"
 
-        # action Return()
+        action Return()
 
     label title:
         xalign 0.5 ypos -40
@@ -732,16 +702,16 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
 
-    vbox:
-        xalign 0.5
-        yalign 0.9975
+    # vbox:
+    #     xalign 0.5
+    #     yalign 0.9975
 
-        button:
-            action Return()
-            xysize (191,191)
+    #     button:
+    #         action Return()
+    #         xysize (191,191)
 
-            background "gui/button/q_about.png"
-            at return_hover
+    #         background "gui/button/q_about.png"
+    #         at return_hover
 
 style game_menu_outer_frame is empty
 style game_menu_navigation_frame is empty
@@ -769,6 +739,7 @@ style game_menu_navigation_frame:
 style game_menu_content_frame:
     # left_margin 60
     # right_margin 30
+    
     top_margin 40
     ysize 700
     xsize 1500
@@ -868,7 +839,7 @@ screen file_slots(title):
             ## This ensures the input will get the enter event before any of the
             ## buttons do.
             order_reverse True
-
+            ypos 50
             ## The page name, which can be edited by clicking on a button.
             button:
                 style "page_label"
@@ -1163,7 +1134,6 @@ screen history():
         for h in _history_list:
 
             window:
-
                 ## This lays things out properly if history_height is None.
                 has fixed:
                     yfit True
@@ -1182,6 +1152,8 @@ screen history():
                 $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
                 text what:
                     substitute False
+                
+            null height 50
 
         if not _history_list:
             label _("The dialogue history is empty.")
@@ -1204,6 +1176,7 @@ style history_label_text is gui_label_text
 style history_window:
     xfill True
     ysize gui.history_height
+    spacing 30
 
 style history_name:
     xpos gui.history_name_xpos
@@ -1379,6 +1352,7 @@ style help_text is gui_text
 style help_button:
     properties gui.button_properties("help_button")
     xmargin 12
+    selected_idle_background Frame('gui/gradient_highlight.png')
 
 style help_button_text:
     properties gui.button_text_properties("help_button")
@@ -1894,3 +1868,15 @@ screen character_hub_menu(options):
             vbox:
                 for opt in options:
                     textbutton opt["label"] action opt["action"]
+
+label splashscreen:
+    scene black
+    with Pause(1)
+
+    show splash with dissolve
+    with Pause(3)
+    
+    scene black with dissolve
+    with Pause(1)
+
+    return

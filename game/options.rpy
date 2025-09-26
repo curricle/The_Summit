@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("Astrology UI")
+define config.name = _("The Summit")
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -37,7 +37,7 @@ define gui.about = _p("""
 ## distribution. This must be ASCII-only, and must not contain spaces, colons,
 ## or semicolons.
 
-define build.name = "AstrologyUI"
+define build.name = "TheSummit"
 
 
 ## Sounds and music ############################################################
@@ -49,6 +49,11 @@ define build.name = "AstrologyUI"
 define config.has_sound = True
 define config.has_music = True
 define config.has_voice = True
+# define config.has_ambience = True
+
+# ## Add custom channels
+# $ renpy.music.register_channel('ambience', 'ambience', loop=True, tight=True)
+# $ renpy.music.register_channel('gui', 'sfx')
 
 
 ## To allow the user to play a test sound on the sound or voice channel,
@@ -62,10 +67,12 @@ define config.has_voice = True
 ## the player is at the main menu. This file will continue playing into the
 ## game, until it is stopped or another file is played.
 
-# define config.main_menu_music = "main-menu-theme.ogg"
+define config.main_menu_music = "Title_Theme_MASTER.mp3"
+define config.enter_sound = 'audio/ui_book_open.mp3'
+define config.exit_sound = 'audio/ui_book_close.mp3'
 
 ## Layers ######################################################################
-define config.layer_clipping['master'] = (0, 102, 1920, 876)
+# define config.layer_clipping['master'] = (0, 102, 1920, 876)
 define config.layers = [ 'master', 'UI', 'transient', 'screens', 'overlay', 'particles' ]
 
 ## Transitions #################################################################
@@ -146,7 +153,7 @@ default preferences.afm_time = 15
 ## This generally should not be changed, and if it is, should always be a
 ## literal string, not an expression.
 
-define config.save_directory = "AstrologyUI-1702444616"
+define config.save_directory = "TheSummit-1702444616"
 
 
 ## Icon ########################################################################
