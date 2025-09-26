@@ -1489,7 +1489,7 @@ label Morning1Greenhouse:
                     Xander "Water them in the mornings..."
                     Xander "The soil here looks fertile, so we don't have to feed it anything. That's great cuz that stuff stinks."
                     Xander "Other than that... uhh... I don't have much advice."
-                    show alice sprite at left with moveinleft:
+                    show alice sprite at left with moveinleft
                     Alice "Less chitter chatter, more working... you aren't here to socialise."
                     hide alice sprite
                     Xander "Got it..."
