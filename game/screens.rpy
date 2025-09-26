@@ -315,6 +315,9 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
+    ysize 70
+    hover_sound audio.ui_click_02
+    activate_sound audio.ui_click_01
     background 'gui/choice_box.png'
     hover_background 'gui/choice_box_selected.png'
 
@@ -1180,7 +1183,6 @@ screen history():
         for h in _history_list:
 
             window:
-
                 ## This lays things out properly if history_height is None.
                 has fixed:
                     yfit True
@@ -1199,6 +1201,8 @@ screen history():
                 $ what = renpy.filter_text_tags(h.what, allow=gui.history_allow_tags)
                 text what:
                     substitute False
+                
+            null height 50
 
         if not _history_list:
             label _("The dialogue history is empty.")
@@ -1221,6 +1225,7 @@ style history_label_text is gui_label_text
 style history_window:
     xfill True
     ysize gui.history_height
+    spacing 30
 
 style history_name:
     xpos gui.history_name_xpos
