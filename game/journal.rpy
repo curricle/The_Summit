@@ -53,9 +53,9 @@ init python:
 ####################################################################
 
 # Spells
-define journal__spell_light = Spell("Light Spell", "", "Light", "Easy", "Creates light.")
-define journal__spell_unlocking = Spell("Unlocking Spell", "", "Unlocking", "Easy", "Unlocks doors and so on.")
-define journal__spell_telekinesis = Spell("Telekinesis Spell", "", "Telekinesis", "Medium", "Throws things about the room.")
+define journal__spell_light = Spell("Light Spell", "images/icon_spell_light.png", "Light", "Easy", "Creates light.")
+define journal__spell_unlocking = Spell("Unlocking Spell", "images/icon_spell_unlocking.png", "Unlocking", "Easy", "Unlocks doors and so on.")
+define journal__spell_telekinesis = Spell("Telekinesis Spell", "images/icon_spell_telekinesis.png", "Telekinesis", "Medium", "Throws things about the room.")
 
 define journal__spells_list = [journal__spell_light, journal__spell_unlocking, journal__spell_telekinesis]
 
@@ -96,144 +96,153 @@ screen journal(tab):
 
     default current_tab = tab
 
-    vbox:
-        xpos 100
-        ypos 200
-        spacing 30
+    frame:
+        ypos 180
+        style 'game_menu_content_frame'
+        has hbox
+        xfill True
+        spacing 300
+        vbox:
+            spacing 30
+            textbutton _("Spells") action ShowMenu("journal", "spells")
+            textbutton _("Exams") action ShowMenu("journal", "exams")
+            textbutton _("Characters") action ShowMenu("journal", "characters")
 
-        textbutton _("Spells") action ShowMenu("journal", "spells")
-        textbutton _("Exams") action ShowMenu("journal", "exams")
-        textbutton _("Characters") action ShowMenu("journal", "characters")
-
-    vbox:
-        xsize 900
-        xalign 0.5
-        yalign 0.5
-
-        if current_tab == "exams":
-            vbox:
-                spacing 50
-                for exam in journal__exam_list:
-                    
-                    frame:
-                        background Frame('gui/frame_darkBg.png', 32 ,32)
-                        padding (24,24)
-                        has vbox
-                        xfill True
-                        spacing 5
-                        hbox:
-                            xfill True
-                            spacing 60
-                            text exam.name size 36
-                            text exam.scheduled italic True
-                        add Frame('gui/divider_horizontal.png', 1, 1) ysize 2
-                        text exam.description
-                    
-        if current_tab == "spells":
-            vbox:
-                spacing 50
-                for spell in journal__spells_list:
-                    frame:
-                        background Frame('gui/frame_darkBg.png', 32 ,32)
-                        padding (24,24)
-                        has vbox
-                        xfill True
-                        spacing 5
-                        hbox:
-                            xfill True
-                            spacing 60
-                            text spell.name size 36
-                            text spell.difficulty italic True
-                        add Frame('gui/divider_horizontal.png', 1, 1) ysize 2
-                        text spell.category italic True
-                        text spell.description
-
-        if current_tab == "characters":
-            hbox:
-                ysize 776
-                ypos 50
-                xsize 1645
-                spacing 300
-
+            if current_tab == 'characters':
                 #list of characters to choose from
                 frame:
                     background Frame('gui/frame_L.png', 32, 32, 32, 32)
                     padding (10, 25)
-                    ypos 250
+                    xoffset 75
                     has vbox
                     spacing 20
                     for character in journal__characterBio_list:
                         textbutton _(character.name) action [SetVariable("current_character", character),
                             ShowMenu("journal", "characters")]
-                
-                #character information
+
+        vbox:
+            #xsize 900
+            xalign 0.5
+            yalign 0.0
+
+            if current_tab == "exams":
                 vbox:
-                    ysize 776
-                    spacing 30
-                    if current_character:
+                    spacing 50
+                    for exam in journal__exam_list:
+                        
                         frame:
-                            background Frame('gui/frame_L.png', 32, 32)
-                            padding (30,30)
-                            has hbox
-                            spacing 30
-
-                            # image
-                            frame:
-                                background Frame('gui/frame_lightTsp.png', 32, 32)
-                                ysize 700
-                                xsize 390
-                                if current_character != journal__bio_default:
-                                    image current_character.image:
-                                        ysize 706
-                                        ypos 17
-                                        if current_character == journal__bio_xander:
-                                            xsize -992
-                                            xcenter 150
-                                            
-                                        if current_character == journal__bio_aria:
-                                            xcenter 250
-                                            xsize -549
-
-                                        if current_character == journal__bio_melody:
-                                            xsize 637
-                                            xcenter 245
-                                        
-                                        if current_character == journal__bio_rex:
-                                            xsize -636
-                                            xcenter 250
-
-                                        if current_character == journal__bio_tao:
-                                            xsize -544
-                                            xcenter 200
-                                            
-                                        if current_character == journal__bio_alice:
-                                            ysize 788
-                                            xsize -865
-                                            xcenter 120
-                                            ypos 0
-                            # text
-                            vbox:
-                                xsize 667
-                                hbox:
-                                    spacing 30
-                                    yalign 1.0
-                                    text current_character.name size 72 italic True yalign 0.5
-                                    image 'gui/divider_vertical.png'
-                                    vbox:
-                                        yalign 0.5
-                                        text 'Specialty: [current_character.specialty]'
-                                        text current_character.short_description
-                                frame:
-                                    background Frame('gui/frame_darkBg.png', 32, 32)
-                                    ysize 595
-                                    xfill True
-                                    padding (30, 30)
-                                    text current_character.description
-                        hbox: 
+                            background Frame('gui/frame_darkBg.png', 32 ,32)
+                            padding (24,24)
+                            has vbox
                             xfill True
-                            textbutton _("Next >"):
-                                text_size 24
-                                xalign 1.0
-                                action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
+                            spacing 5
+                            hbox:
+                                xfill True
+                                spacing 60
+                                text exam.name size 36
+                                text exam.scheduled italic True xalign 1.0
+                            add Frame('gui/divider_horizontal.png', 1, 1) ysize 2
+                            null height 10
+                            text exam.description
+                        
+            if current_tab == "spells":
+                vbox:
+                    spacing 50
+                    for spell in journal__spells_list:
+                        frame:
+                            background Frame('gui/frame_darkBg.png', 32 ,32)
+                            padding (24,24)
+                            has vbox
+                            xfill True
+                            spacing 5
+                            hbox:
+                                xfill True
+                                spacing 60
+                                text spell.name size 36
+                                text spell.difficulty italic True xalign 1.0
+                            add Frame('gui/divider_horizontal.png', 1, 1) ysize 2
+                            hbox:
+                                spacing 10
+                                add spell.icon yalign 0.5
+                                text spell.category italic True
+                            null height 10
+                            text spell.description
+
+            if current_tab == "characters":
+                hbox:
+                    ysize 776
+                    xsize 1645
+                    spacing 300
+                    
+                    #character information
+                    vbox:
+                        ysize 776
+                        spacing 30
+                        if current_character:
+                            frame:
+                                background Frame('gui/frame_L.png', 32, 32)
+                                padding (30,30)
+                                has hbox
+                                spacing 30
+
+                                # image
+                                frame:
+                                    background Frame('gui/frame_lightTsp.png', 32, 32)
+                                    ysize 700
+                                    xsize 390
+                                    if current_character != journal__bio_default:
+                                        image current_character.image:
+                                            ysize 706
+                                            ypos 30
+                                            if current_character == journal__bio_xander:
+                                                xsize -992
+                                                xcenter 150
+                                                
+                                            if current_character == journal__bio_aria:
+                                                xcenter 250
+                                                xsize -549
+
+                                            if current_character == journal__bio_melody:
+                                                xsize 637
+                                                xcenter 245
+                                            
+                                            if current_character == journal__bio_rex:
+                                                xsize -636
+                                                xcenter 250
+
+                                            if current_character == journal__bio_tao:
+                                                xsize -544
+                                                xcenter 200
+                                                
+                                            if current_character == journal__bio_alice:
+                                                ysize 788
+                                                xsize -865
+                                                xcenter 120
+                                                ypos 0
+                                # text
+                                vbox:
+                                    xsize 667
+                                    hbox:
+                                        spacing 30
+                                        yalign 1.0
+                                        text current_character.name size 72 italic True yalign 0.5
+                                        image 'gui/divider_vertical.png'
+                                        vbox:
+                                            yalign 0.5
+                                            text 'Specialty: [current_character.specialty]'
+                                            text current_character.short_description
+                                    frame:
+                                        background Frame('gui/frame_darkBg.png', 32, 32)
+                                        ysize 595
+                                        xfill True
+                                        padding (30, 30)
+                                        text current_character.description
+                                    hbox: 
+                                        xfill True
+                                        yoffset 10
+                                        textbutton _("Next >"):
+                                            text_size 24
+                                            xalign 1.0
+                                            action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
                         
 

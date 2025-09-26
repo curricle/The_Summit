@@ -443,45 +443,47 @@ screen navigation():
                 textbutton _("Quit") action Quit(confirm=not main_menu)
 
     else:
-        hbox:
-            style_prefix "navigation"
+        vbox:
+            hbox:
+                style_prefix "navigation"
 
-            # xpos gui.navigation_xpos
-            ypos 115
-            xalign 0.5
+                # xpos gui.navigation_xpos
+                ypos 115
+                xalign 0.5
 
-            spacing gui.navigation_spacing
+                spacing gui.navigation_spacing
 
-            textbutton _("Journal") action ShowMenu("journal", "exams")
+                textbutton _("Journal") action ShowMenu("journal", "exams")
 
-            textbutton _("History") action ShowMenu("history")
+                textbutton _("History") action ShowMenu("history")
 
-            if not main_menu:
-                textbutton _("Save") action ShowMenu("save")
+                if not main_menu:
+                    textbutton _("Save") action ShowMenu("save")
 
-            textbutton _("Load") action ShowMenu("load")
+                textbutton _("Load") action ShowMenu("load")
 
-            textbutton _("Settings") action ShowMenu("preferences")
+                textbutton _("Settings") action ShowMenu("preferences")
 
-            # if _in_replay:
+                # if _in_replay:
 
-                # textbutton _("End Replay") action EndReplay(confirm=True)
+                    # textbutton _("End Replay") action EndReplay(confirm=True)
 
-            textbutton _("About") action ShowMenu("about")
+                textbutton _("About") action ShowMenu("about")
 
-            if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+                if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
-                ## Help isn't necessary or relevant to mobile devices.
-                textbutton _("Help") action ShowMenu("help")
+                    ## Help isn't necessary or relevant to mobile devices.
+                    textbutton _("Help") action ShowMenu("help")
 
-            if not main_menu:
-                textbutton _("Home") action MainMenu()
+                if not main_menu:
+                    textbutton _("Home") action MainMenu()
 
-            if renpy.variant("pc") and main_menu:
+                if renpy.variant("pc") and main_menu:
 
-                ## The quit button is banned on iOS and unnecessary on Android and
-                ## Web.
-                textbutton _("Quit") action Quit(confirm=not main_menu)
+                    ## The quit button is banned on iOS and unnecessary on Android and
+                    ## Web.
+                    textbutton _("Quit") action Quit(confirm=not main_menu)
+            add Frame('gui/divider_horizontal.png', 1, 1) ysize 2 yoffset 120
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -693,11 +695,12 @@ screen game_menu(title, scroll=None, yinitial=0.0):
         # hbox:
 
             ## Reserve space for the navigation section.
-        # frame:
-            # style "game_menu_navigation_frame"
+        frame:
+            style "game_menu_navigation_frame"
 
         frame:
             style "game_menu_content_frame"
+            xalign 0.5
 
             if scroll == "viewport":
 
@@ -782,6 +785,7 @@ style game_menu_navigation_frame:
 style game_menu_content_frame:
     # left_margin 60
     # right_margin 30
+    
     top_margin 40
     ysize 700
     xsize 1500
@@ -881,7 +885,7 @@ screen file_slots(title):
             ## This ensures the input will get the enter event before any of the
             ## buttons do.
             order_reverse True
-
+            ypos 50
             ## The page name, which can be edited by clicking on a button.
             button:
                 style "page_label"
