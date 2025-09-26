@@ -41,6 +41,7 @@ init python:
         except:
             print("An exception occurred.")
             item = array[0]
+            return item
 
     def resetCurrentCharacter():
         return journal__bio_default
