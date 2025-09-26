@@ -2388,7 +2388,7 @@ label Morning1Greenhouse:
                 Rex "That's a needle file."
                 $ cinematic = True
                 Narrator "He drops the tool in his hand and moves past you to grab another."
-                Narrator "As he passes, you notice that the smells like solder."
+                Narrator "As he passes, you notice that he smells like solder."
                 Narrator "When he returns, he places his back against the workbench, giving you his full attention."
                 $ cinematic = False
                 pass
@@ -2397,7 +2397,7 @@ label Morning1Greenhouse:
                 Rex "That's a jeweler's hammer."
                 $ cinematic = True
                 Narrator "He drops the tool in his hand and moves past you to grab another."
-                Narrator "As he passes, you notice that the smells like solder."
+                Narrator "As he passes, you notice that he smells like solder."
                 Narrator "When he returns, he places his back against the workbench, giving you his full attention."
                 $ cinematic = False
                 pass
