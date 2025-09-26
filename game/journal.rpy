@@ -114,25 +114,38 @@ screen journal(tab):
             vbox:
                 spacing 50
                 for exam in journal__exam_list:
-                    vbox:
+                    
+                    frame:
+                        background Frame('gui/frame_darkBg.png', 32 ,32)
+                        padding (24,24)
+                        has vbox
+                        xfill True
                         spacing 5
                         hbox:
+                            xfill True
                             spacing 60
-                            text exam.name
-                            text exam.scheduled
+                            text exam.name size 36
+                            text exam.scheduled italic True
+                        add Frame('gui/divider_horizontal.png', 1, 1) ysize 2
                         text exam.description
                     
         if current_tab == "spells":
             vbox:
                 spacing 50
                 for spell in journal__spells_list:
-                    vbox:
+                    frame:
+                        background Frame('gui/frame_darkBg.png', 32 ,32)
+                        padding (24,24)
+                        has vbox
+                        xfill True
                         spacing 5
                         hbox:
+                            xfill True
                             spacing 60
-                            text spell.name
-                            text spell.difficulty
-                        text spell.category
+                            text spell.name size 36
+                            text spell.difficulty italic True
+                        add Frame('gui/divider_horizontal.png', 1, 1) ysize 2
+                        text spell.category italic True
                         text spell.description
 
         if current_tab == "characters":

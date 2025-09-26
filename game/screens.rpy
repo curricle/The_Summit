@@ -573,7 +573,7 @@ screen main_menu():
     add SnowBlossom("gui/particles/light4.png", 3, xspeed=(20, 50), yspeed=(100, 300), start=50)
 
     ## Astrology GUI borders below
-    add "gui/w_border.png"
+    # add "gui/w_border.png"
 
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.
@@ -656,8 +656,8 @@ screen game_menu(title, scroll=None, yinitial=0.0):
         #     alpha 0.6
         #     yoffset -180.75
 
-        add "gui/w_border.png":
-            yoffset -180.75
+        # add "gui/w_border.png":
+        #     yoffset -180.75
 
         # add "gui/constellations.png":
         #     xpos 50
