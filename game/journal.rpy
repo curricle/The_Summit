@@ -97,7 +97,7 @@ screen journal(tab):
     default current_tab = tab
 
     vbox:
-        xpos 50
+        xpos 100
         ypos 200
         spacing 30
 
@@ -192,6 +192,12 @@ screen journal(tab):
                                         if current_character == journal__bio_tao:
                                             xsize -544
                                             xcenter 200
+                                            
+                                        if current_character == journal__bio_alice:
+                                            ysize 788
+                                            xsize -865
+                                            xcenter 120
+                                            ypos 0
                             # text
                             vbox:
                                 xsize 667
