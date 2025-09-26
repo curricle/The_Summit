@@ -100,24 +100,41 @@ screen journal(tab):
         ypos 180
         style 'game_menu_content_frame'
         has hbox
-        xfill True
         spacing 300
         vbox:
             spacing 30
-            textbutton _("Spells") action ShowMenu("journal", "spells")
-            textbutton _("Exams") action ShowMenu("journal", "exams")
-            textbutton _("Characters") action ShowMenu("journal", "characters")
+            style_prefix 'journal'
+
+            textbutton _("Spells"): 
+                selected False
+                if current_tab == 'spells':
+                    selected True
+                action ShowMenu("journal", "spells")
+            textbutton _("Exams"): 
+                selected False
+                if current_tab == 'exams':
+                        selected True
+                action ShowMenu("journal", "exams")
+            textbutton _("Characters"): 
+                selected False
+                if current_tab == 'characters':
+                        selected True
+                action ShowMenu("journal", "characters")
 
             if current_tab == 'characters':
                 #list of characters to choose from
                 frame:
-                    background Frame('gui/frame_L.png', 32, 32, 32, 32)
+                    background Frame('gui/frame_L.png', 32, 32)
                     padding (10, 25)
                     xoffset 75
                     has vbox
                     spacing 20
                     for character in journal__characterBio_list:
-                        textbutton _(character.name) action [SetVariable("current_character", character),
+                        textbutton _(character.name): 
+                            selected False
+                            if character == current_character:
+                                selected True
+                            action [SetVariable("current_character", character),
                             ShowMenu("journal", "characters")]
 
         vbox:
@@ -241,8 +258,8 @@ screen journal(tab):
                                         xfill True
                                         yoffset 10
                                         textbutton _("Next >"):
+                                            selected False
                                             text_size 24
                                             xalign 1.0
                                             action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
-                        
 

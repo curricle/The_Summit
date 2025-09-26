@@ -34,6 +34,8 @@ style button:
     activate_sound 'audio/ui_click_01.mp3'
     padding (35,5)
     hover_background Frame('gui/gradient_highlight.png')
+    selected_idle_background Frame('gui/gradient_highlight.png')
+    
 
 style button_text is gui_text:
     properties gui.text_properties("button")
@@ -498,6 +500,7 @@ style navigation_button:
     properties gui.button_properties("navigation_button")
     xsize 200
     hover_background Frame('gui/gradient_highlight.png')
+    selected_idle_background Frame('gui/gradient_highlight.png')
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
@@ -646,58 +649,6 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     frame:
         style "game_menu_outer_frame"
 
-        # add "gui/starlight_1.png":
-        #     at starlight1
-        #     alpha 0.6
-        #     yoffset -180.75
-        
-        # add "gui/starlight_2.png":
-        #     at starlight2
-        #     alpha 0.6
-        #     yoffset -180.75
-        
-        # add "gui/starlight_3.png":
-        #     at starlight3
-        #     alpha 0.6
-        #     yoffset -180.75
-
-        # add "gui/w_border.png":
-        #     yoffset -180.75
-
-        # add "gui/constellations.png":
-        #     xpos 50
-        #     ypos -150
-        #     at clockwise
-
-        # add "gui/circle1.png":
-        #     xpos 50
-        #     ypos -150
-        #     at clockwise
-
-        # add "gui/circle2.png":
-        #     xpos 50
-        #     ypos -150
-        #     at counterClockWise
-
-        # add "gui/circle3.png":
-        #     xpos 50
-        #     ypos -150
-        #     at clockwise
-
-        # add "gui/circle1.png":
-        #     xpos 1900
-        #     ypos 1000
-        #     alpha 0.5
-        #     at counterClockWise
-
-        # add "gui/comet1.png":
-        #     xpos 2200
-        #     ypos 1300
-        #     at comet1
-
-        # hbox:
-
-            ## Reserve space for the navigation section.
         frame:
             style "game_menu_navigation_frame"
 
@@ -740,10 +691,10 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     use navigation
     
-    # textbutton _("Return"):
-        # style "return_button"
+    textbutton _("Return"):
+        style "return_button"
 
-        # action Return()
+        action Return()
 
     label title:
         xalign 0.5 ypos -40
@@ -751,16 +702,16 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
 
-    vbox:
-        xalign 0.5
-        yalign 0.9975
+    # vbox:
+    #     xalign 0.5
+    #     yalign 0.9975
 
-        button:
-            action Return()
-            xysize (191,191)
+    #     button:
+    #         action Return()
+    #         xysize (191,191)
 
-            background "gui/button/q_about.png"
-            at return_hover
+    #         background "gui/button/q_about.png"
+    #         at return_hover
 
 style game_menu_outer_frame is empty
 style game_menu_navigation_frame is empty
@@ -1401,6 +1352,7 @@ style help_text is gui_text
 style help_button:
     properties gui.button_properties("help_button")
     xmargin 12
+    selected_idle_background Frame('gui/gradient_highlight.png')
 
 style help_button_text:
     properties gui.button_text_properties("help_button")
