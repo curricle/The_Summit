@@ -584,7 +584,7 @@ label Night0Dorms:
 
             "(Go to Sleep)":
                 $ cinematic = True
-                Narrator "You get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle move ever so slightly toward a fake horizon. The world around you seems to fade..."
+                Narrator "You get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle amd move ever so slightly toward a fake horizon. The world around you seems to fade..."
                 $ cinematic = False
                 $ Day0Night = False
                 stop music fadeout 1.0
@@ -595,13 +595,13 @@ label Night0Dorms:
                 $ cinematic = True
                 Narrator "Sneaking out on the first night... even your gut tells you that's not wise."
                 Narrator "You stand up. The other students turn their gaze away from you. Perhaps they don't want to be witnesses."
-                Narrator "You step along the floor, your shoes quiet against the polished marble. When you reach the door you near nothing but silence."
+                Narrator "You step along the floor, your shoes quiet against the polished marble. When you reach the door you hear nothing but silence."
                 Narrator "Your hand twists the handle. Are you sure you want to proceed?"
                 $ cinematic = False
                 menu:
                     "(Explore the Summit)":
                         $ cinematic = True
-                        Narrator "You twist the handle. It's unlocked."
+                        Narrator "You turn the handle. It's unlocked."
                         Narrator "You exit the dormitory."
                         $ cinematic = False
                         jump Night0Corridor
@@ -630,7 +630,7 @@ label Night0Corridor:
     $ Location = "Corridor"
     $ cinematic = True
     Narrator "The dull midnight moonlight casts through the windows and along the marble at your feet. You notice that the windowed cloisters overlooking the courtyard are now clear."
-    Narrator "Allowing you to view the Great Mage tree in it's centre. You have read about the tree before. Some say it's enchanted, others say it's much older than Mages."
+    Narrator "Allowing you to view the Great Mage tree in it's centre. You've read about the tree before. Some say it's enchanted, others say it's much older than Mages."
     Narrator "Whatever the answer, it's not something you want to question."
     Narrator "You press along the corridor, ignoring the feeling of eyes on your back."
     $ cinematic = False
@@ -657,7 +657,7 @@ label Night0Corridor:
                 stop music
                 $ cinematic = True
                 scene dormitory night
-                Narrator "You return to the dormitory and get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle move ever so slightly toward a fake horizon. The world around you seems to fade..."
+                Narrator "You return to the dormitory and get into the bed. The fresh-linen scent hits you as you sink deeper in. Above you, the illusory stars twinkle and move ever so slightly toward a fake horizon. The world around you seems to fade..."
                 $ cinematic = False
                 $ Day0Night = False
                 jump Morning1Dorms
