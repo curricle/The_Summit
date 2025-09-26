@@ -1,5 +1,5 @@
 # The script of the game goes in this file.
-# last changedf 5am on 20/09/2025
+# last changed 5am on 20/09/2025
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
@@ -309,7 +309,7 @@ label start:
     Narrator "It's nothing like the Scholomance, it's quainter. A great tower atop an impossibly steep mountain, overlooking nothing but forests and rivers."
     Narrator "Far in the distance, over the horizon, you imagine your old home. It warms you." 
     Narrator "Looking around, the other carriages seem empty. Like usual, you're the last to arrive." 
-    Narrator "An older woman waits at the entrance: {b}Alice{/b}. You'd taken a taken a few of her classes at the Scholomance." 
+    Narrator "An older woman waits at the entrance: {b}Alice{/b}. You'd taken a few of her classes at the Scholomance." 
     Narrator "As you move closer, you become aware that it's not quite Alice -- it's one of her dolls."
     Narrator "You wipe the rain from your eyes. The doll turns her gaze to you."
     $ cinematic = False
@@ -327,10 +327,10 @@ label start:
     $ cinematic = True
     Narrator "The doors open as you approach. You enter the atrium."
     play sound "audio/moon_sparkle.mp3"
-    Narrator "What first catches your eye is two floating moons. More specifically, moon replicas. The Matron and Son, one large, battered and carved, and orbitted by a smaller, more prestine one."
+    Narrator "What first catches your eye is two floating moons. More specifically, moon replicas. The Matron and Son, one large, battered and carved, and orbited by a smaller, more pristine one."
     Narrator "They hover in the air, bobbing as they rotate, shining dull light across the room."
     stop sound
-    Narrator "As you look around you notice the statues built into alcoves in the wall, tall and protective, each has an alter at the base."
+    Narrator "As you look around you notice the statues built into alcoves in the wall, tall and protective, each has an altar at the base."
     Narrator "The Saints, you assume for a moment... until you see that one is still in construction."
     Narrator "It looks like Eileen."
     Narrator "You hear water, but can't quite find it, so instead you allow your eyes to follow the pillars supporting a glass ceiling. Moonlight shines down on you..."
@@ -500,7 +500,7 @@ label Night0Dorms:
     $ cinematic = True
     $ Location = "Dormitory"
     Narrator "The dormitory isn't what you expected. Rather than the individual rooms you had back at the Scholomance, meek and cramped, there is an exposed dormitory." 
-    Narrator "A floor sepearated into enclosed bed-spaces and study areas -- visible to one another from certain angles."
+    Narrator "A floor separated into enclosed bed-spaces and study areas -- visible to one another from certain angles."
     Narrator "At least the beds look comfortable. You notice your luggage at the foot of a sprawling, purple, curtained bed. Looking up you notice the sky is still visible, though it doesn't seem to be through glass."
     Narrator "It's a spell. You feel it as you analyse it. Swirling patterns, images, all moving to form the illusion of a night sky. Looking at it makes you tired."
     Narrator "A few other students are already unpacking as you get to your bed. You notice Melody, sleepmask on as she sits in bed. You can't tell if she's sleeping."
@@ -653,7 +653,7 @@ label Night0Corridor:
                 call Night0Greenhouse
                 return
 
-            "Back to the {b}Dormitory{/b}.":
+            "Back to the {b}Dormitory{/b}." if Location != "Dormitory":
                 stop music
                 $ cinematic = True
                 scene dormitory night
@@ -764,10 +764,10 @@ label Night0Corridor:
                                                 Narrator "It's late. You know it's time to go to sleep."
                                                 scene dormitory night with fade
                                                 Narrator "You return to the dormitory and get into the bed." 
-                                                Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
+                                                Narrator "The fresh-linen scent hits you as you sink deeper in. Above you, the illusory stars ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
                                                 Narrator "But you can't help but wonder..." 
                                                 Narrator "...what was that?"
-                                                Narrator "And why do you still feel it's gaze?"
+                                                Narrator "And why do you still feel its gaze?"
                                                 $ cinematic = False
                                                 $ Day0Night = False
                                                 $ AtriumVisitedDay1 = True
@@ -780,7 +780,7 @@ label Night0Corridor:
                         $ cinematic = True
                         Narrator "Something in you stirs. You know this place isn't for you."
                         Narrator "You turn, walking away from the moons, from the grate, and from whatever calls itself Alice beneath it."
-                        Narrator "You turn back for one last glimpse -- it's hand upreaching, glowing in the moonlight, as though it's holding the moons in place."
+                        Narrator "You turn back for one last glimpse -- its hand upreaching, glowing in the moonlight, as though it's holding the moons in place."
                         Narrator "You leave the Atrium."
                         $ cinematic = False
                         stop music
@@ -846,7 +846,7 @@ label Night0Corridor:
                 pass
             "(Leave.)": 
                 $ cinematic = True
-                Narrator "You kill the urge to move closer. You don't know where you find the determination."
+                Narrator "You kill the urge to move closer. You don't know where you found the determination."
                 Narrator "You know there is nothing for you here."
                 Narrator "Nothing yet..."
                 $ cinematic = False
@@ -865,7 +865,7 @@ label Night0Corridor:
         scene corridor night
         $ cinematic = True
         Narrator "As you walk around the corridors, you realise there is no way into the greenhouse."
-        Narrator "The tree at its centre seems to have it's own energy. The more you look at it, the more you feel watched."
+        Narrator "The tree at its centre has its own energy. The more you look at it, the more you feel watched."
         Narrator "You're certain it's locked in there for the best."
         Narrator "You should go somewhere else."
         $ cinematic = False
@@ -894,12 +894,16 @@ label Morning1Dorms:
     Narrator "It seems no student decided to close them."
     Narrator "You look around, waiting for someone to make a move."
     $ cinematic = False
-    show alice sprite happy
+    show alice sprite happy:
+        xalign 0.5 
+        yalign 0.3     
     Alice "Good morning, pupils."
     Alice "I hope you're all rested and ready. Today is a busy day."
     Alice "You are going to be planting the materials you'll be using for your potion exam."
     hide alice sprite happy
-    show alice sprite with dissolve
+    show alice sprite with dissolve:
+        xalign 0.5 
+        yalign 0.3  
     Alice "When you're ready, please make your way to the Greenhouse."
     Alice "Don't dawdle."
     $ cinematic = True
@@ -939,7 +943,7 @@ label Morning1Dorms:
     show rex sprite with moveinleft
     Rex "Screw it."
     $ cinematic = True 
-    Narrator "Rex stands up, pulling on his vest. You notice the tattos that creep up his neck -- hellflame."
+    Narrator "Rex stands up, pulling on his vest. You notice the tattoos that creep up his neck -- hellflame."
     Narrator "They look like burns, but the ink outlining it is thick enough to reassure you it isn't."
     Narrator "Without saying a word, he leaves the Dormitory."
     hide rex sprite with moveoutleft
@@ -1099,7 +1103,7 @@ label Morning1Greenhouse:
     $ Location = "Greenhouse"
     $ cinematic = True
     Narrator "You're the last to arrive at the Greenhouse -- a great garden at the centre of the Summit, surrounded on all four sides by hallways and a domed, glass ceiling on top."
-    Narrator "At it's centre, is the Great Mage Tree. An tree said to be enchanted. It's boughs rattle the glass as it sleeps."
+    Narrator "At its centre, is the Great Mage Tree. A tree said to be enchanted. Its boughs rattle the glass as it sleeps."
     Narrator "You notice Alice beneath the tree with Aria, the two of them deep in conversation. At the back of the Greenhouse, seemingly bored, is Eileen."
     Narrator "Alice turns to you, counting to see whether all of the students had arrived."
     if Flag_NotAliceMet == True:
@@ -1110,13 +1114,15 @@ label Morning1Greenhouse:
         pass
     Narrator "She clears her throat."
     $ cinematic = False
-    show alice sprite with moveinleft
+    show alice sprite with moveinleft:
+        xalign 0.5 
+        yalign 0.3  
     Alice "I won't keep you long. I'm sure you have plenty of studying to do."
     Alice "I've taken the liberty of bringing you all a selection of seeds to plant."
     Alice "You will be using these crops for your potion exam, so please, take good care of them."
     hide alice sprite
     $ cinematic = True
-    Narrator "You move over to a table, where a few small sacks of seeds sit."
+    Narrator "You move over to a table where a few small sacks of seeds sit."
     ### if we ever have an image it would go here
     $ cinematic = False
     menu:
@@ -1124,35 +1130,37 @@ label Morning1Greenhouse:
             play sound "audio/clue_found_item_alert.mp3"
             pass
     $ cinematic = True
-    Narrator "You pluck the seeds from the table and feel it weighed in your hand."
-    Narrator "Very quickly, you become aware that these seeds are magical. Not only from the way they feel like electricity on your skin..." 
+    Narrator "You pluck the seeds from the table and feel their weight in your hand."
+    Narrator "Very quickly, you become aware that these seeds are magical, not only from the way they feel like electricity on your skin..." 
     Narrator "...but also from the smell of honey that washes over you."
-    Narrator "This one's sickly sweet."
+    Narrator "This one is sickly sweet."
     $ cinematic = False
-    show alice sprite with dissolve
+    show alice sprite with dissolve:
+        xalign 0.5 
+        yalign 0.3  
     Alice "We've given you a small plot to work with. Try not to overcrowd the area."
-    Alice "For now, I would simply plant one type of seed at a most -- that's my recommendation."
-    Alice "We've labelled the seeds -- you should know what sort of care they require."
-    Alice "If not... well consider it part of the test."
-    Alice "I've taken the liberty of asking Miss Aria to avoid tending to your flowers. If you allow her to do so, both of you will be given a fail on your Potion exam."
+    Alice "For now, I would simply plant one type of seed at most -- that's my recommendation."
+    Alice "We've labeled the seeds -- you should know what sort of care they require."
+    Alice "If not... well, consider it part of the test."
+    Alice "I've taken the liberty of asking Miss Aria to avoid tending to your flowers. If you allow her to do so, both of you will be given a fail on your Potions exam."
     hide alice sprite
     $ cinematic = True
     show aria sprite with dissolve
-    Narrator "You notice Aria looking uncomfortable, her fingers clasping the frills of her dress."
+    Narrator "You notice Aria looking uncomfortable, her fingers clutching the frills of her dress."
     hide aria sprite
     show melody sprite with dissolve
-    Narrator "Melody is already planting, while Xander looks over the seeds he's already unbagged like a child counting pennies."
+    Narrator "Melody is already planting, while Xander looks over the seeds he's unbagged, like a child counting pennies."
     hide melody sprite
     show rex sprite with dissolve
-    Narrator "Rex seems oblivious to what's going on. Instead focusing his attention on the ceiling -- as though he could break the sky open with a glare."
+    Narrator "Rex seems oblivious to what's going on. Instead, focusing his attention on the ceiling -- as though he could break the sky open with a glare."
     hide rex sprite
     show tao sprite with dissolve
-    Narrator "One at a time, Tao lifts the seeds, looking over them against the strong morning light."
+    Narrator "One at a time, Tao lifts the seeds, examining them against the strong morning light."
     hide tao sprite
     show xander sprite with dissolve
-    Narrator "Xander bounces the bag of seeds in his hand like he's attempting to juggle..."
+    Narrator "Xander bounces the bag of seeds in his hand as if he's attempting to juggle..."
     hide xander sprite
-    Narrator "You become aware, as the light hits you, that after this you won't see everyone in the same room apart from during exams..."
+    Narrator "You become aware, as the light hits you, that after this you won't see everyone together in the same room except during exams..."
     Narrator "...and during the night in the dorms."
     Narrator "You wonder what you should do."
     $ cinematic = False
@@ -1195,19 +1203,19 @@ label Morning1Greenhouse:
             $ cinematic = True
             Narrator "You pour the sack out onto your hand."
             play sound "audio/fertilizer_add.mp3"
-            Narrator "You expected them to be labelled, or at least seperated."
+            Narrator "You expected them to be labelled, or at least separated."
             Narrator "But it seems that whoever assembled them, mixed them all together in one."
-            Narrator "With the seeds, comes a rolled up bit of paper that as you unfurl reveals a few names."
+            Narrator "With the seeds comes a rolled-up bit of paper that, as you unfurl it, reveals a few names."
             menu:
                 "Inspect the names":
                     play sound "audio/clue_found_item_alert.mp3"
-                    Narrator "- {b}Winged Jasmine{/b}: A magical flower you remember from your days at the Scholomance. You can't remember it's applications, or which seed it is, but you remember it."
+                    Narrator "- {b}Winged Jasmine{/b}: A magical flower you remember from your days at the Scholomance. You can't remember its applications, or which seed it is, but you remember it."
                     play sound "audio/clue_found_item_alert.mp3"                   
-                    Narrator "- {b}Snapjaw Orchid{/b}: You don't recognize it."
+                    Narrator "- {b}Snapjaw Orchid{/b}: You don't recognise it."
                     play sound "audio/clue_found_item_alert.mp3"
-                    Narrator "- {b}Moon Melon{/b}: You don't recognize it."
+                    Narrator "- {b}Moon Melon{/b}: You don't recognise it."
                     play sound "audio/clue_found_item_alert.mp3"
-                    Narrator "- {b}Sanguine Lily{/b}: You remember that that one is incredibly difficult to manage."
+                    Narrator "- {b}Sanguine Lily{/b}: You remember that one is incredibly difficult to manage."
                     $ Flag_PlayerSeedsInspected = True
                     pass
             Narrator "Have you always been this ill-prepared? You wonder."
@@ -1217,7 +1225,9 @@ label Morning1Greenhouse:
 
         label BSID1GH2: # Talk to Alice
             $ cinematic = True
-            show alice sprite with dissolve
+            show alice sprite with dissolve:
+                xalign 0.5 
+                yalign 0.3  
             Narrator "Alice's mood seems to shift as you approach, a stressed expression melting away."
             Narrator "You wonder whether she's feigning it."
             $ cinematic = False
@@ -1304,7 +1314,7 @@ label Morning1Greenhouse:
             menu: 
                 "(Lean down)":
                     $ cinematic = True
-                    Narrator "Even when she doesn't know she's being percieved, she still glows."
+                    Narrator "Even when she doesn't know she's being perceived, she still glows."
                     Narrator "As though the magic inside her pricks through her skin. Like a million needles."
                     Narrator "Glowing. Shimmering."
                     pass                             
@@ -1314,7 +1324,7 @@ label Morning1Greenhouse:
                     pass
             $ cinematic = True
             Narrator "Now that you are closer, you notice the intricate patterns forming along Aria's seeds."
-            Narrator "It's as though each one is forming it's own extra shell. A blanket of magic, weaving itself."
+            Narrator "It's as though each one is forming its own extra shell. A blanket of magic, weaving itself."
             $ cinematic = False
             menu:
                 "How are you doing that?":
@@ -1405,7 +1415,7 @@ label Morning1Greenhouse:
             Tao "Do you need something?"
             menu:
                 "Can you help me understand these seeds?":
-                    Tao "No. I shant."
+                    Tao "No. I shan't."
                     Tao "It's not my fault you spent your time at the Scholomance in a drunken stupor..."
                     menu:
                         "Me?":
@@ -1450,7 +1460,9 @@ label Morning1Greenhouse:
             play sound "audio/watering_can_put_down.mp3"
             $ cinematic = True
             Narrator "With the [planted_seeds] planted, you watch your classmates funnel out of the greenhouse without you."
-            show alice sprite with dissolve
+            show alice sprite with dissolve:
+                xalign 0.5 
+                yalign 0.3  
             Narrator "Alice looks over at you."
             $ cinematic = False
             Alice "You have the rest of the day to prepare for you upcoming exams."
@@ -1477,7 +1489,7 @@ label Morning1Greenhouse:
                     Xander "Water them in the mornings..."
                     Xander "The soil here looks fertile, so we don't have to feed it anything. That's great cuz that stuff stinks."
                     Xander "Other than that... uhh... I don't have much advice."
-                    show alice sprite at left with moveinleft
+                    show alice sprite at left with moveinleft:
                     Alice "Less chitter chatter, more working... you aren't here to socialise."
                     hide alice sprite
                     Xander "Got it..."
@@ -1489,7 +1501,7 @@ label Morning1Greenhouse:
 
     label Afternoon1DecisionMenu:
         $ cinematic = True
-        Narrator "The morning has passed. You wonder what you should do with your day."
+        Narrator "The morning has passed."
         $ Day1Morning = False
         $ Day1Afternoon = True
         $ cinematic = False
@@ -1578,7 +1590,7 @@ label Morning1Greenhouse:
         play music "audio/project_w_concept_04_fminor.mp3"
         $ cinematic = True
         Narrator "You enter the {b}Library{/b}. The air is stuffy, and in the distance you hear the unmistakable sound of turning pages."
-        Narrator "As you make you way through, you spot Tao in the stacks."
+        Narrator "As you make your way through, you spot Tao in the stacks."
         Narrator "They hold the book open as they stand, reading, seemingly oblivious to their surroundings."
         $ cinematic = False        
         jump Afternoon1Library_Choices
@@ -2329,7 +2341,9 @@ label Morning1Greenhouse:
                 Narrator "The trees seem to sway in the wind. It's just enough that you feel time passing."
                 Narrator "You take a step into the grass..."
                 $ cinematic = False
-                show alice sprite
+                show alice sprite:
+                    xalign 0.5 
+                    yalign 0.3  
                 Alice "No. Absolutely not. Come back here."
                 menu:
                     "Okay...":
@@ -4724,7 +4738,9 @@ label Morning2Courtyard:
                     Narrator "There's something in the forest." 
                     Narrator "Watching you."
                     $ cinematic = False
-                    show alice sprite
+                    show alice sprite:
+                        xalign 0.5 
+                        yalign 0.3  
                     Alice "Pupil, you shouldn't be this far out of the courtyard."
                     $ cinematic = True
                     Narrator "The doll looks at you, seemingly oblivious to your fear."
@@ -5570,7 +5586,9 @@ label Afternoon2Courtyard:
             "(Talk to Alice)":
                 jump Afternoon2Alice
                 label Afternoon2Alice:
-                    show alice sprite
+                    show alice sprite:
+                        xalign 0.5 
+                        yalign 0.3  
                     Alice "Good afternoon, pupil. Did you need something?"
                     menu:
                         "Is Aria alright?":
@@ -5599,7 +5617,9 @@ label Afternoon2Courtyard:
                 Narrator "The trees sway gently in the breeze, their leaves rustling softly."
                 Narrator "As you step away from the Courtyard, towards the forest, you hear Alice yell loudly in your direction."
                 $ cinematic = False
-                show alice sprite
+                show alice sprite:
+                    xalign 0.5 
+                    yalign 0.3  
                 Alice "Absolutely not. Come back."
                 hide alice sprite
                 menu:
