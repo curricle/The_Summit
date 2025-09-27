@@ -15,7 +15,7 @@ define NotAlice = Character("NotAlice")
 define Narrator = Character("")
 
 # List of possible locations (optional, for reference)
-define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Archive", "Forest", "Teacher's Lounge", "Clearing", "Grotto")#gotto only has night, clearing only has night, teachers lounge is just corridor night
+define PlayerLocation = ("Dormitory", "Atrium", "Corridor", "Greenhouse", "Alchemy Lab", "Courtyard", "Artificing Lab", "Library", "Archive", "Forest", "Teacher's Lounge", "Clearing", "Grotto")#grotto only has night, clearing only has night, teachers lounge is just corridor night
 default Location = "Dormitory"
 # Variable to track the player's current location
 
@@ -51,7 +51,7 @@ $ Flag_XanderPlantSabotaged = "Xander" in sabotaged_plant
 $ Flag_TaoPlantSabotaged = "Tao" in sabotaged_plant
 $ Flag_RexPlantSabotaged = "Rex" in sabotaged_plant
 $ Flag_MelodyPlantSabotaged = "Melody" in sabotaged_plant
-######referencing sabotagued plants######
+######referencing sabotaged plants######
 
 
 #### CHARACTER SACRIFICED ###
@@ -218,7 +218,7 @@ define Quest_NotAliceFailed = False
 
 #Exam Flags
 define Flag_CombatExamCompleted = False
-define Flag_MelodySabotaguedPotion = False
+define Flag_MelodySabotagedPotion = False
 define Flag_PotionSubmitted = False
 define Flag_PotionExamCompleted = False
 define Flag_ArtificingExamCompleted = False
@@ -330,7 +330,7 @@ label start:
     Narrator "What first catches your eye is two floating moons. More specifically, moon replicas. The Matron and Son, one large, battered and carved, and orbited by a smaller, more pristine one."
     Narrator "They hover in the air, bobbing as they rotate, shining dull light across the room."
     stop sound
-    Narrator "As you look around you notice the statues built into alcoves in the wall, tall and protective, each has an altar at the base."
+    Narrator "As you look around, you notice the statues built into alcoves in the wall, tall and protective, each has an altar at the base."
     Narrator "The Saints, you assume for a moment... until you see that one is still in construction."
     Narrator "It looks like Eileen."
     Narrator "You hear water, but can't quite find it, so instead you allow your eyes to follow the pillars supporting a glass ceiling. Moonlight shines down on you..."
@@ -348,7 +348,7 @@ label start:
             pass
     
     $ cinematic = True
-    Narrator "As the chatter of the students dies down you hear the sharp clink of footsteps against the marble floor."
+    Narrator "As the chatter of the students dies down, you hear the sharp clink of footsteps against the marble floor."
     Narrator "As you look at the moons once more, you see a woman pass below them, standing on the platform before the students. You recognise her instantly: Inquisitor Eileen."
     show eileen sprite
     Narrator "Rather than stand still, she turns, as if summoning the woman behind her. Inquisitor Alice, the woman who crafted the dolls. This isn't the first time you've seen her in person, but it still strikes you as odd."
@@ -408,11 +408,11 @@ label start:
     Alice "And remember to ask yourself. What is it you desire from this place? Let that motivate you."
     $ cinematic = True
     Narrator "You wonder whether she'd prepared that speech. Her demeanor seemed to shift almost as a counterpoint to Inquisitor Eileen."
-    Narrator "Alice clears her throat once more, clasping her hands together to wait for the room to settle. Inquisitor Eileen glares at the white haired to your right. The room quiets."
+    Narrator "Alice clears her throat once more, clasping her hands together to wait for the room to settle. Inquisitor Eileen glares at the white-haired student to your right. The room quiets."
     $ cinematic = False
     Alice "As it is your first night here, I'll allow you all to settle a bit." 
     Alice "However... curfew is 9pm. You should be in your dorms by then. Whether you study the night away or sleep the moment your pretty little heads touch your bed does not matter to me."
-    Alice "But I implore you to please, remain in your dorms. The Summit is an ancient place, filled with ancient spells that we do not have that much control over."
+    Alice "But I implore you to please, remain in your dorms. The Summit is an ancient place, filled with ancient spells that we have little control over."
     Alice "If you're out past curfew and something awful happens to you..."
     show eileen sprite at right with moveinleft
     Eileen "I will write your parents and tell them you died being an imbecile."
@@ -437,7 +437,7 @@ label start:
     Narrator "The man with tattoos is the one you noticed earlier. He still seems annoyed."
     hide rex sprite
     show xander sprite
-    Narrator "A short man with messy, white hair..."
+    Narrator "A short man with messy, white hair looks around the atrium with an aloof look in his eye..."
     hide xander sprite
     show melody sprite 
     Narrator "Lastly you see the raven-haired woman who waved you over earlier..."
@@ -499,7 +499,7 @@ label Night0Dorms:
     $ Day0Night = True
     $ cinematic = True
     $ Location = "Dormitory"
-    Narrator "The dormitory isn't what you expected. Rather than the individual rooms you had back at the Scholomance, meek and cramped, there is an exposed dormitory." 
+    Narrator "The dormitory isn't what you expected. Rather than the individual rooms you had back at the Scholomance, stuffy and cramped, there is an exposed dormitory." 
     Narrator "A floor separated into enclosed bed-spaces and study areas -- visible to one another from certain angles."
     Narrator "At least the beds look comfortable. You notice your luggage at the foot of a sprawling, purple, curtained bed. Looking up you notice the sky is still visible, though it doesn't seem to be through glass."
     Narrator "It's a spell. You feel it as you analyse it. Swirling patterns, images, all moving to form the illusion of a night sky. Looking at it makes you tired."
@@ -584,7 +584,7 @@ label Night0Dorms:
 
             "(Go to Sleep)":
                 $ cinematic = True
-                Narrator "You get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle amd move ever so slightly toward a fake horizon. The world around you seems to fade..."
+                Narrator "You get into the bed. The fresh-linen scent hits you as you sink deeper in. Above you, the illusory stars twinkle and move ever so slightly toward a fake horizon. The world around you seems to fade..."
                 $ cinematic = False
                 $ Day0Night = False
                 stop music fadeout 1.0
@@ -711,7 +711,7 @@ label Night0Corridor:
                     "Hello?":
                         $ cinematic = True
                         Narrator "You call out into the darkness, your voice barely above a whisper."
-                        Narrator "The silhouette stirs. You feel it's eyes meet yours, you feel like prey."
+                        Narrator "The silhouette stirs. You feel its eyes meet yours, you feel like prey."
                         Narrator "After a moment, as the moonlight twists and turns as the moons rotate, a shaft pushes into the darkness."
                         show notalice sprite
                         Narrator "Revealing another Doll. Alice. Trapped below the sewer grates."
@@ -764,7 +764,7 @@ label Night0Corridor:
                                                 Narrator "It's late. You know it's time to go to sleep."
                                                 scene dormitory night with fade
                                                 Narrator "You return to the dormitory and get into the bed." 
-                                                Narrator "The fresh-linen scent hits you as you sink deeper in. Above you, the illusory stars ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
+                                                Narrator "The fresh-linen scent hits you as you sink deeper in. Above you, the illusory stars twinkle and ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
                                                 Narrator "But you can't help but wonder..." 
                                                 Narrator "...what was that?"
                                                 Narrator "And why do you still feel its gaze?"
@@ -826,13 +826,13 @@ label Night0Corridor:
         Narrator "Shadows dance along the walls -- remnants clouds through the skylight."
         Narrator "Despite the prickly feeling on your neck, you know you're alone."
         Narrator "In the distance, you notice a gated door, a great padlock stopping you."
-        Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+        Narrator "Yet you can't help but approach it. There's an aura to it. You feel as though you're moving towards honey-scented wood." 
         Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
         Narrator "You breathe it in..."
         Narrator "Whatever is behind the door is old magic."
         Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
         Narrator "They feel intimate."
-        Narrator "More apart of you than your beating heart."
+        Narrator "More a part of you than your beating heart."
         Narrator "You lift your light higher and look over the old paper label above the door."
         Narrator "{b}The Archives{/b}."
         $ Flag_ArchivesDiscovered = True
@@ -918,7 +918,7 @@ label Morning1Dorms:
     Tao "Are we going to be graded on the planting itself or..."
     hide xander sprite with moveoutright
     show melody sprite at right with moveinright
-    Melody "I'd imagine so. Half of the quality of a potion is in it's components."
+    Melody "I'd imagine so. Half of the quality of a potion is in its components."
     hide tao sprite with moveoutleft
     Rex "Fuck me, I'm surrounded by--"
     show aria sprite at left with moveinleft
@@ -935,7 +935,7 @@ label Morning1Dorms:
     Xander "Maybe Aria knows a few spells... you kept flowers in the Scholomance, didn't you?"
     Aria "Just the dangly ones. They're easy to keep."
     $ cinematic = True
-    Narrator "You watch Tao's face crimp as Aria shrugs."
+    Narrator "You watch Tao's face tighten as Aria shrugs."
     hide xander sprite with moveoutright
     Narrator "The Scholomance is beneath the Great Lake. There's no sunlight. The temperature and light is controlled by complex spells..."
     Narrator "You wonder whether Aria took that into account when she kept her flowers, or whether she never needed to."
@@ -964,7 +964,7 @@ label Morning1Dorms:
             Tao "There's not much of a chance of {i}us{/i} going back."
             Melody "You never know, Tao."
             jump Day1DormsChat1
-        "Xander, you don't seem that phased by planting.":
+        "Xander, you don't seem that fazed by planting.":
             hide aria sprite
             show xander sprite at center
             Xander "I grew up on a farm."
@@ -1102,8 +1102,8 @@ label Morning1Greenhouse:
     $ Day1Morning = True
     $ Location = "Greenhouse"
     $ cinematic = True
-    Narrator "You're the last to arrive at the Greenhouse -- a great garden at the centre of the Summit, surrounded on all four sides by hallways and a domed, glass ceiling on top."
-    Narrator "At its centre, is the Great Mage Tree. A tree said to be enchanted. Its boughs rattle the glass as it sleeps."
+    Narrator "You're the last to arrive at the Greenhouse -- a great garden at the centre of the Summit, surrounded on all four sides by hallways with a domed, glass ceiling on top."
+    Narrator "At its centre is the Great Mage Tree, a tree said to be enchanted. Its boughs rattle the glass as it sleeps."
     Narrator "You notice Alice beneath the tree with Aria, the two of them deep in conversation. At the back of the Greenhouse, seemingly bored, is Eileen."
     Narrator "Alice turns to you, counting to see whether all of the students had arrived."
     if Flag_NotAliceMet == True:
@@ -1804,7 +1804,7 @@ label Morning1Greenhouse:
         label Afternoon1Dorms_Choices:
             $ cinematic = True
             Narrator "You sit at the edge of your bed."
-            Narrator "What do want to do?"
+            Narrator "What do you want to do?"
             $ cinematic = False
             menu:
                 "(Go to the {b}Library{/b})":
@@ -1873,7 +1873,7 @@ label Morning1Greenhouse:
         play music "audio/Potion_Theme.mp3"
         $ cinematic = True
         Narrator "You enter the {b}Alchemy Lab{/b}."
-        Narrator "The air is thick with the smell sterile chemicals. You wonder who was last in here?"
+        Narrator "The air is thick with the smell of sterile chemicals. You wonder who was last in here?"
         Narrator "A faint sound catches your attention. At the back, tinkering over a bubbling pot, is Melody, seemingly immersed in whatever it is she's doing."
         $ cinematic = False
         $ Location = "Alchemy Lab"
@@ -2003,7 +2003,7 @@ label Morning1Greenhouse:
 
             label Afternoon1AlchemyLab_Potions:
                 $ cinematic = True
-                Narrator "Inside a locked glass cupboard, you see rows and rows of potions. Each meticulously label still readable under a layer of dust."
+                Narrator "Inside a locked glass cupboard, you see rows and rows of potions. Each meticulous label still readable under a layer of dust."
                 Narrator "You wonder when any of them were last used."
                 Narrator "As you look over them, you hear Melody stir her potion -- the unmistakable smell of burned hair filling the room."
                 $ cinematic = False
@@ -2034,13 +2034,13 @@ label Morning1Greenhouse:
                                 Narrator "You know you can only take one. Any more and it'd be noticeable."
                                 $ cinematic = False
                                 menu: 
-                                    "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
+                                    "(Take the {b}Potion of Cleansing{/b})" if "Potion of Cleansing" not in potion_stolen:
                                         $ potion_stolen.append("Potion of Cleansing")
                                         pass
-                                    "(Take the {b}Potion of Frog Polymorph{/b})" if not "Potion of Frog Polymorph" not in potion_stolen:
+                                    "(Take the {b}Potion of Frog Polymorph{/b})" if "Potion of Frog Polymorph" not in potion_stolen:
                                         $ potion_stolen.append("Potion of Frog Polymorph")
                                         pass
-                                    "(Take the {b}Potion of Sleepless Night{/b})" if not "Potion of Sleepless Night" not in potion_stolen:
+                                    "(Take the {b}Potion of Sleepless Night{/b})" if "Potion of Sleepless Night" not in potion_stolen:
                                         $ potion_stolen.append("Potion of Sleepless Night")
                                         pass
                                 $ cinematic = True
@@ -2141,7 +2141,7 @@ label Morning1Greenhouse:
                                         Xander "Ha. Thanks."
                                         Xander "It survived a lot of burns..."
                                         Xander "Not intentional ones... but you can only dodge a few pyromancies before one grazes you."
-                                        $ Affection_Xander +=10
+                                        $ Affinity_Xander +=10
                                         pass
 
                             "Sounds like you got through step one alright.":
@@ -2175,7 +2175,7 @@ label Morning1Greenhouse:
                                 jump Afternoon1Atrium_XanderChoices
                     
                     "I've got stuff I wanna ask you.":
-                        Xander "Really? Lets hear it."
+                        Xander "Really? Let's hear it."
                         call xanderhub_main
                         hide xander sprite
                         jump Afternoon1Atrium_Choices
@@ -2253,7 +2253,7 @@ label Morning1Greenhouse:
             label Afternoon1Courtyard_Aria:
                 $ cinematic = True
                 Narrator "Aria seems oblivious to the fact that she's not alone. Her mind adrift."
-                Narrator "She sits in the grass. You can't help but notice the flowers turning towards her as."
+                Narrator "She sits in the grass. You can't help but notice the flowers turning towards her."
                 Narrator "To them, she's the sun."
                 Narrator "You step closer, and finally, she turns to look up at you."
                 show aria sprite with dissolve
@@ -2288,7 +2288,7 @@ label Morning1Greenhouse:
                             menu:
                                 "Where do you think you belong?":
                                     Aria "Nowhere. Not back at the village, not in the Scholomance..." 
-                                    Aria "... {i}definitely{i} not here."
+                                    Aria "... {i}definitely{/i} not here."
                                     Aria "Maybe out there, in nature."
                                     Aria "It's like the forest is calling me home."
                                     Aria "I grew up on a mountain, the forests there were endless."
@@ -2381,7 +2381,7 @@ label Morning1Greenhouse:
                 Rex "Thanks."
                 $ cinematic = True 
                 Narrator "He shaves a mote of glowing metal and places the tool down. Turning to give you his full attention."
-                $ Affection_Rex += 10
+                $ Affinity_Rex += 10
                 pass
 
             "(Hand him the long file)":
@@ -2457,7 +2457,7 @@ label Morning1Greenhouse:
         label Afternoon1ArtificingLab_WorkingOn:
             Rex "This? It's just some practice."
             Rex "It doesn't explode... if that's what you're worried about."
-            Rex "I wanted to make a something to water my plants every day..."
+            Rex "I wanted to make something to water my plants every day..."
             Rex "Means I can sleep in."
             Rex "Maybe I can submit it for my Artificing Exam. That way I don't have to think about all this exam crap."
             menu:
@@ -2617,7 +2617,7 @@ label Morning1Greenhouse:
 
                 else:
                     Melody "I'm a little unsettled tonight. Dunno why. Maybe I'm just worried about my plants."
-                    Melody "One more thing we don't have that much control over, you know?"
+                    Melody "One more thing we have little control over, you know?"
                     menu:
                         "I know.":
                             Melody "Oh I'm sure."
@@ -2892,13 +2892,13 @@ label Morning1Greenhouse:
                 Narrator "Shadows dance along the walls -- remnants clouds through the skylight."
                 Narrator "Despite the prickly feeling on your neck, you know you're alone."
                 Narrator "In the distance, you notice a gated door, a great padlock stopping you."
-                Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+                Narrator "Yet you can't help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
                 Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
                 Narrator "You breathe it in..."
                 Narrator "Whatever is behind the door is old magic."
                 Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
                 Narrator "They feel intimate."
-                Narrator "More apart of you than your beating heart."
+                Narrator "More a part of you than your beating heart."
                 Narrator "You lift your light higher and look over the old paper label above the door."
                 Narrator "{b}The Archives{/b}."
                 $ Flag_ArchivesDiscovered = True
@@ -3031,7 +3031,7 @@ label Morning1Greenhouse:
                                 Narrator "You stand, heart pounding in your chest."
                                 Narrator "It's late. You know it's time to go to sleep."
                                 Narrator "You return to the dormitory and get into the bed." 
-                                Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
+                                Narrator "The fresh-linen scent hits you as you sink deeper in. Above you, the illusory stars twinkle and ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
                                 Narrator "But you can't help but wonder..." 
                                 Narrator "...what was that?"
                                 Narrator "And why do you still feel its gaze?"
@@ -3142,7 +3142,7 @@ label Morning1Greenhouse:
                                                     Narrator "You stand, heart pounding in your chest."
                                                     Narrator "It's late. You know it's time to go to sleep."
                                                     Narrator "You return to the dormitory and get into the bed." 
-                                                    Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
+                                                    Narrator "The fresh-linen scent hits you as you sink deeper in. Above you, the illusory stars twinkle and ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
                                                     Narrator "But you can't help but wonder..." 
                                                     Narrator "...what was that?"
                                                     Narrator "And why do you still feel its gaze?"
@@ -3979,13 +3979,13 @@ label Morning2Library:
         $ cinematic = True
         Narrator "You look around, noticing a door you haven't seen before."
         Narrator "It's gated, a great padlock stopping you."
-        Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+        Narrator "Yet you can't help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
         Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
         Narrator "You breathe it in..."
         Narrator "Whatever is behind the door is old magic."
         Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
         Narrator "They feel intimate."
-        Narrator "More apart of you than your beating heart."
+        Narrator "More a part of you than your beating heart."
         Narrator "You look up at the label above the door."
         Narrator "{b}The Archives{/b}."
         $ Flag_ArchivesDiscovered = True
@@ -4891,13 +4891,13 @@ label Afternoon2Library: #empty
         $ cinematic = True
         Narrator "You look around, noticing a door you haven't seen before."
         Narrator "It's gated, a great padlock stopping you."
-        Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+        Narrator "Yet you can't help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
         Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
         Narrator "You breathe it in..."
         Narrator "Whatever is behind the door is old magic."
         Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
         Narrator "They feel intimate."
-        Narrator "More apart of you than your beating heart."
+        Narrator "More a part of you than your beating heart."
         Narrator "You look up at the label above the door."
         Narrator "{b}The Archives{/b}."
         $ Flag_ArchivesDiscovered = True
@@ -6504,7 +6504,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
 
 
                     "(Leave)":
-                        if sabotagued_potions == False:
+                        if sabotaged_potions == False:
                             Narrator "As you step away from the crops, a thought seems to manifest in your mind -- fully formed."
                             Narrator "If there are only limited slots... why not play dirty?"
                             Narrator "If your whole future is riding on this one week... you might as well..."      
@@ -7443,7 +7443,10 @@ label BREX01:
         "Nothing right now.":
             Rex "Alright. Buzz off then."
             pass
-    Rex "I'm Rex, by the way."
+    $ cinematic = True
+    Narrator "You remember him... or at least remember hearing about him. Cairyx... though most people just called him Rex."
+    Narrator "He doesn't seem interested in talking."
+    $ cinematic = False
     hide rex sprite
     $ Flag_RexMet = True
     return
@@ -7484,51 +7487,6 @@ label BNAL01:
     show border onlayer UI 
     ###################################
     return
-
-
-
-
-
-
-
-
-
-
-
-##############################################################################
-## CHARACTER BARKS // CHARACTER BARKS // CHARACTER BARKS // CHARACTER BARKS ##
-##############################################################################
-
-
-#####################
-##    TAO BARKS    ##
-#####################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -7996,8 +7954,8 @@ label melodyhub_main:
         menu:
             "That would really help.":
                 Melody "Oh, well here you go. Happy to help."
-                Melody "Anyway, don't be too worried about the exam. I think if you overthink it you'll just end up anxious and unfocused. "
-                $ Flag_MelodySabotaguedPotion = True
+                Melody "Anyway, don't be too worried about the exam. I think if you overthink it you'll just end up anxious and unfocused."
+                $ Flag_MelodySabotagedPotion = True
                 jump melodyhub_main
             "Thanks, but I should be fine.":
                 Melody "As long as you turn {i}something{/i} in I'm sure you'll pass."
