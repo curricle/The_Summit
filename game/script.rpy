@@ -1,5 +1,5 @@
 # The script of the game goes in this file.
-# I have begun my edits!
+# I have begun my edits
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
@@ -302,8 +302,8 @@ label start:
     Narrator "Bells chime behind you as you step onto the stone path and look up at the great structure before you." 
     Narrator "It's nothing like the Scholomance, it's quainter. A great tower atop an impossibly steep mountain, overlooking nothing but forests and rivers."
     Narrator "Far in the distance, over the horizon, you imagine your old home. It warms you." 
-    Narrator "Looking around, the other carriages seem empty. Like usual, you're the last to arrive." 
-    Narrator "An older woman waits at the entrance: {b}Alice{/b}. You'd taken a taken a few of her classes at the Scholomance." 
+    Narrator "Looking around, the other carriages seem empty. As usual, you're the last to arrive." 
+    Narrator "An older woman waits at the entrance: {b}Alice{/b}. You've taken a few of her classes at the Scholomance." 
     Narrator "As you move closer, you become aware that it's not quite Alice -- it's one of her dolls."
     Narrator "You wipe the rain from your eyes. The doll turns her gaze to you."
     $ cinematic = False
@@ -321,10 +321,10 @@ label start:
     $ cinematic = True
     Narrator "The doors open as you approach. You enter the atrium."
     play sound "audio/moon_sparkle.mp3"
-    Narrator "What first catches your eye is two floating moons. More specifically, moon replicas. The Matron and Son, one large, battered and carved, and orbitted by a smaller, more prestine one."
-    Narrator "They hover in the air, bobbing as they rotate, shining dull light across the room."
+    Narrator "What first catches your eye is two floating moons. More specifically, moon replicas. The Matron and Son, one large, battered and carved, and orbited by a smaller, more pristine one."
+    Narrator "They hover in the air, bobbing as they rotate, shining a dull light across the room."
     stop sound
-    Narrator "As you look around you notice the statues built into alcoves in the wall, tall and protective, each has an alter at the base."
+    Narrator "As you look around you notice the statues built into alcoves in the wall, tall and protective, each has an altar at the base."
     Narrator "The Saints, you assume for a moment... until you see that one is still in construction."
     Narrator "It looks like Eileen."
     Narrator "You hear water, but can't quite find it, so instead you allow your eyes to follow the pillars supporting a glass ceiling. Moonlight shines down on you..."
@@ -362,7 +362,7 @@ label start:
     $ cinematic = False
     Alice "Or if you fail."
     Alice "The six of you have been carefully selected by the Council and deemed worthy, trained, and old enough to attempt your Mage Licence Exam."
-    Alice "Upon receiving this title you will be not only authorised, but also assisted in departing the Scholomance and joining society as a Town Mage." 
+    Alice "Upon receiving this title you will not only be authorised by the Council, but also assisted in departing the Scholomance to join society as a Town Mage." 
     Alice "Some of you have honed your Magecraft for over a decade for this moment. So I implore you to take the opportunity seriously."
     Alice "Failure will result in your dismissal back to the Scholomance for further training."
     $ cinematic = True
@@ -376,7 +376,7 @@ label start:
     Alice "Artificing..."
     Alice "And importantly, combat..."
     Alice "Do your best."
-    Alice "Eileen, would you like to say a few words."
+    Alice "Eileen, would you like to say a few words?"
     hide alice sprite
     hide eileen sprite
     $ cinematic = True
@@ -402,7 +402,7 @@ label start:
     Alice "And remember to ask yourself. What is it you desire from this place? Let that motivate you."
     $ cinematic = True
     Narrator "You wonder whether she'd prepared that speech. Her demeanor seemed to shift almost as a counterpoint to Inquisitor Eileen."
-    Narrator "Alice clears her throat once more, clasping her hands together to wait for the room to settle. Inquisitor Eileen glares at the white haired to your right. The room quiets."
+    Narrator "Alice clears her throat once more, clasping her hands together to wait for the room to settle. Inquisitor Eileen glares at the white haired man to your right. The room quiets."
     $ cinematic = False
     Alice "As it is your first night here, I'll allow you all to settle a bit." 
     Alice "However... curfew is 9pm. You should be in your dorms by then. Whether you study the night away or sleep the moment your pretty little heads touch your bed does not matter to me."
@@ -494,10 +494,10 @@ label Night0Dorms:
     $ cinematic = True
     $ Location = "Dormitory"
     Narrator "The dormitory isn't what you expected. Rather than the individual rooms you had back at the Scholomance, meek and cramped, there is an exposed dormitory." 
-    Narrator "A floor sepearated into enclosed bed-spaces and study areas -- visible to one another from certain angles."
-    Narrator "At least the beds look comfortable. You notice your luggage at the foot of a sprawling, purple, curtained bed. Looking up you notice the sky is still visible, though it doesn't seem to be through glass."
-    Narrator "It's a spell. You feel it as you analyse it. Swirling patterns, images, all moving to form the illusion of a night sky. Looking at it makes you tired."
-    Narrator "A few other students are already unpacking as you get to your bed. You notice Melody, sleepmask on as she sits in bed. You can't tell if she's sleeping."
+    Narrator "A floor separated into enclosed bed-spaces and study areas -- visible to one another from certain angles."
+    Narrator "At least the beds look comfortable. You notice your luggage at the foot of a sprawling, curtained, purple bed. Looking up you notice the sky is still visible, though it doesn't seem to be through glass."
+    Narrator "It's a spell. You feel it as you analyse it. Swirling patterns, images, all in motion to form the illusion of a night sky. Looking at it makes you tired."
+    Narrator "A few other students are already unpacking as you get to your bed. You notice Melody, sleepmask on, as she sits in bed. You can't tell if she's sleeping."
     $ cinematic = False
     
     label Night0DormsMenu:
@@ -578,7 +578,7 @@ label Night0Dorms:
 
             "(Go to Sleep)":
                 $ cinematic = True
-                Narrator "You get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle move ever so slightly toward a fake horizon. The world around you seems to fade..."
+                Narrator "You get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle and move ever so slightly toward a fake horizon. The world around you seems to fade..."
                 $ cinematic = False
                 $ Day0Night = False
                 stop music fadeout 1.0
@@ -624,7 +624,7 @@ label Night0Corridor:
     $ Location = "Corridor"
     $ cinematic = True
     Narrator "The dull midnight moonlight casts through the windows and along the marble at your feet. You notice that the windowed cloisters overlooking the courtyard are now clear."
-    Narrator "Allowing you to view the Great Mage tree in it's centre. You have read about the tree before. Some say it's enchanted, others say it's much older than Mages."
+    Narrator "You can now see the Great Mage tree in its centre. You have read about the tree before. Some say it's enchanted, others say it's much older than mages."
     Narrator "Whatever the answer, it's not something you want to question."
     Narrator "You press along the corridor, ignoring the feeling of eyes on your back."
     $ cinematic = False
@@ -651,7 +651,7 @@ label Night0Corridor:
                 stop music
                 $ cinematic = True
                 scene dormitory night
-                Narrator "You return to the dormitory and get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle move ever so slightly toward a fake horizon. The world around you seems to fade..."
+                Narrator "You return to the dormitory and get into the bed. The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle and move ever so slightly toward a fake horizon. The world around you seems to fade..."
                 $ cinematic = False
                 $ Day0Night = False
                 jump Morning1Dorms
@@ -665,16 +665,16 @@ label Night0Corridor:
         $ Location = "Atrium"
         $ cinematic = True
         Narrator "The Atrium is still magnificent. You see moonlight flicker through the stain glass window..."
-        Narrator "But you also notice that the spell conjuring the two, twin moons, is in effect, casting faux-moonlight along the floor."
+        Narrator "But you also notice that the spell conjuring the two, twin moons, is in effect casting faux-moonlight along the floor."
         Narrator "It's quiet. Quieter than you remember."
         Narrator "It takes you a moment to place the difference... the water, there's no longer the sound of running water."
         Narrator "All you hear is your footsteps, and the distant wind as it caresses the entrance."
         Narrator "Part of you wonders whether you could simply escape. Run off to a distant land."
-        Narrator "Whether you could run into the woods and never think of the Summit, or the Scholomance again."
-        Narrator "Or whether you'd simply die trying to descend."
+        Narrator "Whether you could run into the woods and never think of the Summit or the Scholomance again."
+        Narrator "Or, whether you'd simply die trying to descend the mountain."
         Narrator "Then you hear something break the silence."
         play sound "audio/main_hall_gentle_water.mp3"
-        Narrator "A splash. The pitter-patter of feet against water. Sloshing like emerging from a bathtub."
+        Narrator "A splash. The pitter-patter of feet against water. Sloshing as if emerging from a bathtub."
         $ cinematic = False
         menu:
             "(Hide)":
@@ -689,7 +689,7 @@ label Night0Corridor:
                 $ cinematic = False
                 pass
         $ cinematic = True
-        Narrator "Your heart races. You try and find the source of the noise. Looking over at the large, green, window -- expecting at any moment see Eileen."
+        Narrator "Your heart races. You try and find the source of the noise. Looking over at the large, green window -- expecting at any moment see Eileen."
         Narrator "{i}{b}slosh, slosh, slosh.{/b}{/i}"
         play sound "audio/moon_sparkle.mp3"
         Narrator "The noise moves to the moons. More specifically, to the grate below them. You listen as something pushes the grate up, and with effort, tries to push through."
@@ -699,14 +699,14 @@ label Night0Corridor:
                 $ cinematic = True
                 Narrator "You creep closer, noticing a white hand twist upward. Whatever is down there isn't small enough to squeeze through."
                 Narrator "You move closer. Crouching below the moons, gingerly shuffling until you can see something below."
-                Narrator "Staring up at you, is a silhouette. You can't make out features in the darkness, but you can hear it move in the shallow water."
+                Narrator "Staring up at you is a silhouette. You can't make out its features in the darkness, but you can hear it move in the shallow water."
                 $ cinematic = False
                 menu:
                     "Hello?":
                         $ cinematic = True
                         Narrator "You call out into the darkness, your voice barely above a whisper."
-                        Narrator "The silhouette stirs. You feel it's eyes meet yours, you feel like prey."
-                        Narrator "After a moment, as the moonlight twists and turns as the moons rotate, a shaft pushes into the darkness."
+                        Narrator "The silhouette stirs. You feel its eyes meet yours, you feel like prey."
+                        Narrator "After a moment, as the moonlight twists and turns, as the moons rotate, a shaft pushes into the darkness."
                         show notalice sprite
                         Narrator "Revealing another Doll. Alice. Trapped below the sewer grates."
                         $ cinematic = False
@@ -758,10 +758,10 @@ label Night0Corridor:
                                                 Narrator "It's late. You know it's time to go to sleep."
                                                 scene dormitory night with fade
                                                 Narrator "You return to the dormitory and get into the bed." 
-                                                Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle ebb ever so slowly toward a fake horizon. The world around you seems to fade..."
+                                                Narrator "The fresh-linen scent hits you as you seep deeper in. Above you, the illusory stars twinkle and ever so slowly move toward a fake horizon. The world around you seems to fade..."
                                                 Narrator "But you can't help but wonder..." 
                                                 Narrator "...what was that?"
-                                                Narrator "And why do you still feel it's gaze?"
+                                                Narrator "And why do you still feel its gaze?"
                                                 $ cinematic = False
                                                 $ Day0Night = False
                                                 $ AtriumVisitedDay1 = True
@@ -773,8 +773,8 @@ label Night0Corridor:
                     "(Leave it there)":
                         $ cinematic = True
                         Narrator "Something in you stirs. You know this place isn't for you."
-                        Narrator "You turn, walking away from the moons, from the grate, and from whatever calls itself Alice beneath it."
-                        Narrator "You turn back for one last glimpse -- it's hand upreaching, glowing in the moonlight, as though it's holding the moons in place."
+                        Narrator "You turn, walking away from the moons, from the grates, and from whatever calls itself Alice beneath it."
+                        Narrator "You turn back for one last glimpse -- its hand upreaching, glowing in the moonlight, as though it's holding the moons in place."
                         Narrator "You leave the Atrium."
                         $ cinematic = False
                         stop music
@@ -817,16 +817,16 @@ label Night0Corridor:
             jump Night0CorridorChoices
         $ cinematic = True
         Narrator "The spell casts eerie light over the library. The silence seems uncanny as you step inside -- looking over the stacks of thick books and tomes."
-        Narrator "Shadows dance along the walls -- remnants clouds through the skylight."
+        Narrator "Shadows dance along the walls -- remnants of clouds through the skylight."
         Narrator "Despite the prickly feeling on your neck, you know you're alone."
         Narrator "In the distance, you notice a gated door, a great padlock stopping you."
-        Narrator "Yet you cant help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
-        Narrator "You can feel great magic, as though spectral fingers are luring you closer. Twisting and spiralling."
+        Narrator "Yet you can't help but approach it. There's an aura to it, as though moving towards honey-scented wood." 
+        Narrator "You can feel great magic, as though spectral fingers are beckoning you closer. Twisting and spiralling."
         Narrator "You breathe it in..."
         Narrator "Whatever is behind the door is old magic."
         Narrator "Those scents, dewdrops on grass, honey warmed up, feel intrinsic to you."
         Narrator "They feel intimate."
-        Narrator "More apart of you than your beating heart."
+        Narrator "More a part of you than your beating heart."
         Narrator "You lift your light higher and look over the old paper label above the door."
         Narrator "{b}The Archives{/b}."
         $ Flag_ArchivesDiscovered = True
@@ -840,7 +840,7 @@ label Night0Corridor:
                 pass
             "(Leave.)": 
                 $ cinematic = True
-                Narrator "You kill the urge to move closer. You don't know where you find the determination."
+                Narrator "You kill the urge to move closer. You don't know where you'd find the determination."
                 Narrator "You know there is nothing for you here."
                 Narrator "Nothing yet..."
                 $ cinematic = False
@@ -859,7 +859,7 @@ label Night0Corridor:
         scene corridor night
         $ cinematic = True
         Narrator "As you walk around the corridors, you realise there is no way into the greenhouse."
-        Narrator "The tree at its centre seems to have it's own energy. The more you look at it, the more you feel watched."
+        Narrator "The tree at its centre seems to have its own energy. The more you look at it, the more you feel watched."
         Narrator "You're certain it's locked in there for the best."
         Narrator "You should go somewhere else."
         $ cinematic = False
@@ -898,7 +898,7 @@ label Morning1Dorms:
     Alice "Don't dawdle."
     $ cinematic = True
     hide alice sprite
-    Narrator "She turns and leaves. You look around, a few opening the curtains around their beds to investigate."
+    Narrator "She turns and leaves. You look around, a few students are opening the curtains around their beds to investigate."
     show rex sprite
     Rex "What are we, gardeners now?"
     show tao sprite at left with moveinleft
@@ -908,7 +908,7 @@ label Morning1Dorms:
     Tao "Are we going to be graded on the planting itself or..."
     hide xander sprite with moveoutright
     show melody sprite at right with moveinright
-    Melody "I'd imagine so. Half of the quality of a potion is in it's components."
+    Melody "I'd imagine so. Half of the quality of a potion is in its components."
     hide tao sprite with moveoutleft
     Rex "Fuck me, I'm surrounded by--"
     show aria sprite at left with moveinleft
@@ -918,8 +918,8 @@ label Morning1Dorms:
             pass
     hide rex sprite with moveoutleft
     show tao sprite with moveoutright
-    Tao "It's the first day... if we're planting the herbs now are we expected to make them usable within seven days? What day is the potion exam?"
-    Melody "We're {i}Mages{/i}, I'm sure we'll figure out a way."
+    Tao "It's the first day... if we're planting the herbs now, are we expected to make them usable within seven days? What day is the potion exam?"
+    Melody "We're {i}mages{/i}, I'm sure we'll figure out a way."
     hide tao sprite with moveoutright
     show xander sprite at right with moveinright
     Xander "Maybe Aria knows a few spells... you kept flowers in the Scholomance, didn't you?"
@@ -933,8 +933,8 @@ label Morning1Dorms:
     show rex sprite with moveinleft
     Rex "Screw it."
     $ cinematic = True 
-    Narrator "Rex stands up, pulling on his vest. You notice the tattos that creep up his neck -- hellflame."
-    Narrator "They look like burns, but the ink outlining it is thick enough to reassure you it isn't."
+    Narrator "Rex stands up, pulling on his vest. You notice the tattoos that creep up his neck -- hellflame."
+    Narrator "They look like burns, but the ink outlining it is thick enough to reassure you they aren't."
     Narrator "Without saying a word, he leaves the Dormitory."
     hide rex sprite with moveoutleft
     $ cinematic = False
@@ -966,7 +966,7 @@ label Morning1Dorms:
             show melody sprite at center
             Melody "What did you see?"
             menu:
-                "Something below the moons. Under the grate.":
+                "Something below the moons. Under the grates.":
                     "It looked like Alice's doll."
                     Melody "Maybe one of them got trapped under there..."
                     Melody "Are they autonomous?"
