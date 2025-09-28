@@ -350,7 +350,7 @@ label start:
     $ cinematic = True
     Narrator "As the chatter of the students dies down, you hear the sharp clink of footsteps against the marble floor."
     Narrator "As you look at the moons once more, you see a woman pass below them, standing on the platform before the students. You recognise her instantly: Inquisitor Eileen."
-    show eileen sprite
+    show eileen sprite at right
     Narrator "Rather than stand still, she turns, as if summoning the woman behind her. Inquisitor Alice, the woman who crafted the dolls. This isn't the first time you've seen her in person, but it still strikes you as odd."
     #add x and y positioning to adjust sprite alignment
     show alice sprite:
@@ -358,7 +358,6 @@ label start:
         yalign 0.3
     Narrator "The woman lives through a half-dozen dolls, it's very odd to see her in person. You notice another doll beside the staircase leading to a great green window."
     $ cinematic = False
-    show eileen at right
     Alice "Good evening, pupils. I know the journey here wasn't smooth, but you all seem to have made it from the Scholomance in one piece."
     Alice "I'm Inquisitor Alice, and beside me is Inquisitor Eileen. We've come to the Summit to fulfil our duties as examiners. We authorise your exams and will determine whether you pass..."
     $ cinematic = True
@@ -372,7 +371,7 @@ label start:
     Alice "Some of you have honed your Magecraft for over a decade for this moment. So I implore you to take the opportunity seriously."
     Alice "Failure will result in your dismissal back to the Scholomance for further training."
     $ cinematic = True
-    show rex sprite angry at left with moveinright
+    show rex sprite angry at left with moveinleft
     Narrator "You hear a grunt. Turning, you notice a man scowl, his arms crossed tight as he stares up at Eileen."
     $ cinematic = False
     hide rex sprite angry
@@ -3530,7 +3529,7 @@ label Morning1Greenhouse:
                             if planted_seeds = "Winged Jasmine":
                                 $ cinematic = True
                                 Narrator "You inspect your Winged Jasmine... you're surprised at how much it has already grown."
-                                Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some magecraft."
+                                Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some Magecraft."
                                 Narrator "The flower is blue and white, it's petals delicate..."
                                 Narrator "... somehow you're reminded of fractured ice."
                                 Narrator "It seems so delicate."
@@ -4435,7 +4434,7 @@ label Morning2Greenhouse:
                     if planted_seeds = "Winged Jasmine":
                         $ cinematic = True
                         Narrator "You inspect your Winged Jasmine... you're surprised at how much it has already grown."
-                        Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some magecraft."
+                        Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some Magecraft."
                         Narrator "The flower is blue and white, it's petals delicate..."
                         Narrator "...somehow you're reminded of fractured ice."
                         Narrator "It seems so delicate."
