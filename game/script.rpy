@@ -103,6 +103,17 @@ define Flag_RexDormitoryChat2 = False
 define Flag_MelodyDormitoryChat2 = False
 
 
+
+
+define Flag_AriaAliceOpinion = False #player has asked aria's opinion on alice.
+define Flag_AriaEileenOpinion = False #player has asked aria's opinion on eileen
+define Flag_XanderEileenOpinion = False #player has asked Xander's opinion on eileen.
+define Flag_XanderAliceOpinion = False #player has asked Xander's opinion on alice.
+define Flag_TaoEileenOpinion = False
+define Flag_TaoAliceOpinion = False
+define Flag_HREX12 = False #player has gone through HREX12
+
+
 define Flag_ArchivesDiscovered = False # player has discovered the archives.
 define Flag_ArchivesArtifice = False #player has discovered that the lock on the archives is artifice.
 define Flag_ArchivesUnlocked = False #player has unlocked the archives.
@@ -7953,6 +7964,7 @@ label melodyhub_main:
         menu:
             "That would really help.":
                 Melody "Oh, well here you go. Happy to help."
+                play sound "audio/dialogue_information_default.mp3"
                 $ cinematic = True
                 Narrator "She hands you a handwritten recipe."
                 Narrator "{i}Potion of Night Vision{/i}"
@@ -8130,11 +8142,11 @@ label xanderhub_main:
             call HXAN10
             return
 
-        "What do you think of Eileen?":
+        "What do you think of Eileen?" if not Flag_XanderEileenOpinion:
             call HXAN11
             return
 
-        "What do you think of Alice?":
+        "What do you think of Alice?" if not Flag_XanderAliceOpinion:
             call HXAN12
             return
 
@@ -8188,6 +8200,7 @@ label xanderhub_main:
                     Xander "I was doing chores from when I could walk. Cows, chickens, sheep -- you name it, I was feeding it."
                     Xander "Farming's not easy. A few bad harvests and your family starves."
                     $ Flag_XanderFarmer = True
+                    play sound "audio/dialogue_information_default.mp3"
                     Xander "But I loved it. Out every day, working with my hands, talking to the animals." 
                     Xander "Lots of space and fresh air. Lots of friends too -- although they were all my brothers." 
                     Xander "We're six boys and I'm... let's see…um…the fifth one. One of us was always up for a game, or a scrap. How do you think I got so good at fighting?"
@@ -8196,6 +8209,7 @@ label xanderhub_main:
                 else:
                     Xander "Uh, well, I grew up on a little farm with my parents down in the valley. I have a bunch of brothers." 
                     Xander "We're tough boys. Lots of digging holes and building walls. It was pretty good. Animals like me, and I like lifting heavy stuff so… yeah."
+                    play sound "audio/dialogue_information_default.mp3"
                     $ Flag_XanderFarmer = True
                     jump xanderhub_main
 
@@ -8337,7 +8351,8 @@ label xanderhub_main:
             jump xanderhub_main
 
         
-        else: 
+        else:
+            $ Flag_XanderEileenOpinion = True
             Xander "I never expected Eileen to give me advice. She's real intimidating." 
             Xander "And you know what the weirdest part is? I think she's right. I'm not good at anything other than fighting." 
             Xander "Neither is she when you get down to the heart of it. I wonder if she'd take on an apprentice? There's no way I'm passing all exams, so maybe another path is out there."
@@ -8353,6 +8368,7 @@ label xanderhub_main:
     label HXAN12:
         Xander "Heh… Alice reminds me of a hen we have on the farm. Runs around clucking at everyone about everything, but never laid one egg." 
         Xander "I dunno how much help she's been. She keeps telling me to study, but never tells me what I'm doing wrong."
+        $ Flag_XanderAliceOpinion = True
         jump xanderhub_main 
 
     label HXAN13a:
@@ -8509,11 +8525,11 @@ label ariahub_main:
             call HARI04
             return
 
-        "What do you think of Eileen?":
+        "What do you think of Eileen?" if not Flag_AriaEileenOpinion:
             call HARI09
             return
 
-        "What do you think of Alice?":
+        "What do you think of Alice?" if not Flag_AriaAliceOpinion:
             call HARI10
             return
 
@@ -8525,7 +8541,7 @@ label ariahub_main:
             call HARI17
             return
 
-        "Why are you always in the forest?" if Quest_AriaProgress or Quest_AriaComplete:
+        "What's with you and the forest?" if Quest_AriaProgress or Quest_AriaComplete:
             call HARI16
             return
 
@@ -8858,6 +8874,7 @@ label ariahub_main:
         show aria sprite sad
         Aria "She told me that I was a weak mage and would get someone killed one day. I can feel her watching me and it makes me really anxious."
         hide aria sprite sad
+        $ Flag_AriaEileenOpinion = True
         jump ariahub_main
 
     label HARI10:
@@ -8869,6 +8886,7 @@ label ariahub_main:
         Aria "She told me not to be ashamed." 
         Aria "I wouldn't have tried so hard to be a good mage if it wasn't for Alice."
         Aria "I don't know what makes her so kind but I'm grateful for it. I've always felt like she's been on my side."
+        $ Flag_AriaAliceOpinion = True
         jump ariahub_main
     
     label HARI14:
@@ -8906,6 +8924,7 @@ label ariahub_main:
         jump ariahub_main
 
     label HARI16:
+        show aria sprite happy
         Aria "The others are scared of the forest, I can tell. It's nicer than anywhere in the Summit." 
         Aria "I grew up watching all kinds of animals in the woods." 
         Aria "The thing with animals is that they're never stressed, never in a hurry, they take their time..." 
@@ -8913,6 +8932,7 @@ label ariahub_main:
         Aria "Look at the trees." 
         Aria "The forest has never been touched as long as the Summit's been here." 
         Aria "You got to wonder what creatures live in woods as old as these."
+        hide aria sprite happy
         jump ariahub_main
 
 
@@ -9055,7 +9075,7 @@ label taohub_main:
                 call HTAO11b
                 return
 
-        "What do you think of Eileen?":
+        "What do you think of Eileen?" if not Flag_TaoEileenOpinion:
             call HTAO09
             return
 
@@ -9422,6 +9442,7 @@ label taohub_main:
 
 
     label HTAO09:
+        $ Flag_TaoEileenOpinion = True
         Tao "My father told me he grew up scared of Eileen, she's sort of legendary among mages. I didn't expect her to be as... mean, as she is." 
         Tao "There is really nothing that pleases her."
         menu: 
@@ -9533,7 +9554,7 @@ label rexhub_main:
             call HREX03
             return
 
-        "Why do the others say you don't want friends?":
+        "Why do the others say you don't want friends?" if not Flag_HREX12:
             call HREX12
             return
 
@@ -9748,6 +9769,7 @@ label rexhub_main:
                     jump rexhub_main
 
     label HREX12:
+        $ Flag_HREX12 = True
         Rex "I don't need friends, unless youre willing to help me with my plan. Actions over words, as they say. Friends take risks for each other, right?"
         menu: 
             "What's the plan?":
