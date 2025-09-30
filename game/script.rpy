@@ -146,6 +146,7 @@ define Flag_GreenhouseTunnel = False #Player has found out that there's a tunnel
 define Flag_GreenhouseTunnelUnlocked = False #The tunnel is unlocked and can be used via the Greenhouse starting at Night 2.
 define Flag_XanderPoisoned = False # You've found out that Xander's plants were poisoned.
 define Flag_ForestDiscovered = False #The player can access the forest on night2.
+
 # Spells
 define Spell_Light = False
 define Spell_Unlocking = False
@@ -160,6 +161,7 @@ $ potionrecipe_options = ["Potion of Calming", "Potion of Hydration", "Potion of
 $ Flag_CalmingPotion = "Potion of Calming" in potion_recipe
 $ Flag_HydrationPotion = "Potion of Hydration" in potion_recipe
 $ Flag_FrogPotion = "Potion of Frog Polymorph" in potion_recipe
+$ Flag_MelodySabotagedPotion = "Potion of Night Vision" in potion_recipe
 
 
 # Stolen Potion Variables
@@ -183,7 +185,6 @@ define Flag_ArtificeParts = False
 
 ### Flower Quality ###
 define Quality_Flower = 50
-
 
 
 
@@ -218,7 +219,7 @@ define Quest_NotAliceFailed = False
 
 #Exam Flags
 define Flag_CombatExamCompleted = False
-define Flag_MelodySabotagedPotion = False
+define Flag_MelodySabotagedPotion = False### Potion of Night Vision
 define Flag_PotionSubmitted = False
 define Flag_PotionExamCompleted = False
 define Flag_ArtificingExamCompleted = False
@@ -429,9 +430,9 @@ label start:
     show tao sprite
     Narrator "A mage with black hair stares up at the moons... seemingly in a trance."
     hide tao sprite
-    show aria sprite
+    show aria sprite worried
     Narrator "A woman in a pink, almost frilly, uniform looks down at her feet."
-    hide aria sprite
+    hide aria sprite worried
     show rex sprite
     Narrator "The man with tattoos is the one you noticed earlier. He still seems annoyed."
     hide rex sprite
@@ -7503,11 +7504,6 @@ label BNAL01:
 
 
 
-
-
-
-
-
 ##############################################################################################
 ## CHARACTER MAIN HUBS // CHARACTER MAIN HUBS // CHARACTER MAIN HUBS // CHARACTER MAIN HUBS ##
 ##############################################################################################
@@ -7630,7 +7626,7 @@ label melodyhub_main:
     
     label HMEL01:
 
-        Melody "Oh, you wanna know about the light spell? Sure… here." 
+        Melody "Oh, you wanna know about the light spell? Sure... here." 
         Melody "It's simple enough, then again lights something I've always been good at so I picked it up pretty quick."
         $ cinematic = True
         Narrator "She hands you a page torn from an old book. You take a moment to read it. You wonder whether she was allowed to remove it, but stash it anyway."
@@ -7922,6 +7918,7 @@ label melodyhub_main:
                         hide melody sprite intense
                         call potionfail
                         jump melodyhub_main
+
             "Could've been better.":
                 Melody "Aww, I'm sure you did fine!"
                 jump melodyhub_main
@@ -7953,7 +7950,13 @@ label melodyhub_main:
         menu:
             "That would really help.":
                 Melody "Oh, well here you go. Happy to help."
-                Melody "Anyway, don't be too worried about the exam. I think if you overthink it you'll just end up anxious and unfocused."
+                $ cinematic = True
+                Narrator "She hands you a handwritten recipe."
+                Narrator "{i}Potion of Night Vision{/i}"
+                Narrator "You suppose it's to help you see in the dark."
+                Narrator "The instructions look rather clear, though Melody's handwriting isn't the clearest -- embellished with little stars and moons."
+                $ cinematic = False
+                Melody "Don't be too worried about the exam. I think if you overthink it you'll just end up anxious and unfocused."
                 $ Flag_MelodySabotagedPotion = True
                 jump melodyhub_main
             "Thanks, but I should be fine.":
