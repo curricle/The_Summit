@@ -1048,17 +1048,20 @@ label Morning1Dorms:
                     menu:
                         "Fine, so far.":
                             Aria "Good... good. Wish I could say the same."
+                            show aria sprite sad at center
                             Aria "I'm sort of homesick."
                             Aria "As much as I hated the Scholomance... it's weird to have it suddenly change."
                             Aria "The air's different here. Thinner."
                             menu: 
                                 "We {i}are{/i} on a mountain.":
                                     Aria "That's probably it."
+                                    hide aria sprite sad
                                     pass
 
                         "Overwhelmed.":
                             Aria "You and me both."
                             pass
+                    show aria sprite
                     Aria "I should probably get to the Greenhouse."
                     hide aria sprite with moveoutleft
                     return
