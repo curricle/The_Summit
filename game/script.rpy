@@ -314,9 +314,9 @@ label start:
     $ cinematic = True
     $ Location = "Courtyard"
     ### here should be an image of the players letter that invited them to the Scholomance ###
-    # show acceptanceletter.png
+    show acceptance letter at half_size
     Narrator "You stuff the letter in your bag as the carriage comes to a stop."
-    # hide acceptanceletter.png
+    hide acceptance letter
     Narrator "Bells chime behind you as you step onto the stone path and look up at the great structure before you." 
     Narrator "It's nothing like the Scholomance, it's quainter. A great tower atop an impossibly steep mountain, overlooking nothing but forests and rivers."
     Narrator "Far in the distance, over the horizon, you imagine your old home. It warms you." 
