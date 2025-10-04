@@ -1783,7 +1783,7 @@ label Morning1Greenhouse:
                                                         Tao "I don't think many of the others {i}should{/i}, either."
                                                         Tao "You should be less open with people."
                                                         Tao "It really only ever leads to... well, failure."
-                                                        Tao "Still, I appreciate that wear whatever this is on your sleeve."
+                                                        Tao "Still, I appreciate that you wear whatever this is on your sleeve."
                                                         $ Affinity_Tao += 5
                                                         Tao "Do me a favour, spend less time talking with me and more time studying so that you pass."
                                                         menu:
@@ -5704,7 +5704,7 @@ label Night2Choices:
                 "(Talk to Tao)": #Tao is stressed about the exam - they are reading a book and making notes
                     show tao sprite with dissolve
                     $ cinematic = True
-                    Narrator "Tao's curtain is open as they study at their desk, scratching their furiously along a tattered notebook. As you approach, they look at you over their shoulder."
+                    Narrator "Tao's curtain is open as they study at their desk, scratching furiously along a tattered notebook. As you approach, they look at you over their shoulder."
                     $ cinematic = False
                     Tao "Hmm? I'm a bit busy... what do you want?"
                     menu:
@@ -7259,7 +7259,9 @@ label BTAO01:
                     pass
         "Why are you looking up at the moons?":
             Tao "I'd rather not do small talk. We both have better things to be doing."
-            "Like stare up at the moons?"
+            menu:
+                "Like stare up at the moons?":
+                    pass
 
     Tao "Is that what it looks like to you? You're not the type to work out how things work, are you? It shows."
     $ Flag_TaoMet = True
@@ -9187,7 +9189,7 @@ label taohub_main:
 
 
     label HTAO01b:
-        Tao "My past? Why? What's the point of wasting my time learning anything about me?"
+        Tao "My past? Why? What's the point of wasting time learning anything about me?"
         menu:
             "Because I'm {i}interested{/i}.":
                 pass
@@ -9371,7 +9373,7 @@ label taohub_main:
     label HTAO06b:
         Tao "I'd rather not talk about Xander. Everyone knows we were friends at one point, but friends drift, especially when the difference between us is so vast." 
         Tao "There comes a point where you have to cut yourself off from the slackers in order to focus on your own work."
-        Tao "It was probably for the best, people like him are intellect pits, anything smart around him catches the dumbness curse he's clearly afflicted with..."
+        Tao "It was probably for the best, people like him are intellect pits, anything smart around them catches the dumbness curse they're clearly afflicted with..."
         $ Flag_TaoXanderFriendship = True
         menu: 
             "...":
