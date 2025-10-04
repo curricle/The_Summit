@@ -4211,7 +4211,7 @@ label Morning2Atrium:
                             Narrator "He takes a breath."
                             $ cinematic = False
                             Xander "Yeah. I know, I look worse than I am... I've not had much sleep."
-                            Xander "Someone knocked on my window last night and then I heard who I'm guessing was Rex leaving and coming back..."
+                            Xander "Someone knocked on my window last night and then I heard, who I'm guessing was, Rex leaving and coming back..."
                             $ Flag_XanderWatched = True
                             Xander "I'm just a little on edge. I'll be fine."
                             menu:
@@ -5240,7 +5240,7 @@ label Afternoon2Atrium:
                         Narrator "Xander perks up, a small smile forming on his face."
                         Narrator "You can see the relief hit him as he internalises what you said."
                         $ cinematic = False
-                        Xander "Really? I hate that I have to ask for help. You know, if I could just get a few more hours in Archives, I could catch up to the others." 
+                        Xander "Really? I hate that I have to ask for help. You know, if I could just get a few more hours in the Archives, I could catch up to the others." 
                         Xander "But it's locked up. I'm guessing whatever is in there will help me pass."
                         Xander "I've seen Tao in the Library... there's no way they'd be studying there if not to investigate it." 
                         Xander "Can you break into the Archives with me?"
@@ -5298,7 +5298,7 @@ label Afternoon2Atrium:
                     "Have you talked to Alice or Eileen about it?":
                         Xander "I might be a farmboy, but that doesn't mean I'm dumb." 
                         Xander "They'll put me on discipline for making excuses to slack off."
-                        Xander "Thanks but you're not really helping. Can you leave me be... please."
+                        Xander "Thanks but not really helping. Can you leave me be... please."
                         $ Affinity_Xander -= 10
                         hide xander sprite
                         return
@@ -6051,7 +6051,7 @@ label Night2Library: #Quest_XanderProgress Xander is waiting for you to break in
                         jump Night2Archive
 
             "Have you tried hitting it?":
-                Xander "I've tried hitting it... That's usually the first thing I do. First I hit then I shock it. Do you think that'd work?"
+                Xander "I've tried hitting it... That's usually the first thing I do. First I hit it then I shock it. Do you think that'd work?"
                 menu:
                     "It might.":
                         Xander "Alright, I guess... I'll give it a shot."
@@ -6906,7 +6906,7 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "You notice something under her bed."
                                         Narrator "A hand reaching out from underneath."
                                         $ cinematic = False
-                                        Xander "I'll just make you some tea... one mo--"
+                                        Aria "I'll just make you some tea... one mo--"
                                         $ cinematic = True
                                         Narrator "Before she can finish her sentence, the hands pull her under with a quickness you thought impossible."
                                         Narrator "Her body seems to bend and morph, kicking as whatever has a hold of her drags her into the shadows."
@@ -8334,7 +8334,7 @@ label xanderhub_main:
         jump xanderhub_main
 
     label HXAN11:
-        "You wanna know what {i}I{/i} think of Eileen?"
+        Xander "You wanna know what {i}I{/i} think of Eileen?"
         if Quest_XanderComplete:
             Xander "She scares me. Someone told me she's not just a teacher. Her real job is to handle mages for the Council." 
             Xander "Mages that are strong enough to wreak havoc but don't follow the rules. The Council hates that." 
@@ -8357,7 +8357,7 @@ label xanderhub_main:
             $ Flag_XanderEileenOpinion = True
             Xander "I never expected Eileen to give me advice. She's real intimidating." 
             Xander "And you know what the weirdest part is? I think she's right. I'm not good at anything other than fighting." 
-            Xander "Neither is she when you get down to the heart of it. I wonder if she'd take on an apprentice? There's no way I'm passing all exams, so maybe another path is out there."
+            Xander "Neither is she when you get down to the heart of it. I wonder if she'd take on an apprentice? There's no way I'm passing all my exams, so maybe another path is out there."
             menu: 
                 "You'd want that?":
                     Xander "I dunno. I just know I'm not cut out for this place."
