@@ -420,16 +420,20 @@ style quick_button_text:
 screen navigation():
 
     if renpy.get_screen("main_menu"):
-        add "gui/menubox.png":
-            xalign 0.5
-            yalign 0.7
 
-        hbox:
+        frame:
             style_prefix "main_navigation"
 
-            # xpos gui.navigation_xpos
+            xalign 0.9
+            yalign 0.5
+            xsize 350
+
+            background Frame('#ffffff', 6, 6)
+
+            has vbox
             xalign 0.5
-            yalign 0.69
+
+            label config.name
 
             spacing gui.navigation_spacing
 
@@ -511,6 +515,8 @@ style main_navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
     xsize 200
+    ysize 34
+    hover_background 'gui/decoration_pointer.png'
 
 style main_navigation_button_text:
     properties gui.button_text_properties("navigation_button")
@@ -531,57 +537,6 @@ screen main_menu():
     ## This ensures that any other menu screen is replaced.
     tag menu
     add gui.main_menu_background
-
-    ## This empty frame darkens the main menu.
-    frame:
-        style "main_menu_frame"
-
-        add "gui/starlight_1.png":
-            at starlight1
-        
-        add "gui/starlight_2.png":
-            at starlight2
-        
-        add "gui/starlight_3.png":
-            at starlight3
-
-        add "gui/rays.png":
-            xpos 960
-            yalign 0.5
-            at rayTurn
-
-        add "gui/constellations backing.png":
-            xpos 960
-            yalign 0.5
-            at clockwise
-
-        add "gui/constellationsMain.png":
-            xpos 960
-            yalign 0.5
-            at clockwise
-
-        add "gui/circle1.png":
-            xpos 960
-            yalign 0.5
-            at clockwise
-
-        add "gui/circle2.png":
-            xpos 960
-            yalign 0.5
-            at counterClockWise
-
-        add "gui/comet2.png":
-            xpos 960
-            yalign 0.5
-            at comet2
-
-    add SnowBlossom("gui/particles/light1.png", 15, xspeed=(20, 50), yspeed=(25, 300), start=50)
-    add SnowBlossom("gui/particles/light2.png", 15, xspeed=(20, 50), yspeed=(50, 300), start=50)
-    add SnowBlossom("gui/particles/light3.png", 50, xspeed=(20, 50), yspeed=(50, 300), start=50)
-    add SnowBlossom("gui/particles/light4.png", 3, xspeed=(20, 50), yspeed=(100, 300), start=50)
-
-    ## Astrology GUI borders below
-    # add "gui/w_border.png"
 
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.
@@ -701,17 +656,6 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
-
-    # vbox:
-    #     xalign 0.5
-    #     yalign 0.9975
-
-    #     button:
-    #         action Return()
-    #         xysize (191,191)
-
-    #         background "gui/button/q_about.png"
-    #         at return_hover
 
 style game_menu_outer_frame is empty
 style game_menu_navigation_frame is empty
