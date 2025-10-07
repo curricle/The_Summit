@@ -1,5 +1,12 @@
 ## Do not remove this. This has all of the animations used in the UI.
 
+transform slideIn_down:
+    on show:
+        yoffset -134
+        ease 0.2 yoffset 0
+    on hide:
+        ease  0.2 yoffset -134
+
 transform quickMenu_hover:
     
     on hover:

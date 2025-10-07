@@ -22,7 +22,8 @@ define yellow = "#ffe77e"
 
 ## Images
 # image border = "gui/border.png"
-image border = "gui/w_border.png"
+# image border = "gui/w_border.png"
+image border = "gui/none.png"
 image constellations = "gui/constellations.png"
 
 ## Custom transitions
