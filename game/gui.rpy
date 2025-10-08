@@ -22,7 +22,8 @@ define yellow = "#ffe77e"
 
 ## Images
 # image border = "gui/border.png"
-image border = "gui/w_border.png"
+# image border = "gui/w_border.png"
+image border = "gui/none.png"
 image constellations = "gui/constellations.png"
 
 ## Custom transitions
@@ -105,7 +106,7 @@ define gui.title_text_size = 75
 ## Main and Game Menus #########################################################
 
 ## The images used for the main and game menus.
-define gui.main_menu_background = "gui/main_menu.png"
+define gui.main_menu_background = "gui/main_menu_bg.jpg"
 define gui.game_menu_background = "gui/game_menu.png"
 
 

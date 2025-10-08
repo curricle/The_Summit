@@ -134,7 +134,8 @@ screen say(who, what):
 
             text what id "what":
                 xysize (900, 100)
-                outlines([(5, "#000000", 0, 0)])
+                color black
+                # outlines([(5, "#000000", 0, 0)])
 
     if not renpy.get_screen("choice") and cinematic == False:
         window:
@@ -147,20 +148,23 @@ screen say(who, what):
                     id "namebox"
                     style "namebox"
                     text who id "who":
-                        color black
-                    xoffset 10
+                        color white
+                        yoffset 5
+                    yoffset 25
 
             text what id "what":
                 xoffset 10
-                outlines([(5, "#000000", 0, 0)])
+                color black
+                # outlines([(5, "#000000", 0, 0)])
 
     if cinematic == True:
         window:
-            background None
-            xsize 1800
-            ysize 90
+            background Frame("gui/w_border_top.png")
+            xsize 1980
+            ysize 134
             xalign 0.5
             yalign 0.0
+            # at slideIn_down
 
             if who is not None:
 
@@ -178,16 +182,16 @@ screen say(who, what):
                             size 40
                             xoffset -20
                             yoffset 3
-                            outlines([(2, "#5e510acb", 0, 2)])
+                            # outlines([(2, "#5e510acb", 0, 2)])
                         
 
                     text what id "what":
                         xsize 1600
                         ysize 90
-                        yoffset 7
+                        yoffset -25
                         color "#ffffff"
                         size 30
-                        outlines([(2, "#5e510acb", 0, 2)])
+                        # outlines([(2, "#5e510acb", 0, 2)])
 
     ## If there's a side image, display it above the text. Do not display on the
     ## phone variant - there's no room.
@@ -214,7 +218,7 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/w_textbox.png", xalign=0.5, yalign=1.0)
+    background Image("gui/w_textbox_light.png", xalign=0.5, yalign=1.0)
 
 style namebox:
     xpos gui.name_xpos
@@ -223,7 +227,7 @@ style namebox:
     ypos gui.name_ypos
     ysize gui.namebox_height
 
-    background Frame("gui/namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
+    background Frame("gui/w_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign)
     padding gui.namebox_borders.padding
 
 style say_label:
@@ -339,8 +343,14 @@ screen quick_menu():
 
     if quick_menu:
 
-        hbox:
+        frame:
+            xalign 0.5
+            yalign 1.0
+            xsize 1920
+            ysize 80
+            background Frame("gui/w_border_bottom.png")
             style_prefix "quick"
+            has hbox
 
             xalign 0.5
             yalign 0.985
@@ -420,32 +430,50 @@ style quick_button_text:
 screen navigation():
 
     if renpy.get_screen("main_menu"):
-        add "gui/menubox.png":
-            xalign 0.5
-            yalign 0.7
 
-        hbox:
+        frame:
             style_prefix "main_navigation"
 
-            # xpos gui.navigation_xpos
+            xalign 0.9
+            yalign 0.5
+            xsize 500
+
+            has vbox
             xalign 0.5
-            yalign 0.69
 
-            spacing gui.navigation_spacing
+            label config.name
+            # add "gui/decoration_full.png" xalign 0.5 yoffset -17 yzoom -1
 
-            if main_menu:
+            frame:
+                # yoffset -29
+                ypadding 50
+                background Frame("gui/frame_beige.png", 32, 32)
+                xsize 450
+                xalign 0.5
 
-                textbutton _("Start") action Start()
+                has vbox
+                xalign 0.5
+                
+                spacing gui.navigation_spacing
+                style_prefix "main_navigation_list"
 
-            textbutton _("Load") action ShowMenu("load")
+                if main_menu:
 
-            textbutton _("Settings") action ShowMenu("preferences")
+                    textbutton _("Start") action Start()
 
-            if renpy.variant("pc"):
+                textbutton _("Load") action ShowMenu("load")
 
-                ## The quit button is banned on iOS and unnecessary on Android and
-                ## Web.
-                textbutton _("Quit") action Quit(confirm=not main_menu)
+                textbutton _("Settings") action ShowMenu("preferences")
+
+                if renpy.variant("pc"):
+
+                    ## The quit button is banned on iOS and unnecessary on Android and
+                    ## Web.
+                    textbutton _("Quit") action Quit(confirm=not main_menu)
+
+            frame:
+                background Frame("gui/frame_plain.png", 34, 34)
+                ysize 32
 
     else:
         vbox:
@@ -492,8 +520,8 @@ screen navigation():
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
-style main_navigation_button is gui_button
-style main_navigation_button_text is gui_button_text
+style main_navigation_list_button is gui_button
+style main_navigation_list_button_text is gui_button_text
 
 style navigation_button:
     size_group "navigation"
@@ -504,20 +532,29 @@ style navigation_button:
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
-    # outlines [(1, gold, 0, 0)]
     font "fonts/alegreyaSC-bold.ttf"
 
-style main_navigation_button:
+style main_navigation_list_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
     xsize 200
+    ysize 34
+    hover_background 'gui/decoration_pointer.png'
 
-style main_navigation_button_text:
+style main_navigation_list_button_text:
     properties gui.button_text_properties("navigation_button")
-    # outlines [(1, gold, 0, 0)]
     font "fonts/alegreyaSC-bold.ttf"
     hover_color gold
     idle_color black
+
+style main_navigation_label:
+    background Frame("gui/frame_plain.png", 34, 34)
+    xfill True
+    padding (20, 20)
+
+style main_navigation_label_text:
+    xalign 0.5
+    yalign 0.5
 
 
 ## Main Menu screen ############################################################
@@ -531,57 +568,6 @@ screen main_menu():
     ## This ensures that any other menu screen is replaced.
     tag menu
     add gui.main_menu_background
-
-    ## This empty frame darkens the main menu.
-    frame:
-        style "main_menu_frame"
-
-        add "gui/starlight_1.png":
-            at starlight1
-        
-        add "gui/starlight_2.png":
-            at starlight2
-        
-        add "gui/starlight_3.png":
-            at starlight3
-
-        add "gui/rays.png":
-            xpos 960
-            yalign 0.5
-            at rayTurn
-
-        add "gui/constellations backing.png":
-            xpos 960
-            yalign 0.5
-            at clockwise
-
-        add "gui/constellationsMain.png":
-            xpos 960
-            yalign 0.5
-            at clockwise
-
-        add "gui/circle1.png":
-            xpos 960
-            yalign 0.5
-            at clockwise
-
-        add "gui/circle2.png":
-            xpos 960
-            yalign 0.5
-            at counterClockWise
-
-        add "gui/comet2.png":
-            xpos 960
-            yalign 0.5
-            at comet2
-
-    add SnowBlossom("gui/particles/light1.png", 15, xspeed=(20, 50), yspeed=(25, 300), start=50)
-    add SnowBlossom("gui/particles/light2.png", 15, xspeed=(20, 50), yspeed=(50, 300), start=50)
-    add SnowBlossom("gui/particles/light3.png", 50, xspeed=(20, 50), yspeed=(50, 300), start=50)
-    add SnowBlossom("gui/particles/light4.png", 3, xspeed=(20, 50), yspeed=(100, 300), start=50)
-
-    ## Astrology GUI borders below
-    # add "gui/w_border.png"
 
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.
@@ -701,17 +687,6 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
-
-    # vbox:
-    #     xalign 0.5
-    #     yalign 0.9975
-
-    #     button:
-    #         action Return()
-    #         xysize (191,191)
-
-    #         background "gui/button/q_about.png"
-    #         at return_hover
 
 style game_menu_outer_frame is empty
 style game_menu_navigation_frame is empty
