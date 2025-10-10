@@ -82,7 +82,7 @@ style vslider:
 
 style frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background Frame("gui/frame_corners.png", left=49, top=50, tile=gui.frame_tile)
 
 
 
@@ -124,7 +124,6 @@ screen say(who, what):
             yalign 0.2
 
             if who is not None:
-
                 window:
                     id "namebox"
                     style "namebox"
@@ -143,7 +142,7 @@ screen say(who, what):
             xoffset -10
 
             if who is not None:
-
+               
                 window:
                     id "namebox"
                     style "namebox"
@@ -152,6 +151,7 @@ screen say(who, what):
                         yoffset 5
                     yoffset 25
 
+            null height 100
             text what id "what":
                 xoffset 10
                 color black
@@ -218,7 +218,7 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/w_textbox_light.png", xalign=0.5, yalign=1.0)
+    background Image("gui/w_textbox_light.png", xalign=0.5)
 
 style namebox:
     xpos gui.name_xpos
@@ -354,52 +354,19 @@ screen quick_menu():
 
             xalign 0.5
             yalign 0.985
-            spacing 20
-
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
-
-
-            # button:
-            #     action QuickSave()
-            #     xysize (70,70)
-            #     background "gui/button/q_save.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
-
-            # button:
-            #     action Rollback()
-            #     xysize (70,70)
-            #     background "gui/button/q_back.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
-                
-            # button:
-            #     action ShowMenu('about')
-            #     xysize (191,191)
-            #     background "gui/button/q_about.png"
-            #     at quickMenu_hover
-
-            # button:
-            #     action Preference("auto-forward", "toggle")
-            #     xysize (70,70)
-            #     background "gui/button/q_auto.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
-
-
-            # button:
-            #     action Skip() alternate Skip(fast=True, confirm=True)
-            #     xysize (70,70)
-            #     background "gui/button/q_skip.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
+            spacing 100
+            hbox:
+                spacing 20
+                textbutton _("Back") action Rollback()
+                textbutton _("History") action ShowMenu('history')
+                textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+                textbutton _("Auto") action Preference("auto-forward", "toggle")
+            hbox:
+                spacing 20
+                textbutton _("Save") action ShowMenu('save')
+                textbutton _("Q.Save") action QuickSave()
+                textbutton _("Q.Load") action QuickLoad()
+                textbutton _("Prefs") action ShowMenu('preferences')
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -413,6 +380,11 @@ style quick_button_text is button_text
 
 style quick_button:
     properties gui.button_properties("quick_button")
+    hover_background Frame('gui/quick_hover.png', 14, 0)
+    selected_idle_background Frame('gui/quick_selected.png', 14, 0)
+    selected_hover_background Frame('gui/quick_selected.png', 14, 0)
+    padding (25, 5)
+    ysize 25
 
 style quick_button_text:
     properties gui.button_text_properties("quick_button")
@@ -482,22 +454,44 @@ screen navigation():
             ypos 25
             add Frame('gui/w_horizontal_divider.png', 1, 1) ysize 10 yoffset 78
             hbox:
+                xalign 0.5
+                yoffset 10
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 60
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 60
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 60
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 60
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 60
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 60
+                
+                if renpy.variant("pc") and main_menu:
+                    add Frame("gui/frame_plain.png", 34, 34) xsize 294 ysize 60
+            hbox:
                 style_prefix "navigation"
 
                 xalign 0.5
-
+                yoffset -60
                 spacing 0
 
-                textbutton _("Journal") action ShowMenu("journal", "exams")
+                textbutton _("Journal"): 
+                    at nav_rise
+                    action ShowMenu("journal", "exams")
 
-                textbutton _("History") action ShowMenu("history")
+                textbutton _("History"): 
+                    at nav_rise
+                    action ShowMenu("history")
 
                 if not main_menu:
-                    textbutton _("Save") action ShowMenu("save")
+                    textbutton _("Save"): 
+                        at nav_rise
+                        action ShowMenu("save")
 
-                textbutton _("Load") action ShowMenu("load")
+                textbutton _("Load"): 
+                    at nav_rise
+                    action ShowMenu("load")
 
-                textbutton _("Settings") action ShowMenu("preferences")
+                textbutton _("Settings"): 
+                    at nav_rise
+                    action ShowMenu("preferences")
 
                 # if _in_replay:
 
@@ -506,13 +500,15 @@ screen navigation():
                 if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
                     ## Help isn't necessary or relevant to mobile devices.
-                    textbutton _("Help") action ShowMenu("help")
+                    textbutton _("Help"): 
+                        at nav_rise
+                        action ShowMenu("help")
 
                 if renpy.variant("pc") and main_menu:
 
                     ## The quit button is banned on iOS and unnecessary on Android and
                     ## Web.
-                    textbutton _("Quit") action Quit(confirm=not main_menu)
+                    textbutton _("Quit") action Quit(confirm=not main_menu) at nav_rise
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -522,16 +518,21 @@ style main_navigation_list_button_text is gui_button_text
 style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
+    background Frame('gui/nav_frame_unselected.png', 30, 10)
     xsize 294
-    ysize 78
+    ysize 60
+    yoffset 10
+    selected_yoffset 0
+    selected_ysize 78
     selected_idle_background Frame('gui/menu_tab.png')
     selected_hover_background Frame('gui/menu_tab.png')
+    hover_background Frame('gui/nav_frame_unselected.png', 30, 10)
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
     hover_background Frame('gui/gradient_highlight.png')
     yalign 0.5
-    yoffset 7
+    selected_yoffset 7
     font "fonts/alegreyaSC-bold.ttf"
 
 style main_navigation_list_button:
@@ -1381,13 +1382,8 @@ screen confirm(message, yes_action, no_action):
 
     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png" at confirmDissolve
-    add "gui/confirm.png" align (0.5,0.5) at confirmDissolve
-    add "gui/button/q_about.png" align (0.25, 0.5) at confirmLeft
-    add "gui/button/q_about.png" align (0.75, 0.5) at confirmRight
-
     frame:
-        at confirmDissolve
+        at slideIn_up
 
         vbox:
             xalign .5
@@ -1412,11 +1408,11 @@ screen confirm(message, yes_action, no_action):
 style confirm_frame is gui_frame
 style confirm_prompt is gui_prompt
 style confirm_prompt_text is gui_prompt_text
-style confirm_button is gui_medium_button
-style confirm_button_text is gui_medium_button_text
+style confirm_button is button
+style confirm_button_text is button_text
 
 style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame([ "gui/frame_corners.png", "gui/frame_inner.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5

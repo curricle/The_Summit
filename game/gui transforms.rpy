@@ -3,9 +3,27 @@
 transform slideIn_down:
     on show:
         yoffset -134
-        ease 0.2 yoffset 0
+        ease 0.3 yoffset 0 
     on hide:
-        ease  0.2 yoffset -134
+        ease  0.3 yoffset -134 
+
+transform slideIn_up:
+    on show:
+        yoffset 50
+        alpha 0.0
+        ease 0.3 yoffset 0 alpha 1.0
+    on hide:
+        ease 0.3 yoffset 50 alpha 0.0
+
+transform nav_rise:
+    on selected_idle:
+        pass
+    on selected_hover:
+        pass
+    on hover:
+        ease 0.3 yoffset -10
+    on idle:
+        ease 0.0 yoffset 0
 
 transform quickMenu_hover:
     

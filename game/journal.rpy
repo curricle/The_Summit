@@ -101,7 +101,7 @@ screen journal(tab):
         ypos 150
         style 'game_menu_content_frame'
         has hbox
-        spacing 300
+        spacing 250
         vbox:
             spacing 10
             style_prefix 'journal'
@@ -125,9 +125,9 @@ screen journal(tab):
             if current_tab == 'characters':
                 #list of characters to choose from
                 frame:
-                    background Frame('gui/frame_L.png', 32, 32)
+                    background Frame('gui/corner_bottom_left.png', 50, 1, 1, 50)
                     padding (10, 25)
-                    xoffset 75
+                    xoffset 65
                     has vbox
                     spacing 0
                     for character in journal__characterBio_list:
@@ -145,12 +145,12 @@ screen journal(tab):
 
             if current_tab == "exams":
                 vbox:
-                    spacing 50
+                    spacing 35
                     for exam in journal__exam_list:
                         
                         frame:
-                            background Frame('gui/frame_darkBg.png', 32 ,32)
-                            padding (24,24)
+                            background Frame('gui/frame_corners_faded.png', left=49, top=50)
+                            padding (45,45)
                             has vbox
                             xfill True
                             spacing 5
@@ -165,11 +165,11 @@ screen journal(tab):
                         
             if current_tab == "spells":
                 vbox:
-                    spacing 50
+                    spacing 35
                     for spell in journal__spells_list:
                         frame:
-                            background Frame('gui/frame_darkBg.png', 32 ,32)
-                            padding (24,24)
+                            background Frame('gui/frame_corners_faded.png', left=49, top=50)
+                            padding (45,45)
                             has vbox
                             xfill True
                             spacing 5
@@ -198,7 +198,7 @@ screen journal(tab):
                         spacing 30
                         if current_character:
                             frame:
-                                background Frame('gui/frame_L.png', 32, 32)
+                                background Frame('gui/corner_bottom_left.png', 50, 1, 1, 50)
                                 padding (30,30)
                                 has hbox
                                 spacing 10
@@ -250,16 +250,21 @@ screen journal(tab):
                                             text 'Specialty: [current_character.specialty]'
                                             text current_character.short_description
                                     frame:
-                                        background Frame('gui/frame_darkBg.png', 32, 32)
+                                        background Frame('gui/frame_corners_faded.png', left=49, top=50)
                                         ysize 595
                                         xfill True
-                                        padding (30, 30)
+                                        padding (45,45)
                                         text current_character.description
                                     hbox: 
                                         xfill True
                                         yoffset 10
-                                        textbutton _("Next >"):
-                                            selected False
-                                            text_size 24
-                                            xalign 1.0
-                                            action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
+                                        if(current_character != journal__bio_default):
+                                            textbutton _("Next >"):
+                                                style "journal_next"
+                                                selected False
+                                                text_size 24
+                                                xalign 1.0
+                                                action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
+
+style journal_next:
+    ysize None
