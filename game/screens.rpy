@@ -27,14 +27,14 @@ style gui_text:
 
 style button:
     properties gui.button_properties("button")
-    ## The default sfx played when a button is hovered and pressed
-    # hover_sound Play('audio', 'audio/ui_click_02.mp3')
-    # activate_sound Play('audio', 'audio/ui_click_01.mp3')
     hover_sound 'audio/ui_click_02.mp3'
     activate_sound 'audio/ui_click_01.mp3'
-    padding (35,5)
-    hover_background Frame('gui/gradient_highlight.png')
-    selected_idle_background Frame('gui/gradient_highlight.png')
+    selected_hover_sound None
+    ysize 68
+    padding (70, 0)
+    hover_background Frame('gui/hover2_bg.png', 58, 68)
+    selected_idle_background Frame('gui/selected_idle_bg.png', 58, 68)
+    selected_hover_background Frame('gui/selected_idle_bg.png', 58, 68)
     
 
 style button_text is gui_text:
@@ -82,7 +82,7 @@ style vslider:
 
 style frame:
     padding gui.frame_borders.padding
-    background Frame("gui/frame.png", gui.frame_borders, tile=gui.frame_tile)
+    background Frame("gui/frame_corners.png", left=49, top=50, tile=gui.frame_tile)
 
 
 
@@ -124,7 +124,6 @@ screen say(who, what):
             yalign 0.2
 
             if who is not None:
-
                 window:
                     id "namebox"
                     style "namebox"
@@ -143,7 +142,7 @@ screen say(who, what):
             xoffset -10
 
             if who is not None:
-
+               
                 window:
                     id "namebox"
                     style "namebox"
@@ -152,6 +151,7 @@ screen say(who, what):
                         yoffset 5
                     yoffset 25
 
+            null height 100
             text what id "what":
                 xoffset 10
                 color black
@@ -218,7 +218,7 @@ style window:
     yalign gui.textbox_yalign
     ysize gui.textbox_height
 
-    background Image("gui/w_textbox_light.png", xalign=0.5, yalign=1.0)
+    background Image("gui/w_textbox_light.png", xalign=0.5)
 
 style namebox:
     xpos gui.name_xpos
@@ -354,52 +354,19 @@ screen quick_menu():
 
             xalign 0.5
             yalign 0.985
-            spacing 20
-
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
-
-
-            # button:
-            #     action QuickSave()
-            #     xysize (70,70)
-            #     background "gui/button/q_save.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
-
-            # button:
-            #     action Rollback()
-            #     xysize (70,70)
-            #     background "gui/button/q_back.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
-                
-            # button:
-            #     action ShowMenu('about')
-            #     xysize (191,191)
-            #     background "gui/button/q_about.png"
-            #     at quickMenu_hover
-
-            # button:
-            #     action Preference("auto-forward", "toggle")
-            #     xysize (70,70)
-            #     background "gui/button/q_auto.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
-
-
-            # button:
-            #     action Skip() alternate Skip(fast=True, confirm=True)
-            #     xysize (70,70)
-            #     background "gui/button/q_skip.png"
-            #     at quickMenu_hover
-            #     yalign 0.5
+            spacing 100
+            hbox:
+                spacing 20
+                textbutton _("Back") action Rollback()
+                textbutton _("History") action ShowMenu('history')
+                textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+                textbutton _("Auto") action Preference("auto-forward", "toggle")
+            hbox:
+                spacing 20
+                textbutton _("Save") action ShowMenu('save')
+                textbutton _("Q.Save") action QuickSave()
+                textbutton _("Q.Load") action QuickLoad()
+                textbutton _("Prefs") action ShowMenu('preferences')
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
@@ -413,6 +380,11 @@ style quick_button_text is button_text
 
 style quick_button:
     properties gui.button_properties("quick_button")
+    hover_background Frame('gui/quick_hover.png', 14, 0)
+    selected_idle_background Frame('gui/quick_selected.png', 14, 0)
+    selected_hover_background Frame('gui/quick_selected.png', 14, 0)
+    padding (25, 5)
+    ysize 25
 
 style quick_button_text:
     properties gui.button_text_properties("quick_button")
@@ -432,27 +404,25 @@ screen navigation():
     if renpy.get_screen("main_menu"):
 
         frame:
+            background None
             style_prefix "main_navigation"
 
             xalign 0.9
             yalign 0.5
+            ysize 650
             xsize 500
-
-            has vbox
-            xalign 0.5
-
-            label config.name
-            # add "gui/decoration_full.png" xalign 0.5 yoffset -17 yzoom -1
-
+  
             frame:
-                # yoffset -29
-                ypadding 50
+
                 background Frame("gui/frame_beige.png", 32, 32)
-                xsize 450
+                xsize 400
                 xalign 0.5
+                yalign 0.5
+                yfill True
 
                 has vbox
                 xalign 0.5
+                yalign 0.5
                 
                 spacing gui.navigation_spacing
                 style_prefix "main_navigation_list"
@@ -463,6 +433,8 @@ screen navigation():
 
                 textbutton _("Load") action ShowMenu("load")
 
+                textbutton _("About") action ShowMenu("about")
+
                 textbutton _("Settings") action ShowMenu("preferences")
 
                 if renpy.variant("pc"):
@@ -470,53 +442,88 @@ screen navigation():
                     ## The quit button is banned on iOS and unnecessary on Android and
                     ## Web.
                     textbutton _("Quit") action Quit(confirm=not main_menu)
-
+            frame:
+                background Frame('gui/frame_corners.png', 49, 50)
+                xfill True
+                yalign 0.0
+                ysize 100
+                yoffset -50
+                
+                padding (20, 20)
+                add 'gui/frame_decoration_top.png': 
+                    xalign 0.5 
+                    yalign 0.0 
+                    yoffset -22 
+                label config.name yoffset 5
+                add 'gui/frame_decoration_bottom.png':
+                    xalign 0.5
+                    yalign 1.0
+                    yoffset 22
+                
             frame:
                 background Frame("gui/frame_plain.png", 34, 34)
                 ysize 32
+                yalign 1.0
+                yoffset 16
 
     else:
         vbox:
+            ypos 25
+            add Frame('gui/w_horizontal_divider.png', 1, 1) ysize 10 yoffset 78
+            hbox:
+                xalign 0.5
+                yoffset 15
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                
             hbox:
                 style_prefix "navigation"
 
-                # xpos gui.navigation_xpos
-                ypos 115
                 xalign 0.5
+                yoffset -60
+                spacing 0
 
-                spacing gui.navigation_spacing
+                textbutton _("Journal"): 
+                    at nav_rise
+                    action ShowMenu("journal", "exams")
 
-                textbutton _("Journal") action ShowMenu("journal", "exams")
-
-                textbutton _("History") action ShowMenu("history")
+                textbutton _("History"): 
+                    at nav_rise
+                    action ShowMenu("history")
 
                 if not main_menu:
-                    textbutton _("Save") action ShowMenu("save")
+                    textbutton _("Save"): 
+                        at nav_rise
+                        action ShowMenu("save")
 
-                textbutton _("Load") action ShowMenu("load")
+                textbutton _("Load"): 
+                    at nav_rise
+                    action ShowMenu("load")
 
-                textbutton _("Settings") action ShowMenu("preferences")
+                textbutton _("Settings"): 
+                    at nav_rise
+                    action ShowMenu("preferences")
 
                 # if _in_replay:
 
                     # textbutton _("End Replay") action EndReplay(confirm=True)
 
-                textbutton _("About") action ShowMenu("about")
-
                 if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
                     ## Help isn't necessary or relevant to mobile devices.
-                    textbutton _("Help") action ShowMenu("help")
-
-                if not main_menu:
-                    textbutton _("Home") action MainMenu()
+                    textbutton _("Help"): 
+                        at nav_rise
+                        action ShowMenu("help")
 
                 if renpy.variant("pc") and main_menu:
 
                     ## The quit button is banned on iOS and unnecessary on Android and
                     ## Web.
-                    textbutton _("Quit") action Quit(confirm=not main_menu)
-            add Frame('gui/divider_horizontal.png', 1, 1) ysize 2 yoffset 120
+                    textbutton _("Quit") action Quit(confirm=not main_menu) at nav_rise
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -526,31 +533,39 @@ style main_navigation_list_button_text is gui_button_text
 style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
-    xsize 200
-    hover_background Frame('gui/gradient_highlight.png')
-    selected_idle_background Frame('gui/gradient_highlight.png')
+    background Frame('gui/nav_frame_unselected.png', 30, 10)
+    xsize 294
+    ysize 55
+    yoffset 15
+    selected_yoffset 5
+    selected_ysize 78
+    selected_idle_background Frame('gui/menu_tab.png')
+    selected_hover_background Frame('gui/menu_tab.png')
+    hover_background Frame('gui/nav_frame_unselected.png', 30, 10)
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
+    hover_background Frame('gui/gradient_highlight.png')
+    yalign 0.5
+    yoffset 4
+    selected_yoffset 7
     font "fonts/alegreyaSC-bold.ttf"
 
 style main_navigation_list_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
-    xsize 200
-    ysize 34
-    hover_background 'gui/decoration_pointer.png'
+    xsize 300
+    ysize 68
+    hover_background Frame('gui/hover2_bg.png', 58, 68)
 
 style main_navigation_list_button_text:
     properties gui.button_text_properties("navigation_button")
     font "fonts/alegreyaSC-bold.ttf"
-    hover_color gold
+    hover_color dark_blue
     idle_color black
 
 style main_navigation_label:
-    background Frame("gui/frame_plain.png", 34, 34)
     xfill True
-    padding (20, 20)
 
 style main_navigation_label_text:
     xalign 0.5
@@ -562,6 +577,8 @@ style main_navigation_label_text:
 ## Used to display the main menu when Ren'Py starts.
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#main-menu
+
+default snow = Fixed(SnowBlossom("gui/particle.png", 50, xspeed=(20,60), yspeed=(-50, -100), start=10))
 
 screen main_menu():
 
@@ -583,6 +600,8 @@ screen main_menu():
 
             text "[config.version]":
                 style "main_menu_version"
+
+    add snow
 
 
 style main_menu_frame is empty
@@ -628,9 +647,11 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     style_prefix "game_menu"
 
     if main_menu:
-        add gui.main_menu_background
+        #add gui.main_menu_background
+        add Frame("#20232e")
     else:
-        add gui.game_menu_background
+        #add gui.game_menu_background
+        add Frame("#20232e")
 
     frame:
         style "game_menu_outer_frame"
@@ -676,14 +697,28 @@ screen game_menu(title, scroll=None, yinitial=0.0):
                 transclude
 
     use navigation
-    
-    textbutton _("Return"):
-        style "return_button"
 
-        action Return()
+    frame:
+        background Frame(dark_blue)
+        ysize 75
+        frame:
+            background Frame('gui/w_horizontal_divider.png', 1, 4) ysize 8 yalign 0.0 yoffset -8 xoffset -4
+            xsize 1920
+        yalign 1.0
 
-    label title:
-        xalign 0.5 ypos -40
+        hbox:
+            yalign 1.0
+            xfill True
+            textbutton _("Return"):
+                style "return_button"
+                action Return()
+
+            if not main_menu:
+                textbutton _("Home"): 
+                    style "return_button"
+                    action MainMenu()
+                    xalign 1.0
+                    xoffset -60
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -698,14 +733,14 @@ style game_menu_scrollbar is gui_vscrollbar
 style game_menu_label is gui_label
 style game_menu_label_text is gui_label_text
 
-style return_button is navigation_button
-style return_button_text is navigation_button_text
+style return_button is button
+style return_button_text is button_text
 
 style game_menu_outer_frame:
     bottom_padding 45
     top_padding 180
 
-    background "gui/overlay/game_menu.png"
+    #background "gui/overlay/game_menu.png"
 
 style game_menu_navigation_frame:
     xsize 420
@@ -740,8 +775,8 @@ style game_menu_label_text:
 
 style return_button:
     xpos gui.navigation_xpos
-    yalign 1.0
-    yoffset -45
+    yalign 0.5
+    yoffset 5
 
 
 ## About screen ################################################################
@@ -809,52 +844,10 @@ screen file_slots(title):
 
     use game_menu(title):
 
-        fixed:
-
-            ## This ensures the input will get the enter event before any of the
-            ## buttons do.
-            order_reverse True
-            ypos 50
-            ## The page name, which can be edited by clicking on a button.
-            button:
-                style "page_label"
-
-                key_events True
-                xalign 0.5
-                yoffset -40
-                action page_name_value.Toggle()
-
-                input:
-                    style "page_label_text"
-                    value page_name_value
-
-            ## The grid of file slots.
-            grid gui.file_slot_cols gui.file_slot_rows:
-                style_prefix "slot"
-
-                xalign 0.5
-                yalign 0.5
-
-                spacing gui.slot_spacing
-
-                for i in range(gui.file_slot_cols * gui.file_slot_rows):
-
-                    $ slot = i + 1
-
-                    button:
-                        action FileAction(slot)
-
-                        has vbox
-
-                        add FileScreenshot(slot) xalign 0.5
-
-                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
-                            style "slot_time_text"
-
-                        text FileSaveName(slot):
-                            style "slot_name_text"
-
-                        key "save_delete" action FileDelete(slot)
+        hbox:
+            xalign 0.5
+            yalign 0.5
+            spacing 50
 
             ## Buttons to access other pages.
             vbox:
@@ -863,7 +856,7 @@ screen file_slots(title):
                 xpos 10
                 yalign 1.0
                 yoffset -30
-
+                
                 vbox:
                     xalign 0.5
 
@@ -883,17 +876,75 @@ screen file_slots(title):
 
                     textbutton _("▼") action FilePageNext()
 
-            if config.has_sync:
-                if CurrentScreenName() == "save":
-                    textbutton _("Upload Sync"):
-                        action UploadSync()
-                        xalign 0.885
-                        yalign 1.0
-                else:
-                    textbutton _("Download Sync"):
-                        action DownloadSync()
-                        xalign 0.885
-                        yalign 1.0
+            vbox:
+
+                spacing 0
+                ysize 0.6
+
+                ## This ensures the input will get the enter event before any of the
+                ## buttons do.
+                order_reverse True
+                ypos 50
+                ## The page name, which can be edited by clicking on a button.
+                button:
+                    style "page_label"
+
+                    key_events True
+                    xalign 0.5
+                    action page_name_value.Toggle()
+
+                    input:
+                        style "page_label_text"
+                        value page_name_value
+                
+                ## The grid of file slots.
+                grid gui.file_slot_cols gui.file_slot_rows:
+                    style_prefix "slot"
+
+                    xalign 0.5
+                    yalign 0.5
+
+                    spacing gui.slot_spacing
+
+                    for i in range(gui.file_slot_cols * gui.file_slot_rows):
+
+                        $ slot = i + 1
+
+                        button:
+                            action FileAction(slot)
+
+                            has vbox
+                            at grow_fromCenter
+                            frame:                      
+                                background Frame("#121520")
+                                xsize (config.thumbnail_width+12) 
+                                ysize (config.thumbnail_height+12) 
+                                add FileScreenshot(slot)
+                                add Frame('gui/frame_corners_tsp.png', 49, 50): 
+                                    xysize (config.thumbnail_width+24, config.thumbnail_height+24) 
+                                    xycenter (0.5, 0.5)
+                            
+                            null height 10
+
+                            text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
+                                style "slot_time_text"
+
+                            text FileSaveName(slot):
+                                style "slot_name_text"
+
+                            key "save_delete" action FileDelete(slot)
+
+                if config.has_sync:
+                    if CurrentScreenName() == "save":
+                        textbutton _("Upload Sync"):
+                            action UploadSync()
+                            xalign 0.5
+                            
+                    else:
+                        textbutton _("Download Sync"):
+                            action DownloadSync()
+                            xalign 0.5
+                            
 
 
 style page_label is gui_label
@@ -917,12 +968,15 @@ style page_label_text:
 
 style page_button:
     properties gui.button_properties("page_button")
+    padding (15, 8)
+    ysize None
 
 style page_button_text:
     properties gui.button_text_properties("page_button")
 
 style slot_button:
     properties gui.button_properties("slot_button")
+    background None
 
 style slot_button_text:
     properties gui.button_text_properties("slot_button")
@@ -1327,7 +1381,11 @@ style help_text is gui_text
 style help_button:
     properties gui.button_properties("help_button")
     xmargin 12
-    selected_idle_background Frame('gui/gradient_highlight.png')
+    selected_idle_background Frame('gui/selected_idle_bg.png', 58, 68)
+    selected_hover_background Frame('gui/selected_idle_bg.png', 58, 68)
+    ysize 68
+    padding (70, 0)
+    hover_background Frame('gui/hover2_bg.png', 58, 68)
 
 style help_button_text:
     properties gui.button_text_properties("help_button")
@@ -1364,13 +1422,8 @@ screen confirm(message, yes_action, no_action):
 
     style_prefix "confirm"
 
-    add "gui/overlay/confirm.png" at confirmDissolve
-    add "gui/confirm.png" align (0.5,0.5) at confirmDissolve
-    add "gui/button/q_about.png" align (0.25, 0.5) at confirmLeft
-    add "gui/button/q_about.png" align (0.75, 0.5) at confirmRight
-
     frame:
-        at confirmDissolve
+        at slideIn_up
 
         vbox:
             xalign .5
@@ -1395,11 +1448,11 @@ screen confirm(message, yes_action, no_action):
 style confirm_frame is gui_frame
 style confirm_prompt is gui_prompt
 style confirm_prompt_text is gui_prompt_text
-style confirm_button is gui_medium_button
-style confirm_button_text is gui_medium_button_text
+style confirm_button is button
+style confirm_button_text is button_text
 
 style confirm_frame:
-    background Frame([ "gui/confirm_frame.png", "gui/frame.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
+    background Frame([ "gui/frame_corners.png", "gui/frame_inner.png"], gui.confirm_frame_borders, tile=gui.frame_tile)
     padding gui.confirm_frame_borders.padding
     xalign .5
     yalign .5

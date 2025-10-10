@@ -920,6 +920,7 @@ label Morning1Dorms:
     $ cinematic = True
     hide alice sprite
     Narrator "She turns and leaves. You look around, a few opening the curtains around their beds to investigate."
+    $ cinematic = False
     show rex sprite
     Rex "What are we, gardeners now?"
     show tao sprite at left with moveinleft
