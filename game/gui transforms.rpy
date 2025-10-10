@@ -17,13 +17,23 @@ transform slideIn_up:
 
 transform nav_rise:
     on selected_idle:
-        pass
+        ease 0.0 yoffset 0
     on selected_hover:
-        pass
+        ease 0.0 yoffset 0
     on hover:
         ease 0.3 yoffset -10
     on idle:
         ease 0.0 yoffset 0
+
+transform grow_fromCenter:
+    on hover:
+        ease 0.25 zoom 1.05 xycenter(0.5, 0.5)
+
+    on idle:
+        ease 0.25 zoom 1.0 xycenter(0.5, 0.5)
+
+    on insensitive:
+        ease 0.25 zoom 1.0 xycenter(0.5, 0.5)
 
 transform quickMenu_hover:
     

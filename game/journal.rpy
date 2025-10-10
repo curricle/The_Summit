@@ -211,7 +211,7 @@ screen journal(tab):
                                     if current_character != journal__bio_default:
                                         image current_character.image:
                                             ysize 706
-                                            ypos 30
+                                            ypos 10
                                             if current_character == journal__bio_xander:
                                                 xsize -992
                                                 xcenter 150
@@ -237,6 +237,8 @@ screen journal(tab):
                                                 xsize -865
                                                 xcenter 120
                                                 ypos 0
+
+                                        add 'gui/corner_bottom_left.png' yalign 1.0 xalign 0.0 xoffset -36 yoffset 40
                                 # text
                                 vbox:
                                     xsize 667
@@ -259,12 +261,21 @@ screen journal(tab):
                                         xfill True
                                         yoffset 10
                                         if(current_character != journal__bio_default):
+
                                             textbutton _("Next >"):
                                                 style "journal_next"
                                                 selected False
                                                 text_size 24
+                                                
                                                 xalign 1.0
                                                 action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
 
-style journal_next:
+style journal_next is button:
     ysize None
+    xsize None
+    xpadding 25
+    hover_background Frame('gui/quick_hover.png', 14, 0)
+
+style journal_next_text:
+    italic True
+    hover_color yellow
