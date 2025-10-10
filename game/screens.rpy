@@ -27,14 +27,14 @@ style gui_text:
 
 style button:
     properties gui.button_properties("button")
-    ## The default sfx played when a button is hovered and pressed
-    # hover_sound Play('audio', 'audio/ui_click_02.mp3')
-    # activate_sound Play('audio', 'audio/ui_click_01.mp3')
     hover_sound 'audio/ui_click_02.mp3'
     activate_sound 'audio/ui_click_01.mp3'
-    padding (35,5)
-    hover_background Frame('gui/gradient_highlight.png')
-    selected_idle_background Frame('gui/gradient_highlight.png')
+    selected_hover_sound None
+    ysize 68
+    padding (70, 0)
+    hover_background Frame('gui/hover2_bg.png', 58, 68)
+    selected_idle_background Frame('gui/selected_idle_bg.png', 58, 68)
+    selected_hover_background Frame('gui/selected_idle_bg.png', 58, 68)
     
 
 style button_text is gui_text:
@@ -463,6 +463,8 @@ screen navigation():
 
                 textbutton _("Load") action ShowMenu("load")
 
+                textbutton _("About") action ShowMenu("about")
+
                 textbutton _("Settings") action ShowMenu("preferences")
 
                 if renpy.variant("pc"):
@@ -477,14 +479,14 @@ screen navigation():
 
     else:
         vbox:
+            ypos 25
+            add Frame('gui/w_horizontal_divider.png', 1, 1) ysize 10 yoffset 78
             hbox:
                 style_prefix "navigation"
 
-                # xpos gui.navigation_xpos
-                ypos 115
                 xalign 0.5
 
-                spacing gui.navigation_spacing
+                spacing 0
 
                 textbutton _("Journal") action ShowMenu("journal", "exams")
 
@@ -501,22 +503,16 @@ screen navigation():
 
                     # textbutton _("End Replay") action EndReplay(confirm=True)
 
-                textbutton _("About") action ShowMenu("about")
-
                 if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
                     ## Help isn't necessary or relevant to mobile devices.
                     textbutton _("Help") action ShowMenu("help")
-
-                if not main_menu:
-                    textbutton _("Home") action MainMenu()
 
                 if renpy.variant("pc") and main_menu:
 
                     ## The quit button is banned on iOS and unnecessary on Android and
                     ## Web.
                     textbutton _("Quit") action Quit(confirm=not main_menu)
-            add Frame('gui/divider_horizontal.png', 1, 1) ysize 2 yoffset 120
 
 style navigation_button is gui_button
 style navigation_button_text is gui_button_text
@@ -526,12 +522,16 @@ style main_navigation_list_button_text is gui_button_text
 style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
-    xsize 200
-    hover_background Frame('gui/gradient_highlight.png')
-    selected_idle_background Frame('gui/gradient_highlight.png')
+    xsize 294
+    ysize 78
+    selected_idle_background Frame('gui/menu_tab.png')
+    selected_hover_background Frame('gui/menu_tab.png')
 
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
+    hover_background Frame('gui/gradient_highlight.png')
+    yalign 0.5
+    yoffset 7
     font "fonts/alegreyaSC-bold.ttf"
 
 style main_navigation_list_button:
@@ -563,6 +563,8 @@ style main_navigation_label_text:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#main-menu
 
+default snow = Fixed(SnowBlossom("gui/particle.png", 50, xspeed=(20,60), yspeed=(-50, -100), start=10))
+
 screen main_menu():
 
     ## This ensures that any other menu screen is replaced.
@@ -583,6 +585,8 @@ screen main_menu():
 
             text "[config.version]":
                 style "main_menu_version"
+
+    add snow
 
 
 style main_menu_frame is empty
@@ -628,9 +632,11 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     style_prefix "game_menu"
 
     if main_menu:
-        add gui.main_menu_background
+        #add gui.main_menu_background
+        add Frame("#20232e")
     else:
-        add gui.game_menu_background
+        #add gui.game_menu_background
+        add Frame("#20232e")
 
     frame:
         style "game_menu_outer_frame"
@@ -677,13 +683,18 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     use navigation
     
-    textbutton _("Return"):
-        style "return_button"
+    hbox:
+        yalign 1.0
+        xfill True
+        textbutton _("Return"):
+            style "return_button"
+            action Return()
 
-        action Return()
-
-    label title:
-        xalign 0.5 ypos -40
+        if not main_menu:
+            textbutton _("Home"): 
+                style "return_button"
+                action MainMenu()
+                xalign 1.0
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -705,7 +716,7 @@ style game_menu_outer_frame:
     bottom_padding 45
     top_padding 180
 
-    background "gui/overlay/game_menu.png"
+    #background "gui/overlay/game_menu.png"
 
 style game_menu_navigation_frame:
     xsize 420
@@ -917,6 +928,8 @@ style page_label_text:
 
 style page_button:
     properties gui.button_properties("page_button")
+    padding (15, 8)
+    ysize None
 
 style page_button_text:
     properties gui.button_text_properties("page_button")
@@ -1327,7 +1340,11 @@ style help_text is gui_text
 style help_button:
     properties gui.button_properties("help_button")
     xmargin 12
-    selected_idle_background Frame('gui/gradient_highlight.png')
+    selected_idle_background Frame('gui/selected_idle_bg.png', 58, 68)
+    selected_hover_background Frame('gui/selected_idle_bg.png', 58, 68)
+    ysize 68
+    padding (70, 0)
+    hover_background Frame('gui/hover2_bg.png', 58, 68)
 
 style help_button_text:
     properties gui.button_text_properties("help_button")

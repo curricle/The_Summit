@@ -68,7 +68,7 @@ define journal__bio_tao = CharacterBio("Tao", "images/tao/tao sprite.png", "A ra
 define journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two.")
 define journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "An Inquisitor... best not get on her bad side.")
 define journal__bio_melody = CharacterBio("Melody", "images/melody/melody sprite.png", "A Mage who's dream is to become a great Alchemist.")
-define journal__bio_default = CharacterBio("???", '', "???")
+define journal__bio_default = CharacterBio("???", 'gui/none.png', "???")
 
 define journal__characterBio_list = [journal__bio_alice, journal__bio_aria, journal__bio_eileen, journal__bio_melody, journal__bio_rex, journal__bio_tao, journal__bio_xander]
 
@@ -97,12 +97,13 @@ screen journal(tab):
     default current_tab = tab
 
     frame:
-        ypos 180
+        xoffset -50
+        ypos 150
         style 'game_menu_content_frame'
         has hbox
         spacing 300
         vbox:
-            spacing 30
+            spacing 10
             style_prefix 'journal'
 
             textbutton _("Spells"): 
@@ -128,7 +129,7 @@ screen journal(tab):
                     padding (10, 25)
                     xoffset 75
                     has vbox
-                    spacing 20
+                    spacing 0
                     for character in journal__characterBio_list:
                         textbutton _(character.name): 
                             selected False
@@ -200,7 +201,7 @@ screen journal(tab):
                                 background Frame('gui/frame_L.png', 32, 32)
                                 padding (30,30)
                                 has hbox
-                                spacing 30
+                                spacing 10
 
                                 # image
                                 frame:
@@ -262,4 +263,3 @@ screen journal(tab):
                                             text_size 24
                                             xalign 1.0
                                             action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
-
