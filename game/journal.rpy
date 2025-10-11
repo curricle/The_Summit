@@ -132,6 +132,7 @@ screen journal(tab):
                     spacing 0
                     for character in journal__characterBio_list:
                         textbutton _(character.name): 
+                            style "charlist_button"
                             selected False
                             if character == current_character:
                                 selected True
@@ -270,6 +271,9 @@ screen journal(tab):
                                                 xalign 1.0
                                                 action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
 
+style journal_button_text is navigation_button_text:
+    yoffset -1
+
 style journal_next is button:
     ysize None
     xsize None
@@ -279,3 +283,12 @@ style journal_next is button:
 style journal_next_text:
     italic True
     hover_color yellow
+
+style charlist_button is button:
+    xpadding 50
+    xoffset 10
+    hover_background Frame('gui/charlist_hover_bg.png', 42, 68)
+    selected_idle_background Frame('gui/charlist_hover2_bg.png', 42, 68)
+    selected_hover_background Frame('gui/charlist_hover2_bg.png', 42, 68)
+
+style charlist_button_text is journal_button_text

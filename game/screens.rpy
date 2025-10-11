@@ -66,8 +66,10 @@ style scrollbar:
 
 style vscrollbar:
     xsize gui.scrollbar_size
-    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar Frame("gui/scrollbar/vertical_idle_bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    thumb "gui/scrollbar/vertical_idle_thumb.png"
+    top_gutter 28
+    bottom_gutter 28
 
 style slider:
     ysize gui.slider_size
@@ -404,6 +406,7 @@ screen navigation():
     if renpy.get_screen("main_menu"):
 
         frame:
+            at slideIn_up
             background None
             style_prefix "main_navigation"
 
@@ -467,9 +470,12 @@ screen navigation():
                 yoffset 16
 
     else:
-        vbox:
+        frame:
+            ysize 118
+            background Frame("#00000c")
+            has vbox
             ypos 25
-            add Frame('gui/w_horizontal_divider.png', 1, 1) ysize 10 yoffset 78
+            add Frame('gui/w_horizontal_divider.png', 1, 1) ysize 10 yoffset 78 xsize 1920 xoffset -4
             hbox:
                 xalign 0.5
                 yoffset 15
@@ -579,12 +585,16 @@ style main_navigation_label_text:
 ## https://www.renpy.org/doc/html/screen_special.html#main-menu
 
 default snow = Fixed(SnowBlossom("gui/particle.png", 50, xspeed=(20,60), yspeed=(-50, -100), start=10))
+default pixel_snow =Fixed(SnowBlossom("gui/pixel.png", 50, xspeed=(20,60), yspeed=(-50, -100), start=10))
 
 screen main_menu():
 
     ## This ensures that any other menu screen is replaced.
+    
     tag menu
     add gui.main_menu_background
+
+    add Frame('gui/frame_corners_tsp.png', 49, 50) xsize 1900 ysize 1060 xycenter (0.5, 0.5)
 
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.
@@ -601,6 +611,7 @@ screen main_menu():
             text "[config.version]":
                 style "main_menu_version"
 
+    add pixel_snow
     add snow
 
 
@@ -655,12 +666,14 @@ screen game_menu(title, scroll=None, yinitial=0.0):
 
     frame:
         style "game_menu_outer_frame"
+        add pixel_snow
 
         frame:
             style "game_menu_navigation_frame"
 
         frame:
             style "game_menu_content_frame"
+            
             xalign 0.5
 
             if scroll == "viewport":
@@ -701,9 +714,7 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     frame:
         background Frame(dark_blue)
         ysize 75
-        frame:
-            background Frame('gui/w_horizontal_divider.png', 1, 4) ysize 8 yalign 0.0 yoffset -8 xoffset -4
-            xsize 1920
+        add "gui/w_border_bottom_tsp.png" xsize 1920 ysize 80 yoffset -35 xoffset -5
         yalign 1.0
 
         hbox:
@@ -723,6 +734,7 @@ screen game_menu(title, scroll=None, yinitial=0.0):
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
 
+
 style game_menu_outer_frame is empty
 style game_menu_navigation_frame is empty
 style game_menu_content_frame is empty
@@ -734,13 +746,13 @@ style game_menu_label is gui_label
 style game_menu_label_text is gui_label_text
 
 style return_button is button
-style return_button_text is button_text
+style return_button_text is navigation_button_text
 
 style game_menu_outer_frame:
     bottom_padding 45
     top_padding 180
 
-    #background "gui/overlay/game_menu.png"
+    background "gui/overlay/game_menu_2.png"
 
 style game_menu_navigation_frame:
     xsize 420
@@ -777,6 +789,9 @@ style return_button:
     xpos gui.navigation_xpos
     yalign 0.5
     yoffset 5
+
+style return_button_text:
+    yoffset -1
 
 
 ## About screen ################################################################
