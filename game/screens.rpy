@@ -66,8 +66,10 @@ style scrollbar:
 
 style vscrollbar:
     xsize gui.scrollbar_size
-    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar Frame("gui/scrollbar/vertical_idle_bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    thumb "gui/scrollbar/vertical_idle_thumb.png"
+    top_gutter 28
+    bottom_gutter 28
 
 style slider:
     ysize gui.slider_size
@@ -404,6 +406,7 @@ screen navigation():
     if renpy.get_screen("main_menu"):
 
         frame:
+            at slideIn_up
             background None
             style_prefix "main_navigation"
 
@@ -583,8 +586,11 @@ default snow = Fixed(SnowBlossom("gui/particle.png", 50, xspeed=(20,60), yspeed=
 screen main_menu():
 
     ## This ensures that any other menu screen is replaced.
+    
     tag menu
     add gui.main_menu_background
+
+    add Frame('gui/frame_corners_tsp.png', 49, 50) xsize 1900 ysize 1060 xycenter (0.5, 0.5)
 
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.

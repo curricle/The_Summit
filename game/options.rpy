@@ -100,6 +100,7 @@ define config.after_load_transition = starTrans
 ## Used when entering the main menu after the game has ended.
 
 define config.end_game_transition = starTrans
+define config.end_splash_transition = starTrans
 
 
 ## A variable to set the transition used when the game starts does not exist.
