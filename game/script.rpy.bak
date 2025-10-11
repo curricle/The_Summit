@@ -457,7 +457,7 @@ label start:
     Narrator "You shouldn't be surprised... the Scholomance holds every training mage. None of your friends were chosen alongside you to take the exam. Part of you feels alone."
     $ cinematic = False
     if Flag_MelodyWave == True:
-        call BMEL01 from _call_BMEL01 #melody introduction
+        call BMEL01 #melody introduction
     else:
         "You wonder whether you should break the ice."
         jump introduction_menu
@@ -469,23 +469,23 @@ label start:
         
         menu:
             "(Talk to the raven-haired woman.)" if Flag_MelodyMet == False:
-                call BMEL01 from _call_BMEL01_1
+                call BMEL01
                 jump introduction_menu
 
             "(Talk to the Mage staring up at the moons.)" if Flag_TaoMet == False:
-                call BTAO01 from _call_BTAO01
+                call BTAO01
                 jump introduction_menu
 
             "(Talk to the woman in the pink uniform.)" if Flag_AriaMet == False:
-                call BARI01 from _call_BARI01
+                call BARI01
                 jump introduction_menu
 
             "(Talk to the man with tattoos.)" if Flag_RexMet == False:
-                call BREX01 from _call_BREX01
+                call BREX01
                 jump introduction_menu
 
             "(Talk to the man with white hair.)" if Flag_XanderMet == False:
-                call BXAN01 from _call_BXAN01
+                call BXAN01
                 jump introduction_menu
 
             "(Go to bed.)" if Flag_AriaMet and Flag_MelodyMet and Flag_RexMet and Flag_TaoMet and Flag_XanderMet:
@@ -545,7 +545,7 @@ label Night0Dorms:
                     Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
                     menu:
                         "(Continue) There is...":
-                            call melodyhub_main from _call_melodyhub_main
+                            call melodyhub_main
                             jump Night0DormsMenu
 
                         "(End Conversation) Not really...":
@@ -558,39 +558,39 @@ label Night0Dorms:
                     return
 
             "Talk to raven-haired woman." if Flag_MelodyMet == False:
-                call BMEL01 from _call_BMEL01_2 ###Takes you back to her intro scene. In case someone hasn't done it.
+                call BMEL01 ###Takes you back to her intro scene. In case someone hasn't done it.
                 jump Night0DormsMenu
 
             "(Talk to Xander.)" if Flag_XanderMet == True:
-                call BXAN12 from _call_BXAN12 ###Xander node in Arcweave
+                call BXAN12 ###Xander node in Arcweave
                 jump Night0DormsMenu
 
             "(Talk to the man with white hair.)" if Flag_XanderMet == False:
-                call BXAN01 from _call_BXAN01_1
+                call BXAN01
                 jump Night0DormsMenu
 
             "(Talk to Rex.)" if Flag_RexMet == True:
-                call BREX22 from _call_BREX22
+                call BREX22
                 jump Night0DormsMenu
 
             "(Talk to the man with tattoos.)" if Flag_RexMet == False:
-                call BREX01 from _call_BREX01_1
+                call BREX01
                 jump Night0DormsMenu
 
             "(Talk to Aria.)" if Flag_AriaMet == True:
-                call BARI28 from _call_BARI28
+                call BARI28
                 jump Night0DormsMenu
 
             "(Talk to the woman in the pink uniform.)" if Flag_AriaMet == False:
-                call BARI01 from _call_BARI01_1
+                call BARI01
                 jump Night0DormsMenu
 
             "(Talk to Tao.)" if Flag_TaoMet == True:
-                call BTAO20 from _call_BTAO20
+                call BTAO20
                 jump Night0DormsMenu
 
             "(Talk to the deadpan mage.)" if Flag_TaoMet == False:
-                call BTAO01 from _call_BTAO01_1
+                call BTAO01
                 jump Night0DormsMenu
 
             "(Go to Sleep)":
@@ -652,16 +652,16 @@ label Night0Corridor:
         menu: 
             "Back to the {b}Atrium{/b}" if Location != "Atrium":
                 stop music
-                call Night0Atrium from _call_Night0Atrium
+                call Night0Atrium
                 return
 
             "To the {b}Library{/b}" if Location != "Library":
                 stop music
-                call Night0Library from _call_Night0Library
+                call Night0Library
                 return
 
             "To the {b}Greenhouse{/b}." if Location != "Greenhouse":
-                call Night0Greenhouse from _call_Night0Greenhouse
+                call Night0Greenhouse
                 return
 
             "Back to the {b}Dormitory{/b}." if Location != "Dormitory":
@@ -1025,15 +1025,15 @@ label Morning1Dorms:
                 jump Morning1Greenhouse
             
             "(Speak to Xander)" if not Flag_Morning1Xander:
-                call Morning1DormsXander from _call_Morning1DormsXander
+                call Morning1DormsXander
                 jump Day1DormsChat1
 
             "(Speak to Aria)" if not Flag_Morning1Aria:
-                call Morning1DormsAria from _call_Morning1DormsAria
+                call Morning1DormsAria
                 jump Day1DormsChat1
 
             "(Speak to Tao)" if not Flag_Morning1Tao:
-                call Morning1DormsTao from _call_Morning1DormsTao
+                call Morning1DormsTao
                 jump Day1DormsChat1
 
 
@@ -1182,35 +1182,35 @@ label Morning1Greenhouse:
     label GreenhouseMorning1Choices:
         menu:
             "(Inspect the Seeds)":
-                call BSID1GH from _call_BSID1GH
+                call BSID1GH
                 return
 
             "(Talk to Alice.)":
-                call BSID1GH2 from _call_BSID1GH2
+                call BSID1GH2
                 return
 
             "(Talk to Melody)":
-                call BSID1GH3 from _call_BSID1GH3
+                call BSID1GH3
                 return
 
             "(Talk to Aria)":
-                call BSID1GH4 from _call_BSID1GH4
+                call BSID1GH4
                 return
 
             "(Talk to Rex)":
-                call BSID1GH5 from _call_BSID1GH5
+                call BSID1GH5
                 return
 
             "(Talk to Tao)":
-                call BSID1GH6 from _call_BSID1GH6
+                call BSID1GH6
                 return
 
             "(Talk to Xander)":
-                call BSID1GH8 from _call_BSID1GH8
+                call BSID1GH8
                 return
 
             "(Plant the Seeds)" if Flag_PlayerSeedsInspected:
-                call BSID1GH7 from _call_BSID1GH7
+                call BSID1GH7
                 return
             
 
@@ -1616,10 +1616,10 @@ label Morning1Greenhouse:
             $ cinematic = False
             menu:
                 "Look around for books on Botany." if Flag_PlayerSeedsInspected and not Flag_IllustratedBotanical or Flag_WoodwitchGuide or Flag_CarnivorousPlants:
-                    call Afternoon1Library_Botany from _call_Afternoon1Library_Botany
+                    call Afternoon1Library_Botany
                     return
                 "(Talk to Tao)" if Flag_TaoMet:
-                    call Afternoon1Library_Tao from _call_Afternoon1Library_Tao
+                    call Afternoon1Library_Tao
                     return
                 "(Leave the Library)":
                     stop music
@@ -1728,7 +1728,7 @@ label Morning1Greenhouse:
                 menu:
                     "Do you have a moment to chat?":
                         Tao "I have a minute. Don't waste it, {i}please{/i}."
-                        call taohub_main from _call_taohub_main
+                        call taohub_main
                         jump Afternoon1Library_TaoConvo
 
                     "How are you doing?":
@@ -2001,7 +2001,7 @@ label Morning1Greenhouse:
 
                         "I had some questions...":
                             Melody "I'm an open book."
-                            call melodyhub_main from _call_melodyhub_main_1
+                            call melodyhub_main
 
                         "Nothing. I should get going.":
                             Melody "Anyway, don't be a stranger."
@@ -2106,20 +2106,20 @@ label Morning1Greenhouse:
             $ cinematic = False
             menu:
                 "(Check Beneath the Moons)" if Flag_NotAliceMet:
-                    call Afternoon1Atrium_NotAlice from _call_Afternoon1Atrium_NotAlice
+                    call Afternoon1Atrium_NotAlice
                     return
 
                 "(Inspect the Moons)":
-                    call Afternoon1Atrium_Moons from _call_Afternoon1Atrium_Moons
+                    call Afternoon1Atrium_Moons
                     return
 
                 "(Talk to Xander)":
-                    call Afternoon1Atrium_Xander from _call_Afternoon1Atrium_Xander
+                    call Afternoon1Atrium_Xander
                     return
 
                 "(Leave the Atrium)":
                     stop music
-                    call Afternoon1DecisionMenu from _call_Afternoon1DecisionMenu
+                    call Afternoon1DecisionMenu
 
 
 
@@ -2191,7 +2191,7 @@ label Morning1Greenhouse:
                     
                     "I've got stuff I wanna ask you.":
                         Xander "Really? Let's hear it."
-                        call xanderhub_main from _call_xanderhub_main
+                        call xanderhub_main
                         hide xander sprite
                         jump Afternoon1Atrium_Choices
 
@@ -2335,7 +2335,7 @@ label Morning1Greenhouse:
 
                         "I have a lot of questions.":
                             Aria "Ask away."
-                            call melodyhub_main from _call_melodyhub_main_2
+                            call melodyhub_main
                             hide aria sprite
                             jump Afternoon1Courtyard_Choices
 
@@ -2426,17 +2426,17 @@ label Morning1Greenhouse:
             Rex "What do you need?"
             menu:
                 "(Ask Rex about Artifice)":
-                    call Afternoon1ArtificingLab_Artifice from _call_Afternoon1ArtificingLab_Artifice
+                    call Afternoon1ArtificingLab_Artifice
 
                 "(Ask Rex what he's working on)":
-                    call Afternoon1ArtificingLab_WorkingOn from _call_Afternoon1ArtificingLab_WorkingOn
+                    call Afternoon1ArtificingLab_WorkingOn
 
                 "Can I ask you some stuff?":
-                    call rexhub_main from _call_rexhub_main
+                    call rexhub_main
 
                 "(Investigate the Artificing Lab)":
                     hide rex sprite
-                    call Afternoon1ArtificingLab_Explore from _call_Afternoon1ArtificingLab_Explore
+                    call Afternoon1ArtificingLab_Explore
 
                 "(Leave the Artificing Lab)":
                     stop music
@@ -2455,7 +2455,7 @@ label Morning1Greenhouse:
                 "I'll be fine.":
                     Rex "You'll be fine but you're asking me what Artifice is."
                     Rex "At least own up to it, loser."
-                    $ Affinity_Rex -= 5
+                    $ Affection_Rex -= 5
                     pass
 
                 "I'm {i}absolutely{/i} not prepared.":
@@ -2463,7 +2463,7 @@ label Morning1Greenhouse:
                     Rex "Only tip I can give is to use good materials and figure out the stuff you {i}can{/i} make soon, so you're prepped."
                     Rex "Artificing is simple... so long as you know what tools to use and what you're making."
                     Rex "My sister used to bake a lot... it's kinda like that."
-                    $ Affinity_Rex += 5
+                    $ Affection_Rex += 5
                     pass
             Rex "Anyway... the exams isn't for a few days."
             return
@@ -2581,7 +2581,7 @@ label Morning1Greenhouse:
                     menu:
                         "I brought you a book." if AriaBookAcquired:
                             Aria "Oh, that's so kind."
-                            $ Affinity_Aria += 10
+                            $ Affection_Aria += 10
                             $ cinematic = True 
                             Narrator "She takes the book and opens it."
                             Narrator "You can tell she's tired, but she turns to page 1."
@@ -2622,7 +2622,7 @@ label Morning1Greenhouse:
                                     Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
                                     menu:
                                         "A few things...":
-                                            call melodyhub_main from _call_melodyhub_main_3
+                                            call melodyhub_main
                                             hide melody sprite
                                             jump Night1DecisionMenu
                                         "Nothing in particular.":
@@ -3243,7 +3243,7 @@ label Morning1Greenhouse:
                     $ cinematic = False
                     menu:
                         "(Investigate)":
-                            call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions
+                            call Night1AlchemyLab_Potions
                             stop music
                             jump Night1SneakDecision_Choices
 
@@ -3457,15 +3457,15 @@ label Morning1Greenhouse:
 
                     "(Search the Lab)":
                         if Flag_LockBreakerNeeded == True:
-                            call Night1ArtificingLab_SearchLock from _call_Night1ArtificingLab_SearchLock
+                            call Night1ArtificingLab_SearchLock
                             return
 
                         else:
-                            call Night1ArtificingLab_Search from _call_Night1ArtificingLab_Search
+                            call Night1ArtificingLab_Search
                             return
                         
                     "(Look for Machine Parts)" if artifice_options:
-                        call Night1ArtificingLab_MachinePart from _call_Night1ArtificingLab_MachinePart
+                        call Night1ArtificingLab_MachinePart
                         return
 
                         label Night1ArtificingLab_MachinePart:
@@ -3538,7 +3538,7 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 menu:
                     "(Check on your Plants)":
-                        call GreenhousePlants_Night1 from _call_GreenhousePlants_Night1
+                        call GreenhousePlants_Night1
                         jump Night1Greenhouse_Choices
 
                         label GreenhousePlants_Night1:
@@ -3753,23 +3753,23 @@ label Morning2Dorms:
     label Morning2Dorms_Choices:
         menu:
             "(Talk to Tao)" if not Flag_TaoDormitoryChat2:
-                call BTAO06 from _call_BTAO06
+                call BTAO06
                 return
             
             "(Talk to Aria)" if not Flag_AriaDormitoryChat2:
-                call BARI29 from _call_BARI29
+                call BARI29
                 return
 
             "(Talk to Rex)" if not Flag_RexDormitoryChat2:
-                call BREX06 from _call_BREX06
+                call BREX06
                 return
 
             "(Talk to Melody)" if not Flag_MelodyDormitoryChat2:
-                call BMEL012 from _call_BMEL012
+                call BMEL012
                 return
 
             "(Talk to Xander)" if not Flag_XanderDormitoryChat2:
-                call BXAN099 from _call_BXAN099
+                call BXAN099
                 return
 
             "(Leave the Dormitory)":
@@ -3857,7 +3857,7 @@ label Morning2Dorms:
                 Melody "Anyway, did you need something? I'm just about to start my day."
                 menu:
                     "I had a few questions...":
-                        call melodyhub_main from _call_melodyhub_main_4
+                        call melodyhub_main
                         return
                     "Just checking in.":
                         return
@@ -4042,7 +4042,7 @@ label Morning2Library_Choices:
             Narrator "You wonder whether they need a new one."
             Narrator "They barely look up at you as you approach."
             $ cinematic = False
-            call Morning2LibraryTao_Choices from _call_Morning2LibraryTao_Choices
+            call Morning2LibraryTao_Choices
             hide tao sprite
             jump Morning2Library_Choices
 
@@ -4103,7 +4103,7 @@ label Morning2Library_Choices:
             Narrator "Nevertheless, you poke around until -- trying not to disturb Tao, who seems very aware of your presence."
             Narrator "You find a few books that seem relevant to your needs."
             $ cinematic = False
-            call Afternoon1Library_BotanyBooks from _call_Afternoon1Library_BotanyBooks
+            call Afternoon1Library_BotanyBooks
             return
 
         "(Leave the Library)":
@@ -4150,7 +4150,7 @@ label Morning2AlchemyLab:
         $ cinematic = False
         menu:
             "(Investigate)":
-                call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions_1
+                call Night1AlchemyLab_Potions
                 jump Morning2AlchemyLab_Choices
     else:
         $ cinematic = True
@@ -4192,7 +4192,7 @@ label Morning2Atrium:
         $ cinematic = False
         menu:
             "(Talk to Xander)":
-                call Morning2AtriumXander_Choices from _call_Morning2AtriumXander_Choices
+                call Morning2AtriumXander_Choices
                 jump Morning2Atrium_Choices
 
                 label Morning2AtriumXander_Choices:
@@ -4293,7 +4293,7 @@ label Morning2ArtificingLab:
             "(Talk to Rex)":
                 show rex sprite
                 if Flag_GreenhouseTunnel:
-                    call Morning2ArtificingLab_RexA from _call_Morning2ArtificingLab_RexA
+                    call Morning2ArtificingLab_RexA
                     jump Morning2ArtificingLab_Choices
 
                     label Morning2ArtificingLab_RexA:
@@ -4439,7 +4439,7 @@ label Morning2Greenhouse:
     label Morning2Greenhouse_Choices:
         menu:
             "(Tend to your plants)" if not Flag_Day2PlantsWatered:
-                call Morning1Greenhouse_Plants from _call_Morning1Greenhouse_Plants
+                call Morning1Greenhouse_Plants
                 $ Flag_Day2PlantsWatered = True
                 jump Morning2Greenhouse_Choices
                 
@@ -4635,7 +4635,7 @@ label Morning2Greenhouse:
 
 
                     "I have some questions...":
-                        call melodyhub_main from _call_melodyhub_main_5
+                        call melodyhub_main
                         return
 
                     "(Leave)":
@@ -4650,14 +4650,14 @@ label Morning2Greenhouse:
                 Narrator "Aria steps towards you as you approach. Her arms are twisted around her body like she's embracing herself."
                 $ cinematic = False
                 Aria "Hmm? Did you need to talk?"
-                call Morning2Greenhouse_Aria from _call_Morning2Greenhouse_Aria
+                call Morning2Greenhouse_Aria
                 hide aria sprite
                 jump Morning2Greenhouse_Choices
 
                 label Morning2Greenhouse_Aria:
                     menu:
                         "(Parting the Roots of the Mage Tree)" if Flag_GreenhouseTunnel and not Flag_GreenhouseTunnelUnlocked:
-                            call AriaOpensGreenhouseTunnel from _call_AriaOpensGreenhouseTunnel
+                            call AriaOpensGreenhouseTunnel
                             jump Morning2Greenhouse_Aria
 
                             label AriaOpensGreenhouseTunnel:
@@ -4700,7 +4700,7 @@ label Morning2Greenhouse:
                         
             
                         "(I have other questions)":
-                            call ariahub_main from _call_ariahub_main
+                            call ariahub_main
                             jump Morning2Greenhouse_Aria
 
                         "(Nothing to say.)":
@@ -4741,7 +4741,7 @@ label Morning2Courtyard:
                 $ cinematic = True
                 Narrator "You remember what Xander told you... it sticks with you."
                 $ cinematic = False
-                call Morning2Courtyard_Dorms from _call_Morning2Courtyard_Dorms
+                call Morning2Courtyard_Dorms
                 jump Morning2Courtyard_Choices
 
                 label Morning2Courtyard_Dorms:
@@ -4962,7 +4962,7 @@ label Afternoon2Library: #empty
                 Narrator "Nevertheless, you poke around until -- trying not to disturb Tao, who seems very aware of your presence."
                 Narrator "You find a few books that seem relevant to your needs."
                 $ cinematic = False
-                call Afternoon1Library_BotanyBooks from _call_Afternoon1Library_BotanyBooks_1
+                call Afternoon1Library_BotanyBooks
                 return
 
             "(Leave the Library)":
@@ -5075,7 +5075,7 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
         $ cinematic = False
         menu:
             "(Investigate)":
-                call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions_2
+                call Night1AlchemyLab_Potions
                 jump Afternoon2AlchemyLab_Choices
     else:
         $ cinematic = True
@@ -5147,7 +5147,7 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
                 
 
             "(Investigate Potions)" if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
-                call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions_3
+                call Night1AlchemyLab_Potions
                 jump Afternoon2AlchemyLab_Choices
 
             "(Leave the {b}Alchemy Lab{/b})":
@@ -5180,11 +5180,11 @@ label Afternoon2Atrium:
     menu:
         "(Talk to Xander)":
             if not Quest_XanderProgress:
-                call XanderQuestStartDialogue from _call_XanderQuestStartDialogue
+                call XanderQuestStartDialogue
                 jump Afternoon2Atrium_Choices
 
             else:
-                call Afternoon2Atrium_Xander from _call_Afternoon2Atrium_Xander
+                call Afternoon2Atrium_Xander
                 jump Afternoon2Atrium_Choices
 
         "(Explore the Atrium)":
@@ -5319,7 +5319,7 @@ label Afternoon2Atrium:
         Xander "Was there something you wanted to chat about?"
         menu:
             "Just a few general questions...":
-                call xanderhub_main from _call_xanderhub_main_1
+                call xanderhub_main
                 hide xander sprite
                 return
 
@@ -5416,7 +5416,7 @@ label Afternoon2ArtificingLab:#Rex is being berated by Eileen about poisoning Xa
 
             "(Investigate the Artificing Lab)":
                 if not artifice_options:
-                    call Afternoon1ArtificingLab_Explore from _call_Afternoon1ArtificingLab_Explore_1
+                    call Afternoon1ArtificingLab_Explore
                     jump Afternoon2ArtificingLab_Choices
                 else:
                     $ cinematic = True
@@ -5493,7 +5493,7 @@ label Afternoon2Greenhouse: #You can check on the passage -- which Aria has unve
                 jump Afternoon2Greenhouse_Choices
 
             "(Tend to your Crops)" if not Flag_Day2PlantsWatered:
-                call Morning1Greenhouse_Plants from _call_Morning1Greenhouse_Plants_1
+                call Morning1Greenhouse_Plants
                 $ Flag_Day2PlantsWatered = True
                 jump Afternoon2Greenhouse_Choices
 
@@ -5618,7 +5618,7 @@ label Afternoon2Courtyard:
                             jump Afternoon2Alice
 
                         "I have other questions...":
-                            call alicehub_main from _call_alicehub_main
+                            call alicehub_main
                             jump Afternoon2Alice
                         
                         "(Leave)":
@@ -5711,7 +5711,7 @@ label Night2Choices:
                     menu:
                         "I have a few questions...":
                             Tao "I can afford a small break..."
-                            call taohub_main from _call_taohub_main_1
+                            call taohub_main
                             Tao "Right... can you leave me be now?"
                             menu:
                                 "Sure...":
@@ -5783,7 +5783,7 @@ label Night2Choices:
                         menu:
                             "Yes, I'll help you.":
                                 Rex "I knew I liked you."
-                                $ Affinity_Rex += 10
+                                $ Affection_Rex += 10
                                 Rex "Right, I've been building a few devices... One of them is a nifty bit of artifice I'm calling the Stonecutter."
                                 Rex "It's basically a big hammer... with blades..."
                                 Rex "I need to finish it, and to do that I need materials... which is why I've been trying to find a way out of the Summit."
@@ -5857,7 +5857,7 @@ label Night2Choices:
                                     Melody "I'm rambling. Did you need something?"
                                     menu:
                                         "I have a few questions...":
-                                            call melodyhub_main from _call_melodyhub_main_6
+                                            call melodyhub_main
                                             hide melody sprite
                                             jump Night2Choices_Menu
                                         "No. I'll head to bed now.":
@@ -6349,15 +6349,15 @@ label Night2ArtificingLab:
         menu:
             "(Search the Lab)":
                 if Flag_LockBreakerNeeded == True:
-                    call Night1ArtificingLab_SearchLock from _call_Night1ArtificingLab_SearchLock_1
+                    call Night1ArtificingLab_SearchLock
                     jump Night2ArtificingLab_Choices
 
                 else:
-                    call Night1ArtificingLab_Search from _call_Night1ArtificingLab_Search_1
+                    call Night1ArtificingLab_Search
                     jump Night2ArtificingLab_Choices
                 
             "(Look for Machine Parts)" if artifice_options:
-                call Night2ArtificingLab_MachinePart from _call_Night2ArtificingLab_MachinePart
+                call Night2ArtificingLab_MachinePart
                 jump Night2ArtificingLab_Choices
 
                 label Night2ArtificingLab_MachinePart:
@@ -7068,7 +7068,7 @@ label BTAO20: #Tao Dormitory Night 0
                                 return
                             "I just have a few questions...":
                                 Tao "{i}Sigh{/i}. Fine. What is it?"
-                                call taohub_main from _call_taohub_main_2
+                                call taohub_main
                                 hide tao sprite
                                 return
             else:
@@ -7102,7 +7102,7 @@ label BXAN12: #Xander Dormitory Night 0
     Xander "Did you wanna talk about somethin'? I'm gonna be up a while."
     menu:
         "(Continue) Sure, we can chat.":
-            call xanderhub_main from _call_xanderhub_main_2
+            call xanderhub_main
             return
         "(Exit Conversation) I'll pass for now.":
             hide xander sprite
@@ -7135,7 +7135,7 @@ label BARI28: #Aria Dormitory Night 0
     menu: 
         "(Continue) Sure.":
             $ Affinity_Aria+= 10
-            call ariahub_main from _call_ariahub_main_1
+            call ariahub_main
         "(Exit Conversation) I'm a little tired.":
             show aria sprite sad 
             Aria "Okay. Goodnight then. Big day tomorrow."
@@ -7156,7 +7156,7 @@ label BREX22: #Rex Dormitory Night 0
             $ Affinity_Rex+= 10
             menu: 
                 "(Continue) I was wondering...":
-                    call rexhub_main from _call_rexhub_main_1
+                    call rexhub_main
                 "(End Conversation) Bye for now.":
                     Rex "Alright... see ya."
                     hide rex sprite
@@ -7532,58 +7532,58 @@ label melodyhub_main:
     Melody "What's the matter?"
     menu:
         "About that light spell..." if Flag_LightSpellNotLearned:
-            call HMEL01 from _call_HMEL01
+            call HMEL01
             return
 
         "About the Potion Exam..." if not Day0Night:
-            call HMEL02 from _call_HMEL02
+            call HMEL02
             return
 
         "What do you think of Tao?" if Flag_TaoMet:
-            call HMEL03 from _call_HMEL03
+            call HMEL03
             return
 
         "What do you think of Aria?" if Flag_AriaMet:
-            call HMEL04 from _call_HMEL04
+            call HMEL04
             return
 
         "What do you think of Rex?" if Flag_RexMet:
-            call HMEL05 from _call_HMEL05
+            call HMEL05
             return
 
         "What do you think of Xander?" if Flag_XanderMet:
-            call HMEL06 from _call_HMEL06
+            call HMEL06
             return
 
         "What do you think about Inquisitor Eileen?":
-            call HMEL07 from _call_HMEL07
+            call HMEL07
             return
 
         "What do you think about Alice?":
-            call HMEL08 from _call_HMEL08
+            call HMEL08
             return
 
         "I saw 'Alice' in the forest..." if Flag_NotAliceMet:
-            call HMEL09 from _call_HMEL09
+            call HMEL09
             return
 
         "Do you have dreams? What do you want to do after Graduation?":
-            call HMEL10 from _call_HMEL10
+            call HMEL10
             return
 
         "I'm worried about the exams.":
-            call HMEL11 from _call_HMEL11
+            call HMEL11
             return
 
         "Do you know anything about the graduation placements?":
-            call HMEL12 from _call_HMEL12
+            call HMEL12
             return
 
         "(Combat Exam)":
             if Flag_CombatExamCompleted:
-                call HMEL13 from _call_HMEL13
+                call HMEL13
             else:
-                call HMEL14 from _call_HMEL14
+                call HMEL14
             return
 
         "(Exit Conversation)":
@@ -7603,32 +7603,32 @@ label melodyhub_main:
 
         "(Potion Exam)":
             if Flag_PotionExamCompleted:
-                call HMEL15 from _call_HMEL15
+                call HMEL15
             else:
-                call HMEL16 from _call_HMEL16
+                call HMEL16
             return
 
         "(Artificing Exam)":
-            call HMEL17 from _call_HMEL17
+            call HMEL17
             return
 
         "(Magic) How did your magic manifest?":
-            call HMEL18 from _call_HMEL18
+            call HMEL18
             return
 
         "Would you say we're friends?":
             if Day0Afternoon or Day0Night or Day1Afternoon or Day1Morning or Day1Night or Day2Morning or Day2Afternoon or Day2Night:
-                call HMEL19a from _call_HMEL19a
+                call HMEL19a
             elif Day3Morning or Day3Afternoon or Day3Night or Day4Morning or Day4Afternoon or Day4Night:
-                call HMEL19b from _call_HMEL19b
+                call HMEL19b
             elif Day5Morning or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
-                call HMEL19c from _call_HMEL19c
+                call HMEL19c
             else:
-                call HMEL19d from _call_HMEL19d
+                call HMEL19d
             return
 
         "(Mage Society) What do you know about Mage Society?":
-            call HMEL20 from _call_HMEL20
+            call HMEL20
             return
 
     return
@@ -7919,7 +7919,7 @@ label melodyhub_main:
                     "You think Rex sabotaged me?":
                         Melody "Maybe I shouldn't have said that without proof. I just know he's one to tamper with things."
                         hide melody sprite intense
-                        call potionfail from _call_potionfail
+                        call potionfail
                         jump melodyhub_main
                     "Maybe I messed it up.":
                         hide melody sprite intense
@@ -7927,13 +7927,13 @@ label melodyhub_main:
                         Melody "Hmm. It's not a complex potion and it certainly shouldn't have backfired in any way."
                         hide melody sprite sad
                         show melody sprite
-                        call potionfail from _call_potionfail_1
+                        call potionfail
                         jump melodyhub_main
                     
                     "I'm confused":
                         Melody "I am too."
                         hide melody sprite intense
-                        call potionfail from _call_potionfail_2
+                        call potionfail
                         jump melodyhub_main
 
             "Could've been better.":
@@ -8102,76 +8102,76 @@ label xanderhub_main:
     Xander "Everything alright, pal?"
     menu:
         "Tell me about where you came from.":
-            call HXAN01 from _call_HXAN01
+            call HXAN01
             return
 
         "What was it like on the farm?" if Flag_XanderFarmer == True:
-            call HXAN02 from _call_HXAN02
+            call HXAN02
             return
 
         "What happened the first time your magic manifested?":
-            call HXAN03 from _call_HXAN03
+            call HXAN03
             return
 
         "What do you think of me?":
             if Affinity_Xander < 30:
-                call HXAN04a from _call_HXAN04a
+                call HXAN04a
                 return
             else:
-                call HXAN04b from _call_HXAN04b
+                call HXAN04b
                 return
 
         "Heard you're the best fighter among us.":
-            call HXAN05 from _call_HXAN05
+            call HXAN05
             return
 
         "What do you think of Melody?" if Flag_MelodyMet:
-            call HXAN06 from _call_HXAN06
+            call HXAN06
             return
         
         "What do you think of Tao?" if Flag_TaoMet:
-            call HXAN07 from _call_HXAN07
+            call HXAN07
             return
 
         "What do you think of Aria?" if Flag_AriaMet:
-            call HXAN08 from _call_HXAN08
+            call HXAN08
             return
 
         "What do you think of Rex?" if Flag_RexMet:
-            call HXAN09 from _call_HXAN09
+            call HXAN09
             return
 
         "What do you think about the authorities we're under as mages?" if Flag_MageAuthority:
-            call HXAN10 from _call_HXAN10
+            call HXAN10
             return
 
         "What do you think of Eileen?" if not Flag_XanderEileenOpinion:
-            call HXAN11 from _call_HXAN11
+            call HXAN11
             return
 
         "What do you think of Alice?" if not Flag_XanderAliceOpinion:
-            call HXAN12 from _call_HXAN12
+            call HXAN12
             return
 
         "Are we friends?":
             if Affinity_Xander < 40:
-                call HXAN13a from _call_HXAN13a
+                call HXAN13a
                 return
 
             else:
-                call HXAN13b from _call_HXAN13b
+                call HXAN13b
                 return
 
         "What do you think of the Mage Council?":
-            call HXAN14 from _call_HXAN14
+            call HXAN14
             return
 
         "What's the Adventurer's Guild?" if Flag_AdventureGuild:
-            call HXAN15 from _call_HXAN15
+            call HXAN15
             return
 
         "Ok, so how do I find the key to the Archives?" if Quest_XanderProgress:
-            call HXAN16 from _call_HXAN16
+            call HXAN16
             return
 
         "(Exit Conversation)":
@@ -8472,92 +8472,92 @@ label ariahub_main:
 
         "Tell me about where you came from...":
             if Affinity_Aria < 30:
-                call HARI01a from _call_HARI01a
+                call HARI01a
                 return
             else: 
-                call HARI01b from _call_HARI01b
+                call HARI01b
 
         "What happened the first time your magic manifested?" if not Day0Night or Day1Morning or Day1Afternoon or Day1Night:
-            call HARI02 from _call_HARI02
+            call HARI02
             return
 
         "What do you think of me?":
             if Quest_AriaComplete:
-                call HARI03a from _call_HARI03a
+                call HARI03a
                 return
 
             else:
-                call HARI03b from _call_HARI03b
+                call HARI03b
                 return
 
         "Are we friends?" if not Day0Night:
             if Day2Morning or Day2Afternoon or Day2Night or Day3Morning or Day3Afternoon or Day3Night:
-                call HARI11a from _call_HARI11a
+                call HARI11a
                 return
 
             elif Day4Morning or Day4Afternoon or Day4Night or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
-                call HARI11b from _call_HARI11b
+                call HARI11b
                 return
             
             else: 
-                call HARI11c from _call_HARI11c
+                call HARI11c
                 return
 
         "What do you think of the Mage Council?" if Location == "Greenhouse":
-            call HARI12 from _call_HARI12
+            call HARI12
             return
 
         "What do you think of Melody?" if Flag_MelodyMet:
-            call HARI05 from _call_HARI05
+            call HARI05
             return
 
         "What do you think of Tao?" if Flag_TaoMet:
-            call HARI06 from _call_HARI06
+            call HARI06
             return
 
         "What do you think of Xander?" if Flag_XanderMet:
-            call HARI07 from _call_HARI07
+            call HARI07
             return
 
         "What do you think of Rex?" if Flag_RexMet:
-            call HARI08 from _call_HARI08
+            call HARI08
             return
             
 
         "Tell me more about the Ents" if Quest_AriaComplete:
-            call HARI04 from _call_HARI04
+            call HARI04
             return
 
         "What do you think of Eileen?" if not Flag_AriaEileenOpinion:
-            call HARI09 from _call_HARI09
+            call HARI09
             return
 
         "What do you think of Alice?" if not Flag_AriaAliceOpinion:
-            call HARI10 from _call_HARI10
+            call HARI10
             return
 
         "Tell me more of what happened in the forest." if Quest_AriaComplete:
-            call HARI14 from _call_HARI14
+            call HARI14
             return
 
         "What's the deal with the Great Mage Tree?" if not Day0Afternoon and not Day0Night and not Day1Morning and not Day1Afternoon and not Day1Night:
-            call HARI17 from _call_HARI17
+            call HARI17
             return
 
         "What's with you and the forest?" if Quest_AriaProgress or Quest_AriaComplete:
-            call HARI16 from _call_HARI16
+            call HARI16
             return
 
         "Do you want to be a powerful mage?" if not Day0Night:
-            call HARI15 from _call_HARI15
+            call HARI15
             return
 
         "How do you see your life after Scholomance?" if Day4Morning or Day4Afternoon or Day4Night or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
             if Quest_AriaComplete:
-                call HARI18a from _call_HARI18a
+                call HARI18a
                 return
             else:
-                call HARI18b from _call_HARI18b
+                call HARI18b
                 return
 
         "(Exit Conversation)":
@@ -8994,113 +8994,113 @@ label taohub_main:
     Tao "What did you want to discuss?"
     menu:
         "(Botany)":
-            call HTAO014 from _call_HTAO014
+            call HTAO014
             return
 
         "(Artificing)":
-            call HTAO13 from _call_HTAO13
+            call HTAO13
             return
 
         "(Potions)":
             if Quest_TaoComplete:
-                call HTAO12a from _call_HTAO12a
+                call HTAO12a
                 return
 
             else:
-                call HTAO12b from _call_HTAO12b
+                call HTAO12b
                 return
 
         "What was your childhood like?":
             if Quest_TaoComplete:
-                call HTAO01a from _call_HTAO01a
+                call HTAO01a
                 return
 
             else:
-                call HTAO01b from _call_HTAO01b
+                call HTAO01b
                 return
 
         "How did your magic first manifest?":
-            call HTAO02 from _call_HTAO02
+            call HTAO02
             return
 
         "What do you think of Melody?" if Flag_MelodyMet:
             if Quest_TaoComplete:
-                call HTAO03a from _call_HTAO03a
+                call HTAO03a
                 return
             else:
-                call HTAO03b from _call_HTAO03b
+                call HTAO03b
                 return
 
         "What do you think of Rex?" if Flag_RexMet:
             if Quest_TaoComplete:
-                call HTAO04a from _call_HTAO04a
+                call HTAO04a
                 return
             else:
-                call HTAO04b from _call_HTAO04b
+                call HTAO04b
                 return
 
         "What do you think of Aria?" if Flag_AriaMet:
             if Quest_TaoComplete:
-                call HTAO05a from _call_HTAO05a
+                call HTAO05a
                 return
             else:
-                call HTAO05b from _call_HTAO05b
+                call HTAO05b
                 return
 
         "What do you think of Alice?":
             if Quest_TaoFailed:
-                call HTAO08a from _call_HTAO08a
+                call HTAO08a
                 return
                         
             elif Quest_TaoComplete:
-                call HTAO08b from _call_HTAO08b
+                call HTAO08b
                 return
 
             else:
-                call HTAO08c from _call_HTAO08c
+                call HTAO08c
                 return
         
         "What do you think of Xander?" if Flag_XanderMet:
             if Quest_TaoComplete:
-                call HTAO06a from _call_HTAO06a
+                call HTAO06a
                 return
             
             else:
-                call HTAO06b from _call_HTAO06b
+                call HTAO06b
                 return
         
         "Can you tell me about your father?" if Flag_C3TaoFather:
             if Quest_TaoComplete:
-                call HTAO11a from _call_HTAO11a
+                call HTAO11a
                 return
 
             else:
-                call HTAO11b from _call_HTAO11b
+                call HTAO11b
                 return
 
         "What do you think of Eileen?" if not Flag_TaoEileenOpinion:
-            call HTAO09 from _call_HTAO09
+            call HTAO09
             return
 
         "(Mage Council)":
-            call HTAO10 from _call_HTAO10
+            call HTAO10
             return
 
         "What do you think of me?":
             if Quest_TaoComplete:
-                call HTAO07a from _call_HTAO07a
+                call HTAO07a
                 return
             else:
-                call HTAO07b from _call_HTAO07b
+                call HTAO07b
                 return
         
         "What happened with you and Xander?" if Flag_TaoXanderFriendship:
             if Quest_TaoComplete:
-                call HTAO15a from _call_HTAO15a
+                call HTAO15a
                 return
 
             else:
-                call HTAO15b from _call_HTAO15b
+                call HTAO15b
                 return
 
         "(Exit Conversation)":
@@ -9541,109 +9541,109 @@ label rexhub_main:
 
         "What's your family like back home?":
             if Affinity_Rex < 40:
-                call HREX02a from _call_HREX02a
+                call HREX02a
                 return
 
             else: 
 
-                call HREX02b from _call_HREX02b
+                call HREX02b
                 return
 
         "Can you help me with artificing?":
-            call HREX01 from _call_HREX01
+            call HREX01
             return
 
         "What happened the first time your magic manifested?":
-            call HREX03 from _call_HREX03
+            call HREX03
             return
 
         "Why do the others say you don't want friends?" if not Flag_HREX12:
-            call HREX12 from _call_HREX12
+            call HREX12
             return
 
         "Where did you get the idea to mess with statues?" if Quest_RexProgress:
-            call HREX14 from _call_HREX14
+            call HREX14
             return
 
         "What do you think of Melody?" if Flag_MelodyMet:
-            call HREX05 from _call_HREX05
+            call HREX05
             return
 
         "What do you think of Tao?" if Flag_TaoMet:
-            call HREX06 from _call_HREX06
+            call HREX06
             return
 
         "What do you think of Aria?" if Flag_AriaMet:
-            call HREX08 from _call_HREX08
+            call HREX08
             return
 
         "What do you think of Xander?" if Flag_XanderMet:
-            call HREX07 from _call_HREX07
+            call HREX07
             return
 
         "What did you think of the Scholomance?":
-            call HREX15 from _call_HREX15
+            call HREX15
             return
 
         "What do you think of Eileen?":
             if Affinity_Rex > 50:
-                call HREX11a from _call_HREX11a
+                call HREX11a
                 return
 
             else:
-                call HREX11b from _call_HREX11b
+                call HREX11b
                 return
 
         "What do you think of Alice?":
-            call HREX10 from _call_HREX10
+            call HREX10
             return
         
         "Are we friends?":
             if Affinity_Rex < 50 and not Quest_RexProgress and not Quest_RexComplete and not Quest_RexProgress:
-                call HREX09a from _call_HREX09a
+                call HREX09a
                 return
             elif Affinity_Rex > 50 and Quest_RexProgress:
-                call HREX09b from _call_HREX09b
+                call HREX09b
                 return
 
             elif Quest_RexComplete and not Flag_PlayerSnitchesRex:
-                call HREX09c from _call_HREX09c
+                call HREX09c
                 return
 
             
             elif Flag_PlayerSnitchesRex:
-                call HREX09d from _call_HREX09d
+                call HREX09d
                 return
 
             else:
-                call HREX09e from _call_HREX09e
+                call HREX09e
                 return
 
         "What do you think of the Mage Council?":
-            call HREX13 from _call_HREX13
+            call HREX13
             return
 
         "Heard you were an anarchist or something?":
-            call HREX04 from _call_HREX04
+            call HREX04
             return
 
         "Why do you dislike Eileen so much?":
             if Affinity_Rex < 50:
-                call HREX16a from _call_HREX16a
+                call HREX16a
 
             else:
-                call HREX16b from _call_HREX16b
+                call HREX16b
 
         "(Quest) Remind me, what do you need me to do?" if Quest_RexProgress:
-            call HREX17 from _call_HREX17
+            call HREX17
             return
 
         "(Quest) Are you sure blowing up Eileen's statue is what you really want?" if Quest_RexProgress:
-            call HREX18 from _call_HREX18
+            call HREX18
             return
 
         "(Archives) Have you seen the Archive Door Lock?" if Flag_ArchivesArtifice:
-            call HREX28 from _call_HREX28
+            call HREX28
             return
 
         "(Exit Conversation)":
@@ -10075,78 +10075,78 @@ label melody2hub_main:
     menu:
 
         "(Friendship) Are we {i}actually{/i} friends?":
-            call HMEL27 from _call_HMEL27
+            call HMEL27
             return
 
         "(Dreams) Do you have a dream?":
-            call HMEL21 from _call_HMEL21
+            call HMEL21
             return
 
         "(Past) Tell me about your past.":
-            call HMEL22 from _call_HMEL22
+            call HMEL22
             return
 
         "(Tao) What do you really think of Tao?":
             if Quest_MelodyComplete:
-                call HMEL24a from _call_HMEL24a
+                call HMEL24a
                 return
 
             else:
-                call HMEL24b from _call_HMEL24b
+                call HMEL24b
                 return
 
         "(Aria) What do you really think of Aria?":
-            call HMEL25 from _call_HMEL25
+            call HMEL25
             return
 
         "(Rex) What do you really think of Rex?":
-            call HMEL28 from _call_HMEL28
+            call HMEL28
             return
 
         "(Graduation Spot) Tell me about the graduation spots.":
-            call HMEL29 from _call_HMEL29
+            call HMEL29
             return
 
         "(Exams) Got anything on the exams?":
-            call HMEL30 from _call_HMEL30
+            call HMEL30
             return
 
         "(Combat Exam)":
             if Flag_CombatExamCompleted:
-                call HMEL31a from _call_HMEL31a
+                call HMEL31a
                 return
             else:
-                call HMEL31b from _call_HMEL31b
+                call HMEL31b
                 return
 
         "(Potion Exam)":
             if Flag_PotionExamCompleted:
-                call HMEL33a from _call_HMEL33a
+                call HMEL33a
                 return
 
             else:
-                call HMEL33b from _call_HMEL33b
+                call HMEL33b
                 return
 
         "(Artificing Exam)":
             if Flag_ArtificingExamCompleted:
-                call HMEL35a from _call_HMEL35a
+                call HMEL35a
                 return
 
             else:
-                call HMEL35b from _call_HMEL35b
+                call HMEL35b
                 return
 
         "I met something that looked like Alice but clearly wasn't... 'Alice'":
-            call HMEL37 from _call_HMEL37
+            call HMEL37
             return
 
         "(Magic) How did your magic manifest?":
-            call HMEL38 from _call_HMEL38
+            call HMEL38
             return
 
         "(Mage Society)":
-            call HMEL39 from _call_HMEL39
+            call HMEL39
             return
 
         "(Exit Conversation)":
@@ -10485,56 +10485,56 @@ label alicehub_main:
     Alice "What do you need??"
     menu:
         "(Past)":
-            call HALI01 from _call_HALI01
+            call HALI01
             return
 
         "(Sewer Doll)" if Flag_NotAliceMet:
-            call HALI02 from _call_HALI02
+            call HALI02
             return
 
         "I think Tao needs help." if Flag_TaoNonVerbal:
-            call HALI03 from _call_HALI03
+            call HALI03
             return
         
         "(Great Mage Tree)" if Location == "Greenhouse":
-            call HALI04 from _call_HALI04
+            call HALI04
             return
 
         "(Xander)" if Flag_XanderMet:
-            call HALI06 from _call_HALI06
+            call HALI06
             return
 
         "(Melody)" if Flag_MelodyMet:
-            call HALI07 from _call_HALI07
+            call HALI07
             return
 
         "(Tao)" if Flag_TaoMet:
-            call HALI08 from _call_HALI08
+            call HALI08
             return
 
         "(Aria)":
             if Quest_AriaProgress:
-                call HALI10a from _call_HALI10a
+                call HALI10a
                 return
 
             else:
-                call HALI10b from _call_HALI10b
+                call HALI10b
                 return
         
         "(The Summit)":
-            call HALI11 from _call_HALI11
+            call HALI11
             return
 
         "(Rex Statues)":
-            call HALI12 from _call_HALI12
+            call HALI12
             return
 
         "(Mage Society)":
-            call HALI13 from _call_HALI13
+            call HALI13
             return
 
         "(Your Job)" if Flag_DemoAliceJob:
-            call HALI14 from _call_HALI14
+            call HALI14
             return
 
         "(Exit Conversation)":
