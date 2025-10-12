@@ -2705,7 +2705,7 @@ label Morning1Greenhouse:
                 $ Day1Night = False
                 $ Flag_EileenLibraryDay2 = False
                 stop music
-                jump Morning1Dorms
+                jump Morning2Dorms
     
 
 
@@ -3542,7 +3542,7 @@ label Morning1Greenhouse:
                         jump Night1Greenhouse_Choices
 
                         label GreenhousePlants_Night1:
-                            if planted_seeds = "Winged Jasmine":
+                            if planted_seeds == "Winged Jasmine":
                                 $ cinematic = True
                                 Narrator "You inspect your Winged Jasmine... you're surprised at how much it has already grown."
                                 Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some Magecraft."
@@ -3572,7 +3572,7 @@ label Morning1Greenhouse:
                                         return
 
 
-                            if planted_seeds = "Snapjaw Orchid":
+                            if planted_seeds == "Snapjaw Orchid":
                                 $ cinematic = True
                                 Narrator "You inspect your Snapjaw Orchid... it looks a little sad."
                                 Narrator "Still, you're surprised at how much it's grown in such a short amount of time."
@@ -3611,7 +3611,7 @@ label Morning1Greenhouse:
                                 
 
 
-                            if planted_seeds = "Moon Melon":
+                            if planted_seeds == "Moon Melon":
                                 $ cinematic = True
                                 Narrator "You inspect your Moon Melon, a large, round plant that glows a deep blue."
                                 Narrator "You're surprised how much it's already grown."
@@ -3649,7 +3649,7 @@ label Morning1Greenhouse:
                                         return
 
 
-                            if planted_seeds = "Sanguine Lily":
+                            if planted_seeds == "Sanguine Lily":
                                 $ cinematic = True
                                 Narrator "You inspect your Sanguine Lily... it has already grown tremendously since you planted it."
                                 Narrator "The flower itself is rather interesting... long, thin petals stretch out and curl like spindling fingers."
@@ -4444,10 +4444,10 @@ label Morning2Greenhouse:
                 jump Morning2Greenhouse_Choices
                 
                 label Morning1Greenhouse_Plants:
-                    $ cinematic = True
+                    $ cinematic = True                    
                     Narrator "You take a moment, kneeling over your plot."
                     $ cinematic = False
-                    if planted_seeds = "Winged Jasmine":
+                    if "Winged Jasmine" in planted_seeds:
                         $ cinematic = True
                         Narrator "You inspect your Winged Jasmine... you're surprised at how much it has already grown."
                         Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some Magecraft."
@@ -4479,7 +4479,7 @@ label Morning2Greenhouse:
                                 return
 
 
-                    if planted_seeds = "Snapjaw Orchid":
+                    if "Snapjaw Orchid" in planted_seeds:
                         $ cinematic = True
                         Narrator "You inspect your Snapjaw Orchid... it looks a little sad."
                         Narrator "Still, you're surprised at how much it's grown in such a short amount of time."
@@ -4518,7 +4518,7 @@ label Morning2Greenhouse:
                                 return
 
 
-                    if planted_seeds = "Moon Melon":
+                    if "Moon Melon" in planted_seeds:
                         $ cinematic = True
                         Narrator "You inspect your Moon Melon, a large, round plant that glows a deep blue."
                         Narrator "You're surprised how much it's already grown."
@@ -4558,7 +4558,7 @@ label Morning2Greenhouse:
                                 return
 
 
-                    if planted_seeds = "Sanguine Lily":
+                    if "Sanguine Lily" in planted_seeds:
                         $ cinematic = True
                         Narrator "You inspect your Sanguine Lily... it has already grown tremendously since you planted it."
                         Narrator "The flower itself is rather interesting... long, thin petals stretch out and curl like spindling fingers."
@@ -6455,7 +6455,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                 $ cinematic = False
                 menu:
                     "(Inspect your Crops)":
-                        if planted_seeds = "Winged Jasmine":
+                        if "Winged Jasmine" in planted_seeds:
                             $ cinematic = True
                             Narrator "You inspect your Winged Jasmine."
                             $ cinematic = False
@@ -6467,10 +6467,10 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                             else:
                                 $ cinematic = True
                                 Narrator "It seems to be wilting... You wonder why."
-                                $ cinematic = False
+                                $ cinematic = False                                
                                 jump Night2Greenhouse_Choices
 
-                        if planted_seeds = "Snapjaw Orchid":
+                        if "Snapjaw Orchid" in planted_seeds:
                             $ cinematic = True
                             Narrator "You inspect your Snapjaw Orchid."
                             $ cinematic = False
@@ -6485,7 +6485,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                 $ cinematic = False
                                 jump Night2Greenhouse_Choices
 
-                        if planted_seeds = "Moon Melon":
+                        if "Moon Melon" in planted_seeds:
                             $ cinematic = True
                             Narrator "You inspect your Moon Melon."
                             $ cinematic = False
@@ -6497,10 +6497,10 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                             else:
                                 $ cinematic = True
                                 Narrator "It seems to be wilting... You wonder why."
-                                $ cinematic = False
+                                $ cinematic = False                                
                                 jump Night2Greenhouse_Choices
 
-                        if planted_seeds = "Sanguine Lily":
+                        if "Sanguine Lily" in planted_seeds:
                             $ cinematic = True
                             Narrator "You inspect your Sanguine Lily."
                             $ cinematic = False
