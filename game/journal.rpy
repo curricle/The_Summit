@@ -14,12 +14,13 @@ init python:
             self.description = description
 
     class CharacterBio:
-        def __init__(self, name, image, description, specialty='???', short_description='???'):
+        def __init__(self, name, image, description, specialty='???', short_description='???', isUnlocked=False):
             self.name = name
             self.image = image
             self.description = description
             self.specialty = specialty
             self.short_description = short_description
+            self.isUnlocked = isUnlocked
 
     class ExamInfo:
         def __init__(self, name, scheduled, description):
@@ -61,16 +62,16 @@ define journal__spells_list = [journal__spell_light, journal__spell_unlocking, j
 
 
 # Characters
-define journal__bio_aria = CharacterBio("Aria", "images/aria/aria sprite.png", "A Mage who seems more comfortable around plants than people.")
-define journal__bio_xander = CharacterBio("Xander", "images/xander/xander sprite.png", "He's very energetic... perhaps a bit too much so.")
-define journal__bio_rex = CharacterBio("Rex", "images/rex/rex sprite.png", "He seems a bit rough around the edges, but has a heart.")
-define journal__bio_tao = CharacterBio("Tao", "images/tao/tao sprite.png", "A rather studious sort. Do they have any hobbies...?")
-define journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two.")
-define journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "An Inquisitor... best not get on her bad side.")
-define journal__bio_melody = CharacterBio("Melody", "images/melody/melody sprite.png", "A Mage who's dream is to become a great Alchemist.")
-define journal__bio_default = CharacterBio("???", 'gui/none.png', "???")
+default journal__bio_aria = CharacterBio("Aria", "images/aria/aria sprite.png", "A Mage who seems more comfortable around plants than people.", isUnlocked=Flag_AriaMet)
+default journal__bio_xander = CharacterBio("Xander", "images/xander/xander sprite.png", "He's very energetic... perhaps a bit too much so.", isUnlocked=Flag_XanderMet)
+default journal__bio_rex = CharacterBio("Rex", "images/rex/rex sprite.png", "He seems a bit rough around the edges, but has a heart.", isUnlocked=Flag_RexMet)
+default journal__bio_tao = CharacterBio("Tao", "images/tao/tao sprite.png", "A rather studious sort. Do they have any hobbies...?", isUnlocked=Flag_TaoMet)
+default journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two.", isUnlocked=Flag_AliceMet)
+default journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "An Inquisitor... best not get on her bad side.", isUnlocked=Flag_EileenMet)
+default journal__bio_melody = CharacterBio("Melody", "images/melody/melody sprite.png", "A Mage who's dream is to become a great Alchemist.", isUnlocked=Flag_MelodyMet)
+default journal__bio_default = CharacterBio("???", 'gui/none.png', "???", isUnlocked=True)
 
-define journal__characterBio_list = [journal__bio_alice, journal__bio_aria, journal__bio_eileen, journal__bio_melody, journal__bio_rex, journal__bio_tao, journal__bio_xander]
+default journal__characterBio_list = [journal__bio_alice, journal__bio_aria, journal__bio_eileen, journal__bio_melody, journal__bio_rex, journal__bio_tao, journal__bio_xander]
 
 
 # Exams
@@ -131,13 +132,22 @@ screen journal(tab):
                     has vbox
                     spacing 0
                     for character in journal__characterBio_list:
-                        textbutton _(character.name): 
-                            style "charlist_button"
-                            selected False
-                            if character == current_character:
-                                selected True
-                            action [SetVariable("current_character", character),
-                            ShowMenu("journal", "characters")]
+                        if character.isUnlocked == True:
+                            textbutton _(character.name): 
+                                style "charlist_button"
+                                selected False
+                                if character == current_character:
+                                    selected True
+                                action [SetVariable("current_character", character),
+                                ShowMenu("journal", "characters")]
+                        else:
+                            textbutton _(journal__bio_default.name): 
+                                style "charlist_button"
+                                selected False
+                                if character == current_character:
+                                    selected True
+                                action [SetVariable("current_character", journal__bio_default),
+                                ShowMenu("journal", "characters")]
 
         vbox:
             #xsize 900
@@ -261,15 +271,15 @@ screen journal(tab):
                                     hbox: 
                                         xfill True
                                         yoffset 10
-                                        if(current_character != journal__bio_default):
+                                        # if(current_character != journal__bio_default):
 
-                                            textbutton _("Next >"):
-                                                style "journal_next"
-                                                selected False
-                                                text_size 24
+                                        #     textbutton _("Next >"):
+                                        #         style "journal_next"
+                                        #         selected False
+                                        #         text_size 24
                                                 
-                                                xalign 1.0
-                                                action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
+                                        #         xalign 1.0
+                                        #         action [SetVariable('current_character', getNextItemInArray(current_character, journal__characterBio_list)), ShowMenu("journal", "characters")]
 
 style journal_button_text is navigation_button_text:
     yoffset -1
