@@ -323,7 +323,7 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
-    ysize 70
+    ysize 90
     hover_sound audio.ui_click_02
     activate_sound audio.ui_click_01
     background 'gui/choice_box.png'
@@ -334,6 +334,7 @@ style choice_button_text is default:
     xoffset 19
     xsize 0.95
     xalign 0.5
+    yalign 0.5
 
 
 ## Quick Menu screen ###########################################################
@@ -1475,7 +1476,7 @@ screen confirm(message, yes_action, no_action):
         vbox:
             xalign .5
             yalign .5
-            spacing 5
+            spacing 25
 
             label _(message):
                 style "confirm_prompt"
@@ -1510,6 +1511,8 @@ style confirm_prompt_text:
 
 style confirm_button:
     properties gui.button_properties("confirm_button")
+    background Frame('gui/button/check_foreground.png', 32,32)
+    hover_background Frame('gui/button/check_selected_foreground.png', 32, 32)
 
 style confirm_button_text:
     properties gui.button_text_properties("confirm_button")
