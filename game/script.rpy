@@ -329,6 +329,7 @@ label start:
     show alice sprite with dissolve:
         xalign 0.5
         yalign 0.3
+    $ journal__bio_alice.isUnlocked = True
     Alice "You took your time. I was getting close to sending out a search party."
     Alice "The ceremony hasn't begun yet. Your fellow classmates are in the atrium. Leave your luggage, I'll get someone to take them to your dorm."
     Alice "Go on in. I must lock the doors behind you. Find your classmates."
@@ -363,6 +364,7 @@ label start:
     Narrator "As the chatter of the students dies down, you hear the sharp clink of footsteps against the marble floor."
     Narrator "As you look at the moons once more, you see a woman pass below them, standing on the platform before the students. You recognise her instantly: Inquisitor Eileen."
     show eileen sprite at right
+    $ journal__bio_eileen.isUnlocked = True
     Narrator "Rather than stand still, she turns, as if summoning the woman behind her. Inquisitor Alice, the woman who crafted the dolls. This isn't the first time you've seen her in person, but it still strikes you as odd."
     #add x and y positioning to adjust sprite alignment
     show alice sprite:
