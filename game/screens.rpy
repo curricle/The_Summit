@@ -331,6 +331,9 @@ style choice_button is default:
 
 style choice_button_text is default:
     properties gui.button_text_properties("choice_button")
+    xoffset 19
+    xsize 0.95
+    xalign 0.5
 
 
 ## Quick Menu screen ###########################################################
@@ -417,11 +420,12 @@ screen navigation():
   
             frame:
 
-                background Frame("gui/frame_beige.png", 32, 32)
+                background Frame("gui/mm_buttons_bg.png", 32, 32)
                 xsize 400
                 xalign 0.5
                 yalign 0.5
-                yfill True
+                yoffset 15
+                ysize 601
 
                 has vbox
                 xalign 0.5
@@ -877,7 +881,7 @@ screen file_slots(title):
 
                     spacing gui.page_spacing
 
-                    textbutton _("▲") action FilePagePrevious() 
+                    imagebutton idle "gui/arrow_up.png" action FilePagePrevious() at grow_fromCenter
 
                     if config.has_autosave:
                         textbutton _("{#auto_page}A") action FilePage("auto") xalign 0.5
@@ -889,7 +893,7 @@ screen file_slots(title):
                     for page in range(1, 10):
                         textbutton "[page]" action FilePage(page) xalign 0.5
 
-                    textbutton _("▼") action FilePageNext()
+                    imagebutton idle "gui/arrow_down.png" action FilePageNext() at grow_fromCenter
 
             vbox:
 
@@ -949,16 +953,19 @@ screen file_slots(title):
 
                             key "save_delete" action FileDelete(slot)
 
+                
                 if config.has_sync:
                     if CurrentScreenName() == "save":
                         textbutton _("Upload Sync"):
                             action UploadSync()
-                            xalign 0.5
+                            xalign 1.0
+                            style "has_sync"
                             
                     else:
                         textbutton _("Download Sync"):
                             action DownloadSync()
-                            xalign 0.5
+                            xalign 1.0
+                            style "has_sync"
                             
 
 
@@ -971,6 +978,10 @@ style slot_button is gui_button
 style slot_button_text is gui_button_text
 style slot_time_text is slot_button_text
 style slot_name_text is slot_button_text
+style has_sync is gui_button:
+    yoffset -13
+style has_sync_text is navigation_button_text:
+    yoffset -3
 
 style page_label:
     xpadding 75
@@ -1010,21 +1021,27 @@ screen preferences():
 
     use game_menu(_("Settings"), scroll="viewport"):
 
-        vbox:
+        hbox:
+            spacing 25
 
-            hbox:
+            vbox:
+                spacing 50
                 box_wrap True
 
                 if renpy.variant("pc") or renpy.variant("web"):
 
-                    vbox:
+                    frame:
+                        
                         style_prefix "radio"
+                        has vbox
                         label _("Display")
                         textbutton _("Window") action Preference("display", "window")
                         textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
-                vbox:
+                frame:
+                    
                     style_prefix "check"
+                    has vbox
                     label _("Skip")
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
@@ -1035,11 +1052,13 @@ screen preferences():
 
             null height (4 * gui.pref_spacing)
 
-            hbox:
+            vbox:
+                spacing 50
                 style_prefix "slider"
                 box_wrap True
 
-                vbox:
+                frame:
+                    has vbox
 
                     label _("Text Speed")
 
@@ -1049,7 +1068,8 @@ screen preferences():
 
                     bar value Preference("auto-forward time")
 
-                vbox:
+                frame:
+                    has vbox
 
                     if config.has_music:
                         label _("Music Volume")
@@ -1094,12 +1114,14 @@ style radio_label_text is pref_label_text
 style radio_button is gui_button
 style radio_button_text is gui_button_text
 style radio_vbox is pref_vbox
+style radio_frame is prefs_frame
 
 style check_label is pref_label
 style check_label_text is pref_label_text
 style check_button is gui_button
 style check_button_text is gui_button_text
 style check_vbox is pref_vbox
+style check_frame is prefs_frame
 
 style slider_label is pref_label
 style slider_label_text is pref_label_text
@@ -1107,6 +1129,7 @@ style slider_slider is gui_slider
 style slider_button is gui_button
 style slider_button_text is gui_button_text
 style slider_pref_vbox is pref_vbox
+style slider_frame is prefs_frame
 
 style mute_all_button is check_button
 style mute_all_button_text is check_button_text
@@ -1120,6 +1143,10 @@ style pref_label_text:
 
 style pref_vbox:
     xsize 338
+    
+style prefs_frame:
+    background Frame('gui/frame_corners_faded.png', left=49, top=50)
+    padding (50, 30)
 
 style radio_vbox:
     spacing gui.pref_button_spacing
@@ -1388,7 +1415,7 @@ screen gamepad_help():
 
 
 style help_button is gui_button
-style help_button_text is gui_button_text
+style help_button_text is navigation_button_text
 style help_label is gui_label
 style help_label_text is gui_label_text
 style help_text is gui_text
@@ -1404,6 +1431,7 @@ style help_button:
 
 style help_button_text:
     properties gui.button_text_properties("help_button")
+    yoffset -3
 
 style help_label:
     xsize 375
