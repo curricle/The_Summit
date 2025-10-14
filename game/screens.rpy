@@ -1035,6 +1035,7 @@ screen preferences():
                         style_prefix "radio"
                         has vbox
                         label _("Display")
+                        null height 10
                         textbutton _("Window") action Preference("display", "window")
                         textbutton _("Fullscreen") action Preference("display", "fullscreen")
 
@@ -1043,6 +1044,7 @@ screen preferences():
                     style_prefix "check"
                     has vbox
                     label _("Skip")
+                    null height 10
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
@@ -1112,14 +1114,16 @@ style pref_vbox is vbox
 style radio_label is pref_label
 style radio_label_text is pref_label_text
 style radio_button is gui_button
-style radio_button_text is gui_button_text
+style radio_button_text is gui_button_text:
+    xoffset 50
 style radio_vbox is pref_vbox
 style radio_frame is prefs_frame
 
 style check_label is pref_label
 style check_label_text is pref_label_text
 style check_button is gui_button
-style check_button_text is gui_button_text
+style check_button_text is gui_button_text:
+    xoffset 50
 style check_vbox is pref_vbox
 style check_frame is prefs_frame
 
