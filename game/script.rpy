@@ -73,6 +73,8 @@ define Flag_AriaMet = False
 define Flag_RexMet = False
 define Flag_XanderMet = False
 define Flag_NotAliceMet = False
+define Flag_AliceMet = False
+define Flag_EileenMet = False
 
 
 # Smaller Flags
@@ -329,7 +331,8 @@ label start:
     show alice sprite with dissolve:
         xalign 0.5
         yalign 0.3
-    $ journal__bio_alice.isUnlocked = True
+    $ Flag_AliceMet = True
+    $ journal__bio_alice.isUnlocked = Flag_AliceMet
     Alice "You took your time. I was getting close to sending out a search party."
     Alice "The ceremony hasn't begun yet. Your fellow classmates are in the atrium. Leave your luggage, I'll get someone to take them to your dorm."
     Alice "Go on in. I must lock the doors behind you. Find your classmates."
@@ -364,7 +367,8 @@ label start:
     Narrator "As the chatter of the students dies down, you hear the sharp clink of footsteps against the marble floor."
     Narrator "As you look at the moons once more, you see a woman pass below them, standing on the platform before the students. You recognise her instantly: Inquisitor Eileen."
     show eileen sprite at right
-    $ journal__bio_eileen.isUnlocked = True
+    $ Flag_EileenMet = True
+    $ journal__bio_eileen.isUnlocked = Flag_EileenMet
     Narrator "Rather than stand still, she turns, as if summoning the woman behind her. Inquisitor Alice, the woman who crafted the dolls. This isn't the first time you've seen her in person, but it still strikes you as odd."
     #add x and y positioning to adjust sprite alignment
     show alice sprite:
@@ -7268,6 +7272,7 @@ label BTAO01:
 
     Tao "Is that what it looks like to you? You're not the type to work out how things work, are you? It shows."
     $ Flag_TaoMet = True
+    $ journal__bio_tao.isUnlocked = Flag_TaoMet
     menu: 
         "That's not very nice of you":
             Tao "You're right. Sorry."
@@ -7370,6 +7375,7 @@ label BARI01:
 
     Aria "Hm, you're not like the other students here. I'll leave you to it. Good luck on the exams. Let me know if you need help."
     $ Flag_AriaMet = True
+    $ journal__bio_aria.isUnlocked = Flag_AriaMet
     hide aria sprite
     return
 
@@ -7403,6 +7409,7 @@ label BXAN01:
     Xander "I'll see ya around, I guess." 
     hide xander sprite
     $ Flag_XanderMet = True
+    $ journal__bio_xander.isUnlocked = Flag_XanderMet
     return
 
 
@@ -7435,6 +7442,7 @@ label BMEL01:
     $ cinematic = True
     Narrator "With a quick, but earnest wave, she steps away."
     $ Flag_MelodyMet = True
+    $ journal__bio_melody.isUnlocked = Flag_MelodyMet
     hide melody sprite
 
     return
@@ -7468,6 +7476,7 @@ label BREX01:
     $ cinematic = False
     hide rex sprite
     $ Flag_RexMet = True
+    $ journal__bio_rex.isUnlocked = Flag_RexMet
     return
 
 

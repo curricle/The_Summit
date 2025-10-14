@@ -66,8 +66,8 @@ default journal__bio_aria = CharacterBio("Aria", "images/aria/aria sprite.png", 
 default journal__bio_xander = CharacterBio("Xander", "images/xander/xander sprite.png", "He's very energetic... perhaps a bit too much so.", isUnlocked=Flag_XanderMet)
 default journal__bio_rex = CharacterBio("Rex", "images/rex/rex sprite.png", "He seems a bit rough around the edges, but has a heart.", isUnlocked=Flag_RexMet)
 default journal__bio_tao = CharacterBio("Tao", "images/tao/tao sprite.png", "A rather studious sort. Do they have any hobbies...?", isUnlocked=Flag_TaoMet)
-default journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two.",)
-default journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "An Inquisitor... best not get on her bad side.")
+default journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two.", isUnlocked=Flag_AliceMet)
+default journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "An Inquisitor... best not get on her bad side.", isUnlocked=Flag_EileenMet)
 default journal__bio_melody = CharacterBio("Melody", "images/melody/melody sprite.png", "A Mage who's dream is to become a great Alchemist.", isUnlocked=Flag_MelodyMet)
 default journal__bio_default = CharacterBio("???", 'gui/none.png', "???", isUnlocked=True)
 
