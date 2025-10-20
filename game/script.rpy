@@ -1252,46 +1252,47 @@ label Morning1Greenhouse:
             Narrator "Alice's mood seems to shift as you approach, a stressed expression melting away."
             Narrator "You wonder whether she's feigning it."
             $ cinematic = False
-            Alice "Pupil, what do you need help with?"
-            menu:
-                "What were you and Aria talking about?":
-                    Alice "That's between Aria and I."
-                    menu:
-                        "She seems upset.":
-                            Alice "That's not what I {i}wanted{/i}."
-                            $ cinematic = True
-                            Narrator "Alice seems genuinely saddened."
-                            $ cinematic = False
-                            Alice "It's for her own good. Know that."
-                            hide alice sprite
-                            jump BSID1GH2
+            label BSID1GH2_Choices:
+                Alice "Pupil, what do you need help with?"
+                menu:
+                    "What were you and Aria talking about?":
+                        Alice "That's between Aria and I."
+                        menu:
+                            "She seems upset.":
+                                Alice "That's not what I {i}wanted{/i}."
+                                $ cinematic = True
+                                Narrator "Alice seems genuinely saddened."
+                                $ cinematic = False
+                                Alice "It's for her own good. Know that."
+                                hide alice sprite
+                                jump BSID1GH2_Choices
 
-                        "Alright...":
-                            hide alice sprite
-                            jump BSID1GH2
-                "I need some help with my seeds.":
-                    Alice "I'm not permitted to help you anymore than I already have."
-                    Alice "If you're struggling to understand which seed is which and the care they need, perhaps the library should be your next stop."
-                    hide alice sprite
-                    jump BSID1GH2
+                            "Alright...":
+                                hide alice sprite
+                                jump BSID1GH2_Choices
+                    "I need some help with my seeds.":
+                        Alice "I'm not permitted to help you anymore than I already have."
+                        Alice "If you're struggling to understand which seed is which and the care they need, perhaps the library should be your next stop."
+                        hide alice sprite
+                        jump BSID1GH2_Choices
 
-                "I saw one of your dolls in the sewers." if Flag_NotAliceMet == True:
-                    Alice "In the sewers..."
-                    Alice "I doubt that."
-                    Alice "None of my dolls leave the grounds. That's too many things to keep track of. Are you sure that you saw one? It just seems... unlikely."
-                    menu: 
-                        "I'm certain.":
-                            Alice "I'll talk to Eileen. I recommend you don't leave the grounds or engage with it."
-                            hide alice sprite
-                            jump BSID1GH2
-                        "Maybe I was mistaken.":
-                            Alice "You're under a lot of stress. Take care of yourself, pupil."
-                            hide alice sprite
-                            jump BSID1GH2
-                
-                "Nothing. Nevermind.":
-                    hide alice sprite
-                    jump GreenhouseMorning1Choices
+                    "I saw one of your dolls in the sewers." if Flag_NotAliceMet == True:
+                        Alice "In the sewers..."
+                        Alice "I doubt that."
+                        Alice "None of my dolls leave the grounds. That's too many things to keep track of. Are you sure that you saw one? It just seems... unlikely."
+                        menu: 
+                            "I'm certain.":
+                                Alice "I'll talk to Eileen. I recommend you don't leave the grounds or engage with it."
+                                hide alice sprite
+                                jump BSID1GH2_Choices
+                            "Maybe I was mistaken.":
+                                Alice "You're under a lot of stress. Take care of yourself, pupil."
+                                hide alice sprite
+                                jump BSID1GH2_Choices
+                    
+                    "Nothing. Nevermind.":
+                        hide alice sprite
+                        jump GreenhouseMorning1Choices
 
 
 
