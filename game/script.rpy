@@ -547,7 +547,6 @@ label Night0Dorms:
                     menu:
                         "Thanks.":
                             pass
-                    hide melody sprite excited
                     Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
                     menu:
                         "(Continue) There is...":
@@ -7362,7 +7361,8 @@ label BARI01:
             pass
             
         "I was busy. Got to impress the Mage Council somehow.":
-            Aria "I can't imagine being like them. Stuck inside stone walls, in meetings all the time... sounds frustrating."
+            Aria "I can't imagine being like them. Stuck inside stone walls, in meetings all the time..." 
+            Aria "...sounds frustrating."
             menu: 
                 "Makes you I wonder how they all felt during {i}their{/i} final exams.":
                     pass
@@ -7541,6 +7541,7 @@ label BNAL01:
 #   Melody Main Hub   #
 ####################### 
 label melodyhub_main:
+    show melody sprite happy
     Melody "What's the matter?"
     menu:
         "About that light spell..." if Flag_LightSpellNotLearned:
@@ -7827,6 +7828,7 @@ label melodyhub_main:
         Melody "You want to know about my dreams? I feel like we're at a sleepover or something..."
         $ cinematic = True
         Narrator "She purses her lips in thought, which seems out of character for someone usually so put together."
+        $ cinematic = False
         Melody "For now? Graduating. This place has been great but I think we're all over it. Wherever we end up I'm sure we'll all be a lot happier."
         Melody "Maybe they'll put you and me somewhere close so we can visit… Wait, where do you want to end up?"
         menu:
@@ -7855,11 +7857,9 @@ label melodyhub_main:
         menu: 
             "Hopefully, a bit less stressful.":
                 Melody "You and me both."
-                hide melody sprite happy
                 jump melodyhub_main
             "I'd rather not speculate.":
                 Melody "Good point, I shouldn't jinx it."
-                hide melody sprite happy
                 jump melodyhub_main
 
     label HMEL11:
