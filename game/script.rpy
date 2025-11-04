@@ -3,15 +3,15 @@
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
 
-define Tao = Character("Tao")
-define Aria = Character("Aria")
-define Melody = Character("Melody", color="#6f068ad3")
-define Melody2 = Character("Melody", color="#6f068ad3")
-define Rex = Character("Rex")
-define Xander = Character("Xander")
-define Eileen = Character("Eileen")
-define Alice = Character("Alice")
-define NotAlice = Character("NotAlice")
+define Tao = Character("Tao", namebox_background=Frame("gui/tao_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define Aria = Character("Aria", namebox_background=Frame("gui/aria_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define Melody = Character("Melody", namebox_background=Frame("gui/melody_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define Melody2 = Character("Melody", namebox_background=Frame("gui/melody_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define Rex = Character("Rex", namebox_background=Frame("gui/rex_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define Xander = Character("Xander", namebox_background=Frame("gui/xander_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define Eileen = Character("Eileen", namebox_background=Frame("gui/eileen_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define Alice = Character("Alice", namebox_background=Frame("gui/alice_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define NotAlice = Character("NotAlice", namebox_background=Frame("gui/alice_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
 define Narrator = Character("")
 
 # List of possible locations (optional, for reference)
