@@ -547,7 +547,6 @@ label Night0Dorms:
                     menu:
                         "Thanks.":
                             pass
-                    hide melody sprite excited
                     Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
                     menu:
                         "(Continue) There is...":
@@ -1252,46 +1251,47 @@ label Morning1Greenhouse:
             Narrator "Alice's mood seems to shift as you approach, a stressed expression melting away."
             Narrator "You wonder whether she's feigning it."
             $ cinematic = False
-            Alice "Pupil, what do you need help with?"
-            menu:
-                "What were you and Aria talking about?":
-                    Alice "That's between Aria and I."
-                    menu:
-                        "She seems upset.":
-                            Alice "That's not what I {i}wanted{/i}."
-                            $ cinematic = True
-                            Narrator "Alice seems genuinely saddened."
-                            $ cinematic = False
-                            Alice "It's for her own good. Know that."
-                            hide alice sprite
-                            jump BSID1GH2
+            label BSID1GH2_Choices:
+                Alice "Pupil, what do you need help with?"
+                menu:
+                    "What were you and Aria talking about?":
+                        Alice "That's between Aria and I."
+                        menu:
+                            "She seems upset.":
+                                Alice "That's not what I {i}wanted{/i}."
+                                $ cinematic = True
+                                Narrator "Alice seems genuinely saddened."
+                                $ cinematic = False
+                                Alice "It's for her own good. Know that."
+                                hide alice sprite
+                                jump BSID1GH2_Choices
 
-                        "Alright...":
-                            hide alice sprite
-                            jump BSID1GH2
-                "I need some help with my seeds.":
-                    Alice "I'm not permitted to help you anymore than I already have."
-                    Alice "If you're struggling to understand which seed is which and the care they need, perhaps the library should be your next stop."
-                    hide alice sprite
-                    jump BSID1GH2
+                            "Alright...":
+                                hide alice sprite
+                                jump BSID1GH2_Choices
+                    "I need some help with my seeds.":
+                        Alice "I'm not permitted to help you anymore than I already have."
+                        Alice "If you're struggling to understand which seed is which and the care they need, perhaps the library should be your next stop."
+                        hide alice sprite
+                        jump BSID1GH2_Choices
 
-                "I saw one of your dolls in the sewers." if Flag_NotAliceMet == True:
-                    Alice "In the sewers..."
-                    Alice "I doubt that."
-                    Alice "None of my dolls leave the grounds. That's too many things to keep track of. Are you sure that you saw one? It just seems... unlikely."
-                    menu: 
-                        "I'm certain.":
-                            Alice "I'll talk to Eileen. I recommend you don't leave the grounds or engage with it."
-                            hide alice sprite
-                            jump BSID1GH2
-                        "Maybe I was mistaken.":
-                            Alice "You're under a lot of stress. Take care of yourself, pupil."
-                            hide alice sprite
-                            jump BSID1GH2
-                
-                "Nothing. Nevermind.":
-                    hide alice sprite
-                    jump GreenhouseMorning1Choices
+                    "I saw one of your dolls in the sewers." if Flag_NotAliceMet == True:
+                        Alice "In the sewers..."
+                        Alice "I doubt that."
+                        Alice "None of my dolls leave the grounds. That's too many things to keep track of. Are you sure that you saw one? It just seems... unlikely."
+                        menu: 
+                            "I'm certain.":
+                                Alice "I'll talk to Eileen. I recommend you don't leave the grounds or engage with it."
+                                hide alice sprite
+                                jump BSID1GH2_Choices
+                            "Maybe I was mistaken.":
+                                Alice "You're under a lot of stress. Take care of yourself, pupil."
+                                hide alice sprite
+                                jump BSID1GH2_Choices
+                    
+                    "Nothing. Nevermind.":
+                        hide alice sprite
+                        jump GreenhouseMorning1Choices
 
 
 
@@ -7361,7 +7361,8 @@ label BARI01:
             pass
             
         "I was busy. Got to impress the Mage Council somehow.":
-            Aria "I can't imagine being like them. Stuck inside stone walls, in meetings all the time... sounds frustrating."
+            Aria "I can't imagine being like them. Stuck inside stone walls, in meetings all the time..." 
+            Aria "...sounds frustrating."
             menu: 
                 "Makes you I wonder how they all felt during {i}their{/i} final exams.":
                     pass
@@ -7540,6 +7541,7 @@ label BNAL01:
 #   Melody Main Hub   #
 ####################### 
 label melodyhub_main:
+    show melody sprite happy
     Melody "What's the matter?"
     menu:
         "About that light spell..." if Flag_LightSpellNotLearned:
@@ -7826,6 +7828,7 @@ label melodyhub_main:
         Melody "You want to know about my dreams? I feel like we're at a sleepover or something..."
         $ cinematic = True
         Narrator "She purses her lips in thought, which seems out of character for someone usually so put together."
+        $ cinematic = False
         Melody "For now? Graduating. This place has been great but I think we're all over it. Wherever we end up I'm sure we'll all be a lot happier."
         Melody "Maybe they'll put you and me somewhere close so we can visit… Wait, where do you want to end up?"
         menu:
@@ -7854,11 +7857,9 @@ label melodyhub_main:
         menu: 
             "Hopefully, a bit less stressful.":
                 Melody "You and me both."
-                hide melody sprite happy
                 jump melodyhub_main
             "I'd rather not speculate.":
                 Melody "Good point, I shouldn't jinx it."
-                hide melody sprite happy
                 jump melodyhub_main
 
     label HMEL11:
