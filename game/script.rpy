@@ -287,6 +287,8 @@ define Day7Morning = False
 define Day7Afternoon = False
 define Day7Night = False
 
+init python:
+    config.auto_voice = "voice/{id}.ogg"
 
 transform half_size:
     zoom 0.5 #adjust as required
