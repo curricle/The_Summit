@@ -7549,7 +7549,7 @@ label melodyhub_main:
         "(Exams)":
             call MelodyExams_Choices
 
-        "(Personal)":
+        "(Personal Questions)":
             call MelodyPersonal_Choices
 
         "(Other Students)":
@@ -8563,96 +8563,14 @@ label ariahub_main:
     ###################################
     Aria "Did you want to discuss something?"
     menu:
+        "(Personal Questions)":
+            call AriaPersonal_Choices
+        
+        "(Other Students)":
+            call AriaPupils_Choices
 
-        "Tell me about where you came from...":
-            if Affinity_Aria < 30:
-                call HARI01a from _call_HARI01a
-                return
-            else: 
-                call HARI01b from _call_HARI01b
-
-        "What happened the first time your magic manifested?" if not Day0Night or Day1Morning or Day1Afternoon or Day1Night:
-            call HARI02 from _call_HARI02
-            return
-
-        "What do you think of me?":
-            if Quest_AriaComplete:
-                call HARI03a from _call_HARI03a
-                return
-
-            else:
-                call HARI03b from _call_HARI03b
-                return
-
-        "Are we friends?" if not Day0Night:
-            if Day2Morning or Day2Afternoon or Day2Night or Day3Morning or Day3Afternoon or Day3Night:
-                call HARI11a from _call_HARI11a
-                return
-
-            elif Day4Morning or Day4Afternoon or Day4Night or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
-                call HARI11b from _call_HARI11b
-                return
-            
-            else: 
-                call HARI11c from _call_HARI11c
-                return
-
-        "What do you think of the Mage Council?" if Location == "Greenhouse":
-            call HARI12 from _call_HARI12
-            return
-
-        "What do you think of Melody?" if Flag_MelodyMet:
-            call HARI05 from _call_HARI05
-            return
-
-        "What do you think of Tao?" if Flag_TaoMet:
-            call HARI06 from _call_HARI06
-            return
-
-        "What do you think of Xander?" if Flag_XanderMet:
-            call HARI07 from _call_HARI07
-            return
-
-        "What do you think of Rex?" if Flag_RexMet:
-            call HARI08 from _call_HARI08
-            return
-            
-
-        "Tell me more about the Ents" if Quest_AriaComplete:
-            call HARI04 from _call_HARI04
-            return
-
-        "What do you think of Eileen?" if not Flag_AriaEileenOpinion:
-            call HARI09 from _call_HARI09
-            return
-
-        "What do you think of Alice?" if not Flag_AriaAliceOpinion:
-            call HARI10 from _call_HARI10
-            return
-
-        "Tell me more of what happened in the forest." if Quest_AriaComplete:
-            call HARI14 from _call_HARI14
-            return
-
-        "What's the deal with the Great Mage Tree?" if not Day0Afternoon and not Day0Night and not Day1Morning and not Day1Afternoon and not Day1Night:
-            call HARI17 from _call_HARI17
-            return
-
-        "What's with you and the forest?" if Quest_AriaProgress or Quest_AriaComplete:
-            call HARI16 from _call_HARI16
-            return
-
-        "Do you want to be a powerful mage?" if not Day0Night:
-            call HARI15 from _call_HARI15
-            return
-
-        "How do you see your life after Scholomance?" if Day4Morning or Day4Afternoon or Day4Night or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
-            if Quest_AriaComplete:
-                call HARI18a from _call_HARI18a
-                return
-            else:
-                call HARI18b from _call_HARI18b
-                return
+        "(Other)":
+            call AriaOther_Choices
 
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
@@ -8668,6 +8586,120 @@ label ariahub_main:
             if result == 4:
                 Aria "Ok, see you later."
                 return
+
+
+
+    label AriaPersonal_Choices:
+        menu:
+
+            "Tell me about where you came from...":
+                if Affinity_Aria < 30:
+                    call HARI01a from _call_HARI01a
+                    return
+                else: 
+                    call HARI01b from _call_HARI01b
+
+            "What happened the first time your magic manifested?" if not Day0Night or Day1Morning or Day1Afternoon or Day1Night:
+                call HARI02 from _call_HARI02
+                return
+
+            "What do you think of me?":
+                if Quest_AriaComplete:
+                    call HARI03a from _call_HARI03a
+                    return
+
+                else:
+                    call HARI03b from _call_HARI03b
+                    return
+
+            "Are we friends?" if not Day0Night:
+                if Day2Morning or Day2Afternoon or Day2Night or Day3Morning or Day3Afternoon or Day3Night:
+                    call HARI11a from _call_HARI11a
+                    return
+
+                elif Day4Morning or Day4Afternoon or Day4Night or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
+                    call HARI11b from _call_HARI11b
+                    return
+                
+                else: 
+                    call HARI11c from _call_HARI11c
+                    return
+
+            "What do you think of the Mage Council?" if Location == "Greenhouse":
+                call HARI12 from _call_HARI12
+                return
+
+            "How do you see your life after Scholomance?" if Day4Morning or Day4Afternoon or Day4Night or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
+                if Quest_AriaComplete:
+                    call HARI18a from _call_HARI18a
+                    return
+                else:
+                    call HARI18b from _call_HARI18b
+                    return
+
+            "(Return)":
+                return
+
+
+
+
+    label AriaPupils_Choices:
+        menu:
+            "What do you think of Melody?" if Flag_MelodyMet:
+                call HARI05 from _call_HARI05
+                return
+
+            "What do you think of Tao?" if Flag_TaoMet:
+                call HARI06 from _call_HARI06
+                return
+
+            "What do you think of Xander?" if Flag_XanderMet:
+                call HARI07 from _call_HARI07
+                return
+
+            "What do you think of Rex?" if Flag_RexMet:
+                call HARI08 from _call_HARI08
+                return
+
+            "(Return)":
+                return
+                
+
+    label AriaOther_Choices:
+        menu:
+
+            "Tell me more about the Ents" if Quest_AriaComplete:
+                call HARI04 from _call_HARI04
+                return
+
+            "What do you think of Eileen?" if not Flag_AriaEileenOpinion:
+                call HARI09 from _call_HARI09
+                return
+
+            "What do you think of Alice?" if not Flag_AriaAliceOpinion:
+                call HARI10 from _call_HARI10
+                return
+
+            "Tell me more of what happened in the forest." if Quest_AriaComplete:
+                call HARI14 from _call_HARI14
+                return
+
+            "What's the deal with the Great Mage Tree?" if not Day0Afternoon and not Day0Night and not Day1Morning and not Day1Afternoon and not Day1Night:
+                call HARI17 from _call_HARI17
+                return
+
+            "What's with you and the forest?" if Quest_AriaProgress or Quest_AriaComplete:
+                call HARI16 from _call_HARI16
+                return
+
+            "Do you want to be a powerful mage?" if not Day0Night:
+                call HARI15 from _call_HARI15
+                return
+
+            "(Return)":
+                return
+
+
 
 
     return
@@ -8709,7 +8741,7 @@ label ariahub_main:
                 pass
         menu: 
             "...":
-                jump ariahub_main
+                return
 
 
 
@@ -8758,7 +8790,7 @@ label ariahub_main:
                 Aria "Anyway... I got off topic. Did you want to ask something else?"
                 menu: 
                     "...":
-                        jump ariahub_main
+                        return
 
 
 
@@ -8799,21 +8831,21 @@ label ariahub_main:
                     pass
         menu:
             "...":
-                jump ariahub_main
+                return
 
 
 
     label HARI03a:
         Aria "I still can't believe you found me in the woods. No one has ever done that for me. Your energy is so positive, it'll come back to you, just watch!"
         $ Affinity_Aria += 5
-        jump ariahub_main
+        return
 
 
 
     label HARI03b:
         Aria "You? Of course I think you're nice. You can be weird too, but that's what I like about you."
         Aria "Let's chat more often. Everyone else is so wrapped up in exams, it gets so lonely."
-        jump ariahub_main
+        return
 
 
 
@@ -8826,12 +8858,12 @@ label ariahub_main:
                 Aria "Anytime you need help, I'll do what I can."
                 hide aria sprite happy
                 $ Affinity_Aria += 5
-                jump ariahub_main
+                return
             "I'd rather just study.":
                 show aria sprite sad
                 Aria "Ah, no problem. But you don't have to be a stranger, you know."
                 hide aria sprite sad
-                jump ariahub_main           
+                return           
 
 
 
@@ -8851,20 +8883,20 @@ label ariahub_main:
         menu: 
             "I agree with your mum.":
                 Aria "I'm trying my best, I really am."
-                jump ariahub_main
+                return
 
             "You'll find a way to fix it.":
                 Aria "What I'm really worried about is my exams. What if I lose control and fail?"
                 menu: 
                     "We're in the same boat. We could all fail and get shipped back to the Scholomance.":
                         Aria "You're just trying to make me feel better."
-                        jump ariahub_main
+                        return
 
 
 
     label HARI11c:
         Aria "Why wouldn't we be?"
-        jump ariahub_main
+        return
 
 
     label HARI12:
@@ -8876,7 +8908,7 @@ label ariahub_main:
         Aria "Animals coming and going as they like." 
         Aria "I'm safe. I can't hurt anyone." 
         Aria "No one can hurt me."
-        jump ariahub_main
+        return
 
     
     label HARI05:
@@ -8910,7 +8942,7 @@ label ariahub_main:
                 Aria "Mel lets her facade down around me. She knows I'm not a threat."
                 Aria "But I can see the cracks. I can see how hard she tries to keep it all together."
                 Aria "It's like she's holding a fragile glass sculpture, and she's terrified of it shattering."
-                jump ariahub_main
+                return
     
     label HARI06:
         Aria "Tao is a sweetheart under all that, I can feel it." 
@@ -8919,7 +8951,7 @@ label ariahub_main:
         Aria "What about being a good friend that you can rely on?"
         Aria "If only they'd keep secrets. Instead, they'd try to use it against you." 
         Aria "I like Tao but I can't trust them, which makes me sad."
-        jump ariahub_main
+        return
 
     label HARI07:
         Aria "Xander? I'd like to get to know him better but he's so quiet." 
@@ -8927,7 +8959,7 @@ label ariahub_main:
         Aria "He's moody during exams, I think he's really stressed." 
         Aria "If we were friends I'd tell him that it's not the end of the world if you can't memorize everything." 
         Aria "Sometimes you can work around it."
-        jump ariahub_main
+        return
 
     label HARI08:
         Aria "Rex never seems happy." 
@@ -8935,7 +8967,7 @@ label ariahub_main:
         Aria "I've tried to make friends with him a few times but he won't have it."
         Aria "He reminds me of a mountain goat. A headstrong loner that won't hesitate to charge at you when they're mad." 
         Aria "When I have time, I'll make him a fire flower or something. I'm sure he'd feel better."
-        jump ariahub_main
+        return
 
     
     label HARI04:
@@ -8961,7 +8993,7 @@ label ariahub_main:
                 Aria "Hm, it felt natural to me. Living things always have something to say." 
                 Aria "Something to ask Nert when I see him next."
                 $ Affinity_Aria += 10
-                jump ariahub_main
+                return
     
     label HARI09:
         Aria "I don't know why Eileen dislikes me so much." 
@@ -8972,7 +9004,7 @@ label ariahub_main:
         Aria "She told me that I was a weak mage and would get someone killed one day. I can feel her watching me and it makes me really anxious."
         hide aria sprite sad
         $ Flag_AriaEileenOpinion = True
-        jump ariahub_main
+        return
 
     label HARI10:
         Aria "You know, Alice collected me from home and took me to the Scholomance." 
@@ -8984,7 +9016,7 @@ label ariahub_main:
         Aria "I wouldn't have tried so hard to be a good mage if it wasn't for Alice."
         Aria "I don't know what makes her so kind but I'm grateful for it. I've always felt like she's been on my side."
         $ Flag_AriaAliceOpinion = True
-        jump ariahub_main
+        return
     
     label HARI14:
         Aria "Before you found me, I just... wandered." 
@@ -9007,7 +9039,7 @@ label ariahub_main:
         Aria "The Ent lifted me up. I knew what his intentions were." 
         Aria "He just wanted to meet me. It was like he was holding my magic, and my magic was holding me." 
         Aria "I began to see what my power could be."
-        jump ariahub_main
+        return
 
     label HARI17:
         Aria "He's the best part of this place. At first I was afraid of him, either he'd aggravate my... condition… or I'd hurt him somehow."
@@ -9018,7 +9050,7 @@ label ariahub_main:
                 pass
 
         Aria "Oh yes. If I ever get out of this place, I'd love to learn spells that can make trees so... human."
-        jump ariahub_main
+        return
 
     label HARI16:
         show aria sprite happy
@@ -9030,7 +9062,7 @@ label ariahub_main:
         Aria "The forest has never been touched as long as the Summit's been here." 
         Aria "You got to wonder what creatures live in woods as old as these."
         hide aria sprite happy
-        jump ariahub_main
+        return
 
 
     label HARI15:
@@ -9040,7 +9072,7 @@ label ariahub_main:
             "What do the teachers say?":
                 Aria "They tell me I'm not working hard enough. I'm doing everything I can." 
                 Aria "Maybe I'm not mage material. But I can't go home like this, either."
-                jump ariahub_main
+                return
             "That's your fear talking.":
                 Aria "The day I was born, an earthquake leveled several houses in town and they said it was my fault." 
                 Aria "And now, my magic is out of control. Aren't I sick after all?"
@@ -9049,19 +9081,19 @@ label ariahub_main:
                         Aria "I know I needed to go to the Scholomance to learn how to handle my magic." 
                         Aria "I'm afraid my magic is stronger than me. It'll do something worse than an earthquake." 
                         Aria "Something really, really, bad."
-                        jump ariahub_main
+                        return
 
     label HARI18a:
         Aria "It's all different since the forest."
         Aria "I get now I'm just part of a big mystery that's happening around us all the time." 
         Aria "I'm not good or evil. It's my choices that make the world better or worse. If I deal with my fear, my magic will help me find my place." 
         Aria "I reckon I'm starting to get what it means to be a mage."
-        jump ariahub_main
+        return
     
     label HARI18b:
         Aria "Scared and confused. I can't sort it out, if I'm honest." 
         Aria "I can't fix my magic. And I don't see what place a broken mage has in this world."
-        jump ariahub_main
+        return
 
 
 
@@ -10246,81 +10278,17 @@ label melody2hub_main:
     ###################################
     Melody2 "Hmm?"
     menu:
+        "(Exams)":
+            call Melody2Exams_Choices
 
-        "(Friendship) Are we {i}actually{/i} friends?":
-            call HMEL27 from _call_HMEL27
-            return
+        "(Personal Questions)":
+            call Melody2Personal_Choices
 
-        "(Dreams) Do you have a dream?":
-            call HMEL21 from _call_HMEL21
-            return
+        "(Other Students)":
+            call Melody2Pupils_Choices
 
-        "(Past) Tell me about your past.":
-            call HMEL22 from _call_HMEL22
-            return
-
-        "(Tao) What do you really think of Tao?":
-            if Quest_MelodyComplete:
-                call HMEL24a from _call_HMEL24a
-                return
-
-            else:
-                call HMEL24b from _call_HMEL24b
-                return
-
-        "(Aria) What do you really think of Aria?":
-            call HMEL25 from _call_HMEL25
-            return
-
-        "(Rex) What do you really think of Rex?":
-            call HMEL28 from _call_HMEL28
-            return
-
-        "(Graduation Spot) Tell me about the graduation spots.":
-            call HMEL29 from _call_HMEL29
-            return
-
-        "(Exams) Got anything on the exams?":
-            call HMEL30 from _call_HMEL30
-            return
-
-        "(Combat Exam)":
-            if Flag_CombatExamCompleted:
-                call HMEL31a from _call_HMEL31a
-                return
-            else:
-                call HMEL31b from _call_HMEL31b
-                return
-
-        "(Potion Exam)":
-            if Flag_PotionExamCompleted:
-                call HMEL33a from _call_HMEL33a
-                return
-
-            else:
-                call HMEL33b from _call_HMEL33b
-                return
-
-        "(Artificing Exam)":
-            if Flag_ArtificingExamCompleted:
-                call HMEL35a from _call_HMEL35a
-                return
-
-            else:
-                call HMEL35b from _call_HMEL35b
-                return
-
-        "I met something that looked like Alice but clearly wasn't... 'Alice'":
-            call HMEL37 from _call_HMEL37
-            return
-
-        "(Magic) How did your magic manifest?":
-            call HMEL38 from _call_HMEL38
-            return
-
-        "(Mage Society)":
-            call HMEL39 from _call_HMEL39
-            return
+        "(Other)":
+            call Melody2Other_Choices
 
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
@@ -10336,6 +10304,119 @@ label melody2hub_main:
             if result == 4:
                 Melody2 "We'll talk."
                 return       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    label Melody2Exams_Choices:
+        menu:
+
+            "(Exams) Got anything on the exams?":
+                call HMEL30 from _call_HMEL30
+                return
+
+            "(Combat Exam)":
+                if Flag_CombatExamCompleted:
+                    call HMEL31a from _call_HMEL31a
+                    return
+                else:
+                    call HMEL31b from _call_HMEL31b
+                    return
+
+            "(Potion Exam)":
+                if Flag_PotionExamCompleted:
+                    call HMEL33a from _call_HMEL33a
+                    return
+
+                else:
+                    call HMEL33b from _call_HMEL33b
+                    return
+
+            "(Artificing Exam)":
+                if Flag_ArtificingExamCompleted:
+                    call HMEL35a from _call_HMEL35a
+                    return
+
+                else:
+                    call HMEL35b from _call_HMEL35b
+                    return
+
+            "(Return)":
+                return
+
+
+    label Melody2Personal_Choices:
+        menu:
+            "(Friendship) Are we {i}actually{/i} friends?":
+                call HMEL27 from _call_HMEL27
+                return
+
+            "(Dreams) Do you have a dream?":
+                call HMEL21 from _call_HMEL21
+                return
+
+            "(Past) Tell me about your past.":
+                call HMEL22 from _call_HMEL22
+                return
+
+            "(Magic) How did your magic manifest?":
+                call HMEL38 from _call_HMEL38
+                return
+
+            "(Return)":
+                return
+
+
+
+    label Melody2Pupils_Choices:
+        menu:
+            "(Tao) What do you really think of Tao?":
+                if Quest_MelodyComplete:
+                    call HMEL24a from _call_HMEL24a
+                    return
+
+                else:
+                    call HMEL24b from _call_HMEL24b
+                    return
+
+            "(Aria) What do you really think of Aria?":
+                call HMEL25 from _call_HMEL25
+                return
+
+            "(Rex) What do you really think of Rex?":
+                call HMEL28 from _call_HMEL28
+                return
+
+            "(Return)":
+                return
+        
+    label Melody2Other_Choices:
+        menu:
+            "(Graduation Spot) Tell me about the graduation spots.":
+                call HMEL29 from _call_HMEL29
+                return
+
+            "I met something that looked like Alice but clearly wasn't... 'Alice'":
+                call HMEL37 from _call_HMEL37
+                return
+
+            "(Mage Society)":
+                call HMEL39 from _call_HMEL39
+                return
+
+            "(Return)":
+                return
+
 
 
 
@@ -10361,10 +10442,10 @@ label melody2hub_main:
                                 menu:
                                     "I guess.":
                                         Melody2 "Plus, it's exhausting to keep the facade up."
-                                        jump melody2hub_main
+                                        return
                                     "I'm not going to backstab you.":
                                         Melody2 "We'll see."
-                                        jump melody2hub_main
+                                        return
 
     label HMEL21:
         Melody2 "I've always dreamed of going to the city -- the Scholomance was always a route to that. I like having magic, who wouldn't?" 
@@ -10381,18 +10462,18 @@ label melody2hub_main:
                 Melody2 "There wasn't anything my parents did wrong. They were simply happy living a simple life in a quiet place." 
                 Melody2 "The village might as well have been at the end of the world -- isolated on a small island with nothing going in and out."
                 Melody2 "It's the sort of place you go to die."
-                jump melody2hub_main
+                return
 
             "What about your friends?":
                 Melody2 "Everyone was older than twenty when I was {i}born{/i}. There was no one my age to talk to so I spent most of my time with birds and make-believe friends."
                 menu: 
                     "That's all you had?":
                         Melody2 "Again, what other option did I have? This isn't me telling you some sob story -- if anything, I'm being open with you."
-                        jump melody2hub_main
+                        return
 
                     "Sounds hard.":
                         Melody2 "I made do."
-                        jump melody2hub_main
+                        return
 
 
             "(Say nothing.)":
@@ -10400,7 +10481,7 @@ label melody2hub_main:
                 Melody2 "...but still, I'd rather not make friendship bracelets and fairy chains right now."
                 menu: 
                     "Got it.":
-                        jump melody2hub_main
+                        return
 
 
     label HMEL24a:
@@ -10409,7 +10490,7 @@ label melody2hub_main:
             "Do you enjoy messing with people's grades?":
                 Melody2 "Sometimes. It depends on the person."
                 Melody2 "Messing with Xander's grade is like pushing over a toddler -- not {i}that{/i} fun. But with Tao I know there's stakes."
-                jump melody2hub_main
+                return
 
 
     label HMEL24b:
@@ -10452,7 +10533,7 @@ label melody2hub_main:
                 pass
 
         Melody2 "Just remember, they're still the main contender to sabotage. Don't get attached to a bear cub. It might be cute, but it'll kill you one day."
-        jump melody2hub_main
+        return
 
 
     label HMEL25:
@@ -10477,12 +10558,12 @@ label melody2hub_main:
                         Melody2 "It's not the nicest thought. In a way I really like Aria, I just wish she could manage herself better. It's annoying to watch someone born so lucky have such basic, solvable problems." 
                         Melody2 "Make you wish you'd been born that lucky yourself."
                         Melody2 "I'm sure she'll figure it out eventually at whatever backwater town she ends up in."
-                        jump melody2hub_main
+                        return
 
     label HMEL28:
         Melody2 "Rex is about as bright as a cave. He puts on a show, 'oh look at me I'm edgy, I hate authority,' but anyone who really hated authority wouldn't be here, they'd have burned the school down." 
         Melody2 "Anarchists are only as useful as their ability to commit to it. He needs to learn to play the long game."
-        jump melody2hub_main
+        return
 
 
 
@@ -10500,13 +10581,13 @@ label melody2hub_main:
         Melody2 "It's not a crappy little town, it's a city -- that spot is mine."
         Melody2 "There could be more spots, but those are the ones Alice mentioned. Four rocks and one diamond. I doubt it's a coincidence there are only five of us graduating from this set." 
         Melody2 "Maybe these are the towns that either didn't have a town mage, for whatever reason. "
-        jump melody2hub_main
+        return
 
 
 
     label HMEL30:
         Melody2 "I doubt you need to study that hard for these exams. You're not an idiot like the rest of them."
-        jump melody2hub_main
+        return
 
     label HMEL31a:
         Melody2 "It went fine. I've never been great in combat -- it's not something I particularly enjoy. I doubt I'll need that skill in the city -- surely there will be other mages for that."
@@ -10514,17 +10595,17 @@ label melody2hub_main:
         menu:
             "It could've gone better.":
                 "As long as your average grade was fine, it shouldn't matter. That's why it's graded on a curve, I guess."
-                jump melody2hub_main
+                return
 
             "I think I did fine.":
                 Melody2 "Hmm."
-                jump melody2hub_main
+                return
 
 
 
     label HMEL31b:
         Melody2 "I have a few tricks up my sleeve for the combat exam. I'm not going to do as well as someone like Xander, but I know I'll pass."
-        jump melody2hub_main
+        return
 
 
 
@@ -10541,7 +10622,7 @@ label melody2hub_main:
                 pass
 
         Melody2 "I think everyone else did not enjoy that. Rex looks like he's gonna blow something up."
-        jump melody2hub_main
+        return
 
 
     label HMEL33b:
@@ -10553,7 +10634,7 @@ label melody2hub_main:
         Melody2 "They sell for a lot, they're easy to make once you know the recipe, but still, somehow, people mess it up."
         Melody2 "I've heard about mages who retired by writing one or two potion recipe books -- everyone wants them."
         Melody2 "When I figured all that out, it was just a point of studying a lot and making sure I practised regularly."
-        jump melody2hub_main
+        return
 
     label HMEL35a:
         Melody2 "That went better than expected. I thought the artificing exam would be the hardest one but..." 
@@ -10561,11 +10642,11 @@ label melody2hub_main:
         menu:
             "It did not go well.":
                 Melody2 "Well… let's hope you did well on your other tests…"
-                jump melody2hub_main
+                return
 
             "It went fine.":
                 Melody2 "Never doubted you..."
-                jump melody2hub_main
+                return
 
 
 
@@ -10577,7 +10658,7 @@ label melody2hub_main:
                 "We're in a room with Rex. He could just blow us up. You never know. Intentionally or not, some artificing is dangerous."
                 menu: 
                     "Exciting...":
-                        jump melody2hub_main
+                        return
 
 
     label HMEL37:
@@ -10588,11 +10669,11 @@ label melody2hub_main:
         menu:
             "Can you come see it with me?":
                 "Are you insane? No. Whatever is in that forest will hopefully stay there. I'd rather not see it in the flesh -- or... porcelain, whatever it has."
-                jump melody2hub_main
+                return
     
             "I'll avoid it.":
                 Melody2 "Good… Even if you're somewhat a rival, I don't want you dead."
-                jump melody2hub_main
+                return
 
 
     label HMEL38:
@@ -10625,7 +10706,7 @@ label melody2hub_main:
         Melody2 "Perhaps prison's a bit intense to describe the Scholomance but, really, would any of us wanted to attend that place."
         Melody2 "I think manifesting magic was worth a childhood cut short. It's a price we all paid."
         Melody2 "But that price is too much if I get sent back to a small little town old people die in."
-        jump melody2hub_main
+        return
 
     label HMEL39:
         Melody2 "You want to know my thoughts on Mage Society… I guess it's a big club, when you think about it." 
@@ -10642,7 +10723,7 @@ label melody2hub_main:
         Melody2 "I have a few ideas on who I could use to get in but getting the city spot is step one. The city, after all, is the best place to network"
         Melody2 "..."
         Melody2 "What a rant..."
-        jump melody2hub_main
+        return
 
 
 
