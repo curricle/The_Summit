@@ -8159,78 +8159,14 @@ label xanderhub_main:
     ###################################
     Xander "Everything alright, pal?"
     menu:
-        "Tell me about where you came from.":
-            call HXAN01 from _call_HXAN01
-            return
+        "(Personal Questions)":
+            call XanderPersonal_Choices
 
-        "What was it like on the farm?" if Flag_XanderFarmer == True:
-            call HXAN02 from _call_HXAN02
-            return
+        "(Other Questions)":
+            call XanderPupils_Choices
 
-        "What happened the first time your magic manifested?":
-            call HXAN03 from _call_HXAN03
-            return
-
-        "What do you think of me?":
-            if Affinity_Xander < 30:
-                call HXAN04a from _call_HXAN04a
-                return
-            else:
-                call HXAN04b from _call_HXAN04b
-                return
-
-        "Heard you're the best fighter among us.":
-            call HXAN05 from _call_HXAN05
-            return
-
-        "What do you think of Melody?" if Flag_MelodyMet:
-            call HXAN06 from _call_HXAN06
-            return
-        
-        "What do you think of Tao?" if Flag_TaoMet:
-            call HXAN07 from _call_HXAN07
-            return
-
-        "What do you think of Aria?" if Flag_AriaMet:
-            call HXAN08 from _call_HXAN08
-            return
-
-        "What do you think of Rex?" if Flag_RexMet:
-            call HXAN09 from _call_HXAN09
-            return
-
-        "What do you think about the authorities we're under as mages?" if Flag_MageAuthority:
-            call HXAN10 from _call_HXAN10
-            return
-
-        "What do you think of Eileen?" if not Flag_XanderEileenOpinion:
-            call HXAN11 from _call_HXAN11
-            return
-
-        "What do you think of Alice?" if not Flag_XanderAliceOpinion:
-            call HXAN12 from _call_HXAN12
-            return
-
-        "Are we friends?":
-            if Affinity_Xander < 40:
-                call HXAN13a from _call_HXAN13a
-                return
-
-            else:
-                call HXAN13b from _call_HXAN13b
-                return
-
-        "What do you think of the Mage Council?":
-            call HXAN14 from _call_HXAN14
-            return
-
-        "What's the Adventurer's Guild?" if Flag_AdventureGuild:
-            call HXAN15 from _call_HXAN15
-            return
-
-        "Ok, so how do I find the key to the Archives?" if Quest_XanderProgress:
-            call HXAN16 from _call_HXAN16
-            return
+        "(Other)":
+            call XanderOther_Choices
 
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
@@ -8246,6 +8182,106 @@ label xanderhub_main:
             if result == 4:
                 Xander "Ok, chat later."
                 return
+
+
+    label XanderPersonal_Choices:
+        menu:
+            "Tell me about where you came from.":
+                call HXAN01 from _call_HXAN01
+                return
+
+            "What was it like on the farm?" if Flag_XanderFarmer == True:
+                call HXAN02 from _call_HXAN02
+                return
+
+            "What happened the first time your magic manifested?":
+                call HXAN03 from _call_HXAN03
+                return
+
+            "What do you think of me?":
+                if Affinity_Xander < 30:
+                    call HXAN04a from _call_HXAN04a
+                    return
+                else:
+                    call HXAN04b from _call_HXAN04b
+                    return
+
+            "(Return)":
+                return
+
+
+    label XanderPupils_Choices:
+        menu:
+            "What do you think of Melody?" if Flag_MelodyMet:
+                call HXAN06 from _call_HXAN06
+                return
+            
+            "What do you think of Tao?" if Flag_TaoMet:
+                call HXAN07 from _call_HXAN07
+                return
+
+            "What do you think of Aria?" if Flag_AriaMet:
+                call HXAN08 from _call_HXAN08
+                return
+
+            "What do you think of Rex?" if Flag_RexMet:
+                call HXAN09 from _call_HXAN09
+                return
+
+            "(Return)":
+                return
+
+
+
+    label XanderOther_Choices:
+        menu:
+            "What do you think about the authorities we're under as mages?" if Flag_MageAuthority:
+                call HXAN10 from _call_HXAN10
+                return
+
+            "What do you think of Eileen?" if not Flag_XanderEileenOpinion:
+                call HXAN11 from _call_HXAN11
+                return
+
+            "What do you think of Alice?" if not Flag_XanderAliceOpinion:
+                call HXAN12 from _call_HXAN12
+                return
+
+            "What do you think of the Mage Council?":
+                call HXAN14 from _call_HXAN14
+                return
+
+            "What's the Adventurer's Guild?" if Flag_AdventureGuild:
+                call HXAN15 from _call_HXAN15
+                return
+
+            "Are we friends?":
+                if Affinity_Xander < 40:
+                    call HXAN13a from _call_HXAN13a
+                    return
+
+                else:
+                    call HXAN13b from _call_HXAN13b
+                    return
+
+            "Heard you're the best fighter among us.":
+                call HXAN05 from _call_HXAN05
+                return
+
+            "Ok, so how do I find the key to the Archives?" if Quest_XanderProgress:
+                call HXAN16 from _call_HXAN16
+                return
+
+            "(Return)":
+                return
+
+
+
+
+
+
+
+
 
     return
 
@@ -8264,15 +8300,15 @@ label xanderhub_main:
                     play sound "audio/dialogue_information_default.mp3"
                     Xander "But I loved it. Out every day, working with my hands, talking to the animals." 
                     Xander "Lots of space and fresh air. Lots of friends too -- although they were all my brothers." 
-                    Xander "We're six boys and I'm... let's see…um…the fifth one. One of us was always up for a game, or a scrap. How do you think I got so good at fighting?"
-                    jump xanderhub_main
+                    Xander "We're six boys and I'm... let's see… um… the fifth one. One of us was always up for a game, or a scrap. How do you think I got so good at fighting?"
+                    return
 
                 else:
                     Xander "Uh, well, I grew up on a little farm with my parents down in the valley. I have a bunch of brothers." 
                     Xander "We're tough boys. Lots of digging holes and building walls. It was pretty good. Animals like me, and I like lifting heavy stuff so… yeah."
                     play sound "audio/dialogue_information_default.mp3"
                     $ Flag_XanderFarmer = True
-                    jump xanderhub_main
+                    return
 
     label HXAN02:
         Xander "Our farm's known for its beef and milk. I'm proud of that. Cows are smart, you know." 
@@ -8280,7 +8316,7 @@ label xanderhub_main:
         Xander "But it was never lonely in the valley. Kids from the other farms came by." 
         Xander "My brothers -- there's five of them -- always had some chore or shenanigan in mind for me. I miss the lot of them." 
         Xander "When I get back, I'll help them out again. They're probably hurting for hands."
-        jump xanderhub_main
+        return
 
 
     label HXAN03:
@@ -8291,7 +8327,7 @@ label xanderhub_main:
 
     label HXAN04a:
         Xander "I reckon you'd do well in the Mage Council. You seem to be the type they want."
-        jump xanderhub_main
+        return
 
 
 
@@ -8299,7 +8335,7 @@ label xanderhub_main:
         Xander "You seem like a good person. You helped me when I really needed it... sorry I was such a mess about it all. I panicked a little bit, right?" 
         Xander "I was so focused on how bad I was at things that I didn't stop and think that my talents might not be like Melody's or Tao's. Weird, right, before I got sent to the Scholomance, I never really compared myself to others..." 
         Xander "I guess I didn't need to."
-        jump xanderhub_main
+        return
 
     label HXAN05:
         Xander "Ha! Wanna have a scrap for fun?"
@@ -8323,7 +8359,7 @@ label xanderhub_main:
         menu: 
             "I like to keep a level head.":
                 Xander "Guess not..."
-                jump xanderhub_main
+                return
             "Sometimes. I guess I'll have to hold out until graduation.":
                 if Affinity_Xander > 50:
                     Xander "Or find other ways to get the energy out."
@@ -8333,22 +8369,22 @@ label xanderhub_main:
                             Xander "I didn't mean for it to come out like that..."
                             hide xander sprite shy
                             Xander "Anywho lets talk about somethin' else."
-                            jump xanderhub_main
+                            return
                         "If only it was that easy.":
                             Xander "I know, right?"
-                            jump xanderhub_main
+                            return
                 else:
                     Xander "You'll make it."
-                    jump xanderhub_main
+                    return
     
     label HXAN06:
         Xander "Mel?"
         if Day0Afternoon or Day0Night or Day1Afternoon or Day1Morning or Day1Night or Day2Morning or Day2Afternoon or Day2Night or Day3Morning or Day3Afternoon or Day3Night or Day4Morning or Day4Afternoon or Day4Night or Day5Morning or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
             Xander "She's always nice when I ask her stuff. Seems like a genuine person. I think anyone who's nice should do great in life."
-            jump xanderhub_main
+            return
         else: 
             Xander "I like her. She tried to help me with the potions exam. I didn't do too well, but she still tried."
-            jump xanderhub_main
+            return
             
     label HXAN07:
         Xander "Tao is a whiny, spoiled rich kid. Wouldn't last a minute on a farm." 
@@ -8357,10 +8393,10 @@ label xanderhub_main:
         menu:
             "That bad?":
                 Xander "Well, it sure wasn't good."
-                jump xanderhub_main
+                return
             "Sounds like a tough situation.":
                 Xander "Damn right."
-                jump xanderhub_main
+                return
 
     label HXAN08:
         Xander "Aria? Euh, she's from the country, like me. Do you think she'd like an Owlcat if I caught her one?"
@@ -8368,7 +8404,7 @@ label xanderhub_main:
             "You'd go out of your way like that?":
                 if Affinity_Xander < 40:
                     Xander "She's the only one who loves animals as much as I do. She'd take care of it."
-                    jump xanderhub_main
+                    return
                 else: 
                     Xander "I wanna see the look on her face. She'd love it. Aria's so… sweet and kind. She doesn't put on airs." 
                     Xander "And she's smart."
@@ -8377,20 +8413,20 @@ label xanderhub_main:
                     $ cinematic = False
                     Xander "She is. The others don't think so, I heard them talking shit. But one time, I saw her grow a tree through a stone wall. Ha!" 
                     Xander "The wall broke right in half like stale bread. How'd she do that? I haven't been able to talk to her since. She makes me too nervous."
-                    jump xanderhub_main
+                    return
 
     label HXAN09:
         Xander "Rex? I don't mind him, but I avoid him. Trouble has a way of finding him. Rex has a bad reputation here." 
         Xander "He's not a bad guy, he just can't get along with anyone, especially the teachers. I just don't get how he survives without any friends." 
         Xander "Anyway -- I got to focus on graduating. Rex'll be nothing but a distraction with his antics."
         $ Flag_MageAuthority = True
-        jump xanderhub_main
+        return
 
     label HXAN10:
         Xander "Um, authority's not a bad thing, because the mages need a leader." 
         Xander "Someone that tells them how to work together. Where I'm from, everyone has their role to play, and that's how we survive."
         "I don't mind following a leader with a good plan."
-        jump xanderhub_main
+        return
 
     label HXAN11:
         Xander "You wanna know what {i}I{/i} think of Eileen?"
@@ -8403,13 +8439,13 @@ label xanderhub_main:
                     Xander "Yea, I mean kill. Don't be a baby. Why else would they be making her that huge statue?" 
                     Xander "If I needed a powerful mage to keep other powerful mages in line, I'd try to stay on her good side, right?" 
                     Xander "Give her rewards and stuff. That's the story behind her statue. Or so I heard."
-                    jump xanderhub_main
+                    return
 
             
         elif Day0Night or Day0Afternoon or Day1Afternoon or Day1Morning or Day1Night:
             Xander "She watched me do a combat test back at the Scholomance." 
             Xander "Just sat there staring the whole time. I'm pretty sure she doesn't like me."
-            jump xanderhub_main
+            return
 
         
         else:
@@ -8420,17 +8456,17 @@ label xanderhub_main:
             menu: 
                 "You'd want that?":
                     Xander "I dunno. I just know I'm not cut out for this place."
-                    jump xanderhub_main
+                    return
                 
                 "Probably not. She seems the lonely type.":
                     Xander "Everyone needs someone. Learned that one the hard way."
-                    jump xanderhub_main
+                    return
 
     label HXAN12:
         Xander "Heh… Alice reminds me of a hen we have on the farm. Runs around clucking at everyone about everything, but never laid one egg." 
         Xander "I dunno how much help she's been. She keeps telling me to study, but never tells me what I'm doing wrong."
         $ Flag_XanderAliceOpinion = True
-        jump xanderhub_main 
+        return 
 
     label HXAN13a:
         Xander "I'd say we're friends, right?" 
@@ -8438,13 +8474,13 @@ label xanderhub_main:
         Xander "Right?"
         menu: 
             "Of course.":
-                jump xanderhub_main
+                return
 
 
     label HXAN13b:
         Xander "Yea, you're my buddy. You never held my freak outs against me." 
         Xander "And anyone who went through what the Scholomance put us through is my friend. Well, almost everyone."
-        jump xanderhub_main
+        return
 
     label HXAN14:
         Xander "The Mage Council? My plan is to lay low after Scholomance, and hope they won't notice me. The last thing I wanna do is have to show up to all those functions." 
@@ -8454,7 +8490,7 @@ label xanderhub_main:
             "I'd hope so. Seems like a waste otherwise.":
                 Xander "Damn right."
                 $ Affinity_Xander += 5
-                jump xanderhub_main
+                return
 
     label HXAN15:
             Xander "When I was a kid, adventurers from the Guild travelled through the valley all the time. Sometimes, pops put them up in our barn."
@@ -8472,12 +8508,12 @@ label xanderhub_main:
                                     Xander "Maybe. Let me tell you something really weird. I've had my fortune read, you know. An elder in the valley had the gift. She told me I'd die in combat one day." 
                                     Xander "My brother thought she probably meant in some village bar brawl. But after the Scholomance, I'm not so sure." 
                                     Xander "I figure, if I can get a job in combat, I could get better at it. Then, I might stand a chance of changing my fate when the day comes."
-                                    jump xanderhub_main
+                                    return
                         "Sounds exclusive and hard to get in.":
                             Xander "You got a nose for these things, heh? You're not wrong." 
                             Xander "I've only ever seen one or two adventurers that could do magic, but they were never human, usually elves or horned." 
                             Xander "But I figure, I'm a mage that can fight. There's a first time for everything, right?"
-                            jump xanderhub_main
+                            return
     
     label HXAN16:
         Xander "Glad you're helping me. The spell I used to hide it split it into several pieces that are scattered around the room." 
@@ -8485,7 +8521,7 @@ label xanderhub_main:
         Xander "Can you try, if you got enough mana? Cast the finder spell to locate the pieces of the key." 
         Xander "Once you've found all the pieces, they should just combine magically."
         Xander "Saints... who came up with this crap. I get we're in a magic castle but... c'mon."
-        jump xanderhub_main
+        return
 
 
             
