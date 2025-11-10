@@ -9007,115 +9007,14 @@ label taohub_main:
     ###################################
     Tao "What did you want to discuss?"
     menu:
-        "(Botany)":
-            call HTAO014 from _call_HTAO014
-            return
-
-        "(Artificing)":
-            call HTAO13 from _call_HTAO13
-            return
-
-        "(Potions)":
-            if Quest_TaoComplete:
-                call HTAO12a from _call_HTAO12a
-                return
-
-            else:
-                call HTAO12b from _call_HTAO12b
-                return
-
-        "What was your childhood like?":
-            if Quest_TaoComplete:
-                call HTAO01a from _call_HTAO01a
-                return
-
-            else:
-                call HTAO01b from _call_HTAO01b
-                return
-
-        "How did your magic first manifest?":
-            call HTAO02 from _call_HTAO02
-            return
-
-        "What do you think of Melody?" if Flag_MelodyMet:
-            if Quest_TaoComplete:
-                call HTAO03a from _call_HTAO03a
-                return
-            else:
-                call HTAO03b from _call_HTAO03b
-                return
-
-        "What do you think of Rex?" if Flag_RexMet:
-            if Quest_TaoComplete:
-                call HTAO04a from _call_HTAO04a
-                return
-            else:
-                call HTAO04b from _call_HTAO04b
-                return
-
-        "What do you think of Aria?" if Flag_AriaMet:
-            if Quest_TaoComplete:
-                call HTAO05a from _call_HTAO05a
-                return
-            else:
-                call HTAO05b from _call_HTAO05b
-                return
-
-        "What do you think of Alice?":
-            if Quest_TaoFailed:
-                call HTAO08a from _call_HTAO08a
-                return
-                        
-            elif Quest_TaoComplete:
-                call HTAO08b from _call_HTAO08b
-                return
-
-            else:
-                call HTAO08c from _call_HTAO08c
-                return
+        "(Exams)":
+            call TaoExams_Choices
         
-        "What do you think of Xander?" if Flag_XanderMet:
-            if Quest_TaoComplete:
-                call HTAO06a from _call_HTAO06a
-                return
-            
-            else:
-                call HTAO06b from _call_HTAO06b
-                return
-        
-        "Can you tell me about your father?" if Flag_C3TaoFather:
-            if Quest_TaoComplete:
-                call HTAO11a from _call_HTAO11a
-                return
+        "(Personal Questions)":
+            call TaoPersonal_Choices
 
-            else:
-                call HTAO11b from _call_HTAO11b
-                return
-
-        "What do you think of Eileen?" if not Flag_TaoEileenOpinion:
-            call HTAO09 from _call_HTAO09
-            return
-
-        "(Mage Council)":
-            call HTAO10 from _call_HTAO10
-            return
-
-        "What do you think of me?":
-            if Quest_TaoComplete:
-                call HTAO07a from _call_HTAO07a
-                return
-            else:
-                call HTAO07b from _call_HTAO07b
-                return
-        
-        "What happened with you and Xander?" if Flag_TaoXanderFriendship:
-            if Quest_TaoComplete:
-                call HTAO15a from _call_HTAO15a
-                return
-
-            else:
-                call HTAO15b from _call_HTAO15b
-                return
+        "(Other Students)":
+            call TaoPupils_Choices
 
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
@@ -9130,7 +9029,143 @@ label taohub_main:
                 return
             if result == 4:
                 Tao "..."
-                return            
+                return     
+
+
+
+    label TaoExams_Choices:
+        menu:
+            "(Botany)":
+                call HTAO014 from _call_HTAO014
+                return
+
+            "(Artificing)":
+                call HTAO13 from _call_HTAO13
+                return
+
+            "(Potions)":
+                if Quest_TaoComplete:
+                    call HTAO12a from _call_HTAO12a
+                    return
+
+                else:
+                    call HTAO12b from _call_HTAO12b
+                    return
+            "(Return)":
+                return
+
+    label TaoPersonal_Choices:
+        menu:
+            "What was your childhood like?":
+                if Quest_TaoComplete:
+                    call HTAO01a from _call_HTAO01a
+                    return
+
+                else:
+                    call HTAO01b from _call_HTAO01b
+                    return
+
+            "How did your magic first manifest?":
+                call HTAO02 from _call_HTAO02
+                return
+
+            "Can you tell me about your father?" if Flag_C3TaoFather:
+                if Quest_TaoComplete:
+                    call HTAO11a from _call_HTAO11a
+                    return
+
+                else:
+                    call HTAO11b from _call_HTAO11b
+                    return
+
+            "What happened with you and Xander?" if Flag_TaoXanderFriendship:
+                if Quest_TaoComplete:
+                    call HTAO15a from _call_HTAO15a
+                    return
+
+                else:
+                    call HTAO15b from _call_HTAO15b
+                    return
+            "(Return)":
+                return
+
+
+    label TaoPupils_Choices:
+        menu:
+            "What do you think of Melody?" if Flag_MelodyMet:
+                if Quest_TaoComplete:
+                    call HTAO03a from _call_HTAO03a
+                    return
+                else:
+                    call HTAO03b from _call_HTAO03b
+                    return
+
+            "What do you think of Rex?" if Flag_RexMet:
+                if Quest_TaoComplete:
+                    call HTAO04a from _call_HTAO04a
+                    return
+                else:
+                    call HTAO04b from _call_HTAO04b
+                    return
+
+            "What do you think of Aria?" if Flag_AriaMet:
+                if Quest_TaoComplete:
+                    call HTAO05a from _call_HTAO05a
+                    return
+                else:
+                    call HTAO05b from _call_HTAO05b
+                    return
+
+            "What do you think of Alice?":
+                if Quest_TaoFailed:
+                    call HTAO08a from _call_HTAO08a
+                    return
+                            
+                elif Quest_TaoComplete:
+                    call HTAO08b from _call_HTAO08b
+                    return
+
+                else:
+                    call HTAO08c from _call_HTAO08c
+                    return
+            
+            "What do you think of Xander?" if Flag_XanderMet:
+                if Quest_TaoComplete:
+                    call HTAO06a from _call_HTAO06a
+                    return
+                
+                else:
+                    call HTAO06b from _call_HTAO06b
+                    return
+
+            "What do you think of me?":
+                if Quest_TaoComplete:
+                    call HTAO07a from _call_HTAO07a
+                    return
+                else:
+                    call HTAO07b from _call_HTAO07b
+                    return
+
+            "(Return)":
+                return
+
+    label TaoOther_Choices:
+        menu:
+                    
+            "What do you think of Eileen?" if not Flag_TaoEileenOpinion:
+                call HTAO09 from _call_HTAO09
+                return
+
+            "(Mage Council)":
+                call HTAO10 from _call_HTAO10
+                return
+
+            "(Return)":
+                return
+
+        
+
+       
 
 
 
@@ -9162,25 +9197,25 @@ label taohub_main:
         Tao "Botany? Just cut things up. It's all about being optimal."
         Tao "There should be a recipe book somewhere in your things that help you with that sort of thing. If not, perhaps check the archive."
         Tao "Either way, do you mind?"
-        jump taohub_main
+        return
 
     
     label HTAO13: 
         Tao "Oh... I cannot help you there." 
         Tao "Artificing isn't really my forte, I just have a selection prepared and hope that'll get me the grade I need." 
         Tao "One of the others should know better... perhaps Rex -- as... ridiculous as he is, he has a knack for tinkering."
-        jump taohub_main
+        return
 
     label HTAO12a:
         Tao "You should've learned how to do this years ago... that's what the Scholomance was for."
         Tao "But I suppose I'll help you. Here, this is a simple, but solid recipe. Just follow it." 
         Tao "I can't help you during the exam, though, you know? I don't want to fail due to misconduct or something dubious like that."
-        jump taohub_main
+        return
 
     label HTAO12b:
         Tao "Why are you wasting my time? What, do you expect me to teach you so you can pass your exam?" 
         Tao "Find someone else, I have my own troubles to focus on."
-        jump taohub_main
+        return
     
     label HTAO01a:
         Tao "You really want to know more about me?"
@@ -9189,7 +9224,7 @@ label taohub_main:
             "I do.":
                 pass
             "Yeah, maybe not.":
-                jump taohub_main
+                return
         Tao "I grew up in the northern part of Viordia but my father moved us to the capital because he got a promotion at work."
         Tao "Before that he travelled around the continent similar to Eileen and Alice, making sure that all of us mages are in line and everything is 'up to standard'."
         Tao "Moving was an ordeal. I had a solid set of good friends I'll probably never see again, not the sort I competed with, just the sort who supported and knew me." 
@@ -9200,7 +9235,7 @@ label taohub_main:
         Tao "It'd be nice to end up somewhere close to my parents, though."
         menu: 
             "Yeah, that would be nice.":
-                jump taohub_main
+                return
 
 
     label HTAO01b:
@@ -9213,7 +9248,7 @@ label taohub_main:
                 pass
 
             "You're right.":
-                jump taohub_main
+                return
         Tao "Really?"
         menu:
             "Why else would I ask.":
@@ -9227,7 +9262,7 @@ label taohub_main:
         Tao "Nevertheless, why are you asking such personal questions? {i}Shoo{/i}. Surely, you have other things on your mind."
         menu:
             "({i}Shoo{/i}) ...":
-                jump taohub_main
+                return
 
     label HTAO02:
         Tao "Why would you want to know about how my magic manifested? What do you get out of that?"
@@ -9240,7 +9275,7 @@ label taohub_main:
                 Tao "Exactly, so why should I talk to you about it? {i}Shoo{/i}. Go away."
                 menu:
                     "({i}Shoo{/i}) ...":
-                        jump taohub_main
+                        return
 
         Tao "Surprising. Uhh, I suppose when it manifested it was essentially just water magic." 
         Tao "I ruined my parents wallpaper by making it rain in our kitchen." 
@@ -9258,23 +9293,23 @@ label taohub_main:
             menu: 
                 "Sounds rough.":
                     Tao "Isn't it for everyone?"
-                    jump taohub_main
+                    return
         else:
             Tao "Sated, or do you also want to know what my first words were?"
             menu: 
                 "{i}Sated.{/i}":
-                    jump taohub_main
+                    return
                 "What were they?":
                     $ cinematic = True
                     Narrator "Tao shoots you a glare that reminds you, oddly enough, of Eileen's scowl. You should leave them be."
                     $ cinematic = False
-                    jump taohub_main
+                    return
     
     label HTAO03a:
         Tao "I don't like her, nor do I trust her. The temptation to do anything to be the best was intense in me, and it took its toll. It still does."
         Tao "I can say that behind that pretty face, there's probably something devious going on. You don't get to the top of the mountain without crushing a few ants."
         Tao "I know what it takes to get where she is, trust me, there's something amiss with her."
-        jump taohub_main
+        return
 
     label HTAO03b:
         Tao "I can't say I detest Melody but I certainly don't like her." 
@@ -9282,7 +9317,7 @@ label taohub_main:
         Tao "There's always a cost to academic achievement and she's yet to pay it." 
         Tao "I was the top student in our first year, with her coming second, and she was top in the third year with me coming second, the trend kept fluctuating like that."
         Tao "I will beat her, cementing myself as the top student of our year. I don't care what stunts she pulls, I'm ready for it."
-        jump taohub_main
+        return
 
     
     label HTAO04a:
@@ -9306,9 +9341,9 @@ label taohub_main:
         Tao "He's one bad day away from blowing up the school. I don't think our friendship not blossoming caused that. "
         menu: 
             "Most likely not.":
-                jump taohub_main
+                return
             "...":
-                jump taohub_main
+                return
 
 
 
@@ -9320,12 +9355,12 @@ label taohub_main:
                 Tao "it seems he didn't like that."
                 menu:
                     "...":
-                        jump taohub_main
+                        return
 
             "Fine.":
                 menu:
                     "...":
-                        jump taohub_main
+                        return
     
 
     label HTAO05a:
@@ -9338,7 +9373,7 @@ label taohub_main:
         Tao "Either way, I have nothing against Aria, but I think it's a bit too close to graduation to start any conversation."
         menu: 
             "...":
-                jump taohub_main
+                return
         
 
     label HTAO05b:
@@ -9350,7 +9385,7 @@ label taohub_main:
                 Tao "That's what I think of her. Can I go back to my work now?"
                 menu: 
                     "...":
-                        jump taohub_main
+                        return
     
 
     label HTAO08a: 
@@ -9359,7 +9394,7 @@ label taohub_main:
         Tao "Leave me alone. Please."
         menu:
             "...":
-                jump taohub_main
+                return
 
     label HTAO08b:
         Tao "With everything that went on, I think Alice has everyone's best interest at heart." 
@@ -9367,7 +9402,7 @@ label taohub_main:
         Tao "I was taking everything too far and close to breaking down. I still think she's overbearing, but I have a bit more respect for her."
         menu:
             "...":
-                jump taohub_main
+                return
 
     label HTAO08c:
         Tao "Alice seems nice. I always found her dolls rather creepy, though." 
@@ -9376,13 +9411,13 @@ label taohub_main:
         Tao "Is it a wealth statement? Or a magical restriction..."
         menu:
             "...":
-                jump taohub_main
+                return
 
     label HTAO06a:
         Tao "I'd rather not get into what happened between Xander and I. It's not relevant. Let's just say we fell out and leave it there."
         menu: 
             "...":
-                jump taohub_main
+                return
 
 
     label HTAO06b:
@@ -9392,7 +9427,7 @@ label taohub_main:
         $ Flag_TaoXanderFriendship = True
         menu: 
             "...":
-                jump taohub_main
+                return
 
     label HTAO11a:
         Tao "If I'm being candid with you, I don't enjoy talking about my father."
@@ -9446,7 +9481,7 @@ label taohub_main:
         hide tao sprite happy
         menu:
             "I will.":
-                jump taohub_main
+                return
 
 
     label HTAO11b:
@@ -9455,7 +9490,7 @@ label taohub_main:
         Tao "We get along, I suppose."
         menu: 
             "Makes sense...":
-                jump taohub_main
+                return
 
 
     label HTAO09:
@@ -9464,7 +9499,7 @@ label taohub_main:
         Tao "There is really nothing that pleases her."
         menu: 
             "...":
-                jump taohub_main
+                return
 
     label HTAO10:
         Tao "I suppose other than the proctors, I'm the most knowledgeable about that sort of thing... My father does work in that sector."
@@ -9480,26 +9515,27 @@ label taohub_main:
         menu: 
             "That's horrible.":
                 Tao "It's not exactly pleasant to think about."
-                jump taohub_main
+                return
 
     label HTAO07a:
         Tao "What do I think of you? Hmmn. You're... good. You stuck your neck out to help me when I needed it." 
         Tao "It would've been nice to be friends for longer, but I've come to understand that I never really treated my friends properly." 
         Tao "Perhaps we can make a change to that going forward. We'll stay in touch after the exams, surely."
+        return
 
     label HTAO07b:
         Tao "Why are you wasting my time? Can't you see that I'm busy, some people here are actually trying to pass their exams." 
         Tao "I barely know you, you barely know me, why do you want me to give you some half-baked assessment?"
         Tao "Actually. Here is your assessment..."
         Tao "You annoy me. F for Fail."
-        jump taohub_main
+        return
 
 
     label HTAO15a:
         Tao "Ah. Xander... yes. Honestly, I have a lot of regrets when it comes to my friendship with him."
         Tao "I wouldn't say I was a very good friend, lets leave it at that. Perhaps I won't repeat the same mistake." 
         Tao "If you want to hear about how bad I was, I imagine he'll tell you."
-        jump taohub_main
+        return
 
 
 
@@ -9519,9 +9555,9 @@ label taohub_main:
         menu:
             "Likewise.":
                 $ Affinity_Tao -= 10
-                jump taohub_main
+                return
             "...":
-                jump taohub_main
+                return
 
 
 
@@ -9552,113 +9588,20 @@ label rexhub_main:
     ###################################
     Rex "What's up?"
     menu:
+        "(Exams)":
+            call RexExams_Choices
 
-        "What's your family like back home?":
-            if Affinity_Rex < 40:
-                call HREX02a from _call_HREX02a
-                return
+        "(Personal Questions)":
+            call RexPersonal_Choices
 
-            else: 
+        "(Other Students)":
+            call RexPupils_Choices
 
-                call HREX02b from _call_HREX02b
-                return
-
-        "Can you help me with artificing?":
-            call HREX01 from _call_HREX01
-            return
-
-        "What happened the first time your magic manifested?":
-            call HREX03 from _call_HREX03
-            return
-
-        "Why do the others say you don't want friends?" if not Flag_HREX12:
-            call HREX12 from _call_HREX12
-            return
-
-        "Where did you get the idea to mess with statues?" if Quest_RexProgress:
-            call HREX14 from _call_HREX14
-            return
-
-        "What do you think of Melody?" if Flag_MelodyMet:
-            call HREX05 from _call_HREX05
-            return
-
-        "What do you think of Tao?" if Flag_TaoMet:
-            call HREX06 from _call_HREX06
-            return
-
-        "What do you think of Aria?" if Flag_AriaMet:
-            call HREX08 from _call_HREX08
-            return
-
-        "What do you think of Xander?" if Flag_XanderMet:
-            call HREX07 from _call_HREX07
-            return
-
-        "What did you think of the Scholomance?":
-            call HREX15 from _call_HREX15
-            return
-
-        "What do you think of Eileen?":
-            if Affinity_Rex > 50:
-                call HREX11a from _call_HREX11a
-                return
-
-            else:
-                call HREX11b from _call_HREX11b
-                return
-
-        "What do you think of Alice?":
-            call HREX10 from _call_HREX10
-            return
-        
-        "Are we friends?":
-            if Affinity_Rex < 50 and not Quest_RexProgress and not Quest_RexComplete and not Quest_RexProgress:
-                call HREX09a from _call_HREX09a
-                return
-            elif Affinity_Rex > 50 and Quest_RexProgress:
-                call HREX09b from _call_HREX09b
-                return
-
-            elif Quest_RexComplete and not Flag_PlayerSnitchesRex:
-                call HREX09c from _call_HREX09c
-                return
-
+        "(Quest)" if Quest_RexProgress:
+            call RexQuest_Choices
             
-            elif Flag_PlayerSnitchesRex:
-                call HREX09d from _call_HREX09d
-                return
-
-            else:
-                call HREX09e from _call_HREX09e
-                return
-
-        "What do you think of the Mage Council?":
-            call HREX13 from _call_HREX13
-            return
-
-        "Heard you were an anarchist or something?":
-            call HREX04 from _call_HREX04
-            return
-
-        "Why do you dislike Eileen so much?":
-            if Affinity_Rex < 50:
-                call HREX16a from _call_HREX16a
-
-            else:
-                call HREX16b from _call_HREX16b
-
-        "(Quest) Remind me, what do you need me to do?" if Quest_RexProgress:
-            call HREX17 from _call_HREX17
-            return
-
-        "(Quest) Are you sure blowing up Eileen's statue is what you really want?" if Quest_RexProgress:
-            call HREX18 from _call_HREX18
-            return
-
-        "(Archives) Have you seen the Archive Door Lock?" if Flag_ArchivesArtifice:
-            call HREX28 from _call_HREX28
-            return
+        "(Other)":
+            call RexOther_Choices
 
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
@@ -9673,7 +9616,143 @@ label rexhub_main:
                 return
             if result == 4:
                 Rex "Bye."
-                return       
+                return      
+
+
+
+
+    label RexExams_Choices:  
+        menu:
+            "Can you help me with artificing?":
+                call HREX01 from _call_HREX01
+                return
+
+            "(Return)":
+                return
+
+
+    label RexPersonal_Choices:
+        menu:
+
+            "What's your family like back home?":
+                if Affinity_Rex < 40:
+                    call HREX02a from _call_HREX02a
+                    return
+
+                else: 
+
+                    call HREX02b from _call_HREX02b
+                    return
+
+            "What happened the first time your magic manifested?":
+                call HREX03 from _call_HREX03
+                return
+
+            "(Return)":
+                return
+
+            "Why do the others say you don't want friends?" if not Flag_HREX12:
+                call HREX12 from _call_HREX12
+                return
+
+            "What did you think of the Scholomance?":
+                call HREX15 from _call_HREX15
+                return
+
+            "Are we friends?":
+                if Affinity_Rex < 50 and not Quest_RexProgress and not Quest_RexComplete and not Quest_RexProgress:
+                    call HREX09a from _call_HREX09a
+                    return
+                elif Affinity_Rex > 50 and Quest_RexProgress:
+                    call HREX09b from _call_HREX09b
+                    return
+
+                elif Quest_RexComplete and not Flag_PlayerSnitchesRex:
+                    call HREX09c from _call_HREX09c
+                    return
+
+                
+                elif Flag_PlayerSnitchesRex:
+                    call HREX09d from _call_HREX09d
+                    return
+
+                else:
+                    call HREX09e from _call_HREX09e
+                    return
+
+            "What do you think of the Mage Council?":
+                call HREX13 from _call_HREX13
+                return
+
+            "Heard you were an anarchist or something?":
+                call HREX04 from _call_HREX04
+                return
+        
+    label RexPupils_Choices:
+        menu:
+            "What do you think of Melody?" if Flag_MelodyMet:
+                call HREX05 from _call_HREX05
+                return
+
+            "What do you think of Tao?" if Flag_TaoMet:
+                call HREX06 from _call_HREX06
+                return
+
+            "What do you think of Aria?" if Flag_AriaMet:
+                call HREX08 from _call_HREX08
+                return
+
+            "What do you think of Xander?" if Flag_XanderMet:
+                call HREX07 from _call_HREX07
+                return
+
+    label RexQuest_Choices:
+        menu:
+
+            "Where did you get the idea to mess with statues?" if Quest_RexProgress:
+                call HREX14 from _call_HREX14
+                return
+
+            "(Quest) Remind me, what do you need me to do?" if Quest_RexProgress:
+                call HREX17 from _call_HREX17
+                return
+
+            "(Quest) Are you sure blowing up Eileen's statue is what you really want?" if Quest_RexProgress:
+                call HREX18 from _call_HREX18
+                return
+
+
+
+        
+
+    label RexOther_Choices:
+        menu:
+            "What do you think of Eileen?":
+                if Affinity_Rex > 50:
+                    call HREX11a from _call_HREX11a
+                    return
+
+                else:
+                    call HREX11b from _call_HREX11b
+                    return
+
+
+            "What do you think of Alice?":
+                call HREX10 from _call_HREX10
+                return
+
+            "Why do you dislike Eileen so much?":
+                if Affinity_Rex < 50:
+                    call HREX16a from _call_HREX16a
+
+                else:
+                    call HREX16b from _call_HREX16b
+
+            "(Archives) Have you seen the Archive Door Lock?" if Flag_ArchivesArtifice:
+                call HREX28 from _call_HREX28
+                return
+
+ 
 
 
         
@@ -9696,7 +9775,7 @@ label rexhub_main:
         Rex "All family is, is trouble and baggage. Do yourself a favour and don't pry."
         menu:
             "Got it...":
-                jump rexhub_main
+                return
 
 
     label HREX02b:
@@ -9710,7 +9789,7 @@ label rexhub_main:
                         Rex "She was scared of me, of what I'd do. Next thing I knew… Scholomance. I swear everything's just been a blur since. Anyway, let's move on."
                         menu: 
                             "...":
-                                jump rexhub_main
+                                return
             
             "What was your dad like?":
                 Rex "Not much to say. He fancied himself some sort of scholar, but whatever talent he had, he drank away. Taught me to fight by smacking me around." 
@@ -9719,7 +9798,7 @@ label rexhub_main:
                 Rex "I don't know and don't care."
                 menu: 
                     "...":
-                        jump rexhub_main
+                        return
 
     label HREX01:
         Rex "Course I can."
@@ -9744,7 +9823,7 @@ label rexhub_main:
             "Sure.":
                 Rex "Good."
                 $ Flag_RexArtificing = True
-                jump rexhub_main
+                return
 
     label HREX03:
         Rex "My manifestation? Every mage seems to have some sob story around their manifestation. I'm not that kind of guy."
@@ -9756,7 +9835,7 @@ label rexhub_main:
         if Affinity_Rex < 50:
             Rex "Let's just say, when it happened, it was pointed at the right people. I have no regrets."
             Rex "That's all you're getting."
-            jump rexhub_main
+            return
 
         else:
             Rex "My ma was always busy running the clock shop, so I took care of myself most of the time. I did whatever I wanted." 
@@ -9777,13 +9856,13 @@ label rexhub_main:
                     Rex "She uses violence all the time to get what she wants."
                     Rex "Hypocrite."
                     $ Affinity_Rex += 10
-                    jump rexhub_main
+                    return
                 
                 "You {i}burned{/i} them?":
                     Rex "Yeah. I did."
                     Rex "And I'd do it again."
                     $ Affinity_Rex <= 5
-                    jump rexhub_main
+                    return
 
     label HREX12:
         $ Flag_HREX12 = True
@@ -9793,18 +9872,18 @@ label rexhub_main:
                 Rex "If you have to ask, you ain't someone I'd be friends with." 
                 Rex "Piss off."
                 $ Affinity_Rex -= 5
-                jump rexhub_main
+                return
 
             "Sure, I'll help you.":
                 "I knew you weren't like the others. We'll be thick as thieves, you and me."
                 $ Affinity_Rex += 10
-                jump rexhub_main
+                return
                 #####DOLATERJOSH I need to figure out how to tie this into his quest. Coming back to it.
             
             "I won't help you.":
                 "Thought so. Don't bother me, then. And don't you dare go running to Eileen and Alice."
                 $ Affinity_Rex -= 5
-                jump rexhub_main
+                return
 
     label HREX14:
         Rex "Statues are a symbol of the Mage Council. They're too high and mighty for something as corrupt as your average mage."
@@ -9812,7 +9891,7 @@ label rexhub_main:
         Rex "You'll probably see Melody's statue one day, ha!"
         menu:
             "Right.":
-                jump rexhub_main
+                return
 
     label HREX05:
         Rex "Melody is evil. I know you won't believe me, no one believes that that uptight nerd could be anything but a model mage, but I've seen it." 
@@ -9820,14 +9899,14 @@ label rexhub_main:
         Rex "You all think I'm untrustworthy, well, the face of evil is right over there."
         menu:
             "...":
-                jump rexhub_main
+                return
 
     label HREX06:
         Rex "You might feel sorry for Tao, but don't turn your back on them. They're dangerous…obsessed about grades and will throw you under the carriage for a high mark."
         Rex "Mark my words, they'll brown nose all the right people and the doors will open for them. People like that aren't worth my time."
         menu:
             "...":
-                jump rexhub_main 
+                return
 
     label HREX08:
         Rex "Honestly, I'm surprised Aria's made it this far. The look in her eyes sometimes. A deer in a forest of wolves."
@@ -9835,7 +9914,7 @@ label rexhub_main:
         Rex "Her magic is something else, though. I've seen her do some wild shit."
         menu:
             "...":
-                jump rexhub_main 
+                return
 
     label HREX07:
         Rex "Xander? Barely know him. I mean we've chatted but he's..."
@@ -9843,7 +9922,7 @@ label rexhub_main:
         Rex "I think, underneath it all, he's terrified. I almost feel sorry for the guy, but he's just {i}so{/i} annoying."
         menu:
             "...":
-                jump rexhub_main 
+                return 
 
     label HREX15:
         Rex "I'm going to burn it place down -- it wasn't a university, it was a prison. I shouldn't have been put here just because I got magic."
@@ -9851,11 +9930,11 @@ label rexhub_main:
         menu:
             "No it wouldn't. Mages wouldn't have a school.":
                 Rex "Mages will learn magic in other ways. We don't need the Council or that school, believe me."
-                jump rexhub_main 
+                return
             "At least we wouldn't have to take exams.":
                 Rex "No exams, no ateliers, no punishments. You're finally seeing what things could be like."
                 $ Affinity_Rex += 10
-                jump rexhub_main 
+                return
 
     label HREX11a:
         Rex "Erm, ok, I've never told anyone this before, but I did some portal magic. I know it's forbidden for students." 
@@ -9875,21 +9954,21 @@ label rexhub_main:
         Rex "It meant something, that I was responsible for it, even if it was an accident." 
         Rex "Eileen ruined it. She deprived me of something big. Something that I can't even explain."
         Rex "So, yea, I hold a grudge. Everyone who gave me shit for it can be swallowed by the ground."
-        jump rexhub_main
+        return
 
 
     label HREX11b:
         Rex "Eileen is a cruel witch. Period. I'd never trust her. I'd never help her."
-        jump rexhub_main
+        return
 
     label HREX10:
         Rex "She's weak. Always going on about everyone's feelings. Trying to be friendly. Maybe she puts it on to get close to us."
         Rex "One thing I can't square -- what's someone so nice doing with all those enchanted Dolls? I don't think I want to know why she made them."
-        jump rexhub_main
+        return
 
     label HREX09a:
         Rex "You're just another keener trying to climb the ranks. So nah, we're not friends."
-        jump rexhub_main
+        return
     
     label HREX09b:
         Rex "Heh, well, do you want to be? I know it's hard for me to open up. Not used to relying on other people for anything." 
@@ -9907,29 +9986,29 @@ label rexhub_main:
                         Rex "Not like us."
                         menu: 
                             "Sounds sad.":
-                                jump rexhub_main
+                                return
 
             "What are your thoughts on your plan?":
                 Rex "There's a lot of magic the Council won't teach us, you know. They have the knowledge, but they keep it for themselves." 
                 Rex "That's why the broken statues will piss them off -- not because we disrupted some ceremony."
-                jump rexhub_main
+                return
 
 
     label HREX09c:
         Rex "Course. You had my back. I'm glad I met you."
         Rex "Shame we're not gonna see each other much wherever you end up."
-        jump rexhub_main
+        return
 
     
     label HREX09d:
         Rex "I know it was you who snitched to Eileen and Alice. And to think, for a minute, I thought we could be friends. Get out of my sight."
         $ Affinity_Rex -= 50
-        jump rexhub_main
+        return
 
 
     label HREX09e:
         Rex "I don't really know you. What an weird question."
-        jump rexhub_main
+        return
 
 
 
@@ -9937,7 +10016,7 @@ label rexhub_main:
         Rex "No chance I'll be let into the Mage Council's inner network. Eileen probably thinks I'll try to burn the place down. Maybe I will."
         Rex "There's nothing for me in there. After the Scholomance, I'll make it on my own terms." 
         Rex "I'll think of something. I always do. I don't care if I have to sleep in a ditch, as long as I'm free."
-        jump rexhub_main
+        return
 
     label HREX04:
         Rex "Heh, I'm not an anarchist. And I don't hate society. What I do hate is the Mage Council. Just because we manifested magic, they're allowed to run our lives." 
@@ -9952,7 +10031,7 @@ label rexhub_main:
             "A bit dramatic.":
                 Rex "You'll see what I'm talking about one day."
                 pass
-        jump rexhub_main
+        return
 
 
 
@@ -9967,11 +10046,11 @@ label rexhub_main:
                 Rex "Her job is killing people who don't agree with the Mage Council."
                 Rex "Come up with a better argument, you bootlicker."
                 $ Affinity_Rex -= 10
-                jump rexhub_main
+                return
 
             "I don't think so.":
                 Rex "Who cares what you think?"
-                jump rexhub_main
+                return
 
 
 
@@ -9985,13 +10064,13 @@ label rexhub_main:
                 Rex "You know? I think you do."
                 Rex "You probably got taken from something you loved, too. Maybe you don't have fire magic tied to demons, but you still got stuck in that prison."
                 $ Affinity_Rex += 5
-                jump rexhub_main
+                return
 
             "She's just doing her job.":
                 Rex "Her job is killing people who don't agree with the Mage Council."
                 Rex "Come up with a better argument, you bootlicker."
                 $ Affinity_Rex -= 10
-                jump rexhub_main
+                return
 
     label HREX17:
         Rex "This is the plan: you work on the potion we need for the ritual that'll destroy Eileen's statue. I was never good at that. I have the stone cutter spell." 
@@ -10002,7 +10081,7 @@ label rexhub_main:
         menu: 
             "I am.":
                 Rex "Good."
-                jump rexhub_main
+                return
 
 
     label HREX18:
@@ -10016,7 +10095,7 @@ label rexhub_main:
                         menu: 
                             "Our plan seems a lot more fun to me.":
                                 Rex "Happy to hear it."
-                                jump rexhub_main
+                                return
                     "Maybe I will.":
                         Rex "So you are getting cold feet. Gonna run to the proctors?"
                         menu: 
@@ -10024,11 +10103,11 @@ label rexhub_main:
                                 "Good. Don't."
                                 $ Quest_RexFailed = True
                                 $ Quest_RexProgress = False
-                                jump rexhub_main
+                                return
 
                             "Haven't decided yet.":
                                 Rex "Make up your mind."
-                                jump rexhub_main
+                                return
 
 
             "If I'm being honest, it seems extreme.":
@@ -10061,7 +10140,7 @@ label rexhub_main:
                                                                         Rex "I'm calling off the plan. We can still, erm, hang out though. A bit later."
                                                                         $ Quest_RexPlanStopped = True
                                                                         $ Quest_RexProgress = False
-                                                                        jump rexhub_main
+                                                                        return
         
         label HREX28:
             Rex "Oh that old piece of crap?"
