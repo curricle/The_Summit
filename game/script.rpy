@@ -7546,60 +7546,17 @@ label melodyhub_main:
     show melody sprite happy
     Melody "What's the matter?"
     menu:
-        "About that light spell..." if Flag_LightSpellNotLearned:
-            call HMEL01 from _call_HMEL01
-            return
+        "(Exams)":
+            call MelodyExams_Choices
 
-        "About the Potion Exam..." if not Day0Night:
-            call HMEL02 from _call_HMEL02
-            return
+        "(Personal)":
+            call MelodyPersonal_Choices
 
-        "What do you think of Tao?" if Flag_TaoMet:
-            call HMEL03 from _call_HMEL03
-            return
+        "(Other Students)":
+            call MelodyPupils_Choices
 
-        "What do you think of Aria?" if Flag_AriaMet:
-            call HMEL04 from _call_HMEL04
-            return
-
-        "What do you think of Rex?" if Flag_RexMet:
-            call HMEL05 from _call_HMEL05
-            return
-
-        "What do you think of Xander?" if Flag_XanderMet:
-            call HMEL06 from _call_HMEL06
-            return
-
-        "What do you think about Inquisitor Eileen?":
-            call HMEL07 from _call_HMEL07
-            return
-
-        "What do you think about Alice?":
-            call HMEL08 from _call_HMEL08
-            return
-
-        "I saw 'Alice' in the forest..." if Flag_NotAliceMet:
-            call HMEL09 from _call_HMEL09
-            return
-
-        "Do you have dreams? What do you want to do after Graduation?":
-            call HMEL10 from _call_HMEL10
-            return
-
-        "I'm worried about the exams.":
-            call HMEL11 from _call_HMEL11
-            return
-
-        "Do you know anything about the graduation placements?":
-            call HMEL12 from _call_HMEL12
-            return
-
-        "(Combat Exam)":
-            if Flag_CombatExamCompleted:
-                call HMEL13 from _call_HMEL13
-            else:
-                call HMEL14 from _call_HMEL14
-            return
+        "(Other)":
+            call MelodyOther_Choices
 
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
@@ -7616,35 +7573,122 @@ label melodyhub_main:
                 Melody "I guess we'll talk another time."
                 return
 
-        "(Potion Exam)":
-            if Flag_PotionExamCompleted:
-                call HMEL15 from _call_HMEL15
-            else:
-                call HMEL16 from _call_HMEL16
-            return
 
-        "(Artificing Exam)":
-            call HMEL17 from _call_HMEL17
-            return
+    label MelodyExams_Choices:
+        menu:
+            "About the Potion Exam..." if not Day0Night:
+                call HMEL02 from _call_HMEL02
+                return
 
-        "(Magic) How did your magic manifest?":
-            call HMEL18 from _call_HMEL18
-            return
+            "I'm worried about the exams.":
+                call HMEL11 from _call_HMEL11
+                return
 
-        "Would you say we're friends?":
-            if Day0Afternoon or Day0Night or Day1Afternoon or Day1Morning or Day1Night or Day2Morning or Day2Afternoon or Day2Night:
-                call HMEL19a from _call_HMEL19a
-            elif Day3Morning or Day3Afternoon or Day3Night or Day4Morning or Day4Afternoon or Day4Night:
-                call HMEL19b from _call_HMEL19b
-            elif Day5Morning or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
-                call HMEL19c from _call_HMEL19c
-            else:
-                call HMEL19d from _call_HMEL19d
-            return
+            "(Combat Exam)":
+                if Flag_CombatExamCompleted:
+                    call HMEL13 from _call_HMEL13
+                else:
+                    call HMEL14 from _call_HMEL14
+                return
 
-        "(Mage Society) What do you know about Mage Society?":
-            call HMEL20 from _call_HMEL20
-            return
+
+            "(Potion Exam)":
+                if Flag_PotionExamCompleted:
+                    call HMEL15 from _call_HMEL15
+                else:
+                    call HMEL16 from _call_HMEL16
+                return
+
+            "(Artificing Exam)":
+                call HMEL17 from _call_HMEL17
+                return
+
+            "(Return)":
+                return
+    
+    label MelodyPersonal_Choices:
+        menu:
+            "Do you have dreams? What do you want to do after Graduation?":
+                call HMEL10 from _call_HMEL10
+                return
+
+
+
+            "Do you know anything about the graduation placements?":
+                call HMEL12 from _call_HMEL12
+                return
+
+
+            "(Magic) How did your magic manifest?":
+                call HMEL18 from _call_HMEL18
+                return
+
+            "Would you say we're friends?":
+                if Day0Afternoon or Day0Night or Day1Afternoon or Day1Morning or Day1Night or Day2Morning or Day2Afternoon or Day2Night:
+                    call HMEL19a from _call_HMEL19a
+                elif Day3Morning or Day3Afternoon or Day3Night or Day4Morning or Day4Afternoon or Day4Night:
+                    call HMEL19b from _call_HMEL19b
+                elif Day5Morning or Day5Afternoon or Day5Night or Day6Morning or Day6Afternoon or Day6Night:
+                    call HMEL19c from _call_HMEL19c
+                else:
+                    call HMEL19d from _call_HMEL19d
+                return
+
+            "(Return)":
+                return
+
+
+
+    label MelodyPupils_Choices:
+        menu:
+            "What do you think of Tao?" if Flag_TaoMet:
+                call HMEL03 from _call_HMEL03
+                return
+
+            "What do you think of Aria?" if Flag_AriaMet:
+                call HMEL04 from _call_HMEL04
+                return
+
+            "What do you think of Rex?" if Flag_RexMet:
+                call HMEL05 from _call_HMEL05
+                return
+
+            "What do you think of Xander?" if Flag_XanderMet:
+                call HMEL06 from _call_HMEL06
+                return
+
+            "(Return)":
+                return
+
+
+    label MelodyOther_Choices:
+        menu:
+
+            "About that light spell..." if Flag_LightSpellNotLearned:
+                call HMEL01 from _call_HMEL01
+                return
+
+
+            "What do you think about Inquisitor Eileen?":
+                call HMEL07 from _call_HMEL07
+                return
+
+            "What do you think about Alice?":
+                call HMEL08 from _call_HMEL08
+                return
+
+            "I saw 'Alice' in the forest..." if Flag_NotAliceMet:
+                call HMEL09 from _call_HMEL09
+                return
+
+            "(Mage Society) What do you know about Mage Society?":
+                call HMEL20 from _call_HMEL20
+                return
+            "(Return)":
+                return
+
+
+
 
     return
 
@@ -7666,15 +7710,15 @@ label melodyhub_main:
         $ cinematic = False
         menu: 
             "Thank you.":
-                jump melodyhub_main
+                return
         Melody "If you end up roaming around at night, make sure you use it. I don't want you getting lost or something. Ha ha."
         menu: 
             "Got it.":
                 return
             "I don't plan on roaming.":
                 Melody "Probably wise. Inquisitor Eileen seems strict. I doubt either of us would want her shouting at us."
-                jump melodyhub_main
-        jump melodyhub_main
+                return
+        return
 
     label HMEL02:
         #HMEL02
@@ -7699,8 +7743,8 @@ label melodyhub_main:
                 pass
         menu:
             "(Exit Conversation)":
-                jump melodyhub_main
-        jump melodyhub_main
+                return
+        return
 
     
 
@@ -7722,8 +7766,8 @@ label melodyhub_main:
         $ cinematic = False
         menu: 
             "(End Conversation)":
-                jump melodyhub_main
-        jump melodyhub_main
+                return
+        return
 
 
     label HMEL04:
@@ -7748,8 +7792,8 @@ label melodyhub_main:
                 menu: 
                     "Well, don't take too long":
                         Melody "Trust me, I won't."
-                        jump melodyhub_main
-        jump melodyhub_main
+                        return
+        return
             
     label HMEL05:
         #HMEL05
@@ -7769,7 +7813,7 @@ label melodyhub_main:
                 pass
         menu: 
             "Right...":
-                jump melodyhub_main
+                return
     
 
     label HMEL06:
@@ -7785,7 +7829,7 @@ label melodyhub_main:
                 menu: 
                     "Right.":
                         hide melody sprite happy
-                        jump melodyhub_main
+                        return
     
     label HMEL07:
         #HMEL07
@@ -7798,7 +7842,7 @@ label melodyhub_main:
         menu: 
             "Right.":
                 hide melody sprite happy
-                jump melodyhub_main
+                return
     
     label HMEL08:
         #HMEL08
@@ -7807,21 +7851,21 @@ label melodyhub_main:
         Melody "I'm pretty sure without Alice, Aria would've been kicked out with all the mess she ends up in."
         menu: 
             "Right.":
-                jump melodyhub_main
+                return
             "Trouble?":
                 Melody "Yeah, she can be quite destructive with her spells. I've seen her pull up the flooring a few times when working with her magic."
                 Melody "Property damage doesn't sit well with the council, but she never really got punished for it. I think Alice is very on her side."
                 menu: 
                     "...":
                         hide melody sprite happy
-                        jump melodyhub_main
+                        return
         
     label HMEL09:
         #HMEL09
         Melody "You saw Alice in the forest? It was probably just one of her dolls." 
         Melody "I don't know what you mean by 'like Alice', but you should probably ask her." 
         Melody "Maybe she messed up a ritual or something -- Geomancy isn't exactly something I'm comfortable with."
-        jump melodyhub_main
+        return
 
     
     label HMEL10:
@@ -7859,10 +7903,10 @@ label melodyhub_main:
         menu: 
             "Hopefully, a bit less stressful.":
                 Melody "You and me both."
-                jump melodyhub_main
+                return
             "I'd rather not speculate.":
                 Melody "Good point, I shouldn't jinx it."
-                jump melodyhub_main
+                return
 
     label HMEL11:
         #HMEL11
@@ -7873,13 +7917,13 @@ label melodyhub_main:
         menu: 
             "Thanks.":
                 Melody "Of course!"
-                jump melodyhub_main
+                return
             "What if I fail?":
                 Melody "Friend! Trust me, you won't! And if you do, you know what the worst situation is, I mean, we were just living it."
                 Melody "You go back to the Scholomance until you get put through this place again. It's a setback but you've already been through it. I pinky swear that you'll be fine."
                 menu: 
                     "That's very kind.":
-                        jump melodyhub_main
+                        return
                 
 
     label HMEL12:
@@ -7889,9 +7933,9 @@ label melodyhub_main:
         menu: 
             "I'm sure they will be.":
                 Melody "Crossing my fingers!"
-                jump melodyhub_main
+                return
             "Then we'll have to write letters.":
-                jump melodyhub_main
+                return
 
     ###DIFFERENT BRANCHES OF SAME DIALOGUE###
     label HMEL13:
@@ -7902,11 +7946,11 @@ label melodyhub_main:
         menu: 
             "It could've gone better.":
                 Melody "Hmm. I'm sure you did better than you think..."
-                jump melodyhub_main
+                return
             "Pretty good.":
                 Melody "Glad to hear it."
         Melody "At least we can relax now."
-        jump melodyhub_main
+        return
         #HMEL14
 
 
@@ -7916,7 +7960,7 @@ label melodyhub_main:
             menu: 
                 "Right.":
                     Melody "Sorry I'm not much help here."
-                    jump melodyhub_main
+                    return
                 
     ###END###
     ###DIFFERENT BRANCHES OF SAME DIALOGUE###
@@ -7934,7 +7978,7 @@ label melodyhub_main:
                         Melody "Maybe I shouldn't have said that without proof. I just know he's one to tamper with things."
                         hide melody sprite intense
                         call potionfail from _call_potionfail
-                        jump melodyhub_main
+                        return
                     "Maybe I messed it up.":
                         hide melody sprite intense
                         show melody sprite sad
@@ -7942,28 +7986,28 @@ label melodyhub_main:
                         hide melody sprite sad
                         show melody sprite
                         call potionfail from _call_potionfail_1
-                        jump melodyhub_main
+                        return
                     
                     "I'm confused":
                         Melody "I am too."
                         hide melody sprite intense
                         call potionfail from _call_potionfail_2
-                        jump melodyhub_main
+                        return
 
             "Could've been better.":
                 Melody "Aww, I'm sure you did fine!"
-                jump melodyhub_main
+                return
             "It went well.":
                 Melody "Oh, that's so good. We're past the halfway point. Not long until we're graduating."
-                jump melodyhub_main
+                return
 
         label potionfail: 
             if Flag_PotionSubmitted == True:
                 Melody "Hopefully, you'll still get a pass or maybe a retake option. Sorry you went through that."
-                jump melodyhub_main
+                return
             elif Flag_PotionSubmitted == False:
                 Melody "Did you make sure to submit everything? If you don't submit it might not be marked."
-                jump melodyhub_main
+                return
 
             
     
@@ -7990,11 +8034,11 @@ label melodyhub_main:
                 $ cinematic = False
                 Melody "Don't be too worried about the exam. I think if you overthink it you'll just end up anxious and unfocused."
                 $ Flag_MelodySabotagedPotion = True
-                jump melodyhub_main
+                return
             "Thanks, but I should be fine.":
                 Melody "As long as you turn {i}something{/i} in I'm sure you'll pass."
                 Melody "Anyway, don't be too worried about the exam. I think if you overthink it you'll just end up anxious and unfocused. "
-                jump melodyhub_main
+                return
     ###END###
 
     label HMEL17:
@@ -8005,12 +8049,12 @@ label melodyhub_main:
         menu: 
             "Makes sense.":
                 "Sorry..."
-                jump melodyhub_main
+                return
                 
             
             "Are you sure you can't help?":
                 Melody "If I could, I would. I really don't want to give you bad advice -- I'd feel so guilty if something I did screwed you over."
-                jump melodyhub_main
+                return
                 
     
 
@@ -8049,29 +8093,29 @@ label melodyhub_main:
         Melody "Probably nothing." 
         Melody "Either way, I think every mage here has an interesting story around their manifestation." 
         Melody "I'm quite curious to see whether anyone can get Eileen to tell hers. I have this fear that she'll toss me across the room like a ball if I broach the question."
-        jump melodyhub_main
+        return
 
     label HMEL19a: 
         #HMEL19
         Melody "What a cute question!" 
         Melody "Of {i}course{/i} we're friends. Like, I can already see you and me getting super close, you know? I warm up quick."
-        jump melodyhub_main
+        return
 
 
     label HMEL19b:
         Melody "We've been here like, a few days and I already feel like we've been friends forever. These little chats we have are always so fun."
-        jump melodyhub_main
+        return
 
 
     label HMEL19c:
         Melody "You're certainly my closest friend here. That might not be saying much but it means a lot to me. I trust you, you know. I hope you trust me, too." 
-        jump melodyhub_main
+        return
 
 
 
     label HMEL19d:
         Melody "Ha ha ha haha. {i}I'm in stitches.{/i} You cannot be asking me that right now."
-        jump melodyhub_main
+        return
 
     label HMEL20:
         #HMEL20
@@ -8091,9 +8135,9 @@ label melodyhub_main:
                 Melody "If the mages in those seats cared about what us students had to say about it then we'd be given an alternative."
                 menu:
                     "Hmm.":
-                        jump melodyhub_main
+                        return
             "Fair point.":
-                jump melodyhub_main
+                return
 
         #Exit
 
@@ -10291,7 +10335,7 @@ label melody2hub_main:
         Melody2 "But I'm going to love my time in the city so much more. So much to do."
         Melody2 "I won't be sequestered off to a backwater town where the most interesting thing that can happen is a travelling band or someone dying." 
         Melody2 "I won't be put through that again. "
-        jump melody2hub_main
+        return
 
     label HMEL22:
         Melody2 "The village I'm from had, max, fifty people in it. All of them old, all of them obstinate. The only thing to do there was count flowers in the fields and swim in a freezing ocean. I hated it, it was the sort of place people like me are imprisoned in."
