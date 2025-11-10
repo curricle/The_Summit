@@ -10738,58 +10738,14 @@ label alicehub_main:
     ###################################
     Alice "What do you need??"
     menu:
-        "(Past)":
-            call HALI01 from _call_HALI01
-            return
+        "(Personal Questions)":
+            call AlicePersonal_Choices
 
-        "(Sewer Doll)" if Flag_NotAliceMet:
-            call HALI02 from _call_HALI02
-            return
+        "(Students)":
+            call AlicePupils_Choices
 
-        "I think Tao needs help." if Flag_TaoNonVerbal:
-            call HALI03 from _call_HALI03
-            return
-        
-        "(Great Mage Tree)" if Location == "Greenhouse":
-            call HALI04 from _call_HALI04
-            return
-
-        "(Xander)" if Flag_XanderMet:
-            call HALI06 from _call_HALI06
-            return
-
-        "(Melody)" if Flag_MelodyMet:
-            call HALI07 from _call_HALI07
-            return
-
-        "(Tao)" if Flag_TaoMet:
-            call HALI08 from _call_HALI08
-            return
-
-        "(Aria)":
-            if Quest_AriaProgress:
-                call HALI10a from _call_HALI10a
-                return
-
-            else:
-                call HALI10b from _call_HALI10b
-                return
-        
-        "(The Summit)":
-            call HALI11 from _call_HALI11
-            return
-
-        "(Rex Statues)":
-            call HALI12 from _call_HALI12
-            return
-
-        "(Mage Society)":
-            call HALI13 from _call_HALI13
-            return
-
-        "(Your Job)" if Flag_DemoAliceJob:
-            call HALI14 from _call_HALI14
-            return
+        "(Other)":
+            call AliceOther_Choices
 
         "(Exit Conversation)":
             $ result = renpy.random.randint(1, 4)
@@ -10805,6 +10761,85 @@ label alicehub_main:
             if result == 4:
                 Alice "Come back if you need anything."
                 return
+
+
+
+
+
+
+
+    label AlicePersonal_Choices:
+        menu:
+            "(Sewer Doll)" if Flag_NotAliceMet:
+                call HALI02 from _call_HALI02
+                return
+
+            "I think Tao needs help." if Flag_TaoNonVerbal:
+                call HALI03 from _call_HALI03
+                return
+
+            "(Past)":
+                call HALI01 from _call_HALI01
+                return
+
+            "(Mage Society)":
+                call HALI13 from _call_HALI13
+                return
+
+            "(Your Job)" if Flag_DemoAliceJob:
+                call HALI14 from _call_HALI14
+                return
+
+            "(Return)":
+                return
+
+
+
+    label AlicePupils_Choices:
+        menu:
+            "(Xander)" if Flag_XanderMet:
+                call HALI06 from _call_HALI06
+                return
+
+            "(Melody)" if Flag_MelodyMet:
+                call HALI07 from _call_HALI07
+                return
+
+            "(Tao)" if Flag_TaoMet:
+                call HALI08 from _call_HALI08
+                return
+
+            "(Aria)":
+                if Quest_AriaProgress:
+                    call HALI10a from _call_HALI10a
+                    return
+
+                else:
+                    call HALI10b from _call_HALI10b
+                    return
+
+            "(Return)":
+                return
+
+    label AliceOther_Choices:
+        menu:
+            "(Great Mage Tree)" if Location == "Greenhouse":
+                call HALI04 from _call_HALI04
+                return
+
+            "(The Summit)":
+                call HALI11 from _call_HALI11
+                return
+
+            "(Rex Statues)":
+                call HALI12 from _call_HALI12
+                return
+
+            "(Return)":
+                return
+
+
+
 
 
 
