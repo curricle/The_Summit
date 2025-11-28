@@ -2461,17 +2461,25 @@ label Morning1Greenhouse:
             Rex "You aren't prepared at all, are you?"
             menu:
                 "I'll be fine.":
+                    hide rex sprite 
+                    show rex sprite angry
                     Rex "You'll be fine but you're asking me what Artifice is."
                     Rex "At least own up to it, loser."
                     $ Affinity_Rex -= 5
+                    hide rexsprite angry
+                    show rex sprite
                     pass
 
                 "I'm {i}absolutely{/i} not prepared.":
+                    hide rex sprite
+                    show rex sprite happy
                     Rex "Ha. You're honest, at least."
                     Rex "Only tip I can give is to use good materials and figure out the stuff you {i}can{/i} make soon, so you're prepped."
                     Rex "Artificing is simple... so long as you know what tools to use and what you're making."
                     Rex "My sister used to bake a lot... it's kinda like that."
                     $ Affinity_Rex += 5
+                    hide rex sprite happy
+                    show rex sprite
                     pass
             Rex "Anyway... the exams isn't for a few days."
             return
@@ -5099,7 +5107,7 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
         $ cinematic = False
         menu:
             "(Talk to Tao)":
-                show tao sprite
+                show tao sprite sad
                 if Flag_Afternoon2Tao == False:
                     $ cinematic = True
                     Narrator "You approach Tao, who doesn't look up from their work."
@@ -5119,13 +5127,19 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
                         $ cinematic = True
                         Narrator "Tao looks over their book again, checking whether they've missed a step."
                         $ cinematic = False
+                        hide tao sprite sad
+                        show tao sprite angry
                         Tao "The only reason this {i}isn't{/i} working is if they've been tampered with."
                         Tao "Screw it. I'll wash the skins, then create a purifying alkaline solution..."
+                        hide tao sprite angry
+                        show tao sprite
                         Tao "Say, did you need something? You're just sort of... hovering."
                         menu:
                             "Wanted to see if you needed help.":
                                 Tao "Unless you can actually help, I don't need you hovering."
                                 Tao "Either this book is incorrect, {i}and{/i} I'm having amnesia, or there's something wrong with my plants."
+                                hide tao sprite
+                                show tao sprite angry
                                 Tao "Tell me, did you tamper with my plants? I won't be mad."
                                 Tao "Ok, I will be mad, but tell me, I'm losing my mind."
                                 menu:
@@ -5139,14 +5153,16 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
                                         Narrator "You're sure if you stay all you'll hear is rambling..."
                                         menu:
                                             "(Leave)":
-                                                hide tao sprite
+                                                hide tao sprite angry
                                                 jump Afternoon2AlchemyLab_Choices
                                     "Yes, I'm an evil mastermind who... tampers with plants.":
+                                        hide tao sprite angry
+                                        show tao sprite sad
                                         Tao "Ha-ha. Very funny."
                                         Tao "It's interesting that you believe that's someone here wouldn't do that."
                                         Tao "So not only are you not particularly intelligent, you're also too trusting."
                                         Tao "That's all. You can go."
-                                        hide tao sprite
+                                        hide tao sprite sad
                                         jump Afternoon2AlchemyLab_Choices
 
                             "Good point... (Leave)":
@@ -5790,6 +5806,8 @@ label Night2Choices:
                         Rex "Think about it: we'll be the mages that stood up to them. Are you in?"
                         menu:
                             "Yes, I'll help you.":
+                                hide rex sprite
+                                show rex sprite happy
                                 Rex "I knew I liked you."
                                 $ Affinity_Rex += 10
                                 Rex "Right, I've been building a few devices... One of them is a nifty bit of artifice I'm calling the Stonecutter."
@@ -5817,17 +5835,19 @@ label Night2Choices:
                                         $ cinematic = True
                                         Narrator "Rex smiles. You don't think you've seen him smile before."
                                         Narrator "You leave him alone."
-                                        hide rex sprite
+                                        hide rex sprite happy
                                         $ cinematic = False
                                         jump Night2Choices_Menu
 
                             "No, I don't agree with you.":
+                                hide rex ssprite
+                                show rex sprite angry
                                 Rex "I overestimated you. This conversation never happened."
                                 $ Quest_RexPlanRejected = True
                                 $ cinematic = True
                                 Narrator "He looks pissed. You leave him be."
                                 $ cinematic = False
-                                hide rex sprite
+                                hide rex sprite angry
                                 jump Night2Choices_Menu
 
 
@@ -6896,11 +6916,12 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "A hand reaching out from underneath."
                                         $ cinematic = False
                                         Xander "What's up--"
+                                        hide xander sprite
                                         $ cinematic = True
                                         Narrator "Before he can finish his sentence, the hands pull him under with a quickness you thought impossible."
                                         Narrator "His body seems to bend and morph, kicking as whatever has a hold of him drags him into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
-                                        hide xander sprite
+
                                         $ cinematic = False
                                         jump PostSacrificeSleep
 
@@ -6916,16 +6937,17 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "A hand reaching out from underneath."
                                         $ cinematic = False
                                         Aria "I'll just make you some tea... one mo--"
+                                        hide aria sprite
                                         $ cinematic = True
                                         Narrator "Before she can finish her sentence, the hands pull her under with a quickness you thought impossible."
                                         Narrator "Her body seems to bend and morph, kicking as whatever has a hold of her drags her into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
-                                        hide aria sprite
+
                                         jump PostSacrificeSleep
 
                                     elif "Tao" in sacrificed_character:
-                                        show tao sprite with dissolve
+                                        show tao sprite angry with dissolve
                                         Tao "Do you mind? Some of us are trying to sleep."
                                         $ cinematic = True
                                         Narrator "You look over to see Tao, lit by their nightlight."
@@ -6934,12 +6956,13 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "A hand reaching out from underneath."
                                         $ cinematic = False
                                         Tao "The least you could do is keep qui--"
+                                        hide tao sprite angry
                                         $ cinematic = True
                                         Narrator "Before they can finish, the hands reaches up and pulls them under with a quickness you thought impossible."
                                         Narrator "Tao's body seems to bend and morph, kicking as whatever has a hold of them drags them into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
-                                        hide tao sprite
+
                                         jump PostSacrificeSleep
 
                                     elif "Rex" in sacrificed_character:
@@ -6953,12 +6976,12 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         Narrator "A hand reaching out from underneath."
                                         $ cinematic = False
                                         Rex "What happened to you--"
+                                        hide rex sprite
                                         $ cinematic = True
                                         Narrator "Before he can finish his sentence, the hands pull him under with a quickness you thought impossible."
                                         Narrator "Rex's body seems to bend and morph, kicking as whatever has a hold of him drags him into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
-                                        hide rex sprite
                                         jump PostSacrificeSleep
                                     
                                     elif "Melody" in sacrificed_character:
@@ -6973,12 +6996,12 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                                         $ cinematic = False
                                         Melody "Say... you don't look too good."
                                         Melody "Did something--"
+                                        hide melody sprite
                                         $ cinematic = True
                                         Narrator "Before she can finish her sentence, the hands pull her under with a quickness you thought impossible."
                                         Narrator "Melody's body seems to bend and morph, kicking as whatever has a hold of her drags her into the shadows."
                                         Narrator "And then, there's nothing. Just a soft yellow light illuminating an empty bed quarters."
                                         $ cinematic = False
-                                        hide melody sprite
                                         jump PostSacrificeSleep
 
                                     else:
@@ -10870,7 +10893,7 @@ label alicehub_main:
             Alice "I know you're a person who likes to help others, so perhaps that perspective is something that comes more naturally to you than it did for Eileen or I."
             menu:
                 "...":
-                    jump alicehub_main
+                    return
 
 
 
@@ -10879,10 +10902,10 @@ label alicehub_main:
         menu: 
             "I'm sure.":
                 Alice "I'll talk to Eileen. I recommend you don't leave the grounds."
-                jump alicehub_main
+                return
             "Maybe I didn't.":
                 Alice "Hmm. Alright then..."
-                jump alicehub_main
+                return
 
 
     label HALI03:
@@ -10891,7 +10914,7 @@ label alicehub_main:
         Alice "We're going to let Tao do the exams in that state, and I'll try and we will take what is happening into account when judging the grades."
         Alice "Thank you for looking out for Tao, I know they don't have any friends here, so it's good that you're keeping your eye on them."
         Alice "You're a good person."
-        jump alicehub_main
+        return
 
         
     label HALI04:
@@ -10899,33 +10922,33 @@ label alicehub_main:
         Alice "It's unspoken, of course. The Summit was built around the tree. No one knows whether it's just some living enchantment like the Watching Moons are, or whether it's sentient." 
         Alice "Either way, it reacts, and acts, and seems to have things it likes. It likes Aria, it likes me... I think Eileen and him are on bad terms, if I'm honest." 
         Alice "I watched it recede a branch away from her when she got close once."
-        jump alicehub_main
+        return
 
     label HALI06:
         Alice "I like Xander. He has a good heart. I wish he would put less pressure on himself. Same goes to all of you!"
-        jump alicehub_main
+        return
 
     label HALI07:
         Alice "Ah! Melody. Melody reminds me of myself. Eager. Excited to learn. Often nervous. I think great things are coming to that girl."
-        jump alicehub_main
+        return
 
     label HALI08:
         Alice "Hmm. Tao seems to be struggling. I understand why… this must be the most stressful time of your lives. The weight of your future is on your shoulders." 
         Alice "But Tao's level of anxiety seems unbearable. I just wish I could take it away from them. Worry less... live more... but look out for one another." 
         Alice "No matter how talented and hardworking Tao is, they are still just a young adult who deserves some level of peace through all this."
-        jump alicehub_main
+        return
 
     label HALI10a:
         Alice "It's best not to talk about Aria right now. I'd rather not get heated." 
         Alice "I adore and sympathise with that girl, but she had me worried sick."
-        jump alicehub_main
+        return
 
     label HALI10b:
         Alice "I'm hopeful for Aria's future. Given the right direction she could do anything. The only thing holding her back is control." 
         Alice "All that power in a woman so sweet and unstructured leads to its own set of issues." 
         Alice "The nicest people struggle making hard decisions and when you're someone with that level of power, organisation is more so about safety." 
         Alice "The Mage Council will not like the level of power they have to allow Aria to have, it'll take a lot of control from her part to convince them."
-        jump alicehub_main
+        return
 
     label HALI11:
         Alice "Oh the Summit is just lovely when you have the chance to explore it. Only in the day, of course." 
@@ -10936,13 +10959,13 @@ label alicehub_main:
         menu:
             "And what charm would {i}that{/i} be?":
                 Alice "You'll work it out eventually."
-                jump alicehub_main
+                return
             "...":
-                jump alicehub_main
+                return
 
     label HALI12:
         Alice "Those poor statues. All that hard work. At least restoring them shouldn't be too arduous. Still, very selfish of Rex to pull that sort of prank…"
-        jump alicehub_main
+        return
 
     label HALI13:
         Alice "You aren't the first to ask me about Mage Society. I get that you're all very curious." 
@@ -10967,7 +10990,7 @@ label alicehub_main:
                 Alice "As dreary as it seems. It's {i}this{/i} or it's something much worse."
                 menu:
                     "...":
-                        jump alicehub_main
+                        return
             "Is your life fun?":
                 Alice "I try not to ask myself that."
                 Alice "I find it tends to ruin my mood."
@@ -10985,12 +11008,12 @@ label alicehub_main:
                 Alice "But I like to live in reality, where we sculpt our lives from the clay we're given. You know?"
                 menu:
                     "I know...":
-                        jump alicehub_main
+                        return
 
                     "That's a long way of saying 'no'.":
                         Alice "Haha..."
                         Alice "Don't you have studying to do?"
-                        jump alicehub_main
+                        return
 
         label HALI14:
             Alice "Ha. I've had many jobs after I graduated. Like most of you will be, I was assigned a city position in Estului." 
@@ -11002,7 +11025,7 @@ label alicehub_main:
             Alice "I get to travel -- I love travelling -- and I get to spend time on my hobbies while doing so." 
             Alice "Eileen and I have a very privileged job. The only thing it lacks is companionship -- it's very rare that the two of us are in the same place." 
             Alice "I've been asking the Council to assign me an apprentice, but I have doubts they'll allow that until they find the right fit."
-            jump alicehub_main
+            return
 
             
 
