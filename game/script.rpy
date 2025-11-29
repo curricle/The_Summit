@@ -11,7 +11,7 @@ define Rex = Character("Rex", namebox_background=Frame("gui/rex_namebox.png", gu
 define Xander = Character("Xander", namebox_background=Frame("gui/xander_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
 define Eileen = Character("Eileen", namebox_background=Frame("gui/eileen_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
 define Alice = Character("Alice", namebox_background=Frame("gui/alice_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
-define NotAlice = Character("NotAlice", namebox_background=Frame("gui/alice_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
+define NotAlice = Character("???", namebox_background=Frame("gui/alice_namebox.png", gui.namebox_borders, tile=gui.namebox_tile, xalign=gui.name_xalign))
 define Narrator = Character("")
 
 # List of possible locations (optional, for reference)
@@ -657,7 +657,7 @@ label Night0Corridor:
         Narrator "Where are you going?"
         $ cinematic = False
         menu: 
-            "Back to the {b}Atrium{/b}" if Location != "Atrium":
+            "To the {b}Atrium{/b}" if Location != "Atrium":
                 stop music
                 call Night0Atrium from _call_Night0Atrium
                 return
