@@ -243,6 +243,11 @@ screen journal(tab):
                                                 xsize -544
                                                 xcenter 200
                                                 
+                                            if current_character == journal__bio_eileen:
+                                                xsize 635
+                                                xcenter 225
+                                                ypos 6
+
                                             if current_character == journal__bio_alice:
                                                 ysize 788
                                                 xsize -865
