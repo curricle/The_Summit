@@ -103,6 +103,7 @@ define Flag_AriaDormitoryChat2 = False
 define Flag_XanderDormitoryChat2 = False 
 define Flag_RexDormitoryChat2 = False
 define Flag_MelodyDormitoryChat2 = False
+define Flag_HammerAcquired = False
 
 
 
@@ -177,14 +178,29 @@ $ Flag_FrogPotion = "Potion of Frog Polymorph" in potion_recipe
 $ Flag_MelodySabotagedPotion = "Potion of Night Vision" in potion_recipe
 
 
+default potion_stolen = []
+default stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
+
 # Stolen Potion Variables
 $ potion_stolen = []
 $ stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
 $ Flag_CleansingPotion = "Potion of Cleansing" in potion_stolen
 $ Flag_FrogPolymorphPotion = "Potion of Frog Polymorph" in potion_stolen
 $ Flag_SleeplessNightPotion = "Potion of Sleepless Night" in potion_stolen
+default Flag_CleansingPotion = False
+default Flag_FrogPolymorphPotion = False
+default Flag_SleeplessNightPotion = False
+
 # Now you can reference potion_stolen[0] as 'potion 1' and potion_stolen[1] as 'potion 2' in dialogue
 
+###M THIS MIGHT MESS UP SOME CODE ###
+$ Flag_PotionNotStolen = False # Ensure this flag is always defined
+$ Flag_LockBreakerNeeded = False # Ensure this flag is always defined
+# Ensure potion_stolen is always defined before use
+
+
+default artifice_options = []
+default artificecreated_options = ["Light Machine", "Delivery Bird"]
 
 # Created Artifice Recipe Variables
 $ artifice_options = []
@@ -536,6 +552,7 @@ label Night0Dorms:
                     menu:
                         "Light spell?":
                             pass
+                    hide melody sprite
                     show melody sprite excited
                     Melody "Yeah... wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
                     $ cinematic = True
@@ -552,10 +569,12 @@ label Night0Dorms:
                     Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
                     menu:
                         "(Continue) There is...":
+                            hide melody sprite excited
                             call melodyhub_main from _call_melodyhub_main
                             jump Night0DormsMenu
 
                         "(End Conversation) Not really...":
+                            hide melody sprite excited
                             $ cinematic = True
                             show melody sprite happy
                             Narrator "Melody smiles warmly. You can tell that she isn't all that tired."
@@ -659,16 +678,16 @@ label Night0Corridor:
         menu: 
             "To the {b}Atrium{/b}" if Location != "Atrium":
                 stop music
-                call Night0Atrium from _call_Night0Atrium
+                call Night0Atrium
                 return
 
             "To the {b}Library{/b}" if Location != "Library":
                 stop music
-                call Night0Library from _call_Night0Library
+                call Night0Library
                 return
 
             "To the {b}Greenhouse{/b}." if Location != "Greenhouse":
-                call Night0Greenhouse from _call_Night0Greenhouse
+                call Night0Greenhouse
                 return
 
             "Back to the {b}Dormitory{/b}." if Location != "Dormitory":
@@ -934,18 +953,22 @@ label Morning1Dorms:
     Tao "Well, if you get placed in a small town, you might not have access to rare herbs... so I suppose so."
     show xander sprite at right with moveinright
     Xander "It'll be fine."
+    hide tao sprite
+    show tao sprite sad at left
     Tao "Are we going to be graded on the planting itself or..."
     hide xander sprite with moveoutright
     show melody sprite at right with moveinright
     Melody "I'd imagine so. Half of the quality of a potion is in its components."
-    hide tao sprite with moveoutleft
+    hide tao sprite sad with moveoutleft
+    hide rex sprite
+    show rex sprite angry
     Rex "Fuck me, I'm surrounded by--"
-    show aria sprite at left with moveinleft
+    show aria sprite happy at left with moveinleft
     Aria "Morning everyone... did I hear Alice just now?"
     menu: 
         "We need to head to the Greenhouse to do some planting, apparently.":
             pass
-    hide rex sprite with moveoutleft
+    hide rex sprite angry with moveoutleft
     show tao sprite with moveoutright
     Tao "It's the first day... if we're planting the herbs now are we expected to make them usable within seven days? What day is the potion exam?"
     Melody "We're {i}Mages{/i}, I'm sure we'll figure out a way."
@@ -970,7 +993,7 @@ label Morning1Dorms:
     Melody "I believe that's the first time he's ever been early to anything. That can't be a good sign."
     Aria "He probably just wants to stand out in the sunlight."
     Aria "It's nice, isn't it? After all these years."
-    hide aria sprite
+    hide aria sprite happy
     show xander sprite at left with moveinleft
     Xander "I didn't even know I missed it."
     Melody "I guess..."
@@ -1167,21 +1190,21 @@ label Morning1Greenhouse:
     Alice "I've taken the liberty of asking Miss Aria to avoid tending to your flowers. If you allow her to do so, both of you will be given a fail on your Potions exam."
     hide alice sprite
     $ cinematic = True
-    show aria sprite with dissolve
+    show aria sprite sad with dissolve
     Narrator "You notice Aria looking uncomfortable, her fingers clutching the frills of her dress."
-    hide aria sprite
+    hide aria sprite sad
     show melody sprite with dissolve
     Narrator "Melody is already planting, while Xander looks over the seeds he's unbagged, like a child counting pennies."
     hide melody sprite
     show rex sprite with dissolve
     Narrator "Rex seems oblivious to what's going on. Instead, focusing his attention on the ceiling -- as though he could break the sky open with a glare."
     hide rex sprite
-    show tao sprite with dissolve
+    show tao sprite angry with dissolve
     Narrator "One at a time, Tao lifts the seeds, examining them against the strong morning light."
-    hide tao sprite
+    hide tao sprite angry
     show xander sprite with dissolve
     Narrator "Xander bounces the bag of seeds in his hand as if he's attempting to juggle..."
-    hide xander sprite
+    hide xander sprite 
     Narrator "You become aware, as the light hits you, that after this you won't see everyone together in the same room except during exams..."
     Narrator "...and during the night in the dorms."
     Narrator "You wonder what you should do."
@@ -1252,8 +1275,10 @@ label Morning1Greenhouse:
                 yalign 0.3  
             Narrator "Alice's mood seems to shift as you approach, a stressed expression melting away."
             Narrator "You wonder whether she's feigning it."
+            hide alice sprite
             $ cinematic = False
             label BSID1GH2_Choices:
+                show alice sprite with dissolve
                 Alice "Pupil, what do you need help with?"
                 menu:
                     "What were you and Aria talking about?":
@@ -1894,12 +1919,12 @@ label Morning1Greenhouse:
     label Afternoon1AlchemyLab:
         scene alchemylab afternoon
         play music "audio/Potion_Theme.mp3"
+        $ Location = "Alchemy Lab"
         $ cinematic = True
         Narrator "You enter the {b}Alchemy Lab{/b}."
         Narrator "The air is thick with the smell of sterile chemicals. You wonder who was last in here?"
         Narrator "A faint sound catches your attention. At the back, tinkering over a bubbling pot, is Melody, seemingly immersed in whatever it is she's doing."
         $ cinematic = False
-        $ Location = "Alchemy Lab"
         jump Afternoon1AlchemyLab_Choices
 
 
@@ -1957,9 +1982,11 @@ label Morning1Greenhouse:
                         Melody "I'm sure you will be."
                         pass
                 Melody "Anyway... I'm yapping."
+                hide melody sprite
                 jump Afternoon1AlchemyLab_MelodyChoices
                 
                 label Afternoon1AlchemyLab_MelodyChoices:
+                    show melody sprite happy
                     Melody "Is there something you wanted?"
                     menu:
                         "(Potion) What are you brewing?":
@@ -2000,22 +2027,25 @@ label Morning1Greenhouse:
                                                     Melody "I know we didn't chat much in the Scholomance, but that doesn't mean I never liked you."
                                                     menu:
                                                         "Likewise.":
+                                                            hide melody sprite happy
                                                             jump Afternoon1AlchemyLab_MelodyChoices
 
                                                         "I'm sure we both had other things going on.":
                                                             Melody "Exactly."
+                                                            hide melody sprite happy
                                                             jump Afternoon1AlchemyLab_MelodyChoices
 
 
                         "I had some questions...":
                             Melody "I'm an open book."
+                            hide melody sprite happy
                             call melodyhub_main from _call_melodyhub_main_1
 
                         "Nothing. I should get going.":
                             Melody "Anyway, don't be a stranger."
                             Melody "I'll probably spend a lot of time here."
                             Melody "If you need to chat, you know where to look."
-                            hide melody sprite
+                            hide melody sprite happy
                             $ cinematic = True
                             Narrator "As you leave, you hear Melody begin working on her potion again."
                             $ cinematic = False
@@ -2143,6 +2173,7 @@ label Morning1Greenhouse:
             jump Afternoon1Atrium_XanderChoices
 
             label Afternoon1Atrium_XanderChoices:
+                show xander sprite
                 Xander "What did you wanna chat about?"
                 menu:
                     "(Ask about Botany)":
@@ -2283,9 +2314,11 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 Aria "Hello."
                 Aria "Did you want to sit down?"
+                hide aria sprite
                 jump Afternoon1Courtyard_AriaChoices
 
                 label Afternoon1Courtyard_AriaChoices:
+                    show aria sprite
                     menu:
                         "(Take a seat)":
                             $ cinematic = True
@@ -2322,6 +2355,8 @@ label Morning1Greenhouse:
                                             pass
 
                                 "You belong here, believe it or not.":
+                                    hide aria sprite
+                                    show aria sprite sad
                                     Aria "I don't think that's true."
                                     Aria "I'm called names, avoided and... told I'm crazy."
                                     Aria "All while people watch me."
@@ -2333,8 +2368,9 @@ label Morning1Greenhouse:
                                     pass
                             $ cinematic = True
                             Narrator "Aria seems to deflate a little."
-                            Narrator "Then, almost as if some magic had touched her, she perks up again."
+                            hide aria sprite sad
                             show aria sprite happy
+                            Narrator "Then, almost as if some magic had touched her, she perks up again."
                             $ cinematic = False
                             Aria "I think I'll go in there tomorrow."
                             hide aria sprite happy
@@ -2343,7 +2379,8 @@ label Morning1Greenhouse:
 
                         "I have a lot of questions.":
                             Aria "Ask away."
-                            call melodyhub_main from _call_melodyhub_main_2
+                            hide aria sprite
+                            call ariahub_main
                             hide aria sprite
                             jump Afternoon1Courtyard_Choices
 
@@ -2638,7 +2675,7 @@ label Morning1Greenhouse:
                                     Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
                                     menu:
                                         "A few things...":
-                                            call melodyhub_main from _call_melodyhub_main_3
+                                            call melodyhub_main
                                             hide melody sprite
                                             jump Night1DecisionMenu
                                         "Nothing in particular.":
@@ -2734,6 +2771,7 @@ label Morning1Greenhouse:
     label Night1SneakDecision:
         $ Location = "Corridor"
         play music "audio/project_w_main_theme_concept_02_fade.mp3"
+        scene corridor night
         $ cinematic = True
         Narrator "You enter the corridor, the dormitory door closing behind you."
         Narrator "It's cold, and in the dark you can only make out distant shapes."
@@ -3251,15 +3289,34 @@ label Morning1Greenhouse:
                 $ Location = "Alchemy Lab"
                 $ cinematic = True
                 Narrator "The first thing to hit you is the smell of sterile chemicals. It's been cleaned, at least."
-                Narrator "In the dim light, you notice how the potions and chemicals glow "
+                Narrator "In the dim light, you notice how the potions and chemicals glow and glitter behind their glass containers."
                 $ cinematic = False
-                if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
+                if not potion_stolen:
                     $ cinematic = True
                     Narrator "You notice a glass cupboard, filled to the brim with potions."
                     $ cinematic = False
                     menu:
                         "(Investigate)":
-                            call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions
+                            call Night1AlchemyLab_Potions
+                            stop music
+                            jump Night1SneakDecision_Choices
+                elif not Flag_PotionNotStolen:
+                    $ cinematic = True
+                    Narrator "You notice a glass cupboard, filled to the brim with potions."
+                    $ cinematic = False
+                    menu:
+                        "(Investigate)":
+                            call Night1AlchemyLab_Potions
+                            stop music
+                            jump Night1SneakDecision_Choices
+
+                elif Flag_LockBreakerNeeded:
+                    $ cinematic = True
+                    Narrator "You notice a glass cupboard, filled to the brim with potions."
+                    $ cinematic = False
+                    menu:
+                        "(Investigate)":
+                            call Night1AlchemyLab_Potions
                             stop music
                             jump Night1SneakDecision_Choices
 
@@ -3287,11 +3344,11 @@ label Morning1Greenhouse:
                 menu:
                     "(Inspect the Potions)":
                         $ cinematic = True
-                        Narrator "You ignore it."
+                        Narrator "You ignore the sinking feeling in your gut and look at the potions."
                         Narrator "You notice a few you recognise from your time in the Scholomance."
-                        Narrator "A potion of cleansing - soap, basically."
-                        Narrator "A potion of sleepless night... which you can only assume is caffeine."
-                        Narrator "A frog potion... whatever that is..."
+                        Narrator "A {b}potion of cleansing{/b} - soap, basically."
+                        Narrator "A {b}potion of sleepless night{/b}... which you can only assume is caffeine."
+                        Narrator "A {b}potion of frog polymorph{/b}... whatever that is..."
                         Narrator "A lot of their labels are quite... undescriptive."
                         Narrator "You wonder why they're locked away, and if so, who has the key?"
                         $ cinematic = False
@@ -3326,7 +3383,46 @@ label Morning1Greenhouse:
                             "(Test the Lock)":
                                 $ cinematic = True
                                 Narrator "You pull the handle -- it doesn't give."
+                                Narrator "You probably need some sort of tool..."
+                                $ Flag_LockBreakerNeeded = True
                                 $ cinematic = False
+                                if Flag_HammerAcquired:
+                                    menu:
+                                        "(Smash the lock with the hammer)":
+                                            $ cinematic = True
+                                            Narrator "You pull the hammer out from your bag and bring it down on the lock."
+                                            Narrator "With a loud {i}clunk{/i} it unbolts, the metal feeling loose."
+                                            $ cinematic = False
+                                            $ Flag_AlchemyLabLockBroken = True
+                                            menu: 
+                                                "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
+                                                    $ potion_stolen.append("Potion of Cleansing")
+                                                    pass
+                                                "(Take the {b}Potion of Frog Polymorph{/b})" if not "Potion of Frog Polymorph" not in potion_stolen:
+                                                    $ potion_stolen.append("Potion of Frog Polymorph")
+                                                    pass
+                                                "(Take the {b}Potion of Sleepless Night{/b})" if not "Potion of Sleepless Night" not in potion_stolen:
+                                                    $ potion_stolen.append("Potion of Sleepless Night")
+                                                    pass
+                                            $ cinematic = True
+                                            Narrator "You slip the potion into your bag."
+                                            play sound "audio/clue_found_item_alert.mp3"
+                                            Narrator "A part of you feels a thrill of excitement."
+                                            $ cinematic = False
+                                            $ Flag_LockBreakerUsed = True
+                                            menu:
+                                                "(Leave)":
+                                                    stop music
+                                                    return 
+                                        "(Leave it alone)":
+                                            stop music
+                                            return
+                                else:
+                                    $ cinematic = True
+                                    Narrator "Without some sort of tool, you won't be able to get in."
+                                    Narrator "Bored, you decide to leave it be."
+                                    $ cinematic = False
+                                    return
                                 pass
                             
                             "(Smash the Lock)":
@@ -3366,9 +3462,11 @@ label Morning1Greenhouse:
                                     $ cinematic = False
                                     menu:
                                         "(Leave)":
+                                            stop music
                                             return 
 
                             "(Leave it alone)":
+                                stop music
                                 return
 
 
@@ -3405,10 +3503,14 @@ label Morning1Greenhouse:
                                 Rex "If it's something that's actually useful in the real world, for one. Like artificing."
                                 menu:
                                     "A lot of what we learn is useful.":
+                                        hide rex sprite
+                                        show rex sprite angry
                                         Rex "They give you the sterilized version of everything because they only want you to do things their way."
                                         menu:
                                             "Who's 'they'?":
                                                 Rex "The Mage Council. Now beat it, I have actual work to do."
+                                                hide rex sprite angry
+                                                show rex sprite
                                                 pass
                                             
                                     "I'm not judging.":
@@ -3435,24 +3537,40 @@ label Morning1Greenhouse:
                                 if Affinity_Rex <= 30:
                                     Rex "Something to submit to the exam..."
                                     Rex "A mechanical plant waterer... I'm using some conjuration runes mixed with a mechanical body."
+                                    hide rex sprite
+                                    show rex sprite happy
                                     Rex "A little artifice to water my plants."
+                                    hide rex sprite happy
+                                    show rex sprite
                                     menu:
                                         "That sounds lazy.":
+                                            hide rex sprite
+                                            show rex sprite sad
                                             Rex "Sometimes people don't feel like getting outta bed."
                                             Rex "I know I don't... wouldn't call it laziness but I'm not always up to face the world."
                                             Rex "We can't all be Melody or Tao."
+                                            hide rex sprite sad
+                                            show rex sprite
                                             Rex "...psychos."
                                             pass
 
                                         "That sounds brilliant.":
+                                            hide rex sprite
+                                            show rex sprite happy
                                             Rex "You think so?"
                                             Rex "Huh. First time someone's called me that."
                                             $ Affinity_Rex += 5
+                                            hide rex sprite happy
+                                            show rex sprite
                                             pass
 
                                         "That sounds useful.":
+                                            hide rex sprite
+                                            show rex sprite happy
                                             Rex "I'm hoping people think that."
                                             Rex "You can't have the blueprint. I haven't made one."
+                                            hide rex sprite happy
+                                            show rex sprite
                                             menu: 
                                                 "Damn.":
                                                     Rex "There's always an angle with Scholomance students.."
@@ -3554,11 +3672,14 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 menu:
                     "(Check on your Plants)":
-                        call GreenhousePlants_Night1 from _call_GreenhousePlants_Night1
+                        call GreenhousePlants_Night1
                         jump Night1Greenhouse_Choices
 
                         label GreenhousePlants_Night1:
-                            if planted_seeds == "Winged Jasmine":
+                            $ cinematic = True
+                            Narrator "You move over to your plot..."
+                            $ cinematic = False
+                            if "Winged Jasmine" in planted_seeds:
                                 $ cinematic = True
                                 Narrator "You inspect your Winged Jasmine... you're surprised at how much it has already grown."
                                 Narrator "You suppose that the soil here must be incredibly fertile... or perhaps potent due to some Magecraft."
@@ -3588,7 +3709,7 @@ label Morning1Greenhouse:
                                         return
 
 
-                            if planted_seeds == "Snapjaw Orchid":
+                            if "Snapjaw Orchid" in planted_seeds:
                                 $ cinematic = True
                                 Narrator "You inspect your Snapjaw Orchid... it looks a little sad."
                                 Narrator "Still, you're surprised at how much it's grown in such a short amount of time."
@@ -3627,7 +3748,7 @@ label Morning1Greenhouse:
                                 
 
 
-                            if planted_seeds == "Moon Melon":
+                            if "Moon Melon" in planted_seeds:
                                 $ cinematic = True
                                 Narrator "You inspect your Moon Melon, a large, round plant that glows a deep blue."
                                 Narrator "You're surprised how much it's already grown."
@@ -3665,7 +3786,7 @@ label Morning1Greenhouse:
                                         return
 
 
-                            if planted_seeds == "Sanguine Lily":
+                            if "Sanguine Lily" in planted_seeds:
                                 $ cinematic = True
                                 Narrator "You inspect your Sanguine Lily... it has already grown tremendously since you planted it."
                                 Narrator "The flower itself is rather interesting... long, thin petals stretch out and curl like spindling fingers."
