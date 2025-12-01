@@ -7322,14 +7322,10 @@ label Night2TeachersLounge: #player cannot enter because it's locked and has tea
 
 
 label EndOfDemo:
-    scene black with fade
+    scene Summitbound_End_Screen with fade
     play music "audio/Title_Theme_MASTER.mp3"
-    "You have now completed Episode 1!"
-    "We hope you enjoyed your time at The Summit!"
-    "Thank you, so much, for playing!"
-    "If you want to support us as we create Episode 2, 3, and other games, we have a Patreon!"
-    "While you wait, we have also created a Podcast, set inside the world of the Summit."
     play sound "audio/dialogue_information_default.mp3"
+    wait 10.0
     return
 
 
