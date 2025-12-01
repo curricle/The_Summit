@@ -543,7 +543,7 @@ label start:
     Narrator "You shouldn't be surprised... the Scholomance holds every training mage. None of your friends were chosen alongside you to take the exam. Part of you feels alone."
     $ cinematic = False
     if Flag_MelodyWave == True:
-        call BMEL01 from _call_BMEL01 #melody introduction
+        call BMEL01 #melody introduction
     else:
         "You wonder whether you should break the ice."
         jump introduction_menu
@@ -656,7 +656,7 @@ label Night0Dorms:
 
 
             "Talk to raven-haired woman." if Flag_MelodyMet == False:
-                jump BMEL01 ###Takes you back to her intro scene. In case someone hasn't done it.
+                call BMEL01 ###Takes you back to her intro scene. In case someone hasn't done it.
 
             "(Talk to Xander.)" if Flag_XanderMet == True and not Flag_XanderNight0:
                 jump BXAN12 ###Xander node in Arcweave
@@ -8057,11 +8057,7 @@ label BMEL01:
     $ Flag_MelodyMet = True
     $ journal__bio_melody.isUnlocked = Flag_MelodyMet
     hide melody sprite
-    if Day0Afternoon:
-        jump introduction_menu
-
-    if Day0Night:
-        jump Night0DormsMenu
+    return
 
 
 
