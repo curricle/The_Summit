@@ -50,6 +50,12 @@ $ Flag_XanderPlantSabotaged = "Xander" in sabotaged_plant
 $ Flag_TaoPlantSabotaged = "Tao" in sabotaged_plant
 $ Flag_RexPlantSabotaged = "Rex" in sabotaged_plant
 $ Flag_MelodyPlantSabotaged = "Melody" in sabotaged_plant
+default sabotaged_plant = []
+default Flag_AriaPlantSabotaged = False
+default Flag_XanderPlantSabotaged = False
+default Flag_TaoPlantSabotaged = False
+default Flag_RexPlantSabotaged = False
+default Flag_MelodyPlantSabotaged = False
 ######referencing sabotaged plants######
 
 
@@ -61,8 +67,28 @@ $ Flag_Sacrificed_Xander = "Xander" in sacrificed_character
 $ Flag_Sacrificed_Tao = "Tao" in sacrificed_character
 $ Flag_Sacrificed_Rex = "Rex" in sacrificed_character
 $ Flag_Sacrificed_Melody = "Melody" in sacrificed_character
+default sacrificed_character = []
+default Flag_Sacrificed_Aria = False
+default Flag_Sacrificed_Xander = False
+default Flag_Sacrificed_Tao = False
+default Flag_Sacrificed_Rex = False
+default Flag_Sacrificed_Melody = False
 #############
 
+# Stolen Potion Variables
+default potion_stolen = []
+default stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
+
+$ potion_stolen = []
+$ stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
+$ Flag_CleansingPotion = "Potion of Cleansing" in potion_stolen
+$ Flag_FrogPolymorphPotion = "Potion of Frog Polymorph" in potion_stolen
+$ Flag_SleeplessNightPotion = "Potion of Sleepless Night" in potion_stolen
+default Flag_CleansingPotion = False
+default Flag_FrogPolymorphPotion = False
+default Flag_SleeplessNightPotion = False
+
+default sabotaged_potions = False
 
 ####################
 #plants tended days#
@@ -115,9 +141,46 @@ define Flag_XanderDormitoryChat2 = False
 define Flag_RexDormitoryChat2 = False
 define Flag_MelodyDormitoryChat2 = False
 define Flag_HammerAcquired = False
+define Flag_DeliveryBirdGrabbed = False
+# Dialogue non repeat flags#############################
+#night 0
+define Flag_XanderNight0 = False
+define Flag_RexNight0 = False
+define Flag_MelodyNight0 = False
+define Flag_AriaNight0  = False
+define Flag_TaoNight0 = False
 
+#morning 1
+define Flag_XanderMorning1 = False
+define Flag_TaoMorning1 = False
+define Flag_RexMorning1 = False
+define Flag_AriaMorning1 = False
+define Flag_MelodyMorning1 = False
+define Flag_AliceMorning1 = False
+define Flag_TaoLibraryMorning1 = False
+define Flag_MelodyAlchemyMorning1 = False
+define Flag_XanderBotanyQuestionsMorning = False
 
+#night 1
+define Flag_TaoNight1 = False
+define Flag_AriaNight1 = False
+define Flag_MelodyNight1 = False
+define Flag_RexNight1 = False
+define Flag_XanderNight1 = False
+define Flag_RexNight1a = False #talked to him in the lab
+define Night1AriaReading = False #aria's reading the book you brought
 
+#morning 2
+define Flag_TaoMorning2 = False
+define Flag_XanderMorning2 = False
+define Flag_MelodyMorning2 = False
+define Flag_AriaMorning2 = False
+define Flag_RexMorning2 = False
+define Flag_Afternoon2Window = False
+define Flag_XanderAfternoon2 = False #this is the one where he has a breakdown so IMPORTANT
+define Flag_TaoAfternoonAlchemyLab = False
+define Flag_RexAfternoon2 = False
+#########################################################
 
 define Flag_AriaAliceOpinion = False #player has asked aria's opinion on alice.
 define Flag_AriaEileenOpinion = False #player has asked aria's opinion on eileen
@@ -189,18 +252,6 @@ $ Flag_FrogPotion = "Potion of Frog Polymorph" in potion_recipe
 $ Flag_MelodySabotagedPotion = "Potion of Night Vision" in potion_recipe
 
 
-default potion_stolen = []
-default stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
-
-# Stolen Potion Variables
-$ potion_stolen = []
-$ stolenpotion_options = ["Potion of Cleansing", "Potion of Frog Polymorph", "Potion of Sleepless Night"]
-$ Flag_CleansingPotion = "Potion of Cleansing" in potion_stolen
-$ Flag_FrogPolymorphPotion = "Potion of Frog Polymorph" in potion_stolen
-$ Flag_SleeplessNightPotion = "Potion of Sleepless Night" in potion_stolen
-default Flag_CleansingPotion = False
-default Flag_FrogPolymorphPotion = False
-default Flag_SleeplessNightPotion = False
 
 # Now you can reference potion_stolen[0] as 'potion 1' and potion_stolen[1] as 'potion 2' in dialogue
 
@@ -445,8 +496,8 @@ label start:
     Narrator "You notice Alice's smile fade as she bites the inside of her cheek."
     $ cinematic = False
     show alice sprite with moveinright:
-        xalign 0.5 
-        yalign 0.3
+        xalign 0.7
+        yalign -1.5  
     Alice "Great... Great. Thank you for your advice, Inquisitor Eileen."
     Alice "As for my own advice... Every licensed Mage has been through the Summit. It's the final test we undertake as student mages." 
     Alice "I have unwavering trust that you each have it in you to succeed."
@@ -504,23 +555,23 @@ label start:
         
         menu:
             "(Talk to the raven-haired woman.)" if Flag_MelodyMet == False:
-                call BMEL01 from _call_BMEL01_1
+                call BMEL01
                 jump introduction_menu
 
             "(Talk to the Mage staring up at the moons.)" if Flag_TaoMet == False:
-                call BTAO01 from _call_BTAO01
+                call BTAO01
                 jump introduction_menu
 
             "(Talk to the woman in the pink uniform.)" if Flag_AriaMet == False:
-                call BARI01 from _call_BARI01
+                call BARI01
                 jump introduction_menu
 
             "(Talk to the man with tattoos.)" if Flag_RexMet == False:
-                call BREX01 from _call_BREX01
+                call BREX01
                 jump introduction_menu
 
             "(Talk to the man with white hair.)" if Flag_XanderMet == False:
-                call BXAN01 from _call_BXAN01
+                call BXAN01
                 jump introduction_menu
 
             "(Go to bed.)" if Flag_AriaMet and Flag_MelodyMet and Flag_RexMet and Flag_TaoMet and Flag_XanderMet:
@@ -554,81 +605,83 @@ label Night0Dorms:
     
     label Night0DormsMenu:
         menu:
-            "(Talk to Melody.)" if Flag_MelodyMet == True:
-                #Melody Dormitory Night 0
+            "(Talk to Melody.)" if Flag_MelodyMet == True and not Flag_MelodyNight0:                #Melody Dormitory Night 0
+                if not Flag_LightSpellNotLearned:
                     label BMEL05:
-                    show melody sprite
-                    Melody "Oh, you're still up. I'm usually in bed pretty early, but I spend a lot of time reading under the covers." 
-                    Melody "Not saying you have to be quiet if you're walking around, I sleep like the dead. Honestly, learning that light spell back at the Scholomance made my life a million times easier."
-                    menu:
-                        "Light spell?":
-                            pass
-                    hide melody sprite
-                    show melody sprite excited
-                    Melody "Yeah... wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
-                    $ cinematic = True
-                    Narrator "Melody rummages through a pristine purple bag. You're surprised it survived the years in the Scholomance."
-                    Narrator "After a few moments, she gives up."
-                    $ cinematic = False
-                    Melody "I know it's in here somewhere..."
-                    Melody "I'll find it tomorrow morning..."
-                    $ Flag_LightSpellNotLearned = True
-                    Melody "If you want it, let me know."
-                    menu:
-                        "Thanks.":
-                            pass
-                    Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
-                    menu:
-                        "(Continue) There is...":
-                            hide melody sprite excited
-                            call melodyhub_main from _call_melodyhub_main
-                            jump Night0DormsMenu
+                        show melody sprite
+                        $ Flag_MelodyNight0 = True
+                        Melody "Oh, you're still up. I'm usually in bed pretty early, but I spend a lot of time reading under the covers." 
+                        Melody "Not saying you have to be quiet if you're walking around, I sleep like the dead. Honestly, learning that light spell back at the Scholomance made my life a million times easier."
+                        menu:
+                            "Light spell?":
+                                pass
+                        hide melody sprite
+                        show melody sprite excited
+                        Melody "Yeah... wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
+                        $ cinematic = True
+                        Narrator "Melody rummages through a pristine purple bag. You're surprised it survived the years in the Scholomance."
+                        Narrator "After a few moments, she gives up."
+                        $ cinematic = False
+                        Melody "I know it's in here somewhere..."
+                        Melody "I'll find it tomorrow morning..."
+                        $ Flag_LightSpellNotLearned = True
+                        Melody "If you want it, let me know."
+                        menu:
+                            "Thanks.":
+                                pass
+                        Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
+                        menu:
+                            "(Continue) There is...":
+                                hide melody sprite excited
+                                call melodyhub_main from _call_melodyhub_main
+                                jump Night0DormsMenu
 
-                        "(End Conversation) Not really...":
-                            hide melody sprite excited
-                            $ cinematic = True
-                            show melody sprite happy
-                            Narrator "Melody smiles warmly. You can tell that she isn't all that tired."
-                            hide melody sprite happy
-                            $ cinematic = False
-                            jump Night0DormsMenu
-                    return
+                            "(End Conversation) Not really...":
+                                hide melody sprite excited
+                                $ cinematic = True
+                                show melody sprite happy
+                                Narrator "Melody smiles warmly. You can tell that she isn't all that tired."
+                                hide melody sprite happy
+                                hide melody sprite
+                                $ cinematic = False
+                                jump Night0DormsMenu
+
+                else:
+                    show melody sprite
+                    Melody "I should probably get to bed. Early start tomorrow."
+                    hide melody sprite
+                    jump Night0DormsMenu 
+
+
+
 
             "Talk to raven-haired woman." if Flag_MelodyMet == False:
-                call BMEL01 from _call_BMEL01_2 ###Takes you back to her intro scene. In case someone hasn't done it.
-                jump Night0DormsMenu
+                jump BMEL01 ###Takes you back to her intro scene. In case someone hasn't done it.
 
-            "(Talk to Xander.)" if Flag_XanderMet == True:
-                call BXAN12 from _call_BXAN12 ###Xander node in Arcweave
-                jump Night0DormsMenu
+            "(Talk to Xander.)" if Flag_XanderMet == True and not Flag_XanderNight0:
+                jump BXAN12 ###Xander node in Arcweave
 
             "(Talk to the man with white hair.)" if Flag_XanderMet == False:
-                call BXAN01 from _call_BXAN01_1
-                jump Night0DormsMenu
+                jump BXAN01
 
-            "(Talk to Rex.)" if Flag_RexMet == True:
-                call BREX22 from _call_BREX22
-                jump Night0DormsMenu
+            "(Talk to Rex.)" if Flag_RexMet == True and not Flag_RexNight0:
+                jump BREX22
 
             "(Talk to the man with tattoos.)" if Flag_RexMet == False:
-                call BREX01 from _call_BREX01_1
-                jump Night0DormsMenu
+                jump BREX01
 
-            "(Talk to Aria.)" if Flag_AriaMet == True:
-                call BARI28 from _call_BARI28
-                jump Night0DormsMenu
+            "(Talk to Aria.)" if Flag_AriaMet == True and not Flag_AriaNight0:
+                jump BARI28
 
             "(Talk to the woman in the pink uniform.)" if Flag_AriaMet == False:
-                call BARI01 from _call_BARI01_1
-                jump Night0DormsMenu
+                jump BARI01
 
-            "(Talk to Tao.)" if Flag_TaoMet == True:
-                call BTAO20 from _call_BTAO20
-                jump Night0DormsMenu
+            "(Talk to Tao.)" if Flag_TaoMet == True and not Flag_TaoNight0:
+                jump BTAO20
 
             "(Talk to the deadpan mage.)" if Flag_TaoMet == False:
-                call BTAO01 from _call_BTAO01_1
-                jump Night0DormsMenu
+                jump BTAO01
+
 
             "(Go to Sleep)":
                 $ cinematic = True
@@ -662,9 +715,6 @@ label Night0Dorms:
                         stop music fadeout 1.0
                         scene fadeout 1.0
                         jump Morning1Dorms
-
-        return
-    return
 
 
 
@@ -942,16 +992,13 @@ label Morning1Dorms:
     Narrator "It seems no student decided to close them."
     Narrator "You look around, waiting for someone to make a move."
     $ cinematic = False
-    show alice sprite happy:
-        xalign 0.5 
-        yalign 0.3     
+    show alice sprite solo:
+        xalign 0.7
+        yalign -1.5  
     Alice "Good morning, pupils."
     Alice "I hope you're all rested and ready. Today is a busy day."
     Alice "You are going to be planting the materials you'll be using for your potion exam."
-    hide alice sprite happy
-    show alice sprite with dissolve:
-        xalign 0.5 
-        yalign 0.3  
+    pause 0.9
     Alice "When you're ready, please make your way to the Greenhouse."
     Alice "Don't dawdle."
     $ cinematic = True
@@ -1014,8 +1061,10 @@ label Morning1Dorms:
             hide xander sprite
             show melody sprite at center
             Melody "I didn't notice it. I suppose it won't feel real until I {i}know{/i} we're not going back to the Scholomance."
+            show tao sprite at left with moveinleft
             Tao "There's not much of a chance of {i}us{/i} going back."
             Melody "You never know, Tao."
+            hide tao sprite
             jump Day1DormsChat1
         "Xander, you don't seem that fazed by planting.":
             hide aria sprite
@@ -1171,8 +1220,8 @@ label Morning1Greenhouse:
     Narrator "She clears her throat."
     $ cinematic = False
     show alice sprite with moveinleft:
-        xalign 0.5 
-        yalign 0.3  
+        xalign 0.7
+        yalign -1.5  
     Alice "I won't keep you long. I'm sure you have plenty of studying to do."
     Alice "I've taken the liberty of bringing you all a selection of seeds to plant."
     Alice "You will be using these crops for your potion exam, so please, take good care of them."
@@ -1192,8 +1241,8 @@ label Morning1Greenhouse:
     Narrator "This one is sickly sweet."
     $ cinematic = False
     show alice sprite with dissolve:
-        xalign 0.5 
-        yalign 0.3  
+        xalign 0.7
+        yalign -1.5  
     Alice "We've given you a small plot to work with. Try not to overcrowd the area."
     Alice "For now, I would simply plant one type of seed at most -- that's my recommendation."
     Alice "We've labeled the seeds -- you should know what sort of care they require."
@@ -1223,36 +1272,35 @@ label Morning1Greenhouse:
     label GreenhouseMorning1Choices:
         menu:
             "(Inspect the Seeds)":
-                call BSID1GH from _call_BSID1GH
-                return
+                jump BSID1GH   
 
-            "(Talk to Alice.)":
-                call BSID1GH2 from _call_BSID1GH2
-                return
+            "(Talk to Alice.)" if not Flag_AliceMorning1:
+                jump BSID1GH2
 
-            "(Talk to Melody)":
-                call BSID1GH3 from _call_BSID1GH3
-                return
+            "(Talk to Melody)" if not Flag_MelodyMorning1:
+                jump BSID1GH3
 
-            "(Talk to Aria)":
-                call BSID1GH4 from _call_BSID1GH4
-                return
+            "(Talk to Aria)" if not Flag_AriaMorning1:
+                jump BSID1GH4
+                
+            "(Talk to Rex)" if not Flag_RexMorning1:
+                jump BSID1GH5
 
-            "(Talk to Rex)":
-                call BSID1GH5 from _call_BSID1GH5
-                return
-
-            "(Talk to Tao)":
-                call BSID1GH6 from _call_BSID1GH6
-                return
+            "(Talk to Tao)" if not Flag_TaoMorning1:
+                jump BSID1GH6
 
             "(Talk to Xander)":
-                call BSID1GH8 from _call_BSID1GH8
-                return
+                if not Flag_XanderMorning1:
+                    jump BSID1GH8
+                else:
+                    show xander sprite
+                    Xander "Uhh... I wanna help you but Alice's doll is staring me down..."
+                    Xander "We'll chat later... okay?"
+                    hide xander sprite
+                    jump GreenhouseMorning1Choices
 
             "(Plant the Seeds)" if Flag_PlayerSeedsInspected:
-                call BSID1GH7 from _call_BSID1GH7
-                return
+                jump BSID1GH7
             
 
         label BSID1GH: # Inspecting seeds
@@ -1281,15 +1329,20 @@ label Morning1Greenhouse:
 
         label BSID1GH2: # Talk to Alice
             $ cinematic = True
+            $ Flag_AliceMorning1 = True
             show alice sprite with dissolve:
-                xalign 0.5 
-                yalign 0.3  
+                xalign 0.7
+                yalign -1.5  
             Narrator "Alice's mood seems to shift as you approach, a stressed expression melting away."
             Narrator "You wonder whether she's feigning it."
             hide alice sprite
             $ cinematic = False
+            jump BSID1GH2_Choices
+            
             label BSID1GH2_Choices:
-                show alice sprite with dissolve
+                show alice sprite with dissolve:
+                    xalign 0.7
+                    yalign -1.5
                 Alice "Pupil, what do you need help with?"
                 menu:
                     "What were you and Aria talking about?":
@@ -1335,6 +1388,7 @@ label Morning1Greenhouse:
 
         label BSID1GH3: #Talk to Melody
             show melody sprite with dissolve
+            $ Flag_MelodyMorning1 = True
             $ cinematic = True
             Narrator "Melody smiles as you approach."
             Narrator "As you reach her, she plants the last of her seeds."
@@ -1347,9 +1401,7 @@ label Morning1Greenhouse:
                     Melody "I {i}would{/i} but I'm pretty sure Alice will get mad at the both of us."
                     Melody "From what I understand, though, try and not plant the one with the obscure sounding name." 
                     Melody "I think that one's carnivorous."
-                    show melody sprite laugh
                     Melody "Lest you become it's next meal..."
-                    hide melody sprite laugh
                     Melody "I'm sure it makes some great potions, though."
                     $ cinematic = True
                     Narrator "She looks back at the seeds, beginning to place her fingers thoughtfully on each little mound."
@@ -1367,6 +1419,7 @@ label Morning1Greenhouse:
 
         label BSID1GH4: # Talk to Aria
             show aria sprite with dissolve
+            $ Flag_AriaMorning1 = True
             $ cinematic = True
             Narrator "Aria is kneeling with her seeds as you approach. She barely notices you as you stand beside her."
             $ cinematic = False
@@ -1399,7 +1452,7 @@ label Morning1Greenhouse:
                     Aria "Something about this place... it's beautiful but I can't help but feel..."
                     Aria "Muted. Like someone's sucked the air out from around me."
                     Aria "I know you noticed Alice speaking to me."
-                    Aria "It wasn't her. I think she was just checking on me."
+                    Aria "It's nothing bad... I think she was just checking on me."
                     Aria "Like you are..."
                     menu:
                         "I wouldn't say I'm checking on you.":
@@ -1407,10 +1460,14 @@ label Morning1Greenhouse:
                             pass
 
                         "That's what friends do, right?":
+                            hide aria sprite
+                            show aria sprite happy
                             Aria "I guess so."
                             Aria "I wouldn't know, to tell the truth."
                             Aria "Other than my dormmate, I don't really get the chance to talk at the Scholomance."
                             $ Affinity_Aria += 10
+                            hide aria sprite happy
+                            show aria sprite
                             pass
             Aria "Did you want something? I don't want to keep you."
             if Flag_PlayerSeedsInspected:
@@ -1434,9 +1491,11 @@ label Morning1Greenhouse:
                 menu:
                     "Plants...":
                         Aria "Hmm? Isn't the greenhouse amazing? I've never worked in one this big. If you need help just ask me. Growth magic is kind of my specialty..."
+                        show eileen sprite at left with dissolve
                         Eileen "You certainly should {i}not{/i} ask Aria for help. Or anybody else. Aria - you don't condone cheating on exams, do you?"
                         Aria "...Uh... well, of course not. Sorry, I -- I wasn't thinking."
                         hide aria sprite
+                        hide eileen sprite
                         jump GreenhouseMorning1Choices
 
                     "I guess not.":
@@ -1447,6 +1506,7 @@ label Morning1Greenhouse:
 
         label BSID1GH5: # Talk to Rex
             show rex sprite with dissolve
+            $ Flag_RexMorning1 = True
             $ cinematic = True
             Narrator "Rex does not want to talk to you."
             Narrator "You're sure of that as he flicks dirt your way."
@@ -1467,6 +1527,7 @@ label Morning1Greenhouse:
 
         label BSID1GH6: # Talk to Tao
             show tao sprite with dissolve
+            $ Flag_TaoMorning1 = True
             $ cinematic = True
             Narrator "Tao looks over at you as you approach."
             Narrator "For a moment, you wonder if they've had a change of heart."
@@ -1520,8 +1581,8 @@ label Morning1Greenhouse:
             $ cinematic = True
             Narrator "With the [planted_seeds] planted, you watch your classmates funnel out of the greenhouse without you."
             show alice sprite with dissolve:
-                xalign 0.5 
-                yalign 0.3  
+                xalign 0.7
+                yalign -1.5   
             Narrator "Alice looks over at you."
             $ cinematic = False
             Alice "You have the rest of the day to prepare for you upcoming exams."
@@ -1539,6 +1600,7 @@ label Morning1Greenhouse:
         label BSID1GH8: # Talk to Xander
             $ cinematic = True
             show xander sprite with dissolve
+            $ Flag_XanderMorning1 = True
             Narrator "Xander looks at you as you approach."
             $ cinematic = False
             Xander "Hey... I don't recognize any of these... I think one's Moon Melon. Hope I plant that one."
@@ -1660,11 +1722,20 @@ label Morning1Greenhouse:
             $ cinematic = False
             menu:
                 "Look around for books on Botany." if Flag_PlayerSeedsInspected and not Flag_IllustratedBotanical or Flag_WoodwitchGuide or Flag_CarnivorousPlants:
-                    call Afternoon1Library_Botany from _call_Afternoon1Library_Botany
-                    return
+                    jump Afternoon1Library_Botany
+
                 "(Talk to Tao)" if Flag_TaoMet:
-                    call Afternoon1Library_Tao from _call_Afternoon1Library_Tao
-                    return
+                    if Flag_TaoLibraryMorning1:
+                        show tao sprite
+                        Tao "I'd like it if you let me study, please."
+                        hide tao sprite
+                        menu:
+                            "(Let them study)":
+                                jump Afternoon1Library_Choices
+
+                    else:
+                        jump Afternoon1Library_Tao
+
                 "(Leave the Library)":
                     stop music
                     play music "audio/project_w_scholomance_map.mp3"
@@ -1739,6 +1810,7 @@ label Morning1Greenhouse:
                                 jump Afternoon1Library_Exit
 
                             else:
+                                Narrator "This is bugged."
                                 return
 
                             
@@ -1754,6 +1826,7 @@ label Morning1Greenhouse:
                                 jump Afternoon1Library_Exit
 
                             else:
+                                Narrator "This is bugged."
                                 return
 
                         "{b}Carnivorous Plants of Viordia and their Many Applications{/b}." if "Carnivorous Plants of Viordia and their Many Applications" not in book_collected:
@@ -1767,6 +1840,7 @@ label Morning1Greenhouse:
                                 jump Afternoon1Library_Exit
 
                             else:
+                                Narrator "This is bugged."
                                 return
                         
                         "(Look through the options once again)":
@@ -1790,11 +1864,12 @@ label Morning1Greenhouse:
                 $ cinematic = False
                 Tao "I suppose you're here to study too... the books here aren't exactly easy to read." 
                 Tao "I'm not suggesting that you're stupid, but avoid dense books, they're too old to be useful."
+                $ Flag_TaoLibraryMorning1 = True
                 label Afternoon1Library_TaoConvo:
                 menu:
                     "Do you have a moment to chat?":
                         Tao "I have a minute. Don't waste it, {i}please{/i}."
-                        call taohub_main from _call_taohub_main
+                        call taohub_main
                         jump Afternoon1Library_TaoConvo
 
                     "How are you doing?":
@@ -1969,8 +2044,10 @@ label Morning1Greenhouse:
             menu:
                 "(Look at Potions)":
                     jump Afternoon1AlchemyLab_Potions
-                "(Talk to Melody)" if Flag_MelodyMet:
+
+                "(Talk to Melody)" if Flag_MelodyMet and not Flag_MelodyAlchemyMorning1:
                     jump Afternoon1AlchemyLab_Melody
+
                 "(Leave the Alchemy Lab)":
                     stop music
                     jump Afternoon1DecisionMenu
@@ -2021,12 +2098,13 @@ label Morning1Greenhouse:
                 label Afternoon1AlchemyLab_MelodyChoices:
                     show melody sprite happy
                     Melody "Is there something you wanted?"
+                    $ Flag_MelodyAlchemyMorning1 = True
                     menu:
                         "(Potion) What are you brewing?":
                             Melody "It's {i}supposed{/i} to be a calming potion. I don't sleep all too well."
                             Melody "I'm a ball of energy but that's not always great when I need to {i}focus{/i}."
                             Melody "I say {i}supposed{/i} because I don't have half the ingredients and I think this is far beyond salvaging."
-                            Melody "I'm good at Potions... don't let whatever monstrosity is bubbling over there fool you."
+                            Melody "I'm good at potions... don't let whatever monstrosity is bubbling over there fool you."
                             Melody "It's one of the two things I'm good at. The other is light Magic -- my forte."
                             menu:
                                 "Did you need some help with it?":
@@ -2039,7 +2117,7 @@ label Morning1Greenhouse:
                                         "Why?":
                                             Melody "It's not exactly a calming potion if it smells like burnt hair."
                                             Melody "I'm not even sure if it's possible to make it with the materials we'll get in the exam."
-                                            Melody "I planted {i}some{/i}of the ingredients... but I doubt we'll be allowed to share."
+                                            Melody "I planted {i}some{/i} of the ingredients... but I doubt we'll be allowed to share."
                                             Melody "Know what, if you don't have any other option... here, let me write down the recipe for you."
                                             $ cinematic = True
                                             Narrator "Melody pulls out her notepad, which seems absolutely stuffed with notes, papers, and even a few imprints of flowers."
@@ -2072,7 +2150,8 @@ label Morning1Greenhouse:
                         "I had some questions...":
                             Melody "I'm an open book."
                             hide melody sprite happy
-                            call melodyhub_main from _call_melodyhub_main_1
+                            call melodyhub_main
+                            jump Afternoon1AlchemyLab_MelodyChoices
 
                         "Nothing. I should get going.":
                             Melody "Anyway, don't be a stranger."
@@ -2145,8 +2224,47 @@ label Morning1Greenhouse:
                             "(Test the Lock)":
                                 $ cinematic = True
                                 Narrator "You pull the handle -- it doesn't give."
+                                Narrator "You probably need some sort of tool..."
+                                $ Flag_LockBreakerNeeded = True
                                 $ cinematic = False
-                            
+                                if Flag_HammerAcquired:
+                                    menu:
+                                        "(Smash the lock with the hammer)":
+                                            $ cinematic = True
+                                            Narrator "You pull the hammer out from your bag and bring it down on the lock."
+                                            Narrator "With a loud {i}clunk{/i} it unbolts, the metal feeling loose."
+                                            $ cinematic = False
+                                            $ Flag_AlchemyLabLockBroken = True
+                                            menu: 
+                                                "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
+                                                    $ potion_stolen.append("Potion of Cleansing")
+                                                    pass
+                                                "(Take the {b}Potion of Frog Polymorph{/b})" if not "Potion of Frog Polymorph" not in potion_stolen:
+                                                    $ potion_stolen.append("Potion of Frog Polymorph")
+                                                    pass
+                                                "(Take the {b}Potion of Sleepless Night{/b})" if not "Potion of Sleepless Night" not in potion_stolen:
+                                                    $ potion_stolen.append("Potion of Sleepless Night")
+                                                    pass
+                                            $ cinematic = True
+                                            Narrator "You slip the potion into your bag."
+                                            play sound "audio/clue_found_item_alert.mp3"
+                                            Narrator "A part of you feels a thrill of excitement."
+                                            $ cinematic = False
+                                            $ Flag_LockBreakerUsed = True
+                                            menu:
+                                                "(Leave)":
+                                                    stop music
+                                                    jump Afternoon1AlchemyLab_Choices 
+                                        "(Leave it alone)":
+                                            stop music
+                                            jump Afternoon1AlchemyLab_Choices
+                                else:
+                                    $ cinematic = True
+                                    Narrator "Without some sort of tool, you won't be able to get in."
+                                    Narrator "Bored, you decide to leave it be."
+                                    $ cinematic = False
+                                    jump Afternoon1AlchemyLab_Choices
+                                pass
                             "(Leave it alone)":
                                 jump Afternoon1AlchemyLab_Choices
 
@@ -2177,17 +2295,24 @@ label Morning1Greenhouse:
             $ cinematic = False
             menu:
                 "(Check Beneath the Moons)" if Flag_NotAliceMet:
-                    call Afternoon1Atrium_NotAlice
-                    return
+                    jump Afternoon1Atrium_NotAlice
 
                 "(Inspect the Moons)":
-                    call Afternoon1Atrium_Moons
-                    return
+                    jump Afternoon1Atrium_Moons
 
                 "(Talk to Xander)":
-                    call Afternoon1Atrium_Xander
-                    return
+                    if Flag_XanderBotanyQuestionsMorning:
+                        show xander sprite
+                        Xander "I should probably keep studying... can we pick this up later?"
+                        menu:
+                            "Sure.":
+                                Xander "Thanks."
+                                hide xander sprite
+                                jump Afternoon1Atrium_Choices
 
+                    else:
+                        jump Afternoon1Atrium_Xander
+                    
                 "(Leave the Atrium)":
                     stop music
                     jump Afternoon1DecisionMenu
@@ -2203,13 +2328,14 @@ label Morning1Greenhouse:
             Xander "Hi..." 
             Xander "I've been trying to get a head start on studying -- I can't take my eyes off those moons though!" 
             Xander "I know the others like the Archives, but it's way more relaxing here."
-            call Afternoon1Atrium_XanderChoices
+            jump Afternoon1Atrium_XanderChoices
 
             label Afternoon1Atrium_XanderChoices:
                 show xander sprite
                 Xander "What did you wanna chat about?"
                 menu:
-                    "(Ask about Botany)":
+                    "(Ask about Botany)" if not Flag_XanderBotanyQuestionsMorning:
+                        $ Flag_XanderBotanyQuestionsMorning = True
                         Xander "Oh. Yeah, I know how to take care of plants. I grew up on a farm."
                         Xander "I think I ended up planting a whole bunch of different herbs."
                         Xander "No idea what sorta potion I'll be making."
@@ -2254,22 +2380,22 @@ label Morning1Greenhouse:
                                         Xander "Ah... ignore me. Tao and I go way back."
                                         Xander "I don't wanna get into all that... you know, a week before we {i}hopefully{/i} graduate."
                                         hide xander sprite
-                                        return
+                                        jump Afternoon1Atrium_XanderChoices
 
                             "Lets talk about something else.":
                                 Xander "Direct... I guess."
                                 hide xander sprite
-                                return
+                                jump Afternoon1Atrium_XanderChoices
                     
                     "I've got stuff I wanna ask you.":
                         Xander "Really? Let's hear it."
                         call xanderhub_main
                         hide xander sprite
-                        return
+                        jump Afternoon1Atrium_XanderChoices
 
                     "Nevermind.":
                         hide xander sprite
-                        return
+                        jump Afternoon1Atrium_Choices
 
 
 
@@ -2434,13 +2560,13 @@ label Morning1Greenhouse:
                 Narrator "The trees seem to sway in the wind. It's just enough that you feel time passing."
                 Narrator "You take a step into the grass..."
                 $ cinematic = False
-                show alice sprite:
-                    xalign 0.5 
-                    yalign 0.3  
+                show doll sprite right:
+                    xalign -0
+                    yalign -1.9
                 Alice "No. Absolutely not. Come back here."
                 menu:
                     "Okay...":
-                        hide alice sprite
+                        hide doll sprite right
                         jump Afternoon1DecisionMenu
                         
 
@@ -2625,181 +2751,263 @@ label Morning1Greenhouse:
         play music "audio/project_w_dorms.mp3"
         $ cinematic = True
         Narrator "You feel tired. Looking around you see the rest of the students sitting around the dorm. Some studying, others already in bed with their curtains drawn."
-        Narrator "What do want to do?"
         $ cinematic = False
-        menu:
-            "(Talk to Tao)":
-                $ cinematic = True
-                Narrator "Tao's curtain's are drawn, but you hear pages turning behind it."
-                Narrator "You clear your throat."
-                $ cinematic = False
-                Tao "I'm busy. Shoo."
-                jump Night1DecisionMenu
-                
-            "(Talk to Aria)":
-                show aria sprite with dissolve
-                if Flag_AriaWantsBook:
+        jump Night1DecisionMenu_Choices
+        label Night1DecisionMenu_Choices:
+            $ cinematic = True
+            Narrator "What do want to do?"
+            $ cinematic = False
+            menu:
+                "(Talk to Tao)" if not Flag_TaoNight1:
                     $ cinematic = True
-                    Narrator "Aria sits on her bed, staring out the window. In the distance, you see the trees wave in the wind."
+                    Narrator "Tao's curtain's are drawn, but you hear pages turning behind it."
+                    Narrator "You clear your throat."
                     $ cinematic = False
-                    Aria "Shame curfew is so early. Night time is when nature is most itself."
-                    Aria "Did you need something?"
-                    menu:
-                        "I don't think so."
-                        "Are you okay?":
-                            Aria "I'm okay. Not tired enough to sleep but not daring enough to sneak out like Rex."
-                            menu:
-                                "Rex snuck out?":
-                                    Aria "Obviously. He's a night owl, these are the hours he's most active.."
-                                    Aria "I haven't checked, but his curtain hasn't moved in a while and last night I heard him snoring..."
-                                    Aria "It's only logical that he's out in the castle."
-                                    Aria "I should've asked him to bring me a book from the library or something. I'm bored out of my mind."
-                                    $ Flag_RexSneakDay1 = True
-                                    $ Flag_AriaWantsBook = True
-                                    menu:
-                                        "Want me to get you one?":
-                                            Aria "I wouldn't want you to get in trouble."
-                                            Aria "If you {i}do{/i} go out... please. Something fictional. Maybe uplifting."
-                                            hide aria sprite
-                                            jump Night1DecisionMenu
-                                        "Pick one up tomorrow, I guess.":
-                                            Aria "Learned my lesson..."
-                                            hide aria sprite
-                                            jump Night1DecisionMenu
-                else:
-                    $ cinematic = True
-                    Narrator "Aria is still sat on her bed when you enter the room."
-                    $ cinematic = False
-                    Aria "Oh, hi. Did you want something?"
-                    menu:
-                        "I brought you a book." if AriaBookAcquired:
-                            Aria "Oh, that's so kind."
-                            $ Affinity_Aria += 10
-                            $ cinematic = True 
-                            Narrator "She takes the book and opens it."
-                            Narrator "You can tell she's tired, but she turns to page 1."
+                    Tao "I'm busy. Shoo."
+                    $ Flag_TaoNight1 = True
+                    jump Night1DecisionMenu_Choices
+                    
+                "(Talk to Aria)":
+                    show aria sprite with dissolve
+                    if not Flag_AriaWantsBook:
+                        $ cinematic = True
+                        Narrator "Aria sits on her bed, staring out the window. In the distance, you see the trees wave in the wind."
+                        $ cinematic = False
+                        Aria "Shame curfew is so early. Night time is when nature is most itself."
+                        Aria "Did you need something?"
+                        menu:
+                            "I don't think so.":
+                                Aria "Ah, well, I'm thinking of maybe going to sleep, so goodnight, I guess."
+                                hide aria sprite
+                                jump Night1DecisionMenu_Choices
+                            "Are you okay?":
+                                Aria "I'm okay. Not tired enough to sleep but not daring enough to sneak out like Rex."
+                                menu:
+                                    "Rex snuck out?":
+                                        Aria "Obviously. He's a night owl, these are the hours he's most active.."
+                                        Aria "I haven't checked, but his curtain hasn't moved in a while and last night I heard him snoring..."
+                                        Aria "It's only logical that he's out in the castle."
+                                        Aria "I should've asked him to bring me a book from the library or something. I'm bored out of my mind."
+                                        $ Flag_RexSneakDay1 = True
+                                        $ Flag_AriaWantsBook = True
+                                        menu:
+                                            "Want me to get you one?":
+                                                Aria "I wouldn't want you to get in trouble."
+                                                Aria "If you {i}do{/i} go out... please. Something fictional. Maybe uplifting."
+                                                Aria "All the books at the Scholomance were so dreary... academia is so boring."
+                                                hide aria sprite
+                                                show aria sprite angry
+                                                Aria "My roommate lent me a book about two academics falling in love and it was the most boring, analytical piece of..."
+                                                Aria "Well, lets say the world they painted in that book was nothing like the reality I lived in."
+                                                hide aria sprite angry
+                                                show aria sprite happy
+                                                Aria "And yet, somehow I'd have taken the Scholomance over it. Better than a world of analysis and overthink."
+                                                Aria "... Sorry. I'm ranting. You can tell I'm bored, can't you?"
+                                                hide aria sprite happy
+                                                show aria sprite
+                                                menu:
+                                                    "A little...":
+                                                        Aria "Well don't let me stop you. Just... you know, be careful out there..."
+                                                        Aria "You seem nice and friendly, I'd rather not get you in trouble over a book."
+                                                        menu:
+                                                            "I'll be careful.":
+                                                                Aria "Good, see you later, I guess. No pressure on the book."
+                                                                hide aria sprite
+                                                                jump Night1DecisionMenu_Choices
+
+                                                    "I'm listening because I'm interested.":
+                                                        Aria "Do you know that great library in the Scholomance? I probably read every fiction book in there."
+                                                        Aria "They were all from hundreds of years ago. I'm craving something better."
+                                                        menu:
+                                                            "I'll have a good look.":
+                                                                hide aria sprite
+                                                                jump Night1DecisionMenu_Choices
+                                                            
+                                                            "(...)":
+                                                                hide aria sprite
+                                                                jump Night1DecisionMenu_Choices
+
+                                            "Pick one up tomorrow, I guess.":
+                                                Aria "Learned my lesson..."
+                                                hide aria sprite
+                                                jump Night1DecisionMenu_Choices
+                    else:
+                        $ cinematic = True
+                        Narrator "Aria is still sat on her bed when you enter the room."
+                        $ cinematic = False
+                        if Night1AriaReading:
+                            $ cinematic = True
+                            Narrator "You see Aria is deeply engrossed in the book you got her."
+                            Narrator "You should leave her to it."
                             $ cinematic = False
                             menu:
-                                "You're going to read it now?":
-                                    Aria "Just a chapter. I'm bored, you know?"
-                                    Aria "Did you mean to get me something this..."
-                                    Aria "Know what, nevermind. I need something this... trashy."
-                                    menu:
-                                        "I'll leave you to it.":
-                                            hide aria sprite
-                                            jump Night1DecisionMenu
+                                "(Leave...)":
+                                    jump Night1DecisionMenu_Choices
 
-                        "No.":
-                            hide aria sprite
-                            jump Night1DecisionMenu
-
-
-
-            "(Talk to Melody)":
-                show melody sprite with dissolve
-                $ cinematic = True
-                Narrator "Melody sits at her desk, writing in her diary."
-                $ cinematic = False
-                Melody "Hey... nice to see you stay up late too."
-                if Spell_Light == False:
-                    Melody "I'm usually in bed pretty early, but I spend a lot of time reading under the covers."
-                    Melody "Not saying you have to be quiet if you're walking around, I sleep like the dead."
-                    Melody "Honestly, learning that light spell back at the Scholomance made my life a million times easier."
-                    menu:
-                        "Light spell?":
-                            Melody "Yeah… wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
-                            $ Spell_Light = True
-                            Melody "Here it is."
+                        else:
+                            Aria "Oh, hi. Did you want something?"
                             menu:
-                                "Thanks.":
-                                    Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
+                                "I brought you a book." if AriaBookAcquired:
+                                    Aria "Oh, that's so kind."
+                                    $ Affinity_Aria += 10
+                                    $ cinematic = True 
+                                    Narrator "She takes the book and opens it."
+                                    Narrator "You can tell she's tired, but she turns to page 1."
+                                    $ cinematic = False
                                     menu:
-                                        "A few things...":
-                                            call melodyhub_main
-                                            hide melody sprite
-                                            jump Night1DecisionMenu
-                                        "Nothing in particular.":
-                                            Melody "Well, we'll chat tomorrow, I guess."
-                                            hide melody sprite
-                                            jump Night1DecisionMenu
+                                        "You're going to read it now?":
+                                            Aria "Just a chapter. I'm bored, you know?"
+                                            Aria "Did you mean to get me something this..."
+                                            Aria "Know what, nevermind. I need something this... trashy."
+                                            menu:
+                                                "I'll leave you to it.":
+                                                    hide aria sprite
+                                                    jump Night1DecisionMenu_Choices
 
-                else:
-                    Melody "I'm a little unsettled tonight. Dunno why. Maybe I'm just worried about my plants."
-                    Melody "One more thing we have little control over, you know?"
-                    menu:
-                        "I know.":
-                            Melody "Oh I'm sure."
-                            Melody "I don't think there's anything happening tomorrow..."
-                            Melody "Pretty sure the Artificing exam is the day after tomorrow, though... which is worrying."
-                            Melody "Not sure what I'm making for that... guess I'll find out."
-                            Melody "Either way, I'll let you get some sleep."
-                            hide melody sprite
-                            jump Night1DecisionMenu
-                        "I might just head to bed.":
-                            Melody "Oh, sure thing. Good night!"
-                            hide melody sprite
-                            jump Night1DecisionMenu
+                                "No.":
+                                    Aria "Well, I'll be up. I'm still bored out of my mind, you know?"
+                                    hide aria sprite
+                                    jump Night1DecisionMenu_Choices
 
 
-            "(Talk to Rex)":
-                $ cinematic = True
-                Narrator "Rex's curtains are drawn. You hear nothing behind them."
-                $ cinematic = False
-                if Flag_RexSneakDay1:
+
+                "(Talk to Melody)" if not Flag_MelodyNight1:
+                    show melody sprite with dissolve
                     $ cinematic = True
-                    Narrator "You know he's not there."
-                    Narrator "You wonder where he snuck off to..."
+                    Narrator "Melody sits at her desk, writing in her diary."
                     $ cinematic = False
-                    jump Night1DecisionsMenu
+                    Melody "Hey... nice to see you stay up late too."
+                    $ Flag_MelodyNight1 = True
+                    if Flag_LightSpellNotLearned == False:
+                        Melody "I'm usually in bed pretty early, but I spend a lot of time reading under the covers."
+                        Melody "Not saying you have to be quiet if you're walking around, I sleep like the dead."
+                        Melody "Honestly, learning that light spell back at the Scholomance made my life a million times easier."
+                        menu:
+                            "Light spell?":
+                                Melody "Yeah… wait, do you not know it? Maybe you missed that class, I should have it somewhere in my bag."
+                                $ Spell_Light = True
+                                Melody "Here it is."
+                                menu:
+                                    "Thanks.":
+                                        Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
+                                        menu:
+                                            "A few things...":
+                                                call melodyhub_main
+                                                hide melody sprite
+                                                jump Night1DecisionMenu_Choices
+                                            "Nothing in particular.":
+                                                Melody "Well, we'll chat tomorrow, I guess."
+                                                hide melody sprite
+                                                jump Night1DecisionMenu_Choices
+                    
+                    elif Flag_LightSpellNotLearned:
+                        Melody "Wait, I'm glad you popped by. I found that light spell I mentioned."
+                        Melody "I was about to go to bed but..."
+                        $ cinematic = True
+                        Narrator "She rummages through her makeshift desk, finding it among a stack of letters."
+                        $ cinematic = False
+                        $ Spell_Light = True
+                        Melody "Here it is."
+                        menu:
+                            "Thanks.":
+                                Melody "No worries. Is there something you wanted to talk about? You know, since you're here and all?"
+                                menu:
+                                    "A few things...":
+                                        call melodyhub_main
+                                        hide melody sprite
+                                        jump Night1DecisionMenu_Choices
+                                    "Nothing in particular.":
+                                        Melody "Well, we'll chat tomorrow, I guess."
+                                        hide melody sprite
+                                        jump Night1DecisionMenu_Choices
 
-                else:
+                    else:
+                        Melody "I'm a little unsettled tonight. Dunno why. Maybe I'm just worried about my plants."
+                        Melody "One more thing we have little control over, you know?"
+                        menu:
+                            "I know.":
+                                Melody "Oh I'm sure."
+                                Melody "I don't think there's anything happening tomorrow..."
+                                Melody "Pretty sure the Artificing exam is the day after tomorrow, though... which is worrying."
+                                Melody "Not sure what I'm making for that... guess I'll find out."
+                                Melody "Either way, I'll let you get some sleep."
+                                hide melody sprite
+                                jump Night1DecisionMenu_Choices
+                            "I might just head to bed.":
+                                Melody "Oh, sure thing. Good night!"
+                                hide melody sprite
+                                jump Night1DecisionMenu_Choices
+
+
+                "(Talk to Rex)" if not Flag_RexNight1:
+                    $ cinematic = True
+                    Narrator "Rex's curtains are drawn. You hear nothing behind them."
+                    $ cinematic = False
+                    if Flag_RexSneakDay1:
+                        $ Flag_RexNight1 = True
+                        $ cinematic = True
+                        Narrator "You know he's not there."
+                        Narrator "You wonder where he snuck off to..."
+                        $ cinematic = False
+                        jump Night1DecisionMenu_Choices
+
+                    else:
+                        $ Flag_RexNight1 = True
+                        menu:
+                            "(Leave)":
+                                jump Night1DecisionMenu_Choices
+
+                "(Talk to Xander)" if not Flag_XanderNight1:
+                    show xander sprite with dissolve
+                    $ cinematic = True
+                    Narrator "Xander is sitting on his bed, staring at the wall."
+                    Narrator "He looks deep in thought."
+                    $ Flag_XanderNight1 = True
+                    $ cinematic = False
+                    menu:
+                        "You alright?":
+                            Xander "I'm okay. I'm going to be up all night studying again..."
+                            Xander "Don't let me keep you up."
+                            menu:
+                                "I'll be alright.":
+                                    Xander "Right..."
+                                    Xander "Must be nice."
+                                    pass
+
+                                "Do you need some help?":
+                                    Xander "There's nothing to help with. Unless you can somehow fix my idiot brain so I can pass."
+                                    menu:
+                                        "Xander you aren't stupid.":
+                                            Xander "You don't need to do that, don't worry."
+                                            Xander "We'll chat tomorrow."
+                                            hide xander sprite
+                                            jump Night1DecisionMenu_Choices
+                                        "...":
+                                            pass
+                    Xander "I won't keep you."
                     menu:
                         "(Leave)":
-                            jump Night1DecisionMenu
-
-            "(Talk to Xander)":
-                show xander sprite with dissolve
-                $ cinematic = True
-                Narrator "Xander is sitting on his bed, staring at the wall."
-                Narrator "He looks deep in thought."
-                $ cinematic = False
-                menu:
-                    "You alright?":
-                        Xander "I'm okay. I'm going to be up all night studying again..."
-                        Xander "Don't let me keep you up."
-                        menu:
-                            "I'll be alright.":
-                                Xander "Right..."
-                                Xander "Must be nice."
-                                pass
-
-                            "Do you need some help?":
-                                Xander "There's nothing to help with. Unless you can somehow fix my idiot brain so I can pass."
-                                pass
-                Xander "I won't keep you."
-                menu:
-                    "(Leave)":
-                        hide xander sprite
-                        jump Night1DecisionMenu
+                            hide xander sprite
+                            jump Night1DecisionMenu_Choices
 
 
-            "(Sneak Out)":
-                $ cinematic = True
-                Narrator "You pull your curtains closed and exit the dormitory."
-                $ cinematic = False
-                stop music
-                jump Night1SneakDecision 
+                "(Sneak Out)":
+                    $ cinematic = True
+                    Narrator "You pull your curtains closed and exit the dormitory."
+                    $ cinematic = False
+                    stop music
+                    jump Night1SneakDecision 
 
-            "(Go to sleep)":
-                $ cinematic = True
-                Narrator "You pull the covers over you, looking up at the ceiling as it lulls you to sleep."
-                Narrator "Moments after your eyes are closed, you fall asleep."
-                $ cinematic = False
-                $ Day1Night = False
-                $ Flag_EileenLibraryDay2 = False
-                stop music
-                jump Morning2Dorms
-    
+                "(Go to sleep)":
+                    $ cinematic = True
+                    Narrator "You pull the covers over you, looking up at the ceiling as it lulls you to sleep."
+                    Narrator "Moments after your eyes are closed, you fall asleep."
+                    $ cinematic = False
+                    $ Day1Night = False
+                    $ Flag_EileenLibraryDay2 = False
+                    stop music
+                    jump Morning2Dorms
+        
 
 
 
@@ -2889,16 +3097,19 @@ label Morning1Greenhouse:
             Narrator "Carrying the light in your hands, you scan the room."
             $ cinematic = False
             if Flag_AriaWantsBook:
+                $ cinematic = True
                 Narrator "You remember Aria mentioning she wanted a book."
                 Narrator "You look around, wondering if you can find something for her."
                 Narrator "After a few moments of looking, you come across a tattered paperback, clearly left by a former student, or perhaps a staff member."
                 Narrator "It's certainly nothing academic..."
                 Narrator "The blurb reads:"
-                "{i}Depressed after a bad breakup, a man falls in love with the ghost haunting his house...{/i}"
+                Narrator "{i}Depressed after a bad breakup, a man falls in love with the ghost haunting his house...{/i}"
                 Narrator "You pick it up."
                 $ AriaBookAcquired = True
+                $ cinematic = False
             else: 
                 pass
+
             if Flag_ArchivesDiscovered:
                 $ cinematic = True
                 Narrator "The silence is almost welcoming. The eerie feeling you had when you last visited has evaporated into solace."
@@ -2997,7 +3208,7 @@ label Morning1Greenhouse:
 
             else:
                 $ cinematic = True
-                Narrator "The spell casts eerie light over the library. The silence seems uncanny as you step inside -- looking over the stacks of thick books and tomes."
+                Narrator "Your spell casts eerie light over the library. The silence seems uncanny as you step inside -- looking over the stacks of thick books and tomes."
                 Narrator "Shadows dance along the walls -- remnants clouds through the skylight."
                 Narrator "Despite the prickly feeling on your neck, you know you're alone."
                 Narrator "In the distance, you notice a gated door, a great padlock stopping you."
@@ -3319,6 +3530,11 @@ label Morning1Greenhouse:
                         "(Return to the dorms)":
                             stop music
                             jump Night1DecisionMenu
+                        "(Enter the Alchemy Lab)":
+                            $ cinematic = True
+                            Narrator "You sneak into the alchemy lab, locking the door behind you."
+                            $ cinematic = False
+                            jump Night1AlchemyLab_Choices
 
             
 ##### IM GONNA BE SO REAL HERE I CANNOT THINK ABOUT THE LOGIC OF IT IT JUST DOESNT MAKE SENSE RN!!!####
@@ -3435,19 +3651,20 @@ label Morning1Greenhouse:
                                             $ cinematic = False
                                             $ Flag_AlchemyLabLockBroken = True
                                             menu: 
-                                                "(Take the {b}Potion of Cleansing{/b})" if not "Potion of Cleansing" not in potion_stolen:
+                                                "(Take the {b}Potion of Cleansing{/b})" if "Potion of Cleansing" not in potion_stolen:
                                                     $ potion_stolen.append("Potion of Cleansing")
                                                     pass
-                                                "(Take the {b}Potion of Frog Polymorph{/b})" if not "Potion of Frog Polymorph" not in potion_stolen:
+                                                "(Take the {b}Potion of Frog Polymorph{/b})" if "Potion of Frog Polymorph" not in potion_stolen:
                                                     $ potion_stolen.append("Potion of Frog Polymorph")
                                                     pass
-                                                "(Take the {b}Potion of Sleepless Night{/b})" if not "Potion of Sleepless Night" not in potion_stolen:
+                                                "(Take the {b}Potion of Sleepless Night{/b})" if "Potion of Sleepless Night" not in potion_stolen:
                                                     $ potion_stolen.append("Potion of Sleepless Night")
                                                     pass
                                             $ cinematic = True
                                             Narrator "You slip the potion into your bag."
                                             play sound "audio/clue_found_item_alert.mp3"
                                             Narrator "A part of you feels a thrill of excitement."
+                                            Narrator "You look around, knowing you should probably get back to your dorm."
                                             $ cinematic = False
                                             $ Flag_LockBreakerUsed = True
                                             menu:
@@ -3517,11 +3734,18 @@ label Morning1Greenhouse:
             $ cinematic = True
             Narrator "You sneak into the {b}Artificing Lab{/b}. Dusty workstations and half-finished projects litter the room."
             Narrator "The smell of oil and metal fills the air..."
-            Narrator "There's a light in the corner as Rex tinkers with something at a workstation."
-            show rex sprite with dissolve
-            Narrator "He doesn't seem surprised to be interrupted. He looks over his shoulder at you, and returns to whatever he's doing."
-            hide rex sprite
             $ cinematic = False
+            if Flag_RexNight1a:
+                pass
+            
+            else:
+                $ cinematic = True
+                Narrator "There's a light in the corner as Rex tinkers with something at a workstation."
+                show rex sprite with dissolve
+                Narrator "He doesn't seem surprised to be interrupted. He looks over his shoulder at you, and returns to whatever he's doing."
+                hide rex sprite
+                $ cinematic = False
+                pass
             jump Night1ArtificingLab_Choices
 
             ### Flag_LockBreakerNeeded alerts the player to needing to take the hammer from the lab to smash the lock in the alchemy lab.
@@ -3531,8 +3755,9 @@ label Morning1Greenhouse:
                 Narrator "You wonder what you should do."
                 $ cinematic = False
                 menu:
-                    "(Talk to Rex)":
+                    "(Talk to Rex)" if not Flag_RexNight1a:
                         $ cinematic = True
+                        $ Flag_RexNight1a = True
                         show rex sprite with dissolve
                         Narrator "Rex looks up as you approach, a smirk on his face."
                         $ cinematic = False
@@ -3631,16 +3856,16 @@ label Morning1Greenhouse:
 
                     "(Search the Lab)":
                         if Flag_LockBreakerNeeded == True:
-                            call Night1ArtificingLab_SearchLock from _call_Night1ArtificingLab_SearchLock
-                            return
+                            call Night1ArtificingLab_SearchLock
+                            jump Night1ArtificingLab_Choices
 
                         else:
-                            call Night1ArtificingLab_Search from _call_Night1ArtificingLab_Search
-                            return
-                        
+                            call Night1ArtificingLab_Search
+                            jump Night1ArtificingLab_Choices
+
                     "(Look for Machine Parts)" if artifice_options:
-                        call Night1ArtificingLab_MachinePart from _call_Night1ArtificingLab_MachinePart
-                        return
+                        call Night1ArtificingLab_MachinePart
+                        jump Night1ArtificingLab_Choices
 
                         label Night1ArtificingLab_MachinePart:
                             $ cinematic = True
@@ -3653,7 +3878,7 @@ label Morning1Greenhouse:
                             $ cinematic = False
                             $ Flag_ArtificeParts = True
                             $ Flag_HammerAcquired = True
-                            return
+                            jump Night1ArtificingLab_Choices
 
                     "(Leave the {b}Artificing Lab{/b})":
                         stop music
@@ -3774,7 +3999,7 @@ label Morning1Greenhouse:
                                         Narrator "Maybe it wants something else..."
                                         $ cinematic = False
                                         return
-                                    "Feed it an insect." if book_collected = "The Woodwitch Guide to Home Gardening":
+                                    "Feed it an insect." if Flag_WoodwitchGuide:
                                         play sound "audio/bug_add_to_inventory.mp3"
                                         $ cinematic = True
                                         Narrator "Remembering what you learned from [book_collected], you look around, finding a few dead insects inside a container left by Alice."
@@ -3820,7 +4045,7 @@ label Morning1Greenhouse:
                                         $ cinematic = False
                                         return
 
-                                    "Sprinkle salt along the soil." if book_collected = "The Illustrated Botanical":
+                                    "Sprinkle salt along the soil." if Flag_IllustratedBotanical:
                                         play sound "audio/fertilizer_add.mp3"
                                         $ cinematic = True
                                         Narrator "You collect the salt left by Alice on the table..."
@@ -3860,7 +4085,7 @@ label Morning1Greenhouse:
                                         $ cinematic = False
                                         return
 
-                                    "Prick your finger and feed it." if book_collected = "Carnivorous Plants of Viordia and their Many Applications":
+                                    "Prick your finger and feed it." if Flag_CarnivorousPlants:
                                         $ cinematic = True
                                         Narrator "You take a thin needle and prick your skin, letting a few dozen drops of blood drop down onto the plant."
                                         Narrator "It lifts its head up, as though to catch them as a dog catches a thrown treat."
@@ -3960,7 +4185,7 @@ label Morning2Dorms:
 
     label BTAO06:
         $ cinematic = True
-        show tao spite
+        show tao sprite
         Narrator "Tao lifts their gaze from a book to look at you. You can see the stress in their eyes... something's on their mind."
         $ cinematic = False
         Tao "What is it? I need to study, so unless you're on your way to the library we'll have to chat another time."
@@ -4016,14 +4241,21 @@ label Morning2Dorms:
                         menu:
                             "How do you know this?":
                                 Rex "I sent one of my artifice down there. C'mere..."
+                                $ cinematic = True
                                 Narrator "Rex looks over your shoulder, checking to see if Eileen has gone. When the coast is clear, he tugs at your shirt to pull you to the window."
                                 Narrator "It's steamed up a little -- cold morning air stark against the warmth of the dormitory."
                                 Narrator "As he wipes away the fog, you see a little metal sheep at the edge of the forest."
+                                $ cinematic = False
                                 Rex "How else did it get out there?"
                                 Rex "You aren't gonna tell anyone, are you?"
                                 menu:
                                     "Course not.":
                                         Rex "Good."
+                                        Rex "Anyway, gotta start the day."
+                                        $ cinematic = True
+                                        Narrator "Rex pulls the curtains closed, hiding the little metal sheep from view."
+                                        Narrator "He scoots past, you hear him leave the dormitory."
+                                        $ cinematic = False
                                         hide rex sprite
                                         jump Morning2Dorms_Choices
             "Can't say I've tried.":
@@ -4230,14 +4462,15 @@ label Morning2Library_Choices:
     Narrator "You wonder what you should do..."
     $ cinematic = False
     menu:
-        "(Talk to Tao)":
+        "(Talk to Tao)" if not Flag_TaoMorning2:
             show tao sprite with dissolve
             $ cinematic = True
             Narrator "Tao's head is deep in a book as you approach, left hand taking notes in a tattered notebook."
             Narrator "You wonder whether they need a new one."
             Narrator "They barely look up at you as you approach."
+            $ Flag_TaoMorning2 = True
             $ cinematic = False
-            call Morning2LibraryTao_Choices from _call_Morning2LibraryTao_Choices
+            call Morning2LibraryTao_Choices
             hide tao sprite
             jump Morning2Library_Choices
 
@@ -4249,7 +4482,9 @@ label Morning2Library_Choices:
                         menu:
                             "Not particularly...":
                                 Tao "You and Xander seem to share a braincell then."
-                                return
+                                menu:
+                                    "...":
+                                        return
 
                             "Sure I am.":
                                 Tao "Oddly enough I've found silence and concentration to greatly assist in studying."
@@ -4278,7 +4513,7 @@ label Morning2Library_Choices:
                                 return
 
 
-        "(Inspect the Archives Door)":
+        "(Inspect the Archives Door)" if not Flag_ArchivesArtifice:
             $ cinematic = True
             Narrator "You inspect the archives door. Tugging on the gate -- it rattles, but holds firm."
             Narrator "You kneel to inspect the lock itself, as it doesn't seem to even have a keyhole."
@@ -4407,22 +4642,39 @@ label Morning2AlchemyLab:
     Narrator "The scent of herbs and chemicals fills the air, mingling with the faint hum of magical energy."
     Narrator "In the dim light, you notice how the potions and chemicals glow, casting soft shadows along the walls."
     $ cinematic = False
-    if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
-        $ cinematic = True
-        Narrator "You notice a glass cupboard, filled to the brim with potions."
-        $ cinematic = False
-        menu:
-            "(Investigate)":
-                call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions_1
-                jump Morning2AlchemyLab_Choices
-    else:
+    if potion_stolen:
         $ cinematic = True
         Narrator "You notice the missing potions."
         Narrator "There's a twinge of guilt that seems to sit with you..."
         Narrator "You ignore it."
         $ cinematic = False
         jump Morning2AlchemyLab_Choices
-    
+
+    else:
+        $ cinematic = True
+        Narrator "You notice a glass cupboard, filled to the brim with potions."
+        $ cinematic = False
+        menu:
+            "(Investigate)":
+                call Night1AlchemyLab_Potions
+                jump Morning2AlchemyLab_Choices
+
+#if not Flag_CleansingPotion or not Flag_FrogPolymorphPotion or not Flag_SleeplessNightPotion or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
+#    $ cinematic = True
+#    Narrator "You notice a glass cupboard, filled to the brim with potions."
+#    $ cinematic = False
+#    menu:
+#        "(Investigate)":
+#            call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions_1
+#            jump Morning2AlchemyLab_Choices
+#else:
+#    $ cinematic = True
+#    Narrator "You notice the missing potions."
+#    Narrator "There's a twinge of guilt that seems to sit with you..."
+#    Narrator "You ignore it."
+#    $ cinematic = False
+#    jump Morning2AlchemyLab_Choices
+
     label Morning2AlchemyLab_Choices:
         $ cinematic = True
         Narrator "There's not much for you here."
@@ -4454,12 +4706,13 @@ label Morning2Atrium:
         Narrator "You wonder what you should do."
         $ cinematic = False
         menu:
-            "(Talk to Xander)":
-                call Morning2AtriumXander_Choices from _call_Morning2AtriumXander_Choices
+            "(Talk to Xander)" if not Flag_XanderMorning2:
+                call Morning2AtriumXander_Choices
                 jump Morning2Atrium_Choices
 
                 label Morning2AtriumXander_Choices:
                     show xander sprite with dissolve
+                    $ Flag_XanderMorning2 = True
                     $ cinematic = True
                     Narrator "You approach Xander, and as you do, you see him begin to compose himself."
                     Narrator "He takes a breath and looks up at you, pushing a pained smile to his face."
@@ -4553,10 +4806,10 @@ label Morning2ArtificingLab:
 
     label Morning2ArtificingLab_Choices:
         menu:
-            "(Talk to Rex)":
+            "(Talk to Rex)" if not Flag_RexMorning2:
                 show rex sprite
                 if Flag_GreenhouseTunnel:
-                    call Morning2ArtificingLab_RexA from _call_Morning2ArtificingLab_RexA
+                    call Morning2ArtificingLab_RexA
                     jump Morning2ArtificingLab_Choices
 
                     label Morning2ArtificingLab_RexA:
@@ -4578,6 +4831,8 @@ label Morning2ArtificingLab:
                                         $ cinematic = True
                                         Narrator "He picks up the screwdriver and starts working again. You make a few noises to get his attention... he ignores you."
                                         $ cinematic = False
+                                        $ Flag_RexMorning2 = True
+                                        hide rex sprite
                                         return 
 
                 else:
@@ -4880,7 +5135,8 @@ label Morning2Greenhouse:
                 $ cinematic = False
                 Melody "Glad you turned up... I sort of needed someone to help with Aria."
                 menu:
-                    "You seem stressed about Xander's plants.":
+                    "You seem stressed about Xander's plants." if not Flag_MelodyMorning2:
+                        $ Flag_MelodyMorning2 = True
                         Melody "I don't mean to be... well, mean."
                         Melody "I just don't want to risk everything over Xander not checking on his crops."
                         Melody "It's nothing personal, if anything, I'm just trying to stop Aria from getting implicated."
@@ -4951,7 +5207,8 @@ label Morning2Greenhouse:
                                         $ Flag_GreenhouseTunnelUnlocked = True
                                         return
 
-                        "(Xander's Plants)":
+                        "(Xander's Plants)" if not Flag_AriaMorning2:
+                            $ Flag_AriaMorning2 = True
                             Aria "I found them like that."
                             Aria "When Melody got here she asked me if {i}I{/i} did it."
                             Aria "As if I'd ever do something like that."
@@ -5008,7 +5265,7 @@ label Morning2Courtyard:
         Narrator "What do you want to do?"
         $ cinematic = False
         menu:
-            "(Investigate outside the dorms)" if Flag_XanderWatched:
+            "(Investigate outside the dorms)" if Flag_XanderWatched and not Flag_TheWatcher:
                 $ cinematic = True
                 Narrator "You remember what Xander told you... it sticks with you."
                 $ cinematic = False
@@ -5025,8 +5282,8 @@ label Morning2Courtyard:
                     Narrator "Watching you."
                     $ cinematic = False
                     show alice sprite:
-                        xalign 0.5 
-                        yalign 0.3  
+                        xalign 0.7
+                        yalign -1.5  
                     Alice "Pupil, you shouldn't be this far out of the courtyard."
                     $ cinematic = True
                     Narrator "The doll looks at you, seemingly oblivious to your fear."
@@ -5213,7 +5470,7 @@ label Afternoon2Library: #empty
         Narrator "You wonder what you should do..."
         $ cinematic = False
         menu:
-            "(Inspect the Archives Door)":
+            "(Inspect the Archives Door)" if not Flag_ArchivesArtifice:
                 $ cinematic = True
                 Narrator "You inspect the archives door. Tugging on the gate -- it rattles, but holds firm."
                 Narrator "You kneel to inspect the lock itself, as it doesn't seem to even have a keyhole."
@@ -5240,6 +5497,7 @@ label Afternoon2Library: #empty
                 $ cinematic = True
                 Narrator "You leave the {b}Library{/b}."
                 stop music
+                scene corridor afternoon
                 jump Afternoon2Choices_Menu
 
 
@@ -5247,14 +5505,18 @@ label Afternoon2Library: #empty
 
 label Afternoon2Dorms:#Melody is in the dorms, she feels a bit under the weather so she's taking a break (she's sabotaging alarms) # talks to you about Flag_TeachersLoungeQuestioned
     scene dormitory afternoon
-
-    $ cinematic = True
-    if Location not "Dormitory":
+    play music "audio/project_w_dorms.mp3"
+    if Location != "Dormitory":
+        $ cinematic = True
         Narrator "You head back to the {b}Dormitory{/b}."
+        $ cinematic = False
         pass
     else:
+        $ cinematic = True
         Narrator "You stay in the {b}Dormitory{/b}."
+        $ cinematic = False
         pass
+    $ cinematic = True
     Narrator "The afternoon light, despite the cold, feels heavy through the windowpanes."
     Narrator "You feel the weight of exams melt as you sit at your bed."
     show melody sprite with dissolve
@@ -5283,7 +5545,7 @@ label Afternoon2Dorms:#Melody is in the dorms, she feels a bit under the weather
                             Melody "I guess I've not had a break... I can afford it."
                             Melody "You should do the same. I've seen you running around all day... have a sit down."
                             jump Afternoon2Melody_Choices
-                        "Where do Alice & Eileen stay?" if Flag_TeachersLoungeQuestioned:
+                        "Where do Alice & Eileen stay?" if Flag_TeachersLoungeQuestioned and not Flag_DiscoveredTeachersLounge:
                             Melody "The teachers lounge... I'm pretty sure. It's up the stairs in the upstairs corridor Directly across from the dorms."
                             Melody "It's always locked."
                             $ Flag_DiscoveredTeachersLounge = True
@@ -5305,13 +5567,14 @@ label Afternoon2Dorms:#Melody is in the dorms, she feels a bit under the weather
                             jump Afternoon2Dorms_Choices
 
 
-            "(Look out the window)" if Flag_TheWatcher:
+            "(Look out the window)" if Flag_TheWatcher and not Flag_Afternoon2Window:
                 $ cinematic = True
                 Narrator "Remembering whatever you saw in the forest, you decide to part the curtain behind your bed and peer through the window..."
                 Narrator "From the safety of your dormitory, you stare out into the forest... the damp grass gleaming as wind ripples through it."
                 Narrator "You see nothing watching you."
                 Narrator "Yet, as you peer into the forest, you still feel like something is looking back at you."
                 $ cinematic = False
+                $ Flag_Afternoon2Window = True
                 jump Afternoon2Dorms_Choices
 
             "(Take a nap)":
@@ -5340,29 +5603,31 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
     Narrator "At one of the stations, you see Tao, deep in thought. Hand aimlessly stirring a potion as the other hold a recipe tome."
     hide tao sprite
     $ cinematic = False
-    if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
-        $ cinematic = True
-        Narrator "You notice a glass cupboard, filled to the brim with potions."
-        $ cinematic = False
-        menu:
-            "(Investigate)":
-                call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions_2
-                jump Afternoon2AlchemyLab_Choices
-    else:
+    if potion_stolen:
         $ cinematic = True
         Narrator "You notice the missing potions."
         Narrator "There's a twinge of guilt that seems to sit with you..."
         Narrator "You ignore it."
         $ cinematic = False
         jump Afternoon2AlchemyLab_Choices
+
+    else:
+        $ cinematic = True
+        Narrator "You notice a glass cupboard, filled to the brim with potions."
+        $ cinematic = False
+        menu:
+            "(Investigate)":
+                call Night1AlchemyLab_Potions
+                jump Afternoon2AlchemyLab_Choices 
     
     label Afternoon2AlchemyLab_Choices:
         $ cinematic = True
         Narrator "You wonder what you should do..."
         $ cinematic = False
         menu:
-            "(Talk to Tao)":
+            "(Talk to Tao)" if not Flag_TaoAfternoonAlchemyLab:
                 show tao sprite sad
+                $ Flag_TaoAfternoonAlchemyLab = True
                 if Flag_Afternoon2Tao == False:
                     $ cinematic = True
                     Narrator "You approach Tao, who doesn't look up from their work."
@@ -5425,7 +5690,7 @@ label Afternoon2AlchemyLab: #Tao is trying to perfect a potion for the exam -- i
                                 jump Afternoon2AlchemyLab_Choices
                 
 
-            "(Investigate Potions)" if not potion_stolen or not Flag_PotionNotStolen or Flag_LockBreakerNeeded:
+            "(Investigate Potions)" if not potion_stolen:
                 call Night1AlchemyLab_Potions from _call_Night1AlchemyLab_Potions_3
                 jump Afternoon2AlchemyLab_Choices
 
@@ -5457,7 +5722,7 @@ label Afternoon2Atrium:
 
     label Afternoon2Atrium_Choices:
     menu:
-        "(Talk to Xander)":
+        "(Talk to Xander)" if not Flag_XanderAfternoon2:
             if not Quest_XanderProgress:
                 call XanderQuestStartDialogue from _call_XanderQuestStartDialogue
                 jump Afternoon2Atrium_Choices
@@ -5515,6 +5780,7 @@ label Afternoon2Atrium:
                         pass
                 Xander "Everyone here just studies all the time. It's real lonely." 
                 Xander "I'm used to having a ton of brothers around. I miss home so bad..."
+                $ Flag_XanderAfternoon2 = True
                 menu:
                     "I can help you study.":
                         $ cinematic = True
@@ -5580,7 +5846,7 @@ label Afternoon2Atrium:
                     "Have you talked to Alice or Eileen about it?":
                         Xander "I might be a farmboy, but that doesn't mean I'm dumb." 
                         Xander "They'll put me on discipline for making excuses to slack off."
-                        Xander "Thanks but not really helping. Can you leave me be... please."
+                        Xander "Thanks but you're not really helping. Can you leave me be... please."
                         $ Affinity_Xander -= 10
                         hide xander sprite
                         return
@@ -5696,7 +5962,7 @@ label Afternoon2ArtificingLab:#Rex is being berated by Eileen about poisoning Xa
                                 jump Afternoon2ArtificingLab_Choices
                 
 
-            "(Investigate the Artificing Lab)":
+            "(Investigate the Artificing Lab)" if not Flag_DeliveryBirdGrabbed:
                 if not artifice_options:
                     call Afternoon1ArtificingLab_Explore from _call_Afternoon1ArtificingLab_Explore_1
                     jump Afternoon2ArtificingLab_Choices
@@ -5709,15 +5975,18 @@ label Afternoon2ArtificingLab:#Rex is being berated by Eileen about poisoning Xa
                     $ cinematic = False
                     menu:
                         "(Break lock)" if Flag_HammerAcquired:
+                            $ cinematic = True
                             Narrator "You pull the hammer out from your bag and bring it down on the lock."
                             Narrator "With a loud {i}clunk{/i} it unbolts, the metal feeling loose."
                             Narrator "Inside you find a blueprint of some sort of Artifice..."
                             Narrator "{b}Delivery Bird{/b}"
+                            $ cinematic = False
                             menu:
                                 "(Take it with you)":
                                     play sound "audio/clue_found_item_alert.mp3"
                                     $ artifice_options.append("Delivery Bird")
                                     $ cinematic = True
+                                    $ Flag_DeliveryBirdGrabbed = True
                                     Narrator "You stash it in your bag."
                                     $ cinematic = False
                                     jump Afternoon2ArtificingLab_Choices
@@ -5798,7 +6067,8 @@ label Afternoon2Courtyard:
     if not Afternoon2CourtyardVisited:#Alice and Aria are talking about the exams
         $ cinematic = True
         show aria sprite at left
-        show alice sprite at right
+        show alice sprite solo at right:
+            yalign -0.4
         Narrator "You notice Alice and Aria both sitting in the grass."
         Narrator "You can't help but eavesdrop..."
         $ cinematic = False
@@ -5814,12 +6084,12 @@ label Afternoon2Courtyard:
         Alice "It's an odd enchantment, isn't it. It almost seems to care."
         Aria "I think it does."
         Alice "Then spend more time with it. If it helps you to be around it, study under it."
-        Aria "What happens after? You know, when I leave? I won't have something like that around and it'llo all start again."
+        Aria "What happens after? You know, when I leave? I won't have something like that around and it'll all start again."
         Alice "I can't answer... But know that I understand."
-        Alice "Anyway, my dress is getting dirty sat here. I'll leave you to st-... well, whatever it is you're doing."
+        Alice "Anyway, my pants are getting dirty sat here. I'll leave you to st-... well, whatever it is you're doing."
         $ cinematic = True
         Narrator "You watch Alice get up and walk towards the Atrium. She looks over at you with a smile."
-        hide alice sprite with dissolve
+        hide alice sprite solo with dissolve
         Narrator "The Courtyard looks as it always does, though since the rain ceased this morning you still notice the leaves of trees slick with droplets."
         $ cinematic = False
         hide aria sprite
@@ -5851,6 +6121,8 @@ label Afternoon2Courtyard:
                         "Are you okay?":
                             Aria "Last night I had a nightmare that felt real. It's one I'm sure you've had, too."
                             Aria "It was the one where you're back at the Scholomance."
+                            hide aria sprite
+                            show aria sprite sad
                             Aria "You hear the sound of water overhead because somewhere on the surface of the lake something has whipped up a storm."
                             Aria "The water above you is thrashing... you feel the walls, they're wet and slick."
                             Aria "The whole lake above the Scholomance is angry, and it's trying to get in..."
@@ -5861,6 +6133,8 @@ label Afternoon2Courtyard:
                                 "I've had a similar one.":
                                     Aria "That whole place is built on nightmares."
                                     pass
+                    hide aria sprite sad
+                    show aria sprite
                     Aria "Sorry if I seem melancholic. I've been trying to study but can't seem to focus."
                     Aria "I just... I don't think I'll be placed anywhere, even if I pass."
                     menu:
@@ -5879,6 +6153,7 @@ label Afternoon2Courtyard:
                 else: 
                     $ cinematic = True
                     Narrator "Aria looks lost in thought. You should leave her be."
+                    $ cinematic = False
                     hide aria sprite
                     jump Afternoon2Courtyard_Choices
 
@@ -5886,8 +6161,8 @@ label Afternoon2Courtyard:
                 jump Afternoon2Alice
                 label Afternoon2Alice:
                     show alice sprite:
-                        xalign 0.5 
-                        yalign 0.3  
+                        xalign 0.7
+                        yalign -1.5  
                     Alice "Good afternoon, pupil. Did you need something?"
                     menu:
                         "Is Aria alright?":
@@ -5902,7 +6177,7 @@ label Afternoon2Courtyard:
                             jump Afternoon2Alice
 
                         "I have other questions...":
-                            call alicehub_main from _call_alicehub_main
+                            call alicehub_main
                             jump Afternoon2Alice
                         
                         "(Leave)":
@@ -5917,8 +6192,8 @@ label Afternoon2Courtyard:
                 Narrator "As you step away from the Courtyard, towards the forest, you hear Alice yell loudly in your direction."
                 $ cinematic = False
                 show alice sprite:
-                    xalign 0.5 
-                    yalign 0.3  
+                    xalign 0.7
+                    yalign -1.5    
                 Alice "Absolutely not. Come back."
                 hide alice sprite
                 menu:
@@ -6750,7 +7025,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                             $ cinematic = True
                             Narrator "You inspect your Winged Jasmine."
                             $ cinematic = False
-                            if quality => 50:
+                            if Quality_Flower >= 50:
                                 $ cinematic = True
                                 Narrator "It's thriving, it's blue and white colours seemingly silky smooth and untainted."
                                 $ cinematic = False
@@ -6765,7 +7040,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                             $ cinematic = True
                             Narrator "You inspect your Snapjaw Orchid."
                             $ cinematic = False
-                            if quality => 50:
+                            if Quality_Flower >= 50:
                                 $ cinematic = True
                                 Narrator "The pink, fleshy bits of it's {i}mouth{/i} seem to be developing well. You can tell it's healthy."
                                 $ cinematic = False
@@ -6780,7 +7055,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                             $ cinematic = True
                             Narrator "You inspect your Moon Melon."
                             $ cinematic = False
-                            if quality => 50:
+                            if Quality_Flower >= 50:
                                 $ cinematic = True
                                 Narrator "You're suprised at how much it's grown... it's positively glowing and fragrant. You're sure it's healthy."
                                 $ cinematic = False 
@@ -6795,7 +7070,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                             $ cinematic = True
                             Narrator "You inspect your Sanguine Lily."
                             $ cinematic = False
-                            if quality => 50:
+                            if Quality_Flower >= 50:
                                 $ cinematic = True
                                 Narrator "It's long tendrils have grown even more. As you look at it, it seems to glisten. You can tell it's healthy."
                                 $ cinematic = False
@@ -6811,15 +7086,19 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
 
                     "(Leave)":
                         if sabotaged_potions == False:
+                            $ cinematic = True
                             Narrator "As you step away from the crops, a thought seems to manifest in your mind -- fully formed."
                             Narrator "If there are only limited slots... why not play dirty?"
                             Narrator "If your whole future is riding on this one week... you might as well..."      
+                            $ cinematic = False
                             menu:
                                 "(Sabotage someone's crops)":
+                                    $ cinematic = True
                                     Narrator "Who should you sabotage?"
+                                    $ cinematic = False
                                     menu:
                                         "(Melody)":
-                                            $ sabotaged_plants.append("Melody")
+                                            $ sabotaged_plant.append("Melody")
                                             $ Flag_MelodyPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Melody's plants, digging in the soil to cut the roots."
@@ -6829,7 +7108,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             jump Night2Greenhouse_Choices
 
                                         "(Xander)":
-                                            $ sabotaged_plants.append("Xander")
+                                            $ sabotaged_plant.append("Xander")
                                             $ Flag_XanderPlantSabotaged = True
                                             Narrator "You sneak over to Xander's plants, digging in the soil to cut the roots."
                                             play sound "audio/uproot_plant.mp3"
@@ -6837,7 +7116,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             jump Night2Greenhouse_Choices
 
                                         "(Aria)":
-                                            $ sabotaged_plants.append("Aria")
+                                            $ sabotaged_plant.append("Aria")
                                             $ Flag_AriaPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Aria's plants, digging in the soil to cut the roots."
@@ -6847,7 +7126,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             jump Night2Greenhouse_Choices
 
                                         "(Rex)":
-                                            $ sabotaged_plants.append("Rex")
+                                            $ sabotaged_plant.append("Rex")
                                             $ Flag_RexPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Rex's plants, digging in the soil to cut the roots."
@@ -6857,7 +7136,7 @@ label Night2Greenhouse: #You can escape into the forest. (Flag_GreenhouseTunnelU
                                             jump Night2Greenhouse_Choices
 
                                         "(Tao)":
-                                            $ sabotaged_plants.append("Tao")
+                                            $ sabotaged_plant.append("Tao")
                                             $ Flag_TaoPlantSabotaged = True
                                             $ cinematic = True
                                             Narrator "You sneak over to Tao's plants, digging in the soil to cut the roots."
@@ -6922,7 +7201,9 @@ label Night2Courtyard: #accessed through Greenhouse (Flag_GreenhouseTunnelUnlock
         scene courtyard night with fade
         play music "audio/project_w_concept_02_eminor.mp3"
         $ Location = "Courtyard"
+        $ cinematic = True
         Narrator "You wonder what you should do..."
+        $ cinematic = False
         menu:
             "(Enter the Forest)":
                 $ cinematic = True
@@ -7008,6 +7289,7 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                     menu:
                         "(Enter the Grotto)":
                             play music "audio/project_w_concept_02_eminor.mp3"
+                            scene grotto night
                             $ cinematic = True
                             Narrator "You step into the grotto, wind at your back. As you step through the threshold, the world falls silent."
                             Narrator "You hadn't realised how loud the forest was in the night. Birds, insects, all forming a cacophony of nature."
@@ -7050,7 +7332,8 @@ label Night2Forest: #accessed through Courtyard (Flag_ForestDiscovered) #You can
                             jump Night2Forest_Choices
 
                     label Night2Forest_Grotto: #NotAlice only speaks using words Alice has spoken
-                        scene forest grotto with fade
+                        scene grotto night with fade
+                        show notalice sprite
                         $ cinematic = True
                         Narrator "After a few moments of silence, the Doll speaks. It's voice is still a mimicry of Alice's... but there's something different about it."
                         $ cinematic = False
@@ -7322,11 +7605,11 @@ label Night2TeachersLounge: #player cannot enter because it's locked and has tea
 
 
 label EndOfDemo:
-    scene Summitbound_End_Screen with fade
+    show Summitbound_End_Screen with fade
     play music "audio/Title_Theme_MASTER.mp3"
     play sound "audio/dialogue_information_default.mp3"
-    wait 10.0
-    return
+    pause 10
+    jump main_menu
 
 
 
@@ -7341,6 +7624,7 @@ label BTAO20: #Tao Dormitory Night 0
     show border onlayer UI
     ###################################
     show tao sprite
+    $ Flag_TaoNight0 = True
     Tao "{i}Shared{/i} dorms? Do they not have the budget for individual rooms?" 
     Tao "I've gotten all my studying done but some idiots leave it til the last moment and I'm sensitive enough to light without people being up and about."
     menu: 
@@ -7355,23 +7639,23 @@ label BTAO20: #Tao Dormitory Night 0
                         menu:
                             "(Leave Tao be.)":
                                 hide tao sprite
-                                return
+                                jump Night0DormsMenu
                             "I just have a few questions...":
                                 Tao "{i}Sigh{/i}. Fine. What is it?"
                                 call taohub_main from _call_taohub_main_2
                                 hide tao sprite
-                                return
+                                jump Night0DormsMenu
             else:
                 Tao "What in the Saints would give you that impression? I'm about to sleep. Shoo."
                 $ cinematic = True
                 Narrator "Tao sits back in their chair, clearly unwilling to talk."
                 Narrator "They flip open a book, blocking your view of them."
                 hide tao sprite
-                return
+                jump Night0DormsMenu
 
         "(Leave Tao be.)":
             hide tao sprite
-            return
+            jump Night0DormsMenu
 
 
 
@@ -7383,6 +7667,7 @@ label BXAN12: #Xander Dormitory Night 0
     show border onlayer UI
     ###################################
     show xander sprite
+    $ Flag_XanderNight0 = True
     Xander "Oh, it's you again. Are you about to pull an all-night study session, too?" 
     Xander "I got no choice with all these exams coming up. And anyway, you can't really leave the dorms after hours, because, you know..."
     menu:
@@ -7393,10 +7678,14 @@ label BXAN12: #Xander Dormitory Night 0
     menu:
         "(Continue) Sure, we can chat.":
             call xanderhub_main from _call_xanderhub_main_2
-            return
-        "(Exit Conversation) I'll pass for now.":
+            Xander "If you don't mind, I think I'll call it. I've not slept on a bed this comfy in years."
+            Xander "Wanna get my hours in, ya know?"
             hide xander sprite
-            return
+            jump Night0DormsMenu
+        "(Exit Conversation) I'll pass for now.":
+            Xander "Well, don't be a stranger."
+            hide xander sprite
+            jump Night0DormsMenu
 
 
 label BARI28: #Aria Dormitory Night 0
@@ -7405,6 +7694,7 @@ label BARI28: #Aria Dormitory Night 0
     show border onlayer UI
     ###################################
     show aria sprite
+    $ Flag_AriaNight0 = True
     Aria "Oh, hello. I saw you come in before me." 
     Aria "There's so much space... have you seen the ceiling? I'm sure you have."
     Aria "It's cold in here. Aren't you cold?"
@@ -7425,12 +7715,20 @@ label BARI28: #Aria Dormitory Night 0
     menu: 
         "(Continue) Sure.":
             $ Affinity_Aria+= 10
-            call ariahub_main from _call_ariahub_main_1
+            call ariahub_main
+            Aria "{i}yawn{/i}..."
+            Aria "Ah. You aren't boring me, promise. I'm just a little tired from the journey."
+            menu:
+                "You should probably sleep.":
+                    Aria "I probably should..."
+                    Aria "We'll talk tomorrow. Okay? Goodnight!"
+                    hide aria sprite
+                    jump Night0DormsMenu
         "(Exit Conversation) I'm a little tired.":
             show aria sprite sad 
             Aria "Okay. Goodnight then. Big day tomorrow."
             hide aria sprite
-            return
+            jump Night0DormsMenu
 
 
 label BREX22: #Rex Dormitory Night 0
@@ -7439,6 +7737,7 @@ label BREX22: #Rex Dormitory Night 0
     show border onlayer UI
     ###################################
     show rex sprite
+    $ Flag_RexNight0 = True
     Rex "Why are you up so late? Aren't you a good student like the rest of them?"
     menu: 
         "I'm a night owl.":
@@ -7446,16 +7745,20 @@ label BREX22: #Rex Dormitory Night 0
             $ Affinity_Rex+= 10
             menu: 
                 "(Continue) I was wondering...":
-                    call rexhub_main from _call_rexhub_main_1
+                    call rexhub_main
+                    show rex sprite
+                    Rex "I'm tired. I'm gonna go sleep. We'll catch up another time."
+                    hide rex sprite
+                    jump Night0DormsMenu
                 "(End Conversation) Bye for now.":
                     Rex "Alright... see ya."
                     hide rex sprite
-                    return
+                    jump Night0DormsMenu
         "Can't sleep. I'm a bit anxious.":
             Rex "Don't come crying to me. I've got my own problems. Try Aria, she's all soppy like you."
             $ Affinity_Rex-= 10
             hide rex sprite
-            return
+            jump Night0DormsMenu
 
 
 
@@ -7567,7 +7870,11 @@ label BTAO01:
             menu:
                 "(Exit Conversation)":
                     hide tao sprite
-                    return
+                    if Day0Afternoon:
+                        jump introduction_menu
+
+                    if Day0Night:
+                        jump Night0DormsMenu
                 "...":
                     pass
     Tao "Do you have to keep hovering around me? I'm certain your time would be better spent studying."
@@ -7578,7 +7885,12 @@ label BTAO01:
             pass
         "(Exit Conversation)":
             hide tao sprite
-            return 
+            if Day0Afternoon:
+                jump introduction_menu
+
+            if Day0Night:
+                jump Night0DormsMenu
+
     $ cinematic = True
     Narrator "Tao rolls their eyes. You're not going to get much else from them."
     $ cinematic = False
@@ -7599,11 +7911,19 @@ label BTAO01:
             hide tao sprite
             menu:
                 "Move on.":
-                    return
+                    if Day0Afternoon:
+                        jump introduction_menu
+
+                    if Day0Night:
+                        jump Night0DormsMenu
         "Move on.":
             hide tao sprite
-            return
-    return
+            if Day0Afternoon:
+                jump introduction_menu
+
+            if Day0Night:
+                jump Night0DormsMenu
+
 
         
 #####################
@@ -7662,7 +7982,11 @@ label BARI01:
     $ Flag_AriaMet = True
     $ journal__bio_aria.isUnlocked = Flag_AriaMet
     hide aria sprite
-    return
+    if Day0Afternoon:
+        jump introduction_menu
+
+    if Day0Night:
+        jump Night0DormsMenu
 
 
 #######################
@@ -7695,7 +8019,11 @@ label BXAN01:
     hide xander sprite
     $ Flag_XanderMet = True
     $ journal__bio_xander.isUnlocked = Flag_XanderMet
-    return
+    if Day0Afternoon:
+        jump introduction_menu
+
+    if Day0Night:
+        jump Night0DormsMenu
 
 
 
@@ -7729,8 +8057,11 @@ label BMEL01:
     $ Flag_MelodyMet = True
     $ journal__bio_melody.isUnlocked = Flag_MelodyMet
     hide melody sprite
+    if Day0Afternoon:
+        jump introduction_menu
 
-    return
+    if Day0Night:
+        jump Night0DormsMenu
 
 
 
@@ -7762,7 +8093,11 @@ label BREX01:
     hide rex sprite
     $ Flag_RexMet = True
     $ journal__bio_rex.isUnlocked = Flag_RexMet
-    return
+    if Day0Afternoon:
+        jump introduction_menu
+
+    if Day0Night:
+        jump Night0DormsMenu
 
 
 
@@ -7841,19 +8176,22 @@ label melodyhub_main:
             call MelodyOther_Choices
 
         "(Exit Conversation)":
-            hide melody sprite happy
             $ result = renpy.random.randint(1, 4)
             if result == 1:
                 Melody "See you."
+                hide melody sprite happy
                 return
             if result == 2:
                 Melody "Bye!"
+                hide melody sprite happy
                 return
             if result == 3:
                 Melody "Let me know if you need anything."
+                hide melody sprite happy
                 return
             if result == 4:
                 Melody "I guess we'll talk another time."
+                hide melody sprite happy
                 return
 
 
@@ -8243,6 +8581,7 @@ label melodyhub_main:
             menu: 
                 "Right.":
                     Melody "Sorry I'm not much help here."
+                    hide melody sprite happy
                     return
                 
     ###END###
