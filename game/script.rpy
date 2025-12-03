@@ -7955,12 +7955,14 @@ label BTAO01:
                     pass
     Tao "Do you have to keep hovering around me? I'm certain your time would be better spent studying."
     Tao "If you're so incessant on chatting we can do so later."
+    hide tao sprite
+    show tao sprite angry
     menu:
         "(Keep Hovering)":
             Tao "Ugh. Really?"
             pass
         "(Exit Conversation)":
-            hide tao sprite
+            hide tao sprite angry
             return
 
     $ cinematic = True
@@ -7980,11 +7982,13 @@ label BTAO01:
             Narrator "It's like they're looking into each individual thread of a complex blanket, while all you can see is the zig-zagging pattern it forms."
             Narrator "You could be here all day. It's best you move."
             $ Flag_PlayerMoonInspect = True
-            hide tao sprite
+            hide tao sprite angry
             menu:
                 "Move on.":
+                    hide tao sprite angry
                     return
         "Move on.":
+            hide tao sprite angry
             return
 
 

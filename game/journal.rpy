@@ -62,13 +62,13 @@ define journal__spells_list = [journal__spell_light, journal__spell_unlocking, j
 
 
 # Characters
-default journal__bio_aria = CharacterBio("Aria", "images/aria/aria sprite.png", "A Mage who seems more comfortable around plants than people.", isUnlocked=Flag_AriaMet)
-default journal__bio_xander = CharacterBio("Xander", "images/xander/xander sprite.png", "He's very energetic... perhaps a bit too much so.", isUnlocked=Flag_XanderMet)
-default journal__bio_rex = CharacterBio("Rex", "images/rex/rex sprite.png", "He seems a bit rough around the edges, but has a heart.", isUnlocked=Flag_RexMet)
-default journal__bio_tao = CharacterBio("Tao", "images/tao/tao sprite.png", "A rather studious sort. Do they have any hobbies...?", isUnlocked=Flag_TaoMet)
-default journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two.", isUnlocked=Flag_AliceMet)
-default journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "An Inquisitor... best not get on her bad side.", isUnlocked=Flag_EileenMet)
-default journal__bio_melody = CharacterBio("Melody", "images/melody/melody sprite.png", "A Mage who's dream is to become a great Alchemist.", isUnlocked=Flag_MelodyMet)
+default journal__bio_aria = CharacterBio("Aria", "images/aria/aria sprite.png", "Aria's a daydreamer, but she's one of the nicer people in the exams. While she doesn't ever really try with her studies, she's sort of closely watched over by the proctors because of her natural talent as a mage. I've heard that she daydreamed a tree to grow through the ceiling, and for the dorms to flood. She'll help anyone but always seems to forget to do her own work.", isUnlocked=Flag_AriaMet)
+default journal__bio_xander = CharacterBio("Xander", "images/xander/xander sprite.png", "Xander's hot headed but friendly. He lets his emotions get in the way of his studying, but will still try and help anyone who needs it -- especially with combat. I'm not sure if he's studying enough to pass the exams, but everyone is sure he'll at least try.", isUnlocked=Flag_XanderMet)
+default journal__bio_rex = CharacterBio("Rex", "images/rex/rex sprite.png", "Rex seems like the kind of man to start a fight over very little. We're all mages here, but he's not too interested in camaraderie, it's all aggression from him. He doesn't seem to have many friends, I suppose there's not much time to fix that before gradutation.", isUnlocked=Flag_RexMet)
+default journal__bio_tao = CharacterBio("Tao", "images/tao/tao sprite.png", "Tao is the child of a renowned mage, and I think they take that too seriously. They spend their days studying, working, and generally hanging out on their own. It's a little sad, I wonder why they haven't managed to make a friend in the Scholomance?", isUnlocked=Flag_TaoMet)
+default journal__bio_alice = CharacterBio("Alice", "images/alice/alice sprite.png", "An Inquisitor... the more supportive of the two. She seems to keep a close eye on all of us -- who knows why she wants to help us so much, I think most students here throw it back in her face.", isUnlocked=Flag_AliceMet)
+default journal__bio_eileen = CharacterBio("Eileen", "images/eileen/eileen sprite.png", "Every mage has heard whispers of Eileen, she's legendary. Theres a lot of literature on her in the libraries, and I'm pretty sure they're trying to build a statue of her. It seems weird that she's here, looking over our exams. It certainly adds to the pressure.", isUnlocked=Flag_EileenMet)
+default journal__bio_melody = CharacterBio("Melody", "images/melody/melody sprite.png", "A mage who's dream is to become a great Alchemist.", isUnlocked=Flag_MelodyMet)
 default journal__bio_default = CharacterBio("???", 'gui/none.png', "???", isUnlocked=True)
 
 default journal__characterBio_list = [journal__bio_alice, journal__bio_aria, journal__bio_eileen, journal__bio_melody, journal__bio_rex, journal__bio_tao, journal__bio_xander]
