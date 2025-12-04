@@ -425,7 +425,7 @@ screen navigation():
                 xsize 400
                 xalign 0.5
                 yalign 0.5
-                yoffset 15
+                yoffset 0
                 ysize 601
 
                 has vbox
@@ -470,10 +470,57 @@ screen navigation():
                 
             frame:
                 background Frame("gui/frame_plain.png", 34, 34)
-                ysize 32
+                xsize 500
+                ysize 75
                 yalign 1.0
                 yoffset 16
+                hbox:
+                    xalign 0.5
+                    yalign 0.5
+                    yoffset -15
+                    spacing gui.navigation_spacing
+                    button:
+                        xsize 50
+                        ysize 50
+                        background Frame("discord_blue_100.png")
+                        hover_background Frame("discord_100_hover.png")
+                        action OpenURL("https://discord.gg/z6aCdCqvbs")
+                    button:
+                        xsize 50
+                        ysize 50
+                        background Frame("patreon_blue_100.png")
+                        hover_background Frame("patreon_100_hover.png")
+                        action OpenURL("https://www.patreon.com/cw/RatMagicGames")
+                    button:
+                        xsize 30
+                        ysize 30
+                        yalign 0.5
+                        background Frame("x_blue_75.png")
+                        hover_background Frame("x_75_hover.png")
+                        action OpenURL("https://x.com/RatMagicGames")
 
+            ## for the externally linked icons
+            # frame:
+            #     background Frame("gui/frame_plain.png", 34, 34)
+            #     xsize 500
+            #     yalign 1.0
+            #     yoffset 100
+            #     hbox:
+            #         xalign 0.5
+            #         yoffset -15
+            #         spacing gui.navigation_spacing
+            #         button:
+            #             xsize 50
+            #             ysize 50
+            #             background Frame("discord_white_100.png")
+            #             hover_background Frame("discord_100_hover.png")
+            #             action OpenURL("https://discord.gg/z6aCdCqvbs")
+            #         button:
+            #             xsize 50
+            #             ysize 50
+            #             background Frame("patreon_white_100.png")
+            #             hover_background Frame("patreon_100_hover.png")
+            #             action OpenURL("https://www.patreon.com/cw/RatMagicGames")
     else:
         frame:
             ysize 118
