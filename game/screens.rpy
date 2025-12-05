@@ -499,28 +499,6 @@ screen navigation():
                         hover_background Frame("x_75_hover.png")
                         action OpenURL("https://x.com/RatMagicGames")
 
-            ## for the externally linked icons
-            # frame:
-            #     background Frame("gui/frame_plain.png", 34, 34)
-            #     xsize 500
-            #     yalign 1.0
-            #     yoffset 100
-            #     hbox:
-            #         xalign 0.5
-            #         yoffset -15
-            #         spacing gui.navigation_spacing
-            #         button:
-            #             xsize 50
-            #             ysize 50
-            #             background Frame("discord_white_100.png")
-            #             hover_background Frame("discord_100_hover.png")
-            #             action OpenURL("https://discord.gg/z6aCdCqvbs")
-            #         button:
-            #             xsize 50
-            #             ysize 50
-            #             background Frame("patreon_white_100.png")
-            #             hover_background Frame("patreon_100_hover.png")
-            #             action OpenURL("https://www.patreon.com/cw/RatMagicGames")
     else:
         frame:
             ysize 118
@@ -531,9 +509,10 @@ screen navigation():
             hbox:
                 xalign 0.5
                 yoffset 15
-                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
-                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
-                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                if not main_menu:
+                    add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                    add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                    add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
                 add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
                 add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
                 add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
@@ -545,18 +524,19 @@ screen navigation():
                 yoffset -60
                 spacing 0
 
-                textbutton _("Journal"): 
-                    at nav_rise
-                    action ShowMenu("journal", "exams")
-
-                textbutton _("History"): 
-                    at nav_rise
-                    action ShowMenu("history")
-
                 if not main_menu:
-                    textbutton _("Save"): 
+                    textbutton _("Journal"): 
                         at nav_rise
-                        action ShowMenu("save")
+                        action ShowMenu("journal", "exams")
+
+                    textbutton _("History"): 
+                        at nav_rise
+                        action ShowMenu("history")
+
+                    if not main_menu:
+                        textbutton _("Save"): 
+                            at nav_rise
+                            action ShowMenu("save")
 
                 textbutton _("Load"): 
                     at nav_rise
