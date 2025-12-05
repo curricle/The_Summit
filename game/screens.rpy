@@ -512,7 +512,7 @@ screen navigation():
                 if not main_menu:
                     add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
                     add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
-                    add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
+                add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
                 add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
                 add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
                 add Frame('gui/nav_frame_unselected.png', 30, 10) xsize 294 ysize 55
