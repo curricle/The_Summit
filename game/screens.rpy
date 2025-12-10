@@ -1974,9 +1974,20 @@ screen character_hub_menu(options):
                 for opt in options:
                     textbutton opt["label"] action opt["action"]
 
+screen disclaimer():
+    frame:
+        xalign 0.5
+        yalign 0.5
+        padding (50,50)
+        text "This is an alpha version of the game with unfinished art and sound." style "gui_text"
+
 label splashscreen:
     scene black
     with Pause(1)
+
+    show screen disclaimer with dissolve
+    with Pause(5)
+    hide screen disclaimer with dissolve
 
     show splash with dissolve
     with Pause(3)
