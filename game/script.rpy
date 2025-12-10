@@ -390,7 +390,8 @@ label start:
     ###################################
     ## Do not remove this portion
     show border onlayer UI 
-    ###################################    
+    ###################################
+    
     scene bg room with fade
     $ Day0Afternoon = True
     $ cinematic = True
@@ -452,8 +453,8 @@ label start:
     Narrator "Rather than stand still, she turns, as if summoning the woman behind her. Inquisitor Alice, the woman who crafted the dolls. This isn't the first time you've seen her in person, but it still strikes you as odd."
     #add x and y positioning to adjust sprite alignment
     show alice sprite:
-        xalign 0.5 
-        yalign 0.3
+        xalign 0.7
+        yalign -1.5  
     Narrator "The woman lives through a half-dozen dolls, it's very odd to see her in person. You notice another doll beside the staircase leading to a great green window."
     $ cinematic = False
     Alice "Good evening, pupils. I know the journey here wasn't smooth, but you all seem to have made it from the Scholomance in one piece."

@@ -75,9 +75,9 @@ default journal__characterBio_list = [journal__bio_alice, journal__bio_aria, jou
 
 
 # Exams
-define journal__exam_combat = ExamInfo("Combat", "Day 4", "Punching? Kicking?")
-define journal__exam_artificing = ExamInfo("Artificing", "Day 3", "It's understood that artificing will be involved.")
-define journal__exam_potion = ExamInfo("Potions", "Day 2", "Unexpected brews are sure to count against you.")
+define journal__exam_combat = ExamInfo("Combat", "Day 6", "Combat usually involves fighting off magical beings... it's not very pleasant.")
+define journal__exam_artificing = ExamInfo("Artificing", "Day 3", "Tinkering with metals and magic in order to build automatons and magical mechanisms.")
+define journal__exam_potion = ExamInfo("Potions", "Day 5", "Brewing potions is the cornerstone of being a town mage, it is of the utmost importance to succeed at it.")
 
 define journal__exam_list = [journal__exam_artificing, journal__exam_combat, journal__exam_potion]
 
